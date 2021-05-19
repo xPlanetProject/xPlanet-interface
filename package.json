@@ -5,7 +5,7 @@
   "private": true,
   "devDependencies": {
     "@babel/core": "7.9.0",
-    "@svgr/webpack": "4.3.3",
+    "@svgr/webpack": "^5.5.0",
     "@types/jest": "^25.2.1",
     "@types/lodash.flatmap": "^4.5.6",
     "@types/multicodec": "^1.0.0",
