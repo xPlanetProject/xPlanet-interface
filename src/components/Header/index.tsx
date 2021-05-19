@@ -11,6 +11,7 @@ import LogoDark from '@/assets/images/logo.png'
 import { YellowCard } from '@/components/Card'
 import Menu from '@/components/Menu'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
+import { SwapPoolTabsMobile } from '@/components/NavigationTabs/mobile'
 import Row, { RowBetween } from '@/components/Row'
 import Web3Status from '@/components/Web3Status'
 import SwithTheme from '@/components/SwitchTheme'
@@ -173,7 +174,7 @@ export default function Header() {
             <SwapPoolTabs active={currentActive} />
           </BrowserView>
           <MobileView>
-            FUCK
+            <SwapPoolTabsMobile active={currentActive} />
           </MobileView>
         </HeaderMemuRow>
         <HeaderControls>
