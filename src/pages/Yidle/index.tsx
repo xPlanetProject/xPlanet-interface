@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { HideSmall, TYPE } from '@/theme'
 
 import { AutoColumn } from '@/components/Column'
@@ -32,9 +32,6 @@ const TitleRow = styled(RowBetween)`
 `
 
 export default function Yield() {
-  const theme = useContext(ThemeContext)
-  console.log(theme)
-
   return (
     <>
       <PageWrapper>
