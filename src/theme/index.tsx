@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react'
 import { transparentize } from 'polished'
 import { Text, TextProps } from 'rebass'
 import styled, {
@@ -7,7 +8,7 @@ import styled, {
   DefaultTheme
 } from 'styled-components'
 
-import React, { useMemo } from 'react'
+import { isMobile, isDesktop } from 'react-device-detect'
 
 import BodyBackground from '@/assets/images/page-bg.png'
 import { useIsDarkMode } from '@/state/user/hooks'
@@ -15,10 +16,10 @@ import { Colors } from './styled'
 
 export * from './components'
 
-const MEDIA_WIDTHS = {
+export const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
   upToSmall: 600,
-  upToMedium: 960,
+  upToMedium: 1040,
   upToLarge: 1280
 }
 
@@ -95,6 +96,10 @@ export function theme(darkMode: boolean): DefaultTheme {
     ...colors(darkMode),
 
     darkMode,
+
+    //  device info
+    isMobile,
+    isDesktop,
 
     grids: {
       sm: 8,
