@@ -2,13 +2,13 @@ import { Text } from 'rebass'
 
 import React from 'react'
 
-import listDark from '../../assets/images/token-list/lists-dark.png'
-import listLight from '../../assets/images/token-list/lists-light.png'
-import { useDarkModeManager } from '../../state/user/hooks'
-import { ExternalLink } from '../../theme'
-import { ButtonPrimary } from '../Button'
-import { OutlineCard } from '../Card'
-import Column, { AutoColumn } from '../Column'
+import listDark from '@/assets/images/token-list/lists-dark.png'
+import listLight from '@/assets/images/token-list/lists-light.png'
+import { useDarkModeManager } from '@/state/user/hooks'
+import { ExternalLink } from '@/theme'
+import { ButtonPrimary } from '@/components/Button'
+import { OutlineCard } from '@/components/Card'
+import Column, { AutoColumn } from '@/components/Column'
 import { PaddedColumn } from './styleds'
 
 export default function ListIntroduction({

@@ -9,15 +9,15 @@ import {
 
 import { useMemo } from 'react'
 
-import ERC20_INTERFACE from '../../constants/abis/erc20'
-import { useActiveWeb3React } from '../../hooks'
-import { useAllTokens } from '../../hooks/Tokens'
-import { useMulticallContract } from '../../hooks/useContract'
-import { isAddress } from '../../utils'
+import ERC20_INTERFACE from '@/constants/abis/erc20'
+import { useActiveWeb3React } from '@/hooks'
+import { useAllTokens } from '@/hooks/Tokens'
+import { useMulticallContract } from '@/hooks/useContract'
+import { isAddress } from '@/utils'
 import {
   useSingleContractMultipleData,
   useMultipleContractSingleData
-} from '../multicall/hooks'
+} from '@/state/multicall/hooks'
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.

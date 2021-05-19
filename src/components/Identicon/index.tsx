@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import React, { useEffect, useRef } from 'react'
 
-import { useActiveWeb3React } from '../../hooks'
+import { useActiveWeb3React } from '@/hooks'
 
 const StyledIdenticonContainer = styled.div`
   height: 1rem;

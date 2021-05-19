@@ -16,21 +16,21 @@ import React, {
 } from 'react'
 import { FixedSizeList } from 'react-window'
 
-import { useActiveWeb3React } from '../../hooks'
-import { useIsUserAddedToken } from '../../hooks/Tokens'
-import { useSelectedTokenList, WrappedTokenInfo } from '../../state/lists/hooks'
+import { useActiveWeb3React } from '@/hooks'
+import { useIsUserAddedToken } from '@/hooks/Tokens'
+import { useSelectedTokenList, WrappedTokenInfo } from '@/state/lists/hooks'
 import {
   useAddUserToken,
   useRemoveUserAddedToken
-} from '../../state/user/hooks'
-import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { LinkStyledButton, TYPE } from '../../theme'
-import { isTokenOnList } from '../../utils'
-import Column from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
-import Loader from '../Loader'
-import { RowFixed } from '../Row'
-import { MouseoverTooltip } from '../Tooltip'
+} from '@/state/user/hooks'
+import { useCurrencyBalance } from '@/state/wallet/hooks'
+import { LinkStyledButton, TYPE } from '@/theme'
+import { isTokenOnList } from '@/utils'
+import Column from '@/components/Column'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import Loader from '@/components/Loader'
+import { RowFixed } from '@/components/Row'
+import { MouseoverTooltip } from '@/components/Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
 
 function currencyKey(currency: Currency): string {

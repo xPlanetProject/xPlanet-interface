@@ -4,11 +4,11 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import { SUGGESTED_BASES } from '../../constants'
-import { AutoColumn } from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
-import QuestionHelper from '../QuestionHelper'
-import { AutoRow } from '../Row'
+import { SUGGESTED_BASES } from '@/constants'
+import { AutoColumn } from '@/components/Column'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import QuestionHelper from '@/components/QuestionHelper'
+import { AutoRow } from '@/components/Row'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
   border: 1px solid

@@ -7,32 +7,32 @@ import React, { useMemo } from 'react'
 import { Activity } from 'react-feather'
 import { useTranslation } from 'react-i18next'
 
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
-import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
-import PortisIcon from '../../assets/images/portisIcon.png'
-import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
+import CoinbaseWalletIcon from '@/assets/images/coinbaseWalletIcon.svg'
+import FortmaticIcon from '@/assets/images/fortmaticIcon.png'
+import PortisIcon from '@/assets/images/portisIcon.png'
+import WalletConnectIcon from '@/assets/images/walletConnectIcon.svg'
 import {
   fortmatic,
   injected,
   portis,
   walletconnect,
   walletlink
-} from '../../connectors'
-import { NetworkContextName } from '../../constants'
-import useENSName from '../../hooks/useENSName'
-import { useHasSocks } from '../../hooks/useSocksBalance'
-import { useWalletModalToggle } from '../../state/application/hooks'
+} from '@/connectors'
+import { NetworkContextName } from '@/constants'
+import useENSName from '@/hooks/useENSName'
+import { useHasSocks } from '@/hooks/useSocksBalance'
+import { useWalletModalToggle } from '@/state/application/hooks'
 import {
   isTransactionRecent,
   useAllTransactions
-} from '../../state/transactions/hooks'
-import { TransactionDetails } from '../../state/transactions/reducer'
-import { shortenAddress } from '../../utils'
-import { ButtonSecondary } from '../Button'
-import Identicon from '../Identicon'
-import Loader from '../Loader'
-import { RowBetween } from '../Row'
-import WalletModal from '../WalletModal'
+} from '@/state/transactions/hooks'
+import { TransactionDetails } from '@/state/transactions/reducer'
+import { shortenAddress } from '@/utils'
+import { ButtonSecondary } from '@/components/Button'
+import Identicon from '@/components/Identicon'
+import Loader from '@/components/Loader'
+import { RowBetween } from '@/components/Row'
+import WalletModal from '@/components/WalletModal'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};

@@ -19,49 +19,49 @@ import {
   ButtonError,
   ButtonLight,
   ButtonPrimary
-} from '../../components/Button'
-import { BlueCard, GreyCard, LightCard } from '../../components/Card'
-import { AutoColumn, ColumnCenter } from '../../components/Column'
-import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import DoubleCurrencyLogo from '../../components/DoubleLogo'
-import { AddRemoveTabs } from '../../components/NavigationTabs'
-import { MinimalPositionCard } from '../../components/PositionCard'
-import Row, { RowBetween, RowFlat } from '../../components/Row'
+} from '@/components/Button'
+import { BlueCard, GreyCard, LightCard } from '@/components/Card'
+import { AutoColumn, ColumnCenter } from '@/components/Column'
+import CurrencyInputPanel from '@/components/CurrencyInputPanel'
+import DoubleCurrencyLogo from '@/components/DoubleLogo'
+import { AddRemoveTabs } from '@/components/NavigationTabs'
+import { MinimalPositionCard } from '@/components/PositionCard'
+import Row, { RowBetween, RowFlat } from '@/components/Row'
 import TransactionConfirmationModal, {
   ConfirmationModalContent
-} from '../../components/TransactionConfirmationModal'
-import { ROUTER_ADDRESS } from '../../constants'
-import { PairState } from '../../data/Reserves'
-import { useActiveWeb3React } from '../../hooks'
-import { useCurrency } from '../../hooks/Tokens'
+} from '@/components/TransactionConfirmationModal'
+import { ROUTER_ADDRESS } from '@/constants'
+import { PairState } from '@/data/Reserves'
+import { useActiveWeb3React } from '@/hooks'
+import { useCurrency } from '@/hooks/Tokens'
 import {
   ApprovalState,
   useApproveCallback
-} from '../../hooks/useApproveCallback'
-import { useWalletModalToggle } from '../../state/application/hooks'
-import { Field } from '../../state/mint/actions'
+} from '@/hooks/useApproveCallback'
+import { useWalletModalToggle } from '@/state/application/hooks'
+import { Field } from '@/state/mint/actions'
 import {
   useDerivedMintInfo,
   useMintActionHandlers,
   useMintState
-} from '../../state/mint/hooks'
-import { useTransactionAdder } from '../../state/transactions/hooks'
+} from '@/state/mint/hooks'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import {
   useIsExpertMode,
   useUserDeadline,
   useUserSlippageTolerance
-} from '../../state/user/hooks'
-import { TYPE } from '../../theme'
+} from '@/state/user/hooks'
+import { TYPE } from '@/theme'
 import {
   calculateGasMargin,
   calculateSlippageAmount,
   getRouterContract
-} from '../../utils'
-import { currencyId } from '../../utils/currencyId'
-import { maxAmountSpend } from '../../utils/maxAmountSpend'
-import { wrappedCurrency } from '../../utils/wrappedCurrency'
-import AppBody from '../AppBody'
-import { Dots, Wrapper } from '../Pool/styleds'
+} from '@/utils'
+import { currencyId } from '@/utils/currencyId'
+import { maxAmountSpend } from '@/utils/maxAmountSpend'
+import { wrappedCurrency } from '@/utils/wrappedCurrency'
+import AppBody from '@/pages/AppBody'
+import { Dots, Wrapper } from '@/pages/Pool/styleds'
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { PoolPriceBar } from './PoolPriceBar'
 

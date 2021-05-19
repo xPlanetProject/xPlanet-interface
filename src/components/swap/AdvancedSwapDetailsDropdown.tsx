@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import { useLastTruthy } from '../../hooks/useLast'
+import { useLastTruthy } from '@/hooks/useLast'
 import {
   AdvancedSwapDetails,
   AdvancedSwapDetailsProps

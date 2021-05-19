@@ -5,8 +5,8 @@ import { X } from 'react-feather'
 import { animated } from 'react-spring'
 import { useSpring } from 'react-spring/web'
 
-import { PopupContent } from '../../state/application/actions'
-import { useRemovePopup } from '../../state/application/hooks'
+import { PopupContent } from '@/state/application/actions'
+import { useRemovePopup } from '@/state/application/hooks'
 import ListUpdatePopup from './ListUpdatePopup'
 import TransactionPopup from './TransactionPopup'
 

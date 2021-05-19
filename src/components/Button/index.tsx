@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import React from 'react'
 import { ChevronDown } from 'react-feather'
 
-import { RowBetween } from '../Row'
+import { RowBetween } from '@/components/Row'
 
 const Base = styled(RebassButton)<{
   padding?: string

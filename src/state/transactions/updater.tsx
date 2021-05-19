@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useActiveWeb3React } from '../../hooks'
-import { useAddPopup, useBlockNumber } from '../application/hooks'
-import { AppDispatch, AppState } from '../index'
+import { useActiveWeb3React } from '@/hooks'
+import { useAddPopup, useBlockNumber } from '@/state/application/hooks'
+import { AppDispatch, AppState } from '@/state'
 import { checkedTransaction, finalizeTransaction } from './actions'
 
 export function shouldCheck(

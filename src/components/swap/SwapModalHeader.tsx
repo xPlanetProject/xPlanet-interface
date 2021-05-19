@@ -5,18 +5,18 @@ import { ThemeContext } from 'styled-components'
 import React, { useContext, useMemo } from 'react'
 import { ArrowDown, AlertTriangle } from 'react-feather'
 
-import { Field } from '../../state/swap/actions'
-import { TYPE } from '../../theme'
-import { isAddress, shortenAddress } from '../../utils'
+import { Field } from '@/state/swap/actions'
+import { TYPE } from '@/theme'
+import { isAddress, shortenAddress } from '@/utils'
 import {
   computeSlippageAdjustedAmounts,
   computeTradePriceBreakdown,
   warningSeverity
-} from '../../utils/prices'
-import { ButtonPrimary } from '../Button'
-import { AutoColumn } from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
-import { RowBetween, RowFixed } from '../Row'
+} from '@/utils/prices'
+import { ButtonPrimary } from '@/components/Button'
+import { AutoColumn } from '@/components/Column'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import { RowBetween, RowFixed } from '@/components/Row'
 import { TruncatedText, SwapShowAcceptChanges } from './styleds'
 
 export default function SwapModalHeader({

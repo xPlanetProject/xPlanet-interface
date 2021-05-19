@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import React, { useCallback, useState } from 'react'
 import { HelpCircle as Question } from 'react-feather'
 
-import Tooltip from '../Tooltip'
+import Tooltip from '@/components/Tooltip'
 
 const QuestionWrapper = styled.div`
   display: flex;

@@ -5,11 +5,11 @@ import { ThemeContext } from 'styled-components'
 import React, { useContext, useMemo } from 'react'
 import { useLocation } from 'react-router'
 
-import useParsedQueryString from '../../hooks/useParsedQueryString'
-import { DEFAULT_VERSION, Version } from '../../hooks/useToggledVersion'
-import { StyledInternalLink } from '../../theme'
-import { YellowCard } from '../Card'
-import { AutoColumn } from '../Column'
+import useParsedQueryString from '@/hooks/useParsedQueryString'
+import { DEFAULT_VERSION, Version } from '@/hooks/useToggledVersion'
+import { StyledInternalLink } from '@/theme'
+import { YellowCard } from '@/components/Card'
+import { AutoColumn } from '@/components/Column'
 
 export default function BetterTradeLink({ version }: { version: Version }) {
   const theme = useContext(ThemeContext)

@@ -2,12 +2,12 @@ import styled, { ThemeContext } from 'styled-components'
 
 import React, { useContext, useCallback } from 'react'
 
-import { useActiveWeb3React } from '../../hooks'
-import useENS from '../../hooks/useENS'
-import { ExternalLink, TYPE } from '../../theme'
-import { getEtherscanLink } from '../../utils'
-import { AutoColumn } from '../Column'
-import { RowBetween } from '../Row'
+import { useActiveWeb3React } from '@/hooks'
+import useENS from '@/hooks/useENS'
+import { ExternalLink, TYPE } from '@/theme'
+import { getEtherscanLink } from '@/utils'
+import { AutoColumn } from '@/components/Column'
+import { RowBetween } from '@/components/Row'
 
 const InputPanel = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap}

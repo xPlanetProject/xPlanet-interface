@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { network } from '../../connectors'
-import { NetworkContextName } from '../../constants'
-import { useEagerConnect, useInactiveListener } from '../../hooks'
-import Loader from '../Loader'
+import { network } from '@/connectors'
+import { NetworkContextName } from '@/constants'
+import { useEagerConnect, useInactiveListener } from '@/hooks'
+import Loader from '@/components/Loader'
 
 const MessageWrapper = styled.div`
   display: flex;

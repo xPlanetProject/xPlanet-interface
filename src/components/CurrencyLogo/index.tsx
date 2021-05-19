@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import React, { useMemo } from 'react'
 
-import EthereumLogo from '../../assets/images/ethereum-logo.png'
-import useHttpLocations from '../../hooks/useHttpLocations'
-import { WrappedTokenInfo } from '../../state/lists/hooks'
-import Logo from '../Logo'
+import EthereumLogo from '@/assets/images/ethereum-logo.png'
+import useHttpLocations from '@/hooks/useHttpLocations'
+import { WrappedTokenInfo } from '@/state/lists/hooks'
+import Logo from '@/components/Logo'
 
 const getTokenLogoURL = (address: string) =>
   `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`

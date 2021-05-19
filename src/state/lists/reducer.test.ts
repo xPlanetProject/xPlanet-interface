@@ -4,8 +4,8 @@ import { createStore, Store } from 'redux'
 import {
   DEFAULT_LIST_OF_LISTS,
   DEFAULT_TOKEN_LIST_URL
-} from '../../constants/lists'
-import { updateVersion } from '../global/actions'
+} from '@/constants/lists'
+import { updateVersion } from '@/state/global/actions'
 import {
   fetchTokenList,
   acceptListUpdate,

@@ -5,11 +5,11 @@ import { ThemeContext } from 'styled-components'
 import React, { useContext } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 
-import { useActiveWeb3React } from '../../hooks'
-import { ButtonSecondary } from '../Button'
-import { AutoColumn } from '../Column'
-import DoubleCurrencyLogo from '../DoubleLogo'
-import { RowBetween, RowFixed } from '../Row'
+import { useActiveWeb3React } from '@/hooks'
+import { ButtonSecondary } from '@/components/Button'
+import { AutoColumn } from '@/components/Column'
+import DoubleCurrencyLogo from '@/components/DoubleLogo'
+import { RowBetween, RowFixed } from '@/components/Row'
 import { FixedHeightRow, HoverCard } from './index'
 
 interface PositionCardProps extends RouteComponentProps<{}> {

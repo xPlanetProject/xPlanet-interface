@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import React, { useCallback, useState } from 'react'
 import { usePopper } from 'react-popper'
 
-import useInterval from '../../hooks/useInterval'
+import useInterval from '@/hooks/useInterval'
 
 const PopoverContainer = styled.div<{ show: boolean }>`
   z-index: 9999;

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import { AutoColumn } from '../Column'
-import { RowBetween } from '../Row'
+import { AutoColumn } from '@/components/Column'
+import { RowBetween } from '@/components/Row'
 
 const Wrapper = styled(AutoColumn)`
   margin-top: 1.25rem;

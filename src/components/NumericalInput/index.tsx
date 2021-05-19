@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import { escapeRegExp } from '../../utils'
+import { escapeRegExp } from '@/utils'
 
 const StyledInput = styled.input<{
   error?: boolean

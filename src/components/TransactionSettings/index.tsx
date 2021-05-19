@@ -3,10 +3,10 @@ import styled, { ThemeContext } from 'styled-components'
 
 import React, { useState, useRef, useContext } from 'react'
 
-import { TYPE } from '../../theme'
-import { AutoColumn } from '../Column'
-import QuestionHelper from '../QuestionHelper'
-import { RowBetween, RowFixed } from '../Row'
+import { TYPE } from '@/theme'
+import { AutoColumn } from '@/components/Column'
+import QuestionHelper from '@/components/QuestionHelper'
+import { RowBetween, RowFixed } from '@/components/Row'
 
 enum SlippageError {
   InvalidInput = 'InvalidInput',

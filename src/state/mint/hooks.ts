@@ -12,16 +12,16 @@ import {
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { PairState, usePair } from '../../data/Reserves'
-import { useTotalSupply } from '../../data/TotalSupply'
-import { useActiveWeb3React } from '../../hooks'
+import { PairState, usePair } from '@/data/Reserves'
+import { useTotalSupply } from '@/data/TotalSupply'
+import { useActiveWeb3React } from '@/hooks'
 import {
   wrappedCurrency,
   wrappedCurrencyAmount
-} from '../../utils/wrappedCurrency'
-import { AppDispatch, AppState } from '../index'
-import { tryParseAmount } from '../swap/hooks'
-import { useCurrencyBalances } from '../wallet/hooks'
+} from '@/utils/wrappedCurrency'
+import { AppDispatch, AppState } from '@/state'
+import { tryParseAmount } from '@/state/swap/hooks'
+import { useCurrencyBalances } from '@/state/wallet/hooks'
 import { Field, typeInput } from './actions'
 
 const ZERO = JSBI.BigInt(0)

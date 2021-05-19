@@ -15,18 +15,18 @@ import {
   BIPS_BASE,
   DEFAULT_DEADLINE_FROM_NOW,
   INITIAL_ALLOWED_SLIPPAGE
-} from '../constants'
-import { getTradeVersion, useV1TradeExchangeAddress } from '../data/V1'
-import { useTransactionAdder } from '../state/transactions/hooks'
+} from '@/constants'
+import { getTradeVersion, useV1TradeExchangeAddress } from '@/data/V1'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import {
   calculateGasMargin,
   getRouterContract,
   isAddress,
   shortenAddress
-} from '../utils'
-import isZero from '../utils/isZero'
-import v1SwapArguments from '../utils/v1SwapArguments'
-import { useActiveWeb3React } from './index'
+} from '@/utils'
+import isZero from '@/utils/isZero'
+import v1SwapArguments from '@/utils/v1SwapArguments'
+import { useActiveWeb3React } from '@/hooks'
 import { useV1ExchangeContract } from './useContract'
 import useENS from './useENS'
 import { Version } from './useToggledVersion'

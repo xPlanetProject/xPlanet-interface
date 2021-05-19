@@ -3,16 +3,16 @@ import { ThemeContext } from 'styled-components'
 
 import React, { useContext } from 'react'
 
-import { Field } from '../../state/swap/actions'
-import { useUserSlippageTolerance } from '../../state/user/hooks'
-import { TYPE } from '../../theme'
+import { Field } from '@/state/swap/actions'
+import { useUserSlippageTolerance } from '@/state/user/hooks'
+import { TYPE } from '@/theme'
 import {
   computeSlippageAdjustedAmounts,
   computeTradePriceBreakdown
-} from '../../utils/prices'
-import { AutoColumn } from '../Column'
-import QuestionHelper from '../QuestionHelper'
-import { RowBetween, RowFixed } from '../Row'
+} from '@/utils/prices'
+import { AutoColumn } from '@/components/Column'
+import QuestionHelper from '@/components/QuestionHelper'
+import { RowBetween, RowFixed } from '@/components/Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import SwapRoute from './SwapRoute'
 import { SectionBreak } from './styleds'

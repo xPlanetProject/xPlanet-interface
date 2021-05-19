@@ -14,8 +14,8 @@ import {
 } from '@uniswap/sdk'
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 
-import { ROUTER_ADDRESS } from '../constants'
-import { TokenAddressMap } from '../state/lists/hooks'
+import { ROUTER_ADDRESS } from '@/constants'
+import { TokenAddressMap } from '@/state/lists/hooks'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {

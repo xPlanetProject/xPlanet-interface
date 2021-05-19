@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import React, { useCallback, useState } from 'react'
 
-import Popover, { PopoverProps } from '../Popover'
+import Popover, { PopoverProps } from '@/components/Popover'
 
 const TooltipContainer = styled.div`
   width: 228px;

@@ -5,8 +5,8 @@ import { ThemeContext } from 'styled-components'
 import React, { Fragment, memo, useContext } from 'react'
 import { ChevronRight } from 'react-feather'
 
-import { TYPE } from '../../theme'
-import CurrencyLogo from '../CurrencyLogo'
+import { TYPE } from '@/theme'
+import CurrencyLogo from '@/components/CurrencyLogo'
 
 export default memo(function SwapRoute({ trade }: { trade: Trade }) {
   const theme = useContext(ThemeContext)

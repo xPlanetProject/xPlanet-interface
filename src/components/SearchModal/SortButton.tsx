@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import { RowFixed } from '../Row'
+import { RowFixed } from '@/components/Row'
 
 export const FilterWrapper = styled(RowFixed)`
   padding: 8px;

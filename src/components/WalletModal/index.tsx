@@ -7,19 +7,19 @@ import React, { useState, useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
 
-import MetamaskIcon from '../../assets/images/metamask.png'
-import { ReactComponent as Close } from '../../assets/images/x.svg'
-import { injected, fortmatic, portis } from '../../connectors'
-import { OVERLAY_READY } from '../../connectors/Fortmatic'
-import { SUPPORTED_WALLETS } from '../../constants'
-import usePrevious from '../../hooks/usePrevious'
+import MetamaskIcon from '@/assets/images/metamask.png'
+import { ReactComponent as Close } from '@/assets/images/x.svg'
+import { injected, fortmatic, portis } from '@/connectors'
+import { OVERLAY_READY } from '@/connectors/Fortmatic'
+import { SUPPORTED_WALLETS } from '@/constants'
+import usePrevious from '@/hooks/usePrevious'
 import {
   useWalletModalOpen,
   useWalletModalToggle
-} from '../../state/application/hooks'
-import { ExternalLink } from '../../theme'
-import AccountDetails from '../AccountDetails'
-import Modal from '../Modal'
+} from '@/state/application/hooks'
+import { ExternalLink } from '@/theme'
+import AccountDetails from '@/components/AccountDetails'
+import Modal from '@/components/Modal'
 import Option from './Option'
 import PendingView from './PendingView'
 
@@ -249,7 +249,7 @@ export default function WalletModal({
               link={option.href}
               header={option.name}
               subheader={null}
-              icon={require('../../assets/images/' + option.iconName)}
+              icon={require('@/assets/images/' + option.iconName)}
             />
           )
         }
@@ -303,7 +303,7 @@ export default function WalletModal({
             link={option.href}
             header={option.name}
             subheader={null} //use option.descriptio to bring back multi-line
-            icon={require('../../assets/images/' + option.iconName)}
+            icon={require('@/assets/images/' + option.iconName)}
           />
         )
       )

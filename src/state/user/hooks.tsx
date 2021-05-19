@@ -4,10 +4,10 @@ import flatMap from 'lodash.flatmap'
 import { useCallback, useMemo } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
-import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants'
-import { useActiveWeb3React } from '../../hooks'
-import { useAllTokens } from '../../hooks/Tokens'
-import { AppDispatch, AppState } from '../index'
+import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '@/constants'
+import { useActiveWeb3React } from '@/hooks'
+import { useAllTokens } from '@/hooks/Tokens'
+import { AppDispatch, AppState } from '@/state'
 import {
   addSerializedPair,
   addSerializedToken,

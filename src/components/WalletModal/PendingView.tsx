@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import { injected } from '../../connectors'
-import { SUPPORTED_WALLETS } from '../../constants'
-import Loader from '../Loader'
+import { injected } from '@/connectors'
+import { SUPPORTED_WALLETS } from '@/constants'
+import Loader from '@/components/Loader'
 import Option from './Option'
 
 const PendingSection = styled.div`
@@ -120,7 +120,7 @@ export default function PendingView({
               color={option.color}
               header={option.name}
               subheader={option.description}
-              icon={require('../../assets/images/' + option.iconName)}
+              icon={require('@/assets/images/' + option.iconName)}
             />
           )
         }

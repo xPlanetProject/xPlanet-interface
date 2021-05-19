@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 import React from 'react'
 import { AlertTriangle } from 'react-feather'
 
-import { AutoColumn } from '../Column'
+import { AutoColumn } from '@/components/Column'
 
 export const Wrapper = styled.div`
   position: relative;

@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import React from 'react'
 import { CheckCircle, Triangle } from 'react-feather'
 
-import { useActiveWeb3React } from '../../hooks'
-import { useAllTransactions } from '../../state/transactions/hooks'
-import { ExternalLink } from '../../theme'
-import { getEtherscanLink } from '../../utils'
-import Loader from '../Loader'
-import { RowFixed } from '../Row'
+import { useActiveWeb3React } from '@/hooks'
+import { useAllTransactions } from '@/state/transactions/hooks'
+import { ExternalLink } from '@/theme'
+import { getEtherscanLink } from '@/utils'
+import Loader from '@/components/Loader'
+import { RowFixed } from '@/components/Row'
 
 const TransactionWrapper = styled.div``
 

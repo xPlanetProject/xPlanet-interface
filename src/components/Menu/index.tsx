@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import React, { useRef } from 'react'
 import { Info, BookOpen, Code, PieChart, MessageCircle } from 'react-feather'
 
-import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
-import { useOnClickOutside } from '../../hooks/useOnClickOutside'
-import useToggle from '../../hooks/useToggle'
-import { ExternalLink } from '../../theme'
+import { ReactComponent as MenuIcon } from '@/assets/images/menu.svg'
+import { useOnClickOutside } from '@/hooks/useOnClickOutside'
+import useToggle from '@/hooks/useToggle'
+import { ExternalLink } from '@/theme'
 
 const StyledMenuIcon = styled(MenuIcon)`
   path {

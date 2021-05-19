@@ -2,8 +2,8 @@ import { JSBI } from '@uniswap/sdk'
 
 import { useMemo } from 'react'
 
-import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
-import { useActiveWeb3React } from './index'
+import { NEVER_RELOAD, useSingleCallResult } from '@/state/multicall/hooks'
+import { useActiveWeb3React } from '@/hooks'
 import { useSocksController } from './useContract'
 
 export default function useSocksBalance(): JSBI | undefined {

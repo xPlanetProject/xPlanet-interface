@@ -6,8 +6,8 @@ import { TokenList } from '@uniswap/token-lists/dist/types'
 import {
   DEFAULT_LIST_OF_LISTS,
   DEFAULT_TOKEN_LIST_URL
-} from '../../constants/lists'
-import { updateVersion } from '../global/actions'
+} from '@/constants/lists'
+import { updateVersion } from '@/state/global/actions'
 import {
   acceptListUpdate,
   addList,

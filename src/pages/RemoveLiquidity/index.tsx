@@ -16,48 +16,48 @@ import {
   ButtonLight,
   ButtonError,
   ButtonConfirmed
-} from '../../components/Button'
-import { LightCard } from '../../components/Card'
-import { AutoColumn, ColumnCenter } from '../../components/Column'
-import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import CurrencyLogo from '../../components/CurrencyLogo'
-import DoubleCurrencyLogo from '../../components/DoubleLogo'
-import { AddRemoveTabs } from '../../components/NavigationTabs'
-import { MinimalPositionCard } from '../../components/PositionCard'
-import Row, { RowBetween, RowFixed } from '../../components/Row'
-import Slider from '../../components/Slider'
+} from '@/components/Button'
+import { LightCard } from '@/components/Card'
+import { AutoColumn, ColumnCenter } from '@/components/Column'
+import CurrencyInputPanel from '@/components/CurrencyInputPanel'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import DoubleCurrencyLogo from '@/components/DoubleLogo'
+import { AddRemoveTabs } from '@/components/NavigationTabs'
+import { MinimalPositionCard } from '@/components/PositionCard'
+import Row, { RowBetween, RowFixed } from '@/components/Row'
+import Slider from '@/components/Slider'
 import TransactionConfirmationModal, {
   ConfirmationModalContent
-} from '../../components/TransactionConfirmationModal'
-import { Dots } from '../../components/swap/styleds'
-import { ROUTER_ADDRESS } from '../../constants'
-import { useActiveWeb3React } from '../../hooks'
-import { useCurrency } from '../../hooks/Tokens'
+} from '@/components/TransactionConfirmationModal'
+import { Dots } from '@/components/swap/styleds'
+import { ROUTER_ADDRESS } from '@/constants'
+import { useActiveWeb3React } from '@/hooks'
+import { useCurrency } from '@/hooks/Tokens'
 import {
   useApproveCallback,
   ApprovalState
-} from '../../hooks/useApproveCallback'
-import { usePairContract } from '../../hooks/useContract'
-import { useWalletModalToggle } from '../../state/application/hooks'
-import { Field } from '../../state/burn/actions'
-import { useBurnActionHandlers } from '../../state/burn/hooks'
-import { useDerivedBurnInfo, useBurnState } from '../../state/burn/hooks'
-import { useTransactionAdder } from '../../state/transactions/hooks'
+} from '@/hooks/useApproveCallback'
+import { usePairContract } from '@/hooks/useContract'
+import { useWalletModalToggle } from '@/state/application/hooks'
+import { Field } from '@/state/burn/actions'
+import { useBurnActionHandlers } from '@/state/burn/hooks'
+import { useDerivedBurnInfo, useBurnState } from '@/state/burn/hooks'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import {
   useUserDeadline,
   useUserSlippageTolerance
-} from '../../state/user/hooks'
-import { StyledInternalLink, TYPE } from '../../theme'
+} from '@/state/user/hooks'
+import { StyledInternalLink, TYPE } from '@/theme'
 import {
   calculateGasMargin,
   calculateSlippageAmount,
   getRouterContract
-} from '../../utils'
-import { currencyId } from '../../utils/currencyId'
-import useDebouncedChangeHandler from '../../utils/useDebouncedChangeHandler'
-import { wrappedCurrency } from '../../utils/wrappedCurrency'
-import AppBody from '../AppBody'
-import { ClickableText, MaxButton, Wrapper } from '../Pool/styleds'
+} from '@/utils'
+import { currencyId } from '@/utils/currencyId'
+import useDebouncedChangeHandler from '@/utils/useDebouncedChangeHandler'
+import { wrappedCurrency } from '@/utils/wrappedCurrency'
+import AppBody from '@/pages/AppBody'
+import { ClickableText, MaxButton, Wrapper } from '@/pages/Pool/styleds'
 
 export default function RemoveLiquidity({
   history,

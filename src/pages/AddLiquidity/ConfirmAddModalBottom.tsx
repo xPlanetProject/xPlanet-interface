@@ -3,11 +3,11 @@ import { Text } from 'rebass'
 
 import React from 'react'
 
-import { ButtonPrimary } from '../../components/Button'
-import CurrencyLogo from '../../components/CurrencyLogo'
-import { RowBetween, RowFixed } from '../../components/Row'
-import { Field } from '../../state/mint/actions'
-import { TYPE } from '../../theme'
+import { ButtonPrimary } from '@/components/Button'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import { RowBetween, RowFixed } from '@/components/Row'
+import { Field } from '@/state/mint/actions'
+import { TYPE } from '@/theme'
 
 export function ConfirmAddModalBottom({
   noLiquidity,

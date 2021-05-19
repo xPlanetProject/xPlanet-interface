@@ -9,8 +9,8 @@ import styled, {
 
 import React, { useMemo } from 'react'
 
-import BodyBackground from '../assets/images/page-bg.png'
-import { useIsDarkMode } from '../state/user/hooks'
+import BodyBackground from '@/assets/images/page-bg.png'
+import { useIsDarkMode } from '@/state/user/hooks'
 import { Colors } from './styled'
 
 export * from './components'

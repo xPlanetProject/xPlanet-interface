@@ -7,8 +7,8 @@ import { ArrowLeft } from 'react-feather'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
 
-import QuestionHelper from '../QuestionHelper'
-import { RowBetween } from '../Row'
+import QuestionHelper from '@/components/QuestionHelper'
+import { RowBetween } from '@/components/Row'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}

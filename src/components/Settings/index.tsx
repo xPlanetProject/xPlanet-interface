@@ -5,25 +5,25 @@ import { ThemeContext } from 'styled-components'
 import React, { useRef, useContext, useState } from 'react'
 import { Settings, X } from 'react-feather'
 
-import { useOnClickOutside } from '../../hooks/useOnClickOutside'
+import { useOnClickOutside } from '@/hooks/useOnClickOutside'
 import {
   useSettingsMenuOpen,
   useToggleSettingsMenu
-} from '../../state/application/hooks'
+} from '@/state/application/hooks'
 import {
   useUserSlippageTolerance,
   useExpertModeManager,
   useUserDeadline,
   useDarkModeManager
-} from '../../state/user/hooks'
-import { TYPE } from '../../theme'
-import { ButtonError } from '../Button'
-import { AutoColumn } from '../Column'
-import Modal from '../Modal'
-import QuestionHelper from '../QuestionHelper'
-import { RowFixed, RowBetween } from '../Row'
-import Toggle from '../Toggle'
-import TransactionSettings from '../TransactionSettings'
+} from '@/state/user/hooks'
+import { TYPE } from '@/theme'
+import { ButtonError } from '@/components/Button'
+import { AutoColumn } from '@/components/Column'
+import Modal from '@/components/Modal'
+import QuestionHelper from '@/components/QuestionHelper'
+import { RowFixed, RowBetween } from '@/components/Row'
+import Toggle from '@/components/Toggle'
+import TransactionSettings from '@/components/TransactionSettings'
 
 const StyledMenuIcon = styled(Settings)`
   height: 20px;

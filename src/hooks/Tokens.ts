@@ -3,11 +3,11 @@ import { Currency, ETHER, Token, currencyEquals } from '@uniswap/sdk'
 
 import { useMemo } from 'react'
 
-import { useSelectedTokenList } from '../state/lists/hooks'
-import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
-import { useUserAddedTokens } from '../state/user/hooks'
-import { isAddress } from '../utils'
-import { useActiveWeb3React } from './index'
+import { useSelectedTokenList } from '@/state/lists/hooks'
+import { NEVER_RELOAD, useSingleCallResult } from '@/state/multicall/hooks'
+import { useUserAddedTokens } from '@/state/user/hooks'
+import { isAddress } from '@/utils'
+import { useActiveWeb3React } from '@/hooks'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 
 export function useAllTokens(): { [address: string]: Token } {

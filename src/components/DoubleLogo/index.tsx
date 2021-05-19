@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import React from 'react'
 
-import CurrencyLogo from '../CurrencyLogo'
+import CurrencyLogo from '@/components/CurrencyLogo'
 
 const Wrapper = styled.div<{ margin: boolean; sizeraw: number }>`
   position: relative;
