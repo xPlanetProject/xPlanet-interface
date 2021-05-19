@@ -16,7 +16,6 @@ import { useETHBalances } from '@/state/wallet/hooks'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
 
 import { YellowCard } from '@/components/Card'
-import Settings from '@/components/Settings'
 import Menu from '@/components/Menu'
 
 import Row, { RowBetween } from '@/components/Row'
@@ -189,7 +188,6 @@ export default function Header() {
             </AccountElement>
           </HeaderElement>
           <HeaderElementWrap>
-            <Settings />
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>

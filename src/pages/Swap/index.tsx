@@ -4,45 +4,47 @@ import { ArrowDown } from 'react-feather'
 import ReactGA from 'react-ga'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
-import AddressInputPanel from '../../components/AddressInputPanel'
-import { ButtonError, ButtonLight, ButtonPrimary, ButtonConfirmed } from '../../components/Button'
-import Card, { GreyCard } from '../../components/Card'
-import { AutoColumn } from '../../components/Column'
-import ConfirmSwapModal from '../../components/swap/ConfirmSwapModal'
-import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import { AutoRow, RowBetween } from '../../components/Row'
-import AdvancedSwapDetailsDropdown from '../../components/swap/AdvancedSwapDetailsDropdown'
-import BetterTradeLink from '../../components/swap/BetterTradeLink'
-import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
-import { ArrowWrapper, BottomGrouping, SwapCallbackError, Wrapper } from '../../components/swap/styleds'
-import TradePrice from '../../components/swap/TradePrice'
-import TokenWarningModal from '../../components/TokenWarningModal'
-import ProgressSteps from '../../components/ProgressSteps'
 
-import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from '../../constants'
-import { getTradeVersion, isTradeBetter } from '../../data/V1'
-import { useActiveWeb3React } from '../../hooks'
-import { useCurrency } from '../../hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
-import useENSAddress from '../../hooks/useENSAddress'
-import { useSwapCallback } from '../../hooks/useSwapCallback'
-import useToggledVersion, { Version } from '../../hooks/useToggledVersion'
-import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
-import { useToggleSettingsMenu, useWalletModalToggle } from '../../state/application/hooks'
-import { Field } from '../../state/swap/actions'
+import Settings from '@/components/Settings'
+import AddressInputPanel from '@/components/AddressInputPanel'
+import { ButtonError, ButtonLight, ButtonPrimary, ButtonConfirmed } from '@/components/Button'
+import Card, { GreyCard } from '@/components/Card'
+import { AutoColumn } from '@/components/Column'
+import ConfirmSwapModal from '@/components/swap/ConfirmSwapModal'
+import CurrencyInputPanel from '@/components/CurrencyInputPanel'
+import { AutoRow, RowBetween } from '@/components/Row'
+import AdvancedSwapDetailsDropdown from '@/components/swap/AdvancedSwapDetailsDropdown'
+import BetterTradeLink from '@/components/swap/BetterTradeLink'
+import confirmPriceImpactWithoutFee from '@/components/swap/confirmPriceImpactWithoutFee'
+import { ArrowWrapper, BottomGrouping, SwapCallbackError, Wrapper } from '@/components/swap/styleds'
+import TradePrice from '@/components/swap/TradePrice'
+import TokenWarningModal from '@/components/TokenWarningModal'
+import ProgressSteps from '@/components/ProgressSteps'
+
+import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from '@/constants'
+import { getTradeVersion, isTradeBetter } from '@/data/V1'
+import { useActiveWeb3React } from '@/hooks'
+import { useCurrency } from '@/hooks/Tokens'
+import { ApprovalState, useApproveCallbackFromTrade } from '@/hooks/useApproveCallback'
+import useENSAddress from '@/hooks/useENSAddress'
+import { useSwapCallback } from '@/hooks/useSwapCallback'
+import useToggledVersion, { Version } from '@/hooks/useToggledVersion'
+import useWrapCallback, { WrapType } from '@/hooks/useWrapCallback'
+import { useToggleSettingsMenu, useWalletModalToggle } from '@/state/application/hooks'
+import { Field } from '@/state/swap/actions'
 import {
   useDefaultsFromURLSearch,
   useDerivedSwapInfo,
   useSwapActionHandlers,
   useSwapState
-} from '../../state/swap/hooks'
-import { useExpertModeManager, useUserDeadline, useUserSlippageTolerance } from '../../state/user/hooks'
-import { LinkStyledButton, TYPE } from '../../theme'
-import { maxAmountSpend } from '../../utils/maxAmountSpend'
-import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
-import AppBody from '../AppBody'
-import { ClickableText } from '../Pool/styleds'
-import Loader from '../../components/Loader'
+} from '@/state/swap/hooks'
+import { useExpertModeManager, useUserDeadline, useUserSlippageTolerance } from '@/state/user/hooks'
+import { LinkStyledButton, TYPE } from '@/theme'
+import { maxAmountSpend } from '@/utils/maxAmountSpend'
+import { computeTradePriceBreakdown, warningSeverity } from '@/utils/prices'
+import AppBody from '@/pages/AppBody'
+import { ClickableText } from '@/pages/Pool/styleds'
+import Loader from '@/components/Loader'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -277,6 +279,13 @@ export default function Swap() {
         onConfirm={handleConfirmTokenWarning}
       />
       <AppBody>
+        <RowBetween style={{
+          marginBottom: '20px',
+          padding: '0 0.2rem'
+        }}>
+          <Text>Swap</Text>
+          <Settings />
+        </RowBetween>
         <Wrapper id="swap-page">
           <ConfirmSwapModal
             isOpen={showConfirm}

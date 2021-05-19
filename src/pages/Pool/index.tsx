@@ -2,23 +2,23 @@ import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from 'styled-components'
 import { Pair } from '@uniswap/sdk'
 import { Link } from 'react-router-dom'
-
-import Question from '../../components/QuestionHelper'
-import FullPositionCard from '../../components/PositionCard'
-import { useUserHasLiquidityInAllTokens } from '../../data/V1'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { StyledInternalLink, TYPE } from '../../theme'
 import { Text } from 'rebass'
-import { LightCard } from '../../components/Card'
-import { RowBetween } from '../../components/Row'
-import { ButtonPrimary, ButtonSecondary } from '../../components/Button'
-import { AutoColumn } from '../../components/Column'
 
-import { useActiveWeb3React } from '../../hooks'
-import { usePairs } from '../../data/Reserves'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import AppBody from '../AppBody'
-import { Dots } from '../../components/swap/styleds'
+import Question from '@/components/QuestionHelper'
+import FullPositionCard from '@/components/PositionCard'
+import { useUserHasLiquidityInAllTokens } from '@/data/V1'
+import { useTokenBalancesWithLoadingIndicator } from '@/state/wallet/hooks'
+import { StyledInternalLink, TYPE } from '@/theme'
+import { LightCard } from '@/components/Card'
+import { RowBetween } from '@/components/Row'
+import { ButtonPrimary } from '@/components/Button'
+import { AutoColumn } from '@/components/Column'
+
+import { useActiveWeb3React } from '@/hooks'
+import { usePairs } from '@/data/Reserves'
+import { toV2LiquidityToken, useTrackedTokenPairs } from '@/state/user/hooks'
+import AppBody from '@/pages/AppBody'
+import { Dots } from '@/components/swap/styleds'
 
 export default function Pool() {
   const theme = useContext(ThemeContext)
@@ -110,12 +110,6 @@ export default function Pool() {
           </AutoColumn>
         </AutoColumn>
       </AppBody>
-
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: '1.5rem' }}>
-        <ButtonSecondary as={Link} style={{ width: 'initial' }} to="/migrate/v1">
-          Migrate V1 Liquidity
-        </ButtonSecondary>
-      </div>
     </>
   )
 }

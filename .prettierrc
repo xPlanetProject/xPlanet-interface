@@ -1,5 +1,19 @@
 {
-  "semi": false,
   "singleQuote": true,
-  "printWidth": 120
+  "jsxSingleQuote": true,
+  "tabWidth": 2,
+  "semi": false,
+  "jsxBracketSameLine": true,
+  "importOrder": [
+    "^react",
+    "^!@",
+    "^@/",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "trailingComma": "none",
+  "experimentalBabelParserPluginsList": [
+    "classProperties",
+    "jsx"
+  ]
 }
