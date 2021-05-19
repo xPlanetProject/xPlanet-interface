@@ -15,8 +15,6 @@ import { Colors } from './styled'
 
 export * from './components'
 
-console.log(BodyBackground)
-
 const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
   upToSmall: 600,

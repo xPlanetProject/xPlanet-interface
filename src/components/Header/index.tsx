@@ -13,6 +13,7 @@ import Menu from '@/components/Menu'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
 import Row, { RowBetween } from '@/components/Row'
 import Web3Status from '@/components/Web3Status'
+import SwithTheme from '@/components/SwitchTheme'
 import { useActiveWeb3React } from '@/hooks'
 import { useDarkModeManager } from '@/state/user/hooks'
 import { useETHBalances } from '@/state/wallet/hooks'
@@ -192,6 +193,7 @@ export default function Header() {
               ) : null}
               <Web3Status />
             </AccountElement>
+            <SwithTheme />
           </HeaderElement>
           <HeaderElementWrap>
             <Menu />
