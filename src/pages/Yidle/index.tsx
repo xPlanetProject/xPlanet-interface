@@ -6,7 +6,7 @@ import { HideSmall, TYPE } from '@/theme'
 import { AutoColumn } from '@/components/Column'
 import { RowBetween } from '@/components/Row'
 
-import AppBody from '../AppBody'
+import AppBody from '@/pages/AppBody'
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 870px;
