@@ -21,6 +21,7 @@ import RemoveLiquidity from './RemoveLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import Yidle from './Yidle'
 
 const TestComponent = () => {
 
@@ -88,7 +89,7 @@ export default function App() {
                 <Route exact strict path="/find" component={PoolFinder} />
                 <Route exact strict path="/pool" component={Pool} />
                 <Route exact strict path="/create" component={RedirectToAddLiquidity} />
-                <Route exact strict path="/yield" component={TestComponent} />
+                <Route exact strict path="/yield" component={Yidle} />
                 <Route exact strict path="/xmoon" component={TestComponent} />
                 <Route exact strict path="/marketpalce" component={TestComponent} />
                 <Route exact strict path="/launchpad" component={TestComponent} />
