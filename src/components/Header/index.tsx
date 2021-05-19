@@ -6,22 +6,21 @@ import { Text } from 'rebass'
 
 import styled from 'styled-components'
 
-import Logo from '../../assets/svg/logo.svg'
-import LogoDark from '../../assets/svg/logo_white.svg'
-import Wordmark from '../../assets/svg/wordmark.svg'
-import WordmarkDark from '../../assets/svg/wordmark_white.svg'
-import { useActiveWeb3React } from '../../hooks'
-import { useDarkModeManager } from '../../state/user/hooks'
-import { useETHBalances } from '../../state/wallet/hooks'
+import Logo from '@/assets/images/logo.png'
+import LogoDark from '@/assets/images/logo.png'
+
+import { useActiveWeb3React } from '@/hooks'
+import { useDarkModeManager } from '@/state/user/hooks'
+import { useETHBalances } from '@/state/wallet/hooks'
 
 import { SwapPoolTabs } from '@/components/NavigationTabs'
 
-import { YellowCard } from '../Card'
-import Settings from '../Settings'
-import Menu from '../Menu'
+import { YellowCard } from '@/components/Card'
+import Settings from '@/components/Settings'
+import Menu from '@/components/Menu'
 
-import Row, { RowBetween } from '../Row'
-import Web3Status from '../Web3Status'
+import Row, { RowBetween } from '@/components/Row'
+import Web3Status from '@/components/Web3Status'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -37,6 +36,14 @@ const HeaderFrame = styled.div`
     width: calc(100%);
     position: relative;
   `};
+`
+
+const HeaderRowBetweenWrapper = styled(RowBetween)`
+  ${({ theme }) => {
+    return `
+      border-bottom: solid 1px ${theme.headerBorder};
+    `
+  }}
 `
 
 const HeaderElement = styled.div`
@@ -99,16 +106,19 @@ const NetworkCard = styled(YellowCard)`
   padding: 8px 12px;
 `
 
-const UniIcon = styled.div`
-  transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
+const LogoIcon = styled.div`
+  display: flex;
+  align-items: center;
+  img { 
+    width: 6rem;
   }
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => {
+    return theme.mediaWidth.upToSmall`
     img { 
       width: 4.5rem;
     }
-  `};
+  `
+  }};
 `
 
 const HeaderControls = styled.div`
@@ -150,15 +160,15 @@ export default function Header() {
 
   return (
     <HeaderFrame>
-      <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
+      <HeaderRowBetweenWrapper alignItems="center" padding="1rem">
         <Row alignItems="center">
           <HeaderElement>
               <Title href=".">
-                <UniIcon>
+                <LogoIcon>
                   <img src={isDark ? LogoDark : Logo} alt="logo" />
-                </UniIcon>
+                </LogoIcon>
                 <TitleText>
-                  <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
+                  {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
                 </TitleText>
               </Title>
             </HeaderElement>
@@ -183,7 +193,7 @@ export default function Header() {
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>
-      </RowBetween>
+      </HeaderRowBetweenWrapper>
     </HeaderFrame>
   )
 }

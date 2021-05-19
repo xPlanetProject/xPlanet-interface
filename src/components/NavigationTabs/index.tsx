@@ -36,9 +36,9 @@ const StyledNavLink = styled(NavLink).attrs({
   cursor: pointer;
   text-decoration: none;
   color: ${({ theme }) => theme.text3};
-  font-size: 20px;
+  font-size: 18px;
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 0 0 1rem;
 
   &.${activeClassName} {
     border-radius: 12px;

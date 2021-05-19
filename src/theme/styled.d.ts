@@ -43,6 +43,8 @@ export interface Colors {
   green1: Color
   yellow1: Color
   yellow2: Color
+
+  headerBorder: Color
 }
 
 export interface Grids {
@@ -57,6 +59,8 @@ declare module 'styled-components' {
 
     // shadows
     shadow1: string
+
+    [key: string]: unknown
 
     // media queries
     mediaWidth: {

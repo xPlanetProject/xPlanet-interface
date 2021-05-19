@@ -10,7 +10,11 @@ import { useIsDarkMode } from '../state/user/hooks'
 import { Text, TextProps } from 'rebass'
 import { Colors } from './styled'
 
+import BodyBackground from '../assets/images/page-bg.png'
+
 export * from './components'
+
+console.log(BodyBackground)
 
 const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
@@ -73,6 +77,8 @@ export function colors(darkMode: boolean): Colors {
     secondary2: darkMode ? '#17000b26' : '#F6DDE8',
     secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
+    headerBorder: darkMode ? 'rgba(255, 255, 255, 0.2)' : '#DDD',
+
     // other
     red1: '#FF6871',
     red2: '#F82D3A',
@@ -86,9 +92,7 @@ export function colors(darkMode: boolean): Colors {
   }
 }
 
-export function theme(darkMode: boolean): DefaultTheme & {
-  [key: string]: unknown
-} {
+export function theme(darkMode: boolean): DefaultTheme {
   return {
     ...colors(darkMode),
 
@@ -216,14 +220,18 @@ html {
 body {
   min-height: 100vh;
   background-position: 0 -30vh;
-  background-repeat: no-repeat;
+  background-repeat: ${({ theme }) => {
+    return theme.darkMode ? 'no-repeat;' : 'repeat;'
+  }};
   background-image: ${({ theme }) => {
-    console.log(theme)
-    return `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
-      1,
-      theme.bg1
-    )} 100%)`;
-  }
-    };
+    if (theme.darkMode) {
+      return `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
+        1,
+        theme.bg1
+      )} 100%)`
+    }
+
+    return `url(${BodyBackground})`
+  }};
 }
 `
