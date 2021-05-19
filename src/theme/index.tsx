@@ -86,9 +86,13 @@ export function colors(darkMode: boolean): Colors {
   }
 }
 
-export function theme(darkMode: boolean): DefaultTheme {
+export function theme(darkMode: boolean): DefaultTheme & {
+  [key: string]: unknown
+} {
   return {
     ...colors(darkMode),
+
+    darkMode,
 
     grids: {
       sm: 8,
@@ -213,10 +217,13 @@ body {
   min-height: 100vh;
   background-position: 0 -30vh;
   background-repeat: no-repeat;
-  background-image: ${({ theme }) =>
-    `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
+  background-image: ${({ theme }) => {
+    console.log(theme)
+    return `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
       1,
       theme.bg1
-    )} 100%)`};
+    )} 100%)`;
+  }
+    };
 }
 `

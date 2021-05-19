@@ -1,5 +1,6 @@
 import { ChainId } from '@uniswap/sdk'
-import React from 'react'
+import React, { useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
 
@@ -13,13 +14,14 @@ import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances } from '../../state/wallet/hooks'
 
+import { SwapPoolTabs } from '@/components/NavigationTabs'
+
 import { YellowCard } from '../Card'
 import Settings from '../Settings'
 import Menu from '../Menu'
 
 import Row, { RowBetween } from '../Row'
 import Web3Status from '../Web3Status'
-import VersionSwitch from './VersionSwitch'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -137,22 +139,31 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
 
+  const location = useLocation()
+
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()
+
+  const currentActive: string = useMemo<string>(() => {
+    return location.pathname.split('/')[1]
+  }, [location])
 
   return (
     <HeaderFrame>
       <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
-        <HeaderElement>
-          <Title href=".">
-            <UniIcon>
-              <img src={isDark ? LogoDark : Logo} alt="logo" />
-            </UniIcon>
-            <TitleText>
-              <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
-            </TitleText>
-          </Title>
-        </HeaderElement>
+        <Row alignItems="center">
+          <HeaderElement>
+              <Title href=".">
+                <UniIcon>
+                  <img src={isDark ? LogoDark : Logo} alt="logo" />
+                </UniIcon>
+                <TitleText>
+                  <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
+                </TitleText>
+              </Title>
+            </HeaderElement>
+            <SwapPoolTabs active={currentActive} />
+        </Row>
         <HeaderControls>
           <HeaderElement>
             <TestnetWrapper>
@@ -168,7 +179,6 @@ export default function Header() {
             </AccountElement>
           </HeaderElement>
           <HeaderElementWrap>
-            <VersionSwitch />
             <Settings />
             <Menu />
           </HeaderElementWrap>
