@@ -1,24 +1,44 @@
-import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@uniswap/sdk'
-import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { FixedSizeList } from 'react-window'
+import {
+  Currency,
+  CurrencyAmount,
+  currencyEquals,
+  ETHER,
+  Token
+} from '@uniswap/sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
+
+import React, {
+  CSSProperties,
+  MutableRefObject,
+  useCallback,
+  useMemo
+} from 'react'
+import { FixedSizeList } from 'react-window'
+
 import { useActiveWeb3React } from '../../hooks'
+import { useIsUserAddedToken } from '../../hooks/Tokens'
 import { useSelectedTokenList, WrappedTokenInfo } from '../../state/lists/hooks'
-import { useAddUserToken, useRemoveUserAddedToken } from '../../state/user/hooks'
+import {
+  useAddUserToken,
+  useRemoveUserAddedToken
+} from '../../state/user/hooks'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { LinkStyledButton, TYPE } from '../../theme'
-import { useIsUserAddedToken } from '../../hooks/Tokens'
+import { isTokenOnList } from '../../utils'
 import Column from '../Column'
-import { RowFixed } from '../Row'
 import CurrencyLogo from '../CurrencyLogo'
+import Loader from '../Loader'
+import { RowFixed } from '../Row'
 import { MouseoverTooltip } from '../Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
-import Loader from '../Loader'
-import { isTokenOnList } from '../../utils'
 
 function currencyKey(currency: Currency): string {
-  return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : ''
+  return currency instanceof Token
+    ? currency.address
+    : currency === ETHER
+    ? 'ETHER'
+    : ''
 }
 
 const StyledBalanceText = styled(Text)`
@@ -43,7 +63,11 @@ const Tag = styled.div`
 `
 
 function Balance({ balance }: { balance: CurrencyAmount }) {
-  return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
+  return (
+    <StyledBalanceText title={balance.toExact()}>
+      {balance.toSignificant(4)}
+    </StyledBalanceText>
+  )
 }
 
 const TagContainer = styled.div`
@@ -71,8 +95,7 @@ function TokenTags({ currency }: { currency: Currency }) {
           text={tags
             .slice(1)
             .map(({ name, description }) => `${name}: ${description}`)
-            .join('; \n')}
-        >
+            .join('; \n')}>
           <Tag>...</Tag>
         </MouseoverTooltip>
       ) : null}
@@ -110,8 +133,7 @@ function CurrencyRow({
       className={`token-item-${key}`}
       onClick={() => (isSelected ? null : onSelect())}
       disabled={isSelected}
-      selected={otherSelected}
-    >
+      selected={otherSelected}>
       <CurrencyLogo currency={currency} size={'24px'} />
       <Column>
         <Text title={currency.name} fontWeight={500}>
@@ -122,11 +144,11 @@ function CurrencyRow({
             <TYPE.main fontWeight={500}>
               Added by user
               <LinkStyledButton
-                onClick={event => {
+                onClick={(event) => {
                   event.stopPropagation()
-                  if (chainId && currency instanceof Token) removeToken(chainId, currency.address)
-                }}
-              >
+                  if (chainId && currency instanceof Token)
+                    removeToken(chainId, currency.address)
+                }}>
                 (Remove)
               </LinkStyledButton>
             </TYPE.main>
@@ -135,11 +157,10 @@ function CurrencyRow({
             <TYPE.main fontWeight={500}>
               Found by address
               <LinkStyledButton
-                onClick={event => {
+                onClick={(event) => {
                   event.stopPropagation()
                   if (currency instanceof Token) addToken(currency)
-                }}
-              >
+                }}>
                 (Add)
               </LinkStyledButton>
             </TYPE.main>
@@ -171,13 +192,20 @@ export default function CurrencyList({
   fixedListRef?: MutableRefObject<FixedSizeList | undefined>
   showETH: boolean
 }) {
-  const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
+  const itemData = useMemo(
+    () => (showETH ? [Currency.ETHER, ...currencies] : currencies),
+    [currencies, showETH]
+  )
 
   const Row = useCallback(
     ({ data, index, style }) => {
       const currency: Currency = data[index]
-      const isSelected = Boolean(selectedCurrency && currencyEquals(selectedCurrency, currency))
-      const otherSelected = Boolean(otherCurrency && currencyEquals(otherCurrency, currency))
+      const isSelected = Boolean(
+        selectedCurrency && currencyEquals(selectedCurrency, currency)
+      )
+      const otherSelected = Boolean(
+        otherCurrency && currencyEquals(otherCurrency, currency)
+      )
       const handleSelect = () => onCurrencySelect(currency)
       return (
         <CurrencyRow
@@ -192,18 +220,20 @@ export default function CurrencyList({
     [onCurrencySelect, otherCurrency, selectedCurrency]
   )
 
-  const itemKey = useCallback((index: number, data: any) => currencyKey(data[index]), [])
+  const itemKey = useCallback(
+    (index: number, data: any) => currencyKey(data[index]),
+    []
+  )
 
   return (
     <FixedSizeList
       height={height}
       ref={fixedListRef as any}
-      width="100%"
+      width='100%'
       itemData={itemData}
       itemCount={itemData.length}
       itemSize={56}
-      itemKey={itemKey}
-    >
+      itemKey={itemKey}>
       {Row}
     </FixedSizeList>
   )

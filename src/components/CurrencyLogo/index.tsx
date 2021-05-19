@@ -1,6 +1,7 @@
 import { Currency, ETHER, Token } from '@uniswap/sdk'
-import React, { useMemo } from 'react'
 import styled from 'styled-components'
+
+import React, { useMemo } from 'react'
 
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
 import useHttpLocations from '../../hooks/useHttpLocations'
@@ -31,7 +32,9 @@ export default function CurrencyLogo({
   size?: string
   style?: React.CSSProperties
 }) {
-  const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
+  const uriLocations = useHttpLocations(
+    currency instanceof WrappedTokenInfo ? currency.logoURI : undefined
+  )
 
   const srcs: string[] = useMemo(() => {
     if (currency === ETHER) return []
@@ -50,5 +53,12 @@ export default function CurrencyLogo({
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} />
   }
 
-  return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
+  return (
+    <StyledLogo
+      size={size}
+      srcs={srcs}
+      alt={`${currency?.symbol ?? 'token'} logo`}
+      style={style}
+    />
+  )
 }

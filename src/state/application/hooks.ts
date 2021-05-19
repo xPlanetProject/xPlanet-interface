@@ -1,13 +1,22 @@
 import { useCallback, useMemo } from 'react'
-import { useActiveWeb3React } from '../../hooks'
-import { addPopup, PopupContent, removePopup, toggleWalletModal, toggleSettingsMenu } from './actions'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { useActiveWeb3React } from '../../hooks'
 import { AppState } from '../index'
+import {
+  addPopup,
+  PopupContent,
+  removePopup,
+  toggleWalletModal,
+  toggleSettingsMenu
+} from './actions'
 
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
 
-  return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
+  return useSelector(
+    (state: AppState) => state.application.blockNumber[chainId ?? -1]
+  )
 }
 
 export function useWalletModalOpen(): boolean {
@@ -54,5 +63,5 @@ export function useRemovePopup(): (key: string) => void {
 // get the list of active popups
 export function useActivePopups(): AppState['application']['popupList'] {
   const list = useSelector((state: AppState) => state.application.popupList)
-  return useMemo(() => list.filter(item => item.show), [list])
+  return useMemo(() => list.filter((item) => item.show), [list])
 }

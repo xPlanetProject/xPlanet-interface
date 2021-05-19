@@ -1,13 +1,14 @@
-import React from 'react'
 import styled from 'styled-components'
+
+import React from 'react'
 import { CheckCircle, Triangle } from 'react-feather'
 
 import { useActiveWeb3React } from '../../hooks'
-import { getEtherscanLink } from '../../utils'
-import { ExternalLink } from '../../theme'
 import { useAllTransactions } from '../../state/transactions/hooks'
-import { RowFixed } from '../Row'
+import { ExternalLink } from '../../theme'
+import { getEtherscanLink } from '../../utils'
 import Loader from '../Loader'
+import { RowFixed } from '../Row'
 
 const TransactionWrapper = styled.div``
 
@@ -20,7 +21,10 @@ const TransactionStatusText = styled.div`
   }
 `
 
-const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: boolean }>`
+const TransactionState = styled(ExternalLink)<{
+  pending: boolean
+  success?: boolean
+}>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +37,8 @@ const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: bool
 `
 
 const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
-  color: ${({ pending, success, theme }) => (pending ? theme.primary1 : success ? theme.green1 : theme.red1)};
+  color: ${({ pending, success, theme }) =>
+    pending ? theme.primary1 : success ? theme.green1 : theme.red1};
 `
 
 export default function Transaction({ hash }: { hash: string }) {
@@ -43,18 +48,30 @@ export default function Transaction({ hash }: { hash: string }) {
   const tx = allTransactions?.[hash]
   const summary = tx?.summary
   const pending = !tx?.receipt
-  const success = !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined')
+  const success =
+    !pending &&
+    tx &&
+    (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined')
 
   if (!chainId) return null
 
   return (
     <TransactionWrapper>
-      <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} pending={pending} success={success}>
+      <TransactionState
+        href={getEtherscanLink(chainId, hash, 'transaction')}
+        pending={pending}
+        success={success}>
         <RowFixed>
           <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
         </RowFixed>
         <IconWrapper pending={pending} success={success}>
-          {pending ? <Loader /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+          {pending ? (
+            <Loader />
+          ) : success ? (
+            <CheckCircle size='16' />
+          ) : (
+            <Triangle size='16' />
+          )}
         </IconWrapper>
       </TransactionState>
     </TransactionWrapper>

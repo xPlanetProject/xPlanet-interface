@@ -1,8 +1,10 @@
 import { Trade, TradeType } from '@uniswap/sdk'
-import React, { useContext, useMemo, useState } from 'react'
-import { Repeat } from 'react-feather'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
+
+import React, { useContext, useMemo, useState } from 'react'
+import { Repeat } from 'react-feather'
+
 import { Field } from '../../state/swap/actions'
 import { TYPE } from '../../theme'
 import {
@@ -33,17 +35,20 @@ export default function SwapModalFooter({
 }) {
   const [showInverted, setShowInverted] = useState<boolean>(false)
   const theme = useContext(ThemeContext)
-  const slippageAdjustedAmounts = useMemo(() => computeSlippageAdjustedAmounts(trade, allowedSlippage), [
-    allowedSlippage,
-    trade
-  ])
-  const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
+  const slippageAdjustedAmounts = useMemo(
+    () => computeSlippageAdjustedAmounts(trade, allowedSlippage),
+    [allowedSlippage, trade]
+  )
+  const { priceImpactWithoutFee, realizedLPFee } = useMemo(
+    () => computeTradePriceBreakdown(trade),
+    [trade]
+  )
   const severity = warningSeverity(priceImpactWithoutFee)
 
   return (
     <>
-      <AutoColumn gap="0px">
-        <RowBetween align="center">
+      <AutoColumn gap='0px'>
+        <RowBetween align='center'>
           <Text fontWeight={400} fontSize={14} color={theme.text2}>
             Price
           </Text>
@@ -57,10 +62,10 @@ export default function SwapModalFooter({
               display: 'flex',
               textAlign: 'right',
               paddingLeft: '10px'
-            }}
-          >
+            }}>
             {formatExecutionPrice(trade, showInverted)}
-            <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
+            <StyledBalanceMaxMini
+              onClick={() => setShowInverted(!showInverted)}>
               <Repeat size={14} />
             </StyledBalanceMaxMini>
           </Text>
@@ -69,9 +74,11 @@ export default function SwapModalFooter({
         <RowBetween>
           <RowFixed>
             <TYPE.black fontSize={14} fontWeight={400} color={theme.text2}>
-              {trade.tradeType === TradeType.EXACT_INPUT ? 'Minimum received' : 'Maximum sold'}
+              {trade.tradeType === TradeType.EXACT_INPUT
+                ? 'Minimum received'
+                : 'Maximum sold'}
             </TYPE.black>
-            <QuestionHelper text="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed." />
+            <QuestionHelper text='Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.' />
           </RowFixed>
           <RowFixed>
             <TYPE.black fontSize={14}>
@@ -91,7 +98,7 @@ export default function SwapModalFooter({
             <TYPE.black color={theme.text2} fontSize={14} fontWeight={400}>
               Price Impact
             </TYPE.black>
-            <QuestionHelper text="The difference between the market price and your price due to trade size." />
+            <QuestionHelper text='The difference between the market price and your price due to trade size.' />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
@@ -100,10 +107,14 @@ export default function SwapModalFooter({
             <TYPE.black fontSize={14} fontWeight={400} color={theme.text2}>
               Liquidity Provider Fee
             </TYPE.black>
-            <QuestionHelper text="A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive." />
+            <QuestionHelper text='A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.' />
           </RowFixed>
           <TYPE.black fontSize={14}>
-            {realizedLPFee ? realizedLPFee?.toSignificant(6) + ' ' + trade.inputAmount.currency.symbol : '-'}
+            {realizedLPFee
+              ? realizedLPFee?.toSignificant(6) +
+                ' ' +
+                trade.inputAmount.currency.symbol
+              : '-'}
           </TYPE.black>
         </RowBetween>
       </AutoColumn>
@@ -114,14 +125,15 @@ export default function SwapModalFooter({
           disabled={disabledConfirm}
           error={severity > 2}
           style={{ margin: '10px 0 0 0' }}
-          id="confirm-swap-or-send"
-        >
+          id='confirm-swap-or-send'>
           <Text fontSize={20} fontWeight={500}>
             {severity > 2 ? 'Swap Anyway' : 'Confirm Swap'}
           </Text>
         </ButtonError>
 
-        {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+        {swapErrorMessage ? (
+          <SwapCallbackError error={swapErrorMessage} />
+        ) : null}
       </AutoRow>
     </>
   )

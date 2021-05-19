@@ -17,6 +17,8 @@ describe('Landing Page', () => {
 
   it('is connected', () => {
     cy.get('#web3-status-connected').click()
-    cy.get('#web3-account-identifier-row').contains(TEST_ADDRESS_NEVER_USE_SHORTENED)
+    cy.get('#web3-account-identifier-row').contains(
+      TEST_ADDRESS_NEVER_USE_SHORTENED
+    )
   })
 })

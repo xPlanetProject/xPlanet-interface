@@ -1,9 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
 import { CardProps, Text } from 'rebass'
 import { Box } from 'rebass/styled-components'
+import styled from 'styled-components'
 
-const Card = styled(Box)<{ padding?: string; border?: string; borderRadius?: string }>`
+import React from 'react'
+
+const Card = styled(Box)<{
+  padding?: string
+  border?: string
+  borderRadius?: string
+}>`
   width: 100%;
   border-radius: 16px;
   padding: 1.25rem;
@@ -48,7 +53,7 @@ const BlueCardStyled = styled(Card)`
 export const BlueCard = ({ children, ...rest }: CardProps) => {
   return (
     <BlueCardStyled {...rest}>
-      <Text fontWeight={500} color="#2172E5">
+      <Text fontWeight={500} color='#2172E5'>
         {children}
       </Text>
     </BlueCardStyled>

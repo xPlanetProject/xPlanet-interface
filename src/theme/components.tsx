@@ -1,11 +1,15 @@
+import { darken } from 'polished'
+import styled, { keyframes } from 'styled-components'
+
 import React, { HTMLProps, useCallback } from 'react'
+import { ArrowLeft, X } from 'react-feather'
 import ReactGA from 'react-ga'
 import { Link } from 'react-router-dom'
-import styled, { keyframes } from 'styled-components'
-import { darken } from 'polished'
-import { ArrowLeft, X } from 'react-feather'
 
-export const Button = styled.button.attrs<{ warning: boolean }, { backgroundColor: string }>(({ warning, theme }) => ({
+export const Button = styled.button.attrs<
+  { warning: boolean },
+  { backgroundColor: string }
+>(({ warning, theme }) => ({
   backgroundColor: warning ? theme.red1 : theme.primary1
 }))`
   padding: 1rem 2rem 1rem 2rem;
@@ -112,7 +116,9 @@ export function ExternalLink({
   href,
   rel = 'noopener noreferrer',
   ...rest
-}: Omit<HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & { href: string }) {
+}: Omit<HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & {
+  href: string
+}) {
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       // don't prevent default, don't redirect if it's a new tab
@@ -130,7 +136,15 @@ export function ExternalLink({
     },
     [href, target]
   )
-  return <StyledLink target={target} rel={rel} href={href} onClick={handleClick} {...rest} />
+  return (
+    <StyledLink
+      target={target}
+      rel={rel}
+      href={href}
+      onClick={handleClick}
+      {...rest}
+    />
+  )
 }
 
 const rotate = keyframes`

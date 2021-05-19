@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react'
-
+import Jazzicon from 'jazzicon'
 import styled from 'styled-components'
 
+import React, { useEffect, useRef } from 'react'
+
 import { useActiveWeb3React } from '../../hooks'
-import Jazzicon from 'jazzicon'
 
 const StyledIdenticonContainer = styled.div`
   height: 1rem;

@@ -1,13 +1,14 @@
-import React, { useMemo } from 'react'
-import styled from 'styled-components'
 import { darken } from 'polished'
-import { useTranslation } from 'react-i18next'
-import { NavLink, Link as HistoryLink } from 'react-router-dom'
+import styled from 'styled-components'
 import { v4 } from 'uuid'
 
+import React, { useMemo } from 'react'
 import { ArrowLeft } from 'react-feather'
-import { RowBetween } from '../Row'
+import { useTranslation } from 'react-i18next'
+import { NavLink, Link as HistoryLink } from 'react-router-dom'
+
 import QuestionHelper from '../QuestionHelper'
+import { RowBetween } from '../Row'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -19,11 +20,11 @@ const Tabs = styled.div`
 const activeClassName = 'ACTIVE'
 
 type MemuItem = {
-  id: string;
-  linkId: string;
-  to: string;
-  text: string;
-  isActive: boolean;
+  id: string
+  linkId: string
+  to: string
+  text: string
+  isActive: boolean
 }
 
 const StyledNavLink = styled(NavLink).attrs({
@@ -119,16 +120,19 @@ export function SwapPoolTabs({ active }: { active: String }) {
   }, [t, active])
 
   return (
-    <Tabs style={{
-      marginLeft: '20px'
-    }}>
-      {
-        menus.map((menu: MemuItem) => 
-        <StyledNavLink key={menu.id} id={menu.linkId} to={menu.to} isActive={() => menu.isActive}>
+    <Tabs
+      style={{
+        marginLeft: '20px'
+      }}>
+      {menus.map((menu: MemuItem) => (
+        <StyledNavLink
+          key={menu.id}
+          id={menu.linkId}
+          to={menu.to}
+          isActive={() => menu.isActive}>
           {menu.text}
         </StyledNavLink>
-        )
-      }
+      ))}
       {/* <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => active === 'swap'}>
         {t('swap')}
       </StyledNavLink>
@@ -158,11 +162,15 @@ export function FindPoolTabs() {
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
-        <HistoryLink to="/pool">
+        <HistoryLink to='/pool'>
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>Import Pool</ActiveText>
-        <QuestionHelper text={"Use this tool to find pairs that don't automatically appear in the interface."} />
+        <QuestionHelper
+          text={
+            "Use this tool to find pairs that don't automatically appear in the interface."
+          }
+        />
       </RowBetween>
     </Tabs>
   )
@@ -172,7 +180,7 @@ export function AddRemoveTabs({ adding }: { adding: boolean }) {
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
-        <HistoryLink to="/pool">
+        <HistoryLink to='/pool'>
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>{adding ? 'Add' : 'Remove'} Liquidity</ActiveText>

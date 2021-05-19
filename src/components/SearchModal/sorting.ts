@@ -1,11 +1,17 @@
 import { Token, TokenAmount } from '@uniswap/sdk'
+
 import { useMemo } from 'react'
+
 import { useAllTokenBalances } from '../../state/wallet/hooks'
 
 // compare two token amounts with highest one coming first
 function balanceComparator(balanceA?: TokenAmount, balanceB?: TokenAmount) {
   if (balanceA && balanceB) {
-    return balanceA.greaterThan(balanceB) ? -1 : balanceA.equalTo(balanceB) ? 0 : 1
+    return balanceA.greaterThan(balanceB)
+      ? -1
+      : balanceA.equalTo(balanceB)
+      ? 0
+      : 1
   } else if (balanceA && balanceA.greaterThan('0')) {
     return -1
   } else if (balanceB && balanceB.greaterThan('0')) {
@@ -37,9 +43,14 @@ function getTokenComparator(balances: {
   }
 }
 
-export function useTokenComparator(inverted: boolean): (tokenA: Token, tokenB: Token) => number {
+export function useTokenComparator(
+  inverted: boolean
+): (tokenA: Token, tokenB: Token) => number {
   const balances = useAllTokenBalances()
-  const comparator = useMemo(() => getTokenComparator(balances ?? {}), [balances])
+  const comparator = useMemo(
+    () => getTokenComparator(balances ?? {}),
+    [balances]
+  )
   return useMemo(() => {
     if (inverted) {
       return (tokenA: Token, tokenB: Token) => comparator(tokenA, tokenB) * -1

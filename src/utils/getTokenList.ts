@@ -1,6 +1,7 @@
 import { TokenList } from '@uniswap/token-lists'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 import Ajv from 'ajv'
+
 import contenthashToUri from './contenthashToUri'
 import { parseENSAddress } from './parseENSAddress'
 import uriToHttp from './uriToHttp'
@@ -31,7 +32,9 @@ export default async function getTokenList(
       translatedUri = contenthashToUri(contentHashUri)
     } catch (error) {
       console.debug('Failed to translate contenthash to URI', contentHashUri)
-      throw new Error(`Failed to translate contenthash to URI: ${contentHashUri}`)
+      throw new Error(
+        `Failed to translate contenthash to URI: ${contentHashUri}`
+      )
     }
     urls = uriToHttp(`${translatedUri}${parsedENS.ensPath ?? ''}`)
   } else {

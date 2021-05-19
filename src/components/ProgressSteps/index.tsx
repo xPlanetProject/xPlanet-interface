@@ -1,8 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { RowBetween } from '../Row'
-import { AutoColumn } from '../Column'
 import { transparentize } from 'polished'
+import styled from 'styled-components'
+
+import React from 'react'
+
+import { AutoColumn } from '../Column'
+import { RowBetween } from '../Row'
 
 const Wrapper = styled(AutoColumn)`
   margin-top: 1.25rem;
@@ -38,8 +40,12 @@ const Connector = styled.div<{ prevConfirmed?: boolean }>`
   background-color: ;
   background: linear-gradient(
     90deg,
-    ${({ theme, prevConfirmed }) => transparentize(0.5, prevConfirmed ? theme.green1 : theme.primary1)} 0%,
-    ${({ theme, prevConfirmed }) => (prevConfirmed ? theme.primary1 : theme.bg4)} 80%
+    ${({ theme, prevConfirmed }) =>
+        transparentize(0.5, prevConfirmed ? theme.green1 : theme.primary1)}
+      0%,
+    ${({ theme, prevConfirmed }) =>
+        prevConfirmed ? theme.primary1 : theme.bg4}
+      80%
   );
   opacity: 0.6;
 `

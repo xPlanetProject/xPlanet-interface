@@ -1,10 +1,11 @@
+import styled from 'styled-components'
+
 import React, { useRef } from 'react'
 import { Info, BookOpen, Code, PieChart, MessageCircle } from 'react-feather'
-import styled from 'styled-components'
+
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import useToggle from '../../hooks/useToggle'
-
 import { ExternalLink } from '../../theme'
 
 const StyledMenuIcon = styled(MenuIcon)`
@@ -51,8 +52,8 @@ const StyledMenu = styled.div`
 const MenuFlyout = styled.span`
   min-width: 8.125rem;
   background-color: ${({ theme }) => theme.bg3};
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
-    0px 24px 32px rgba(0, 0, 0, 0.01);
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 0.5rem;
   padding: 0.5rem;
   display: flex;
@@ -92,23 +93,25 @@ export default function Menu() {
       </StyledMenuButton>
       {open && (
         <MenuFlyout>
-          <MenuItem id="link" href="https://uniswap.org/">
+          <MenuItem id='link' href='https://uniswap.org/'>
             <Info size={14} />
             About
           </MenuItem>
-          <MenuItem id="link" href="https://uniswap.org/docs/v2">
+          <MenuItem id='link' href='https://uniswap.org/docs/v2'>
             <BookOpen size={14} />
             Docs
           </MenuItem>
-          <MenuItem id="link" href="https://github.com/xPlanetProject/xPlanet-interface">
+          <MenuItem
+            id='link'
+            href='https://github.com/xPlanetProject/xPlanet-interface'>
             <Code size={14} />
             Code
           </MenuItem>
-          <MenuItem id="link" href="https://discord.gg/EwFs3Pp">
+          <MenuItem id='link' href='https://discord.gg/EwFs3Pp'>
             <MessageCircle size={14} />
             Discord
           </MenuItem>
-          <MenuItem id="link" href="https://uniswap.info/">
+          <MenuItem id='link' href='https://uniswap.info/'>
             <PieChart size={14} />
             Analytics
           </MenuItem>

@@ -6,7 +6,9 @@ describe('actions', () => {
       expect(parseCallKey('0x-0x')).toEqual({ address: '0x', callData: '0x' })
     })
     it('does not throw for invalid calldata', () => {
-      expect(parseCallKey('0x6b175474e89094c44da98b954eedeac495271d0f-abc')).toEqual({
+      expect(
+        parseCallKey('0x6b175474e89094c44da98b954eedeac495271d0f-abc')
+      ).toEqual({
         address: '0x6b175474e89094c44da98b954eedeac495271d0f',
         callData: 'abc'
       })
@@ -15,13 +17,17 @@ describe('actions', () => {
       expect(() => parseCallKey('abc')).toThrow('Invalid call key: abc')
     })
     it('throws for uppercase calldata', () => {
-      expect(parseCallKey('0x6b175474e89094c44da98b954eedeac495271d0f-0xabcD')).toEqual({
+      expect(
+        parseCallKey('0x6b175474e89094c44da98b954eedeac495271d0f-0xabcD')
+      ).toEqual({
         address: '0x6b175474e89094c44da98b954eedeac495271d0f',
         callData: '0xabcD'
       })
     })
     it('parses pieces into address', () => {
-      expect(parseCallKey('0x6b175474e89094c44da98b954eedeac495271d0f-0xabcd')).toEqual({
+      expect(
+        parseCallKey('0x6b175474e89094c44da98b954eedeac495271d0f-0xabcd')
+      ).toEqual({
         address: '0x6b175474e89094c44da98b954eedeac495271d0f',
         callData: '0xabcd'
       })
@@ -30,7 +36,9 @@ describe('actions', () => {
 
   describe('#toCallKey', () => {
     it('throws for invalid address', () => {
-      expect(() => toCallKey({ callData: '0x', address: '0x' })).toThrow('Invalid address: 0x')
+      expect(() => toCallKey({ callData: '0x', address: '0x' })).toThrow(
+        'Invalid address: 0x'
+      )
     })
     it('throws for invalid calldata', () => {
       expect(() =>
@@ -49,9 +57,12 @@ describe('actions', () => {
       ).toThrow('Invalid hex: 0xabcD')
     })
     it('concatenates address to data', () => {
-      expect(toCallKey({ address: '0x6b175474e89094c44da98b954eedeac495271d0f', callData: '0xabcd' })).toEqual(
-        '0x6b175474e89094c44da98b954eedeac495271d0f-0xabcd'
-      )
+      expect(
+        toCallKey({
+          address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+          callData: '0xabcd'
+        })
+      ).toEqual('0x6b175474e89094c44da98b954eedeac495271d0f-0xabcd')
     })
   })
 })

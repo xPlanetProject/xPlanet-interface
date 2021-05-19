@@ -1,11 +1,14 @@
+import styled from 'styled-components'
+
 import React, { Suspense } from 'react'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
-import styled from 'styled-components'
-import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
+
 import Header from '@/components/Header'
 import Popups from '@/components/Popups'
 import Web3ReactManager from '@/components/Web3ReactManager'
+import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
 import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
+
 import AddLiquidity from './AddLiquidity'
 import {
   RedirectDuplicateTokenIds,
@@ -20,14 +23,9 @@ import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 
 const TestComponent = () => {
-
   const location = useLocation()
 
-  return (
-    <div>
-      {location.pathname}
-    </div>
-  )
+  return <div>{location.pathname}</div>
 }
 
 const AppWrapper = styled.div`
@@ -79,22 +77,65 @@ export default function App() {
             <Popups />
             <Web3ReactManager>
               <Switch>
-                <Route exact strict path="/swap" component={Swap} />
-                <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-                <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-                <Route exact strict path="/find" component={PoolFinder} />
-                <Route exact strict path="/pool" component={Pool} />
-                <Route exact strict path="/create" component={RedirectToAddLiquidity} />
-                <Route exact strict path="/yield" component={TestComponent} />
-                <Route exact strict path="/xmoon" component={TestComponent} />
-                <Route exact strict path="/marketpalce" component={TestComponent} />
-                <Route exact strict path="/launchpad" component={TestComponent} />
-                <Route exact strict path="/xnova" component={TestComponent} />
-                <Route exact path="/add" component={AddLiquidity} />
-                <Route exact path="/add/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
-                <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
-                <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
-                <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+                <Route exact strict path='/swap' component={Swap} />
+                <Route
+                  exact
+                  strict
+                  path='/swap/:outputCurrency'
+                  component={RedirectToSwap}
+                />
+                <Route
+                  exact
+                  strict
+                  path='/send'
+                  component={RedirectPathToSwapOnly}
+                />
+                <Route exact strict path='/find' component={PoolFinder} />
+                <Route exact strict path='/pool' component={Pool} />
+                <Route
+                  exact
+                  strict
+                  path='/create'
+                  component={RedirectToAddLiquidity}
+                />
+                <Route exact strict path='/yield' component={TestComponent} />
+                <Route exact strict path='/xmoon' component={TestComponent} />
+                <Route
+                  exact
+                  strict
+                  path='/marketpalce'
+                  component={TestComponent}
+                />
+                <Route
+                  exact
+                  strict
+                  path='/launchpad'
+                  component={TestComponent}
+                />
+                <Route exact strict path='/xnova' component={TestComponent} />
+                <Route exact path='/add' component={AddLiquidity} />
+                <Route
+                  exact
+                  path='/add/:currencyIdA'
+                  component={RedirectOldAddLiquidityPathStructure}
+                />
+                <Route
+                  exact
+                  path='/add/:currencyIdA/:currencyIdB'
+                  component={RedirectDuplicateTokenIds}
+                />
+                <Route
+                  exact
+                  strict
+                  path='/remove/:tokens'
+                  component={RedirectOldRemoveLiquidityPathStructure}
+                />
+                <Route
+                  exact
+                  strict
+                  path='/remove/:currencyIdA/:currencyIdB'
+                  component={RemoveLiquidity}
+                />
                 <Route component={RedirectPathToSwapOnly} />
               </Switch>
             </Web3ReactManager>

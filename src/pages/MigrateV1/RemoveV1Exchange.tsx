@@ -1,29 +1,42 @@
 import { TransactionResponse } from '@ethersproject/abstract-provider'
-import { JSBI, Token, TokenAmount, WETH, Fraction, Percent, CurrencyAmount } from '@uniswap/sdk'
+import { AddressZero } from '@ethersproject/constants'
+import { Contract } from '@ethersproject/contracts'
+import {
+  JSBI,
+  Token,
+  TokenAmount,
+  WETH,
+  Fraction,
+  Percent,
+  CurrencyAmount
+} from '@uniswap/sdk'
+
 import React, { useCallback, useMemo, useState } from 'react'
 import ReactGA from 'react-ga'
 import { Redirect, RouteComponentProps } from 'react-router'
+
 import { ButtonConfirmed } from '../../components/Button'
 import { LightCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
 import QuestionHelper from '../../components/QuestionHelper'
 import { AutoRow } from '../../components/Row'
+import { Dots } from '../../components/swap/styleds'
 import { DEFAULT_DEADLINE_FROM_NOW } from '../../constants'
+import { useTotalSupply } from '../../data/TotalSupply'
 import { useActiveWeb3React } from '../../hooks'
 import { useToken } from '../../hooks/Tokens'
 import { useV1ExchangeContract } from '../../hooks/useContract'
 import { NEVER_RELOAD, useSingleCallResult } from '../../state/multicall/hooks'
-import { useIsTransactionPending, useTransactionAdder } from '../../state/transactions/hooks'
+import {
+  useIsTransactionPending,
+  useTransactionAdder
+} from '../../state/transactions/hooks'
 import { useTokenBalance, useETHBalances } from '../../state/wallet/hooks'
 import { BackArrow, TYPE } from '../../theme'
 import { isAddress } from '../../utils'
 import { BodyWrapper } from '../AppBody'
 import { EmptyState } from './EmptyState'
 import { V1LiquidityInfo } from './MigrateV1Exchange'
-import { AddressZero } from '@ethersproject/constants'
-import { Dots } from '../../components/swap/styleds'
-import { Contract } from '@ethersproject/contracts'
-import { useTotalSupply } from '../../data/TotalSupply'
 
 const WEI_DENOM = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(18))
 const ZERO = JSBI.BigInt(0)
@@ -41,24 +54,39 @@ function V1PairRemoval({
 }) {
   const { chainId } = useActiveWeb3React()
   const totalSupply = useTotalSupply(liquidityTokenAmount.token)
-  const exchangeETHBalance = useETHBalances([liquidityTokenAmount.token.address])?.[liquidityTokenAmount.token.address]
-  const exchangeTokenBalance = useTokenBalance(liquidityTokenAmount.token.address, token)
+  const exchangeETHBalance = useETHBalances([
+    liquidityTokenAmount.token.address
+  ])?.[liquidityTokenAmount.token.address]
+  const exchangeTokenBalance = useTokenBalance(
+    liquidityTokenAmount.token.address,
+    token
+  )
 
   const [confirmingRemoval, setConfirmingRemoval] = useState<boolean>(false)
-  const [pendingRemovalHash, setPendingRemovalHash] = useState<string | null>(null)
+  const [pendingRemovalHash, setPendingRemovalHash] =
+    useState<string | null>(null)
 
-  const shareFraction: Fraction = totalSupply ? new Percent(liquidityTokenAmount.raw, totalSupply.raw) : ZERO_FRACTION
+  const shareFraction: Fraction = totalSupply
+    ? new Percent(liquidityTokenAmount.raw, totalSupply.raw)
+    : ZERO_FRACTION
 
   const ethWorth: CurrencyAmount = exchangeETHBalance
-    ? CurrencyAmount.ether(exchangeETHBalance.multiply(shareFraction).multiply(WEI_DENOM).quotient)
+    ? CurrencyAmount.ether(
+        exchangeETHBalance.multiply(shareFraction).multiply(WEI_DENOM).quotient
+      )
     : CurrencyAmount.ether(ZERO)
 
   const tokenWorth: TokenAmount = exchangeTokenBalance
-    ? new TokenAmount(token, shareFraction.multiply(exchangeTokenBalance.raw).quotient)
+    ? new TokenAmount(
+        token,
+        shareFraction.multiply(exchangeTokenBalance.raw).quotient
+      )
     : new TokenAmount(token, ZERO)
 
   const addTransaction = useTransactionAdder()
-  const isRemovalPending = useIsTransactionPending(pendingRemovalHash ?? undefined)
+  const isRemovalPending = useIsTransactionPending(
+    pendingRemovalHash ?? undefined
+  )
 
   const remove = useCallback(() => {
     if (!liquidityTokenAmount) return
@@ -79,7 +107,9 @@ function V1PairRemoval({
         })
 
         addTransaction(response, {
-          summary: `Remove ${chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/ETH V1 liquidity`
+          summary: `Remove ${
+            chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol
+          }/ETH V1 liquidity`
         })
         setPendingRemovalHash(response.hash)
       })
@@ -89,14 +119,16 @@ function V1PairRemoval({
       })
   }, [exchangeContract, liquidityTokenAmount, token, chainId, addTransaction])
 
-  const noLiquidityTokens = !!liquidityTokenAmount && liquidityTokenAmount.equalTo(ZERO)
+  const noLiquidityTokens =
+    !!liquidityTokenAmount && liquidityTokenAmount.equalTo(ZERO)
 
   const isSuccessfullyRemoved = !!pendingRemovalHash && noLiquidityTokens
 
   return (
-    <AutoColumn gap="20px">
+    <AutoColumn gap='20px'>
       <TYPE.body my={9} style={{ fontWeight: 400 }}>
-        This tool will remove your V1 liquidity and send the underlying assets to your wallet.
+        This tool will remove your V1 liquidity and send the underlying assets
+        to your wallet.
       </TYPE.body>
 
       <LightCard>
@@ -110,10 +142,20 @@ function V1PairRemoval({
         <div style={{ display: 'flex', marginTop: '1rem' }}>
           <ButtonConfirmed
             confirmed={isSuccessfullyRemoved}
-            disabled={isSuccessfullyRemoved || noLiquidityTokens || isRemovalPending || confirmingRemoval}
-            onClick={remove}
-          >
-            {isSuccessfullyRemoved ? 'Success' : isRemovalPending ? <Dots>Removing</Dots> : 'Remove'}
+            disabled={
+              isSuccessfullyRemoved ||
+              noLiquidityTokens ||
+              isRemovalPending ||
+              confirmingRemoval
+            }
+            onClick={remove}>
+            {isSuccessfullyRemoved ? (
+              'Success'
+            ) : isRemovalPending ? (
+              <Dots>Removing</Dots>
+            ) : (
+              'Remove'
+            )}
           </ButtonConfirmed>
         </div>
       </LightCard>
@@ -134,33 +176,52 @@ export default function RemoveV1Exchange({
   const validatedAddress = isAddress(address)
   const { chainId, account } = useActiveWeb3React()
 
-  const exchangeContract = useV1ExchangeContract(validatedAddress ? validatedAddress : undefined, true)
-  const tokenAddress = useSingleCallResult(exchangeContract, 'tokenAddress', undefined, NEVER_RELOAD)?.result?.[0]
+  const exchangeContract = useV1ExchangeContract(
+    validatedAddress ? validatedAddress : undefined,
+    true
+  )
+  const tokenAddress = useSingleCallResult(
+    exchangeContract,
+    'tokenAddress',
+    undefined,
+    NEVER_RELOAD
+  )?.result?.[0]
   const token = useToken(tokenAddress)
 
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${token.symbol}`, 'Uniswap V1')
+        ? new Token(
+            chainId,
+            validatedAddress,
+            18,
+            `UNI-V1-${token.symbol}`,
+            'Uniswap V1'
+          )
         : undefined,
     [chainId, validatedAddress, token]
   )
-  const userLiquidityBalance = useTokenBalance(account ?? undefined, liquidityToken)
+  const userLiquidityBalance = useTokenBalance(
+    account ?? undefined,
+    liquidityToken
+  )
 
   // redirect for invalid url params
   if (!validatedAddress || tokenAddress === AddressZero) {
     console.error('Invalid address in path', address)
-    return <Redirect to="/migrate/v1" />
+    return <Redirect to='/migrate/v1' />
   }
 
   return (
-    <BodyWrapper style={{ padding: 24 }} id="remove-v1-exchange">
-      <AutoColumn gap="16px">
-        <AutoRow style={{ alignItems: 'center', justifyContent: 'space-between' }} gap="8px">
-          <BackArrow to="/migrate/v1" />
+    <BodyWrapper style={{ padding: 24 }} id='remove-v1-exchange'>
+      <AutoColumn gap='16px'>
+        <AutoRow
+          style={{ alignItems: 'center', justifyContent: 'space-between' }}
+          gap='8px'>
+          <BackArrow to='/migrate/v1' />
           <TYPE.mediumHeader>Remove V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Remove your Uniswap V1 liquidity tokens." />
+            <QuestionHelper text='Remove your Uniswap V1 liquidity tokens.' />
           </div>
         </AutoRow>
 
@@ -173,7 +234,7 @@ export default function RemoveV1Exchange({
             token={token}
           />
         ) : (
-          <EmptyState message="Loading..." />
+          <EmptyState message='Loading...' />
         )}
       </AutoColumn>
     </BodyWrapper>
