@@ -1,8 +1,14 @@
-import React from 'react'
 import styled from 'styled-components'
-import { escapeRegExp } from '../../utils'
 
-const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
+import React from 'react'
+
+import { escapeRegExp } from '@/utils'
+
+const StyledInput = styled.input<{
+  error?: boolean
+  fontSize?: string
+  align?: string
+}>`
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   width: 0;
   position: relative;
@@ -61,22 +67,22 @@ export const Input = React.memo(function InnerInput({
     <StyledInput
       {...rest}
       value={value}
-      onChange={event => {
+      onChange={(event) => {
         // replace commas with periods, because uniswap exclusively uses period as the decimal separator
         enforcer(event.target.value.replace(/,/g, '.'))
       }}
       // universal input options
-      inputMode="decimal"
-      title="Token Amount"
-      autoComplete="off"
-      autoCorrect="off"
+      inputMode='decimal'
+      title='Token Amount'
+      autoComplete='off'
+      autoCorrect='off'
       // text-specific options
-      type="text"
-      pattern="^[0-9]*[.,]?[0-9]*$"
+      type='text'
+      pattern='^[0-9]*[.,]?[0-9]*$'
       placeholder={placeholder || '0.0'}
       minLength={1}
       maxLength={79}
-      spellCheck="false"
+      spellCheck='false'
     />
   )
 })

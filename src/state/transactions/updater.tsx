@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useActiveWeb3React } from '../../hooks'
-import { useAddPopup, useBlockNumber } from '../application/hooks'
-import { AppDispatch, AppState } from '../index'
+
+import { useActiveWeb3React } from '@/hooks'
+import { useAddPopup, useBlockNumber } from '@/state/application/hooks'
+import { AppDispatch, AppState } from '@/state'
 import { checkedTransaction, finalizeTransaction } from './actions'
 
 export function shouldCheck(
@@ -32,7 +33,9 @@ export default function Updater(): null {
   const lastBlockNumber = useBlockNumber()
 
   const dispatch = useDispatch<AppDispatch>()
-  const state = useSelector<AppState, AppState['transactions']>(state => state.transactions)
+  const state = useSelector<AppState, AppState['transactions']>(
+    (state) => state.transactions
+  )
 
   const transactions = chainId ? state[chainId] ?? {} : {}
 
@@ -43,11 +46,11 @@ export default function Updater(): null {
     if (!chainId || !library || !lastBlockNumber) return
 
     Object.keys(transactions)
-      .filter(hash => shouldCheck(lastBlockNumber, transactions[hash]))
-      .forEach(hash => {
+      .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
+      .forEach((hash) => {
         library
           .getTransactionReceipt(hash)
-          .then(receipt => {
+          .then((receipt) => {
             if (receipt) {
               dispatch(
                 finalizeTransaction({
@@ -77,10 +80,16 @@ export default function Updater(): null {
                 hash
               )
             } else {
-              dispatch(checkedTransaction({ chainId, hash, blockNumber: lastBlockNumber }))
+              dispatch(
+                checkedTransaction({
+                  chainId,
+                  hash,
+                  blockNumber: lastBlockNumber
+                })
+              )
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })

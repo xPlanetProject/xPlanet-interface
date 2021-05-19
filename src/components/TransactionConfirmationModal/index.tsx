@@ -1,18 +1,19 @@
 import { ChainId } from '@uniswap/sdk'
-import React, { useContext } from 'react'
-import styled, { ThemeContext } from 'styled-components'
-import Modal from '../Modal'
-import { ExternalLink } from '../../theme'
 import { Text } from 'rebass'
-import { CloseIcon, Spinner } from '../../theme/components'
-import { RowBetween } from '../Row'
-import { AlertTriangle, ArrowUpCircle } from 'react-feather'
-import { ButtonPrimary } from '../Button'
-import { AutoColumn, ColumnCenter } from '../Column'
-import Circle from '../../assets/images/blue-loader.svg'
+import styled, { ThemeContext } from 'styled-components'
 
-import { getEtherscanLink } from '../../utils'
-import { useActiveWeb3React } from '../../hooks'
+import React, { useContext } from 'react'
+import { AlertTriangle, ArrowUpCircle } from 'react-feather'
+
+import Circle from '@/assets/images/blue-loader.svg'
+import { useActiveWeb3React } from '@/hooks'
+import { ExternalLink } from '@/theme'
+import { CloseIcon, Spinner } from '@/theme/components'
+import { getEtherscanLink } from '@/utils'
+import { ButtonPrimary } from '@/components/Button'
+import { AutoColumn, ColumnCenter } from '@/components/Column'
+import Modal from '@/components/Modal'
+import { RowBetween } from '@/components/Row'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,7 +37,13 @@ const CustomLightSpinner = styled(Spinner)<{ size: string }>`
   width: ${({ size }) => size};
 `
 
-function ConfirmationPendingContent({ onDismiss, pendingText }: { onDismiss: () => void; pendingText: string }) {
+function ConfirmationPendingContent({
+  onDismiss,
+  pendingText
+}: {
+  onDismiss: () => void
+  pendingText: string
+}) {
   return (
     <Wrapper>
       <Section>
@@ -45,18 +52,18 @@ function ConfirmationPendingContent({ onDismiss, pendingText }: { onDismiss: () 
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
         <ConfirmedIcon>
-          <CustomLightSpinner src={Circle} alt="loader" size={'90px'} />
+          <CustomLightSpinner src={Circle} alt='loader' size={'90px'} />
         </ConfirmedIcon>
-        <AutoColumn gap="12px" justify={'center'}>
+        <AutoColumn gap='12px' justify={'center'}>
           <Text fontWeight={500} fontSize={20}>
             Waiting For Confirmation
           </Text>
-          <AutoColumn gap="12px" justify={'center'}>
-            <Text fontWeight={600} fontSize={14} color="" textAlign="center">
+          <AutoColumn gap='12px' justify={'center'}>
+            <Text fontWeight={600} fontSize={14} color='' textAlign='center'>
               {pendingText}
             </Text>
           </AutoColumn>
-          <Text fontSize={12} color="#565A69" textAlign="center">
+          <Text fontSize={12} color='#565A69' textAlign='center'>
             Confirm this transaction in your wallet
           </Text>
         </AutoColumn>
@@ -86,7 +93,7 @@ function TransactionSubmittedContent({
         <ConfirmedIcon>
           <ArrowUpCircle strokeWidth={0.5} size={90} color={theme.primary1} />
         </ConfirmedIcon>
-        <AutoColumn gap="12px" justify={'center'}>
+        <AutoColumn gap='12px' justify={'center'}>
           <Text fontWeight={500} fontSize={20}>
             Transaction Submitted
           </Text>
@@ -131,12 +138,18 @@ export function ConfirmationModalContent({
         </RowBetween>
         {topContent()}
       </Section>
-      <BottomSection gap="12px">{bottomContent()}</BottomSection>
+      <BottomSection gap='12px'>{bottomContent()}</BottomSection>
     </Wrapper>
   )
 }
 
-export function TransactionErrorContent({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+export function TransactionErrorContent({
+  message,
+  onDismiss
+}: {
+  message: string
+  onDismiss: () => void
+}) {
   const theme = useContext(ThemeContext)
   return (
     <Wrapper>
@@ -147,14 +160,25 @@ export function TransactionErrorContent({ message, onDismiss }: { message: strin
           </Text>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
-        <AutoColumn style={{ marginTop: 20, padding: '2rem 0' }} gap="24px" justify="center">
-          <AlertTriangle color={theme.red1} style={{ strokeWidth: 1.5 }} size={64} />
-          <Text fontWeight={500} fontSize={16} color={theme.red1} style={{ textAlign: 'center', width: '85%' }}>
+        <AutoColumn
+          style={{ marginTop: 20, padding: '2rem 0' }}
+          gap='24px'
+          justify='center'>
+          <AlertTriangle
+            color={theme.red1}
+            style={{ strokeWidth: 1.5 }}
+            size={64}
+          />
+          <Text
+            fontWeight={500}
+            fontSize={16}
+            color={theme.red1}
+            style={{ textAlign: 'center', width: '85%' }}>
             {message}
           </Text>
         </AutoColumn>
       </Section>
-      <BottomSection gap="12px">
+      <BottomSection gap='12px'>
         <ButtonPrimary onClick={onDismiss}>Dismiss</ButtonPrimary>
       </BottomSection>
     </Wrapper>
@@ -186,9 +210,16 @@ export default function TransactionConfirmationModal({
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
       {attemptingTxn ? (
-        <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
+        <ConfirmationPendingContent
+          onDismiss={onDismiss}
+          pendingText={pendingText}
+        />
       ) : hash ? (
-        <TransactionSubmittedContent chainId={chainId} hash={hash} onDismiss={onDismiss} />
+        <TransactionSubmittedContent
+          chainId={chainId}
+          hash={hash}
+          onDismiss={onDismiss}
+        />
       ) : (
         content()
       )}

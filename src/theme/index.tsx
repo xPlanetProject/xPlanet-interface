@@ -1,20 +1,19 @@
 import { transparentize } from 'polished'
-import React, { useMemo } from 'react'
+import { Text, TextProps } from 'rebass'
 import styled, {
   ThemeProvider as StyledComponentsThemeProvider,
   createGlobalStyle,
   css,
   DefaultTheme
 } from 'styled-components'
-import { useIsDarkMode } from '../state/user/hooks'
-import { Text, TextProps } from 'rebass'
+
+import React, { useMemo } from 'react'
+
+import BodyBackground from '@/assets/images/page-bg.png'
+import { useIsDarkMode } from '@/state/user/hooks'
 import { Colors } from './styled'
 
-import BodyBackground from '../assets/images/page-bg.png'
-
 export * from './components'
-
-console.log(BodyBackground)
 
 const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
@@ -23,17 +22,16 @@ const MEDIA_WIDTHS = {
   upToLarge: 1280
 }
 
-const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } = Object.keys(MEDIA_WIDTHS).reduce(
-  (accumulator, size) => {
-    ;(accumulator as any)[size] = (a: any, b: any, c: any) => css`
-      @media (max-width: ${(MEDIA_WIDTHS as any)[size]}px) {
-        ${css(a, b, c)}
-      }
-    `
-    return accumulator
-  },
-  {}
-) as any
+const mediaWidthTemplates: {
+  [width in keyof typeof MEDIA_WIDTHS]: typeof css
+} = Object.keys(MEDIA_WIDTHS).reduce((accumulator, size) => {
+  ;(accumulator as any)[size] = (a: any, b: any, c: any) => css`
+    @media (max-width: ${(MEDIA_WIDTHS as any)[size]}px) {
+      ${css(a, b, c)}
+    }
+  `
+  return accumulator
+}, {}) as any
 
 const white = '#FFFFFF'
 const black = '#000000'
@@ -132,12 +130,20 @@ export function theme(darkMode: boolean): DefaultTheme {
   }
 }
 
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
+export default function ThemeProvider({
+  children
+}: {
+  children: React.ReactNode
+}) {
   const darkMode = useIsDarkMode()
 
   const themeObject = useMemo(() => theme(darkMode), [darkMode])
 
-  return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
+  return (
+    <StyledComponentsThemeProvider theme={themeObject}>
+      {children}
+    </StyledComponentsThemeProvider>
+  )
 }
 
 const TextWrapper = styled(Text)<{ color: keyof Colors }>`
@@ -155,7 +161,9 @@ export const TYPE = {
     return <TextWrapper fontWeight={500} color={'text1'} {...props} />
   },
   body(props: TextProps) {
-    return <TextWrapper fontWeight={400} fontSize={16} color={'text1'} {...props} />
+    return (
+      <TextWrapper fontWeight={400} fontSize={16} color={'text1'} {...props} />
+    )
   },
   largeHeader(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={24} {...props} />
@@ -179,10 +187,24 @@ export const TYPE = {
     return <TextWrapper fontWeight={500} color={'bg3'} {...props} />
   },
   italic(props: TextProps) {
-    return <TextWrapper fontWeight={500} fontSize={12} fontStyle={'italic'} color={'text2'} {...props} />
+    return (
+      <TextWrapper
+        fontWeight={500}
+        fontSize={12}
+        fontStyle={'italic'}
+        color={'text2'}
+        {...props}
+      />
+    )
   },
   error({ error, ...props }: { error: boolean } & TextProps) {
-    return <TextWrapper fontWeight={500} color={error ? 'red1' : 'text2'} {...props} />
+    return (
+      <TextWrapper
+        fontWeight={500}
+        color={error ? 'red1' : 'text2'}
+        {...props}
+      />
+    )
   }
 }
 
@@ -235,10 +257,10 @@ body {
   }};
   background-image: ${({ theme }) => {
     if (theme.darkMode) {
-      return `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
-        1,
-        theme.bg1
-      )} 100%)`
+      return `radial-gradient(50% 50% at 50% 50%, ${transparentize(
+        0.9,
+        theme.primary1
+      )} 0%, ${transparentize(1, theme.bg1)} 100%)`
     }
 
     return `url(${BodyBackground})`

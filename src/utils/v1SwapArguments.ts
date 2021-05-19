@@ -1,7 +1,16 @@
 import { MaxUint256 } from '@ethersproject/constants'
-import { CurrencyAmount, ETHER, SwapParameters, Token, Trade, TradeOptions, TradeType } from '@uniswap/sdk'
-import { getTradeVersion } from '../data/V1'
-import { Version } from '../hooks/useToggledVersion'
+import {
+  CurrencyAmount,
+  ETHER,
+  SwapParameters,
+  Token,
+  Trade,
+  TradeOptions,
+  TradeType
+} from '@uniswap/sdk'
+
+import { getTradeVersion } from '@/data/V1'
+import { Version } from '@/hooks/useToggledVersion'
 
 function toHex(currencyAmount: CurrencyAmount): string {
   return `0x${currencyAmount.raw.toString(16)}`
@@ -16,7 +25,10 @@ function deadlineFromNow(ttl: number): string {
  * @param trade trade to get v1 arguments for swapping
  * @param options options for swapping
  */
-export default function v1SwapArguments(trade: Trade, options: Omit<TradeOptions, 'feeOnTransfer'>): SwapParameters {
+export default function v1SwapArguments(
+  trade: Trade,
+  options: Omit<TradeOptions, 'feeOnTransfer'>
+): SwapParameters {
   if (getTradeVersion(trade) !== Version.v1) {
     throw new Error('invalid trade version')
   }
@@ -27,7 +39,9 @@ export default function v1SwapArguments(trade: Trade, options: Omit<TradeOptions
   const inputETH = trade.inputAmount.currency === ETHER
   const outputETH = trade.outputAmount.currency === ETHER
   if (inputETH && outputETH) throw new Error('ETHER to ETHER')
-  const minimumAmountOut = toHex(trade.minimumAmountOut(options.allowedSlippage))
+  const minimumAmountOut = toHex(
+    trade.minimumAmountOut(options.allowedSlippage)
+  )
   const maximumAmountIn = toHex(trade.maximumAmountIn(options.allowedSlippage))
   const deadline = deadlineFromNow(options.ttl)
   if (isExactIn) {
@@ -51,7 +65,14 @@ export default function v1SwapArguments(trade: Trade, options: Omit<TradeOptions
       }
       return {
         methodName: 'tokenToTokenTransferInput',
-        args: [maximumAmountIn, minimumAmountOut, '0x1', deadline, options.recipient, outputToken.address],
+        args: [
+          maximumAmountIn,
+          minimumAmountOut,
+          '0x1',
+          deadline,
+          options.recipient,
+          outputToken.address
+        ],
         value: '0x0'
       }
     }

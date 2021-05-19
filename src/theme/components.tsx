@@ -3,7 +3,12 @@ import ReactGA from 'react-ga'
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import { darken } from 'polished'
-import { ArrowLeft, X, ExternalLink as LinkIconFeather, Trash } from 'react-feather'
+import {
+  ArrowLeft,
+  X,
+  ExternalLink as LinkIconFeather,
+  Trash
+} from 'react-feather'
 
 export const ButtonText = styled.button`
   outline: none;
@@ -23,7 +28,10 @@ export const ButtonText = styled.button`
   }
 `
 
-export const Button = styled.button.attrs<{ warning: boolean }, { backgroundColor: string }>(({ warning, theme }) => ({
+export const Button = styled.button.attrs<
+  { warning: boolean },
+  { backgroundColor: string }
+>(({ warning, theme }) => ({
   backgroundColor: warning ? theme.red1 : theme.primary1
 }))`
   padding: 1rem 2rem 1rem 2rem;
@@ -58,7 +66,12 @@ export const CloseIcon = styled(X)<{ onClick: () => void }>`
 `
 
 // for wrapper react feather icons
-export const IconWrapper = styled.div<{ stroke?: string; size?: string; marginRight?: string; marginLeft?: string }>`
+export const IconWrapper = styled.div<{
+  stroke?: string
+  size?: string
+  marginRight?: string
+  marginLeft?: string
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,33 +218,9 @@ export function ExternalLink({
   href,
   rel = 'noopener noreferrer',
   ...rest
-}: Omit<HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & { href: string }) {
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement>) => {
-      // don't prevent default, don't redirect if it's a new tab
-      if (target === '_blank' || event.ctrlKey || event.metaKey) {
-        ReactGA.outboundLink({ label: href }, () => {
-          console.debug('Fired outbound link event', href)
-        })
-      } else {
-        event.preventDefault()
-        // send a ReactGA event and then trigger a location change
-        ReactGA.outboundLink({ label: href }, () => {
-          window.location.href = href
-        })
-      }
-    },
-    [href, target]
-  )
-  return <StyledLink target={target} rel={rel} href={href} onClick={handleClick} {...rest} />
-}
-
-export function ExternalLinkIcon({
-  target = '_blank',
-  href,
-  rel = 'noopener noreferrer',
-  ...rest
-}: Omit<HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & { href: string }) {
+}: Omit<HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & {
+  href: string
+}) {
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       // don't prevent default, don't redirect if it's a new tab
@@ -250,7 +239,48 @@ export function ExternalLinkIcon({
     [href, target]
   )
   return (
-    <LinkIconWrapper target={target} rel={rel} href={href} onClick={handleClick} {...rest}>
+    <StyledLink
+      target={target}
+      rel={rel}
+      href={href}
+      onClick={handleClick}
+      {...rest}
+    />
+  )
+}
+
+export function ExternalLinkIcon({
+  target = '_blank',
+  href,
+  rel = 'noopener noreferrer',
+  ...rest
+}: Omit<HTMLProps<HTMLAnchorElement>, 'as' | 'ref' | 'onClick'> & {
+  href: string
+}) {
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      // don't prevent default, don't redirect if it's a new tab
+      if (target === '_blank' || event.ctrlKey || event.metaKey) {
+        ReactGA.outboundLink({ label: href }, () => {
+          console.debug('Fired outbound link event', href)
+        })
+      } else {
+        event.preventDefault()
+        // send a ReactGA event and then trigger a location change
+        ReactGA.outboundLink({ label: href }, () => {
+          window.location.href = href
+        })
+      }
+    },
+    [href, target]
+  )
+  return (
+    <LinkIconWrapper
+      target={target}
+      rel={rel}
+      href={href}
+      onClick={handleClick}
+      {...rest}>
       <LinkIcon />
     </LinkIconWrapper>
   )

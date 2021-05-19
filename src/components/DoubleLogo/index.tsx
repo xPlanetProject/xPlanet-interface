@@ -1,13 +1,16 @@
 import { Currency } from '@uniswap/sdk'
-import React from 'react'
 import styled from 'styled-components'
-import CurrencyLogo from '../CurrencyLogo'
+
+import React from 'react'
+
+import CurrencyLogo from '@/components/CurrencyLogo'
 
 const Wrapper = styled.div<{ margin: boolean; sizeraw: number }>`
   position: relative;
   display: flex;
   flex-direction: row;
-  margin-right: ${({ sizeraw, margin }) => margin && (sizeraw / 3 + 8).toString() + 'px'};
+  margin-right: ${({ sizeraw, margin }) =>
+    margin && (sizeraw / 3 + 8).toString() + 'px'};
 `
 
 interface DoubleCurrencyLogoProps {
@@ -33,8 +36,16 @@ export default function DoubleCurrencyLogo({
 }: DoubleCurrencyLogoProps) {
   return (
     <Wrapper sizeraw={size} margin={margin}>
-      {currency0 && <HigherLogo currency={currency0} size={size.toString() + 'px'} />}
-      {currency1 && <CoveredLogo currency={currency1} size={size.toString() + 'px'} sizeraw={size} />}
+      {currency0 && (
+        <HigherLogo currency={currency0} size={size.toString() + 'px'} />
+      )}
+      {currency1 && (
+        <CoveredLogo
+          currency={currency1}
+          size={size.toString() + 'px'}
+          sizeraw={size}
+        />
+      )}
     </Wrapper>
   )
 }

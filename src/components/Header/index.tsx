@@ -1,26 +1,22 @@
 import { ChainId } from '@uniswap/sdk'
-import React, { useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
-import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
-
 import styled from 'styled-components'
+
+import React, { useMemo } from 'react'
+import { isMobile } from 'react-device-detect'
+import { useLocation } from 'react-router-dom'
 
 import Logo from '@/assets/images/logo.png'
 import LogoDark from '@/assets/images/logo.png'
-
+import { YellowCard } from '@/components/Card'
+import Menu from '@/components/Menu'
+import { SwapPoolTabs } from '@/components/NavigationTabs'
+import Row, { RowBetween } from '@/components/Row'
+import Web3Status from '@/components/Web3Status'
+import SwithTheme from '@/components/SwitchTheme'
 import { useActiveWeb3React } from '@/hooks'
 import { useDarkModeManager } from '@/state/user/hooks'
 import { useETHBalances } from '@/state/wallet/hooks'
-
-import { SwapPoolTabs } from '@/components/NavigationTabs'
-
-import { YellowCard } from '@/components/Card'
-import Settings from '@/components/Settings'
-import Menu from '@/components/Menu'
-
-import Row, { RowBetween } from '@/components/Row'
-import Web3Status from '@/components/Web3Status'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -109,7 +105,7 @@ const NetworkCard = styled(YellowCard)`
 const LogoIcon = styled.div`
   display: flex;
   align-items: center;
-  img { 
+  img {
     width: 6rem;
   }
   ${({ theme }) => {
@@ -151,7 +147,9 @@ export default function Header() {
 
   const location = useLocation()
 
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[
+    account ?? ''
+  ]
   const [isDark] = useDarkModeManager()
 
   const currentActive: string = useMemo<string>(() => {
@@ -160,36 +158,44 @@ export default function Header() {
 
   return (
     <HeaderFrame>
-      <HeaderRowBetweenWrapper alignItems="center" padding="1rem">
-        <Row alignItems="center">
+      <HeaderRowBetweenWrapper alignItems='center' padding='1rem'>
+        <Row alignItems='center'>
           <HeaderElement>
-              <Title href=".">
-                <LogoIcon>
-                  <img src={isDark ? LogoDark : Logo} alt="logo" />
-                </LogoIcon>
-                <TitleText>
-                  {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
-                </TitleText>
-              </Title>
-            </HeaderElement>
-            <SwapPoolTabs active={currentActive} />
+            <Title href='.'>
+              <LogoIcon>
+                <img src={isDark ? LogoDark : Logo} alt='logo' />
+              </LogoIcon>
+              <TitleText>
+                {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
+              </TitleText>
+            </Title>
+          </HeaderElement>
+          <SwapPoolTabs active={currentActive} />
         </Row>
         <HeaderControls>
           <HeaderElement>
             <TestnetWrapper>
-              {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>}
+              {!isMobile && chainId && NETWORK_LABELS[chainId] && (
+                <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>
+              )}
             </TestnetWrapper>
-            <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
+            <AccountElement
+              active={!!account}
+              style={{ pointerEvents: 'auto' }}>
               {account && userEthBalance ? (
-                <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
+                <BalanceText
+                  style={{ flexShrink: 0 }}
+                  pl='0.75rem'
+                  pr='0.5rem'
+                  fontWeight={500}>
                   {userEthBalance?.toSignificant(4)} ETH
                 </BalanceText>
               ) : null}
               <Web3Status />
             </AccountElement>
+            <SwithTheme />
           </HeaderElement>
           <HeaderElementWrap>
-            <Settings />
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>

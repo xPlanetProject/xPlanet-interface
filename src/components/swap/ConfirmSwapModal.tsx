@@ -1,9 +1,11 @@
 import { currencyEquals, Trade } from '@uniswap/sdk'
+
 import React, { useCallback, useMemo } from 'react'
+
 import TransactionConfirmationModal, {
   ConfirmationModalContent,
   TransactionErrorContent
-} from '../TransactionConfirmationModal'
+} from '@/components/TransactionConfirmationModal'
 import SwapModalFooter from './SwapModalFooter'
 import SwapModalHeader from './SwapModalHeader'
 
@@ -17,7 +19,10 @@ function tradeMeaningfullyDiffers(tradeA: Trade, tradeB: Trade): boolean {
     tradeA.tradeType !== tradeB.tradeType ||
     !currencyEquals(tradeA.inputAmount.currency, tradeB.inputAmount.currency) ||
     !tradeA.inputAmount.equalTo(tradeB.inputAmount) ||
-    !currencyEquals(tradeA.outputAmount.currency, tradeB.outputAmount.currency) ||
+    !currencyEquals(
+      tradeA.outputAmount.currency,
+      tradeB.outputAmount.currency
+    ) ||
     !tradeA.outputAmount.equalTo(tradeB.outputAmount)
   )
 }
@@ -48,7 +53,10 @@ export default function ConfirmSwapModal({
   onDismiss: () => void
 }) {
   const showAcceptChanges = useMemo(
-    () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
+    () =>
+      Boolean(
+        trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)
+      ),
     [originalTrade, trade]
   )
 
@@ -79,15 +87,20 @@ export default function ConfirmSwapModal({
   // text to show while loading
   const pendingText = `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
     trade?.inputAmount?.currency?.symbol
-  } for ${trade?.outputAmount?.toSignificant(6)} ${trade?.outputAmount?.currency?.symbol}`
+  } for ${trade?.outputAmount?.toSignificant(6)} ${
+    trade?.outputAmount?.currency?.symbol
+  }`
 
   const confirmationContent = useCallback(
     () =>
       swapErrorMessage ? (
-        <TransactionErrorContent onDismiss={onDismiss} message={swapErrorMessage} />
+        <TransactionErrorContent
+          onDismiss={onDismiss}
+          message={swapErrorMessage}
+        />
       ) : (
         <ConfirmationModalContent
-          title="Confirm Swap"
+          title='Confirm Swap'
           onDismiss={onDismiss}
           topContent={modalHeader}
           bottomContent={modalBottom}

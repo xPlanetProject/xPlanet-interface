@@ -1,10 +1,12 @@
+import styled, { ThemeContext } from 'styled-components'
+
 import React, { useCallback, useContext, useEffect } from 'react'
 import { X } from 'react-feather'
-import { useSpring } from 'react-spring/web'
-import styled, { ThemeContext } from 'styled-components'
 import { animated } from 'react-spring'
-import { PopupContent } from '../../state/application/actions'
-import { useRemovePopup } from '../../state/application/hooks'
+import { useSpring } from 'react-spring/web'
+
+import { PopupContent } from '@/state/application/actions'
+import { useRemovePopup } from '@/state/application/hooks'
 import ListUpdatePopup from './ListUpdatePopup'
 import TransactionPopup from './TransactionPopup'
 
@@ -53,7 +55,10 @@ export default function PopupItem({
   popKey: string
 }) {
   const removePopup = useRemovePopup()
-  const removeThisPopup = useCallback(() => removePopup(popKey), [popKey, removePopup])
+  const removeThisPopup = useCallback(
+    () => removePopup(popKey),
+    [popKey, removePopup]
+  )
   useEffect(() => {
     if (removeAfterMs === null) return undefined
 
@@ -73,12 +78,22 @@ export default function PopupItem({
     const {
       txn: { hash, success, summary }
     } = content
-    popupContent = <TransactionPopup hash={hash} success={success} summary={summary} />
+    popupContent = (
+      <TransactionPopup hash={hash} success={success} summary={summary} />
+    )
   } else if ('listUpdate' in content) {
     const {
       listUpdate: { listUrl, oldList, newList, auto }
     } = content
-    popupContent = <ListUpdatePopup popKey={popKey} listUrl={listUrl} oldList={oldList} newList={newList} auto={auto} />
+    popupContent = (
+      <ListUpdatePopup
+        popKey={popKey}
+        listUrl={listUrl}
+        oldList={oldList}
+        newList={newList}
+        auto={auto}
+      />
+    )
   }
 
   const faderStyle = useSpring({

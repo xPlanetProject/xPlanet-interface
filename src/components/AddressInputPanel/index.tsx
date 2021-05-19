@@ -1,11 +1,13 @@
-import React, { useContext, useCallback } from 'react'
 import styled, { ThemeContext } from 'styled-components'
-import useENS from '../../hooks/useENS'
-import { useActiveWeb3React } from '../../hooks'
-import { ExternalLink, TYPE } from '../../theme'
-import { AutoColumn } from '../Column'
-import { RowBetween } from '../Row'
-import { getEtherscanLink } from '../../utils'
+
+import React, { useContext, useCallback } from 'react'
+
+import { useActiveWeb3React } from '@/hooks'
+import useENS from '@/hooks/useENS'
+import { ExternalLink, TYPE } from '@/theme'
+import { getEtherscanLink } from '@/utils'
+import { AutoColumn } from '@/components/Column'
+import { RowBetween } from '@/components/Row'
 
 const InputPanel = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap}
@@ -22,7 +24,8 @@ const ContainerRow = styled.div<{ error: boolean }>`
   align-items: center;
   border-radius: 1.25rem;
   border: 1px solid ${({ error, theme }) => (error ? theme.red1 : theme.bg2)};
-  transition: border-color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')},
+  transition: border-color 300ms
+      ${({ error }) => (error ? 'step-end' : 'step-start')},
     color 500ms ${({ error }) => (error ? 'step-end' : 'step-start')};
   background-color: ${({ theme }) => theme.bg1};
 `
@@ -82,7 +85,7 @@ export default function AddressInputPanel({
   const { address, loading, name } = useENS(value)
 
   const handleInput = useCallback(
-    event => {
+    (event) => {
       const input = event.target.value
       const withoutSpaces = input.replace(/\s+/g, '')
       onChange(withoutSpaces)
@@ -96,27 +99,29 @@ export default function AddressInputPanel({
     <InputPanel id={id}>
       <ContainerRow error={error}>
         <InputContainer>
-          <AutoColumn gap="md">
+          <AutoColumn gap='md'>
             <RowBetween>
               <TYPE.black color={theme.text2} fontWeight={500} fontSize={14}>
                 Recipient
               </TYPE.black>
               {address && chainId && (
-                <ExternalLink href={getEtherscanLink(chainId, name ?? address, 'address')} style={{ fontSize: '14px' }}>
+                <ExternalLink
+                  href={getEtherscanLink(chainId, name ?? address, 'address')}
+                  style={{ fontSize: '14px' }}>
                   (View on Etherscan)
                 </ExternalLink>
               )}
             </RowBetween>
             <Input
-              className="recipient-address-input"
-              type="text"
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="off"
-              spellCheck="false"
-              placeholder="Wallet Address or ENS name"
+              className='recipient-address-input'
+              type='text'
+              autoComplete='off'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
+              placeholder='Wallet Address or ENS name'
               error={error}
-              pattern="^(0x[a-fA-F0-9]{40})$"
+              pattern='^(0x[a-fA-F0-9]{40})$'
               onChange={handleInput}
               value={value}
             />
