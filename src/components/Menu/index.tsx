@@ -61,6 +61,9 @@ const MenuFlyout = styled.span`
   font-size: 1rem;
   position: absolute;
   top: 3rem;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    top: -13rem;
+  `};
   right: 0rem;
   z-index: 100;
 `

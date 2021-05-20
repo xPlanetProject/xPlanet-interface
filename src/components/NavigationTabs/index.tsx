@@ -1,14 +1,15 @@
-import { darken } from 'polished'
-import styled from 'styled-components'
-import { v4 } from 'uuid'
-
 import React, { useMemo } from 'react'
 import { ArrowLeft } from 'react-feather'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
 
+import { darken } from 'polished'
+import styled from 'styled-components'
+
 import QuestionHelper from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
+
+import getMenus, { MenuItem } from './menus'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -18,14 +19,6 @@ const Tabs = styled.div`
 `
 
 const activeClassName = 'ACTIVE'
-
-type MemuItem = {
-  id: string
-  linkId: string
-  to: string
-  text: string
-  isActive: boolean
-}
 
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName
@@ -62,61 +55,11 @@ const StyledArrowLeft = styled(ArrowLeft)`
   color: ${({ theme }) => theme.text1};
 `
 
-export function SwapPoolTabs({ active }: { active: String }) {
+export function SwapPoolTabs({ active }: { active: string }) {
   const { t } = useTranslation()
 
-  const menus: Array<MemuItem> = useMemo<Array<MemuItem>>(() => {
-    return [
-      {
-        id: v4(),
-        linkId: 'swap-nav-link',
-        to: '/swap',
-        text: t('swap'),
-        isActive: active === 'swap'
-      },
-      {
-        id: v4(),
-        linkId: 'pool-nav-link',
-        to: '/pool',
-        text: t('pool'),
-        isActive: active === 'pool'
-      },
-      {
-        id: v4(),
-        linkId: 'yield-nav-link',
-        to: '/yield',
-        text: t('yield'),
-        isActive: active === 'yield'
-      },
-      {
-        id: v4(),
-        linkId: 'xmoon-nav-link',
-        to: '/xmoon',
-        text: t('xmoon'),
-        isActive: active === 'xmoon'
-      },
-      {
-        id: v4(),
-        linkId: 'marketpalce-nav-link',
-        to: '/marketpalce',
-        text: t('marketpalce'),
-        isActive: active === 'marketpalce'
-      },
-      {
-        id: v4(),
-        linkId: 'launchpad-nav-link',
-        to: '/launchpad',
-        text: t('launchpad'),
-        isActive: active === 'launchpad'
-      },
-      {
-        id: v4(),
-        linkId: 'xnova-nav-link',
-        to: '/xnova',
-        text: t('xnova'),
-        isActive: active === 'xnova'
-      }
-    ]
+  const menus: Array<MenuItem> = useMemo<Array<MenuItem>>(() => {
+    return getMenus(t, active)
   }, [t, active])
 
   return (
@@ -124,7 +67,7 @@ export function SwapPoolTabs({ active }: { active: String }) {
       style={{
         marginLeft: '20px'
       }}>
-      {menus.map((menu: MemuItem) => (
+      {menus.map((menu: MenuItem) => (
         <StyledNavLink
           key={menu.id}
           id={menu.linkId}
@@ -133,27 +76,6 @@ export function SwapPoolTabs({ active }: { active: String }) {
           {menu.text}
         </StyledNavLink>
       ))}
-      {/* <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => active === 'swap'}>
-        {t('swap')}
-      </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-        {t('pool')}
-      </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-      收益
-      </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-      xMoon
-      </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-      交易市场
-      </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-      发行
-      </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
-      借贷
-      </StyledNavLink> */}
     </Tabs>
   )
 }

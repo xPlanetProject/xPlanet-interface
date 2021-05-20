@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react'
 import { transparentize } from 'polished'
 import { Text, TextProps } from 'rebass'
 import styled, {
@@ -7,7 +8,7 @@ import styled, {
   DefaultTheme
 } from 'styled-components'
 
-import React, { useMemo } from 'react'
+import { isMobile, isDesktop } from 'react-device-detect'
 
 import BodyBackground from '@/assets/images/page-bg.png'
 import { useIsDarkMode } from '@/state/user/hooks'
@@ -15,10 +16,10 @@ import { Colors } from './styled'
 
 export * from './components'
 
-const MEDIA_WIDTHS = {
+export const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
   upToSmall: 600,
-  upToMedium: 960,
+  upToMedium: 1040,
   upToLarge: 1280
 }
 
@@ -45,7 +46,7 @@ export function colors(darkMode: boolean): Colors {
     // text
     text1: darkMode ? '#FFFFFF' : '#000000',
     text2: darkMode ? '#C3C5CB' : '#565A69',
-    text3: darkMode ? '#6C7284' : '#888D9B',
+    text3: darkMode ? '#BFBFBF' : '#333',
     text4: darkMode ? '#565A69' : '#C3C5CB',
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
 
@@ -105,6 +106,10 @@ export function theme(darkMode: boolean): DefaultTheme {
     ...colors(darkMode),
 
     darkMode,
+
+    //  device info
+    isMobile,
+    isDesktop,
 
     grids: {
       sm: 8,
@@ -210,13 +215,13 @@ export const TYPE = {
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
-  font-family: 'Inter', sans-serif;
+  font-family: FT Base,-apple-system,system-ui,BlinkMacSystemFont,SF Pro Text,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   letter-spacing: -0.018em;
   font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
-    font-family: 'Inter var', sans-serif;
+    font-family: FT Base,-apple-system,system-ui,BlinkMacSystemFont,SF Pro Text,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   }
 }
 

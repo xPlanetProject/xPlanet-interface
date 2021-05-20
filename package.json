@@ -87,7 +87,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "integration-test": "start-server-and-test 'serve build -l 3000' http://localhost:3000 'cypress run'",
-    "format:changed": "pretty-quick --pattern \"**/*.tsx\" --pattern \"**/*.ts\"",
+    "format:changed": "npx pretty-quick --pattern \"**/*.tsx\" --pattern \"**/*.ts\"",
     "format": "prettier --write \"**/*.tsx\" \"**/*.ts\"",
     "prepare": "husky install",
     "fix:githook": "chmod ug+x .husky/*"
@@ -140,6 +140,7 @@
     "inter-ui": "^3.13.1",
     "jazzicon": "^1.5.0",
     "lodash.flatmap": "^4.5.0",
+    "matchmedia-polyfill": "^0.3.2",
     "multicodec": "^2.0.0",
     "multihashes": "^3.0.1",
     "polished": "^3.3.2",

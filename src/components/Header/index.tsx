@@ -1,16 +1,17 @@
+import React, { useMemo } from 'react'
+import { MobileView, BrowserView } from 'react-device-detect'
+import { useLocation } from 'react-router-dom'
+
 import { ChainId } from '@uniswap/sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
-
-import React, { useMemo } from 'react'
-import { isMobile } from 'react-device-detect'
-import { useLocation } from 'react-router-dom'
 
 import Logo from '@/assets/images/logo.png'
 import LogoDark from '@/assets/images/logo.png'
 import { YellowCard } from '@/components/Card'
 import Menu from '@/components/Menu'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
+import { SwapPoolTabsMobile } from '@/components/NavigationTabs/mobile'
 import Row, { RowBetween } from '@/components/Row'
 import Web3Status from '@/components/Web3Status'
 import SwithTheme from '@/components/SwitchTheme'
@@ -35,11 +36,7 @@ const HeaderFrame = styled.div`
 `
 
 const HeaderRowBetweenWrapper = styled(RowBetween)`
-  ${({ theme }) => {
-    return `
-      border-bottom: solid 1px ${theme.headerBorder};
-    `
-  }}
+  ${({ theme }) => `border-bottom: solid 1px ${theme.headerBorder};`}
 `
 
 const HeaderElement = styled.div`
@@ -64,14 +61,6 @@ const Title = styled.a`
   :hover {
     cursor: pointer;
   }
-`
-
-const TitleText = styled(Row)`
-  width: fit-content;
-  white-space: nowrap;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
 `
 
 const AccountElement = styled.div<{ active: boolean }>`
@@ -102,6 +91,13 @@ const NetworkCard = styled(YellowCard)`
   padding: 8px 12px;
 `
 
+const HeaderMemuRow = styled(Row)`
+  align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    justify-content: space-between;
+  `};
+};`
+
 const LogoIcon = styled.div`
   display: flex;
   align-items: center;
@@ -121,10 +117,13 @@ const HeaderControls = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-direction: column;
-    align-items: flex-end;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0.6rem;
+    justify-content: space-between;
   `};
 `
 
@@ -159,26 +158,23 @@ export default function Header() {
   return (
     <HeaderFrame>
       <HeaderRowBetweenWrapper alignItems='center' padding='1rem'>
-        <Row alignItems='center'>
+        <HeaderMemuRow>
           <HeaderElement>
             <Title href='.'>
               <LogoIcon>
                 <img src={isDark ? LogoDark : Logo} alt='logo' />
               </LogoIcon>
-              <TitleText>
-                {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
-              </TitleText>
             </Title>
           </HeaderElement>
-          <SwapPoolTabs active={currentActive} />
-        </Row>
+          <BrowserView>
+            <SwapPoolTabs active={currentActive} />
+          </BrowserView>
+          <MobileView>
+            <SwapPoolTabsMobile active={currentActive} />
+          </MobileView>
+        </HeaderMemuRow>
         <HeaderControls>
           <HeaderElement>
-            <TestnetWrapper>
-              {!isMobile && chainId && NETWORK_LABELS[chainId] && (
-                <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>
-              )}
-            </TestnetWrapper>
             <AccountElement
               active={!!account}
               style={{ pointerEvents: 'auto' }}>
@@ -193,9 +189,16 @@ export default function Header() {
               ) : null}
               <Web3Status />
             </AccountElement>
-            <SwithTheme />
+            <BrowserView>
+              <TestnetWrapper>
+                {chainId && NETWORK_LABELS[chainId] && (
+                  <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>
+                )}
+              </TestnetWrapper>
+            </BrowserView>
           </HeaderElement>
           <HeaderElementWrap>
+            <SwithTheme />
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>
