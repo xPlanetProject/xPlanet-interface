@@ -147,7 +147,6 @@ export default function PoolFinder() {
             </Text>
           </ColumnCenter>
         )}
-
         {currency0 && currency1 ? (
           pairState === PairState.EXISTS ? (
             hasPosition && pair ? (

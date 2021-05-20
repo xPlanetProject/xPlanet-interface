@@ -6,7 +6,11 @@ import { Menu, X } from 'react-feather'
 import { darken } from 'polished'
 import styled from 'styled-components'
 
+import { useDarkModeManager } from '@/state/user/hooks'
+
 import { RowBetween, AutoRow } from '@/components/Row'
+import MobileLogo from '@/assets/svg/mobile_logo_yellow.svg'
+import MobileLogoDark from '@/assets/svg/mobile_logo_dark.svg'
 
 import getMenus, { MenuItem } from './menus'
 
@@ -19,6 +23,15 @@ const StyledMenu = styled(Menu)`
 
   > * {
     stroke: ${({ theme }) => theme.text1};
+  }
+`
+
+const LogoIcon = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  img {
+    width: 2rem;
   }
 `
 
@@ -101,6 +114,8 @@ export function SwapPoolTabsMobile({ active }: { active: string }) {
   const [ linkMenu, setLinkMenu ] = useState<boolean>(false)
   const { t } = useTranslation()
 
+  const [isDark] = useDarkModeManager()
+
   const toggleLinkMenu = useCallback(() => {
     setLinkMenu((oldValue) => !oldValue)
   },[])
@@ -115,7 +130,10 @@ export function SwapPoolTabsMobile({ active }: { active: string }) {
       {
         linkMenu && (
           <MenuFlyout>
-            <StyledAutoRow justify="flex-end">
+            <StyledAutoRow justify="space-between">
+              <LogoIcon>
+                <img src={isDark ? MobileLogo : MobileLogoDark} alt='logo' />
+              </LogoIcon>
               <StyledX onClick={toggleLinkMenu} />
             </StyledAutoRow>
             {

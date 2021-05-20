@@ -1,5 +1,8 @@
 import { Text } from 'rebass'
 import styled from 'styled-components'
+import { AutoColumn } from '@/components/Column'
+import { RowBetween, RowFixed } from '@/components/Row'
+import { ButtonPrimary, ButtonSecondary } from '@/components/Button'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -53,4 +56,63 @@ export const Dots = styled.span`
       content: '...';
     }
   }
+`
+
+export const PageWrapper = styled(AutoColumn)`
+  max-width: 870px;
+  width: 100%;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    max-width: 800px;
+  `};
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    max-width: 500px;
+  `};
+`
+
+export const TitleRow = styled(RowBetween)`
+  color: ${({ theme }) => theme.text2};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    flex-direction: column-reverse;
+  `};
+`
+
+export const ButtonRow = styled(RowFixed)`
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  `};
+`
+
+export const ResponsiveButtonPrimary = styled(ButtonPrimary)`
+  border-radius: 12px;
+  padding: 6px 8px;
+  width: fit-content;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex: 1 1 auto;
+    width: 49%;
+  `};
+`
+
+export const ResponsiveButtonSecondary = styled(ButtonSecondary)`
+  border-radius: 12px;
+  padding: 6px 8px;
+  width: fit-content;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex: 1 1 auto;
+    width: 49%;
+  `};
+`
+export const LiquidityWrapper = styled.div`
+  border-radius: 20px;
+  padding: 8px;
+  ${({ theme }) => `background: ${theme.bg1};`};
 `

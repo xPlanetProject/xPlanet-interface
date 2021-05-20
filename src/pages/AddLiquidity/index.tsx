@@ -2,10 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import {
   Currency,
-  currencyEquals,
+  // currencyEquals,
   ETHER,
   TokenAmount,
-  WETH
+  // WETH
 } from '@uniswap/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
@@ -25,7 +25,7 @@ import { AutoColumn, ColumnCenter } from '@/components/Column'
 import CurrencyInputPanel from '@/components/CurrencyInputPanel'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { AddRemoveTabs } from '@/components/NavigationTabs'
-import { MinimalPositionCard } from '@/components/PositionCard'
+// import { MinimalPositionCard } from '@/components/PositionCard'
 import Row, { RowBetween, RowFlat } from '@/components/Row'
 import TransactionConfirmationModal, {
   ConfirmationModalContent
@@ -77,11 +77,11 @@ export default function AddLiquidity({
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
 
-  const oneCurrencyIsWETH = Boolean(
-    chainId &&
-      ((currencyA && currencyEquals(currencyA, WETH[chainId])) ||
-        (currencyB && currencyEquals(currencyB, WETH[chainId])))
-  )
+  // const oneCurrencyIsWETH = Boolean(
+  //   chainId &&
+  //     ((currencyA && currencyEquals(currencyA, WETH[chainId])) ||
+  //       (currencyB && currencyEquals(currencyB, WETH[chainId])))
+  // )
 
   const toggleWalletModal = useWalletModalToggle() // toggle wallet when disconnected
 
@@ -92,7 +92,7 @@ export default function AddLiquidity({
   const {
     dependentField,
     currencies,
-    pair,
+    // pair,
     pairState,
     currencyBalances,
     parsedAmounts,
@@ -542,11 +542,11 @@ export default function AddLiquidity({
         </Wrapper>
       </AppBody>
 
-      {pair && !noLiquidity && pairState !== PairState.INVALID ? (
+      {/* {pair && !noLiquidity && pairState !== PairState.INVALID ? (
         <AutoColumn style={{ minWidth: '20rem', marginTop: '1rem' }}>
           <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
         </AutoColumn>
-      ) : null}
+      ) : null} */}
     </>
   )
 }

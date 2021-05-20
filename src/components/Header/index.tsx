@@ -6,8 +6,10 @@ import { ChainId } from '@uniswap/sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 
-import Logo from '@/assets/images/logo.png'
-import LogoDark from '@/assets/images/logo.png'
+import Logo from '@/assets/svg/logo_yellow.svg'
+import LogoDark from '@/assets/svg/logo_dark.svg'
+import MobileLogo from '@/assets/svg/mobile_logo_yellow.svg'
+import MobileLogoDark from '@/assets/svg/mobile_logo_dark.svg'
 import { YellowCard } from '@/components/Card'
 import Menu from '@/components/Menu'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
@@ -113,6 +115,14 @@ const LogoIcon = styled.div`
   }};
 `
 
+const LogoIconMobile = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 2rem;
+  }
+`
+
 const HeaderControls = styled.div`
   display: flex;
   flex-direction: row;
@@ -161,9 +171,16 @@ export default function Header() {
         <HeaderMemuRow>
           <HeaderElement>
             <Title href='.'>
-              <LogoIcon>
-                <img src={isDark ? LogoDark : Logo} alt='logo' />
-              </LogoIcon>
+                <MobileView>
+                  <LogoIconMobile>
+                    <img src={isDark ? MobileLogo : MobileLogoDark} alt='logo' />  
+                  </LogoIconMobile>
+                </MobileView>
+                <BrowserView>
+                  <LogoIcon>
+                    <img src={isDark ? Logo : LogoDark} alt='logo' />
+                  </LogoIcon>
+                </BrowserView>
             </Title>
           </HeaderElement>
           <BrowserView>
