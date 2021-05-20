@@ -16,7 +16,7 @@ import { ExternalLink } from '@/theme'
 import { currencyId } from '@/utils/currencyId'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
 import { JSBI, Pair, Percent } from '@uniswap/sdk'
-import { darken } from 'polished'
+// import { darken } from 'polished'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 
@@ -25,9 +25,11 @@ export const FixedHeightRow = styled(RowBetween)`
 `
 
 export const HoverCard = styled(Card)`
-  border: 1px solid ${({ theme }) => theme.bg2};
+  padding: 16px;
+  transition: all 0.2s;
+  ${({ theme }) => `background: ${theme.bg2};`};
   :hover {
-    border: 1px solid ${({ theme }) => darken(0.06, theme.bg2)};
+    background: ${({ theme }) => theme.bg3};
   }
 `
 
@@ -56,7 +58,6 @@ export function MinimalPositionCard({
   const totalPoolTokens = useTotalSupply(pair.liquidityToken)
 
   const [token0Deposited, token1Deposited] =
-    !!pair &&
     !!totalPoolTokens &&
     !!userPoolBalance &&
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
@@ -103,7 +104,7 @@ export function MinimalPositionCard({
               </RowFixed>
               <RowFixed>
                 <Text fontWeight={500} fontSize={20}>
-                  {userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}
+                  {userPoolBalance.toSignificant(4)}
                 </Text>
               </RowFixed>
             </FixedHeightRow>
@@ -119,7 +120,7 @@ export function MinimalPositionCard({
                       fontSize={16}
                       fontWeight={500}
                       marginLeft={'6px'}>
-                      {token0Deposited?.toSignificant(6)}
+                      {token0Deposited.toSignificant(6)}
                     </Text>
                   </RowFixed>
                 ) : (
@@ -137,7 +138,7 @@ export function MinimalPositionCard({
                       fontSize={16}
                       fontWeight={500}
                       marginLeft={'6px'}>
-                      {token1Deposited?.toSignificant(6)}
+                      {token1Deposited.toSignificant(6)}
                     </Text>
                   </RowFixed>
                 ) : (
@@ -176,7 +177,6 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
       : undefined
 
   const [token0Deposited, token1Deposited] =
-    !!pair &&
     !!totalPoolTokens &&
     !!userPoolBalance &&
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
@@ -237,7 +237,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               {token0Deposited ? (
                 <RowFixed>
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                    {token0Deposited?.toSignificant(6)}
+                    {token0Deposited.toSignificant(6)}
                   </Text>
                   <CurrencyLogo
                     size='20px'
@@ -259,7 +259,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               {token1Deposited ? (
                 <RowFixed>
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                    {token1Deposited?.toSignificant(6)}
+                    {token1Deposited.toSignificant(6)}
                   </Text>
                   <CurrencyLogo
                     size='20px'

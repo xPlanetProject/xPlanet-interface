@@ -27,6 +27,8 @@ import {
   LiquidityWrapper
 } from './styleds'
 
+import CTACards from './CTACards'
+
 export default function Pool() {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
@@ -63,8 +65,8 @@ export default function Pool() {
   )
   const v2IsLoading =
     fetchingV2PairBalances ||
-    v2Pairs?.length < liquidityTokensWithBalances.length ||
-    v2Pairs?.some((V2Pair) => !V2Pair)
+    v2Pairs.length < liquidityTokensWithBalances.length ||
+    v2Pairs.some((V2Pair) => !V2Pair)
 
   const allV2PairsWithLiquidity = v2Pairs
     .map(([, pair]) => pair)
@@ -93,6 +95,8 @@ export default function Pool() {
               </ResponsiveButtonPrimary>
             </ButtonRow>
           </TitleRow>
+
+          <CTACards />
 
           <AutoColumn gap='12px' style={{ width: '100%' }}>
             <LiquidityWrapper>
