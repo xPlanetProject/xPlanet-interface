@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components'
 import { HideSmall, TYPE } from '@/theme'
 
 import { AutoColumn } from '@/components/Column'
-import { RowBetween } from '@/components/Row'
+import { RowBetween,  } from '@/components/Row'
 import { DarkCard } from '@/components/Card'
 import PoolList from './PoolList'
 
