@@ -51,6 +51,15 @@ const PoolIdData = styled.div`
   }
 `
 
+const DataText = styled.div`
+  font-weight: 600;
+  font-size: 18px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size: 14px;
+  `};
+`
+
 const PoolData = styled.div`
   font-size: 14px;
   display: flex;
@@ -95,6 +104,9 @@ export default function PoolListItme({ id, token0, token1 }: PairProps) {
           size={24}
           margin
         />
+        <DataText>
+          &nbsp;{token0?.symbol}&nbsp;/&nbsp;{token1?.symbol}
+        </DataText>
       </PoolIdData>
 
       <PoolData>
