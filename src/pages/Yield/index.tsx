@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
 
-import styled, { ThemeContext } from 'styled-components'
-import { HideSmall, TYPE } from '@/theme'
-
-import { AutoColumn } from '@/components/Column'
-import { RowBetween } from '@/components/Row'
-import { DarkCard } from '@/components/Card'
 import PoolList from './PoolList'
+import { DarkCard } from '@/components/Card'
+import { AutoColumn } from '@/components/Column'
+import Question from '@/components/QuestionHelper'
+import { RowBetween } from '@/components/Row'
+import { HideSmall, TYPE } from '@/theme'
+import { Text } from 'rebass'
+import styled, { ThemeContext } from 'styled-components'
+import { CountUp } from 'use-count-up'
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 870px;
@@ -48,9 +50,9 @@ export default function Yield() {
   console.log(theme)
 
   const poolInfo: Array<any> = [
-    { key: 'Value of staked LP', value: '999,999,999 XKEY' },
-    { key: 'Yield', value: '10,000,000 XKEY' },
-    { key: 'Rate', value: '108 XKEY/Block' }
+    { key: 'Value of staked LP (XKEY)', value: 999999999 },
+    { key: 'Yield (XKEY)', value: 10000000 },
+    { key: 'Rate (XKEY/Block)', value: 108 }
   ]
 
   return (
@@ -60,27 +62,41 @@ export default function Yield() {
           <AutoColumn gap='lg' style={{ width: '100%' }}>
             <TitleRow>
               <HideSmall>
-                <TYPE.mediumHeader>xLP NFT Mining</TYPE.mediumHeader>
+                <TYPE.mediumHeader>xPoker Mining</TYPE.mediumHeader>
               </HideSmall>
             </TitleRow>
 
             <DarkCard>
               <ResponsiveRow>
-                {poolInfo.map(item => (
+                {poolInfo.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
                     <TYPE.largeHeader
-                      color={theme.yellow3}
+                      color={theme.text1}
                       fontSize='1.5rem'
                       margin='0 0 0.5rem'
                       fontWeight={500}>
-                      {item.value}
+                      <CountUp
+                        isCounting
+                        thousandsSeparator=','
+                        end={item.value}
+                        duration={3.2}
+                      />
                     </TYPE.largeHeader>
-                    <TYPE.subHeader>{item.key}</TYPE.subHeader>
+                    <TYPE.subHeader color={theme.text3}>
+                      {item.key}
+                    </TYPE.subHeader>
                   </BaseInfoItem>
                 ))}
               </ResponsiveRow>
             </DarkCard>
             <DarkCard>
+              <RowBetween padding={'8px 8px 15px'}>
+                <Text color={theme.text1} fontWeight={500}>
+                  Pool List
+                </Text>
+                <Question text='When you add liquidity, you are given pool NFT that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.' />
+              </RowBetween>
+
               <PoolList />
             </DarkCard>
           </AutoColumn>

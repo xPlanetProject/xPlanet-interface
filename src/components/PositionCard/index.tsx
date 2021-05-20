@@ -1,18 +1,7 @@
-import { JSBI, Pair, Percent } from '@uniswap/sdk'
-import { darken } from 'polished'
-import { Text } from 'rebass'
-import styled from 'styled-components'
-
 import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
 
-import { useTotalSupply } from '@/data/TotalSupply'
-import { useActiveWeb3React } from '@/hooks'
-import { useTokenBalance } from '@/state/wallet/hooks'
-import { ExternalLink } from '@/theme'
-import { currencyId } from '@/utils/currencyId'
-import { unwrappedToken } from '@/utils/wrappedCurrency'
 import { ButtonSecondary } from '@/components/Button'
 import Card, { GreyCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
@@ -20,6 +9,16 @@ import CurrencyLogo from '@/components/CurrencyLogo'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { AutoRow, RowBetween, RowFixed } from '@/components/Row'
 import { Dots } from '@/components/swap/styleds'
+import { useTotalSupply } from '@/data/TotalSupply'
+import { useActiveWeb3React } from '@/hooks'
+import { useTokenBalance } from '@/state/wallet/hooks'
+import { ExternalLink } from '@/theme'
+import { currencyId } from '@/utils/currencyId'
+import { unwrappedToken } from '@/utils/wrappedCurrency'
+import { JSBI, Pair, Percent } from '@uniswap/sdk'
+import { darken } from 'polished'
+import { Text } from 'rebass'
+import styled from 'styled-components'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -155,6 +154,8 @@ export function MinimalPositionCard({
 
 export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const { account } = useActiveWeb3React()
+
+  console.log(pair)
 
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)

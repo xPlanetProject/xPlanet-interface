@@ -1,38 +1,57 @@
 import React from 'react'
-import PoolListItme from './PoolListItme'
 
-const poolList: Array<any> = [
+import PoolListItme from './PoolListItme'
+import { Token } from '@uniswap/sdk'
+
+interface PoolPair {
+  id: string
+  token0: Token
+  token1: Token
+}
+
+const poolList: Array<PoolPair> = [
   {
     id: 'XKEY-USDT',
-    address: '0xa10740ff9FF6852eac84cdcfF9184e1D6d27C057',
-    token0: {
-      symbol: 'XKEY',
-      address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-    },
-    token1: {
-      symbol: 'USDT',
-      address: '0xdAC17F958D2ee523a2206206994597C13D831ec7'
-    }
+    token0: new Token(
+      1,
+      '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+      18,
+      'XKEY'
+    ),
+    token1: new Token(
+      1,
+      '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      18,
+      'USDT'
+    )
   },
   {
     id: 'XKEY-ETH',
-    address: '0xa10740ff9FF6852eac84cdcfF9184e1D6d27C057',
-    token0: {
-      symbol: 'XKEY',
-      address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-    },
-    token1: {
-      symbol: 'ETH',
-      address: '0xdAC17F958D2ee523a2206206994597C13D831ec7'
-    }
+    token0: new Token(
+      1,
+      '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+      18,
+      'XKEY'
+    ),
+    token1: new Token(
+      1,
+      '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      18,
+      'ETH'
+    )
   }
 ]
 
 export default function PoolList() {
   return (
     <>
-      {poolList.map(item => (
-        <PoolListItme data={item} key={item.id} />
+      {poolList.map((item) => (
+        <PoolListItme
+          id={item.id}
+          token0={item.token0}
+          token1={item.token1}
+          key={item.id}
+        />
       ))}
     </>
   )

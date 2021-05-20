@@ -1,9 +1,8 @@
-import { Currency } from '@uniswap/sdk'
-import styled from 'styled-components'
-
 import React from 'react'
 
 import CurrencyLogo from '@/components/CurrencyLogo'
+import { Currency } from '@uniswap/sdk'
+import styled from 'styled-components'
 
 const Wrapper = styled.div<{ margin: boolean; sizeraw: number }>`
   position: relative;
@@ -34,6 +33,8 @@ export default function DoubleCurrencyLogo({
   size = 16,
   margin = false
 }: DoubleCurrencyLogoProps) {
+  console.log(currency0, currency1, size, margin)
+
   return (
     <Wrapper sizeraw={size} margin={margin}>
       {currency0 && (
