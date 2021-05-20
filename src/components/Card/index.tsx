@@ -18,6 +18,10 @@ const Card = styled(Box)<{
 `
 export default Card
 
+export const DarkCard = styled(Card)`
+  background-color: ${({ theme }) => theme.bg0};
+`
+
 export const LightCard = styled(Card)`
   border: 1px solid ${({ theme }) => theme.bg2};
   background-color: ${({ theme }) => theme.bg1};
