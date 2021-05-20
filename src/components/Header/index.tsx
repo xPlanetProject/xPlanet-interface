@@ -36,11 +36,7 @@ const HeaderFrame = styled.div`
 `
 
 const HeaderRowBetweenWrapper = styled(RowBetween)`
-  ${({ theme }) => {
-    return `
-      border-bottom: solid 1px ${theme.headerBorder};
-    `
-  }}
+  ${({ theme }) => `border-bottom: solid 1px ${theme.headerBorder};`}
 `
 
 const HeaderElement = styled.div`

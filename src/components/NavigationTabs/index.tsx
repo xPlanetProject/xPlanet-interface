@@ -20,14 +20,6 @@ const Tabs = styled.div`
 
 const activeClassName = 'ACTIVE'
 
-type MemuItem = {
-  id: string
-  linkId: string
-  to: string
-  text: string
-  isActive: boolean
-}
-
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName
 })`
@@ -75,7 +67,7 @@ export function SwapPoolTabs({ active }: { active: string }) {
       style={{
         marginLeft: '20px'
       }}>
-      {menus.map((menu: MemuItem) => (
+      {menus.map((menu: MenuItem) => (
         <StyledNavLink
           key={menu.id}
           id={menu.linkId}
