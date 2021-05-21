@@ -288,7 +288,6 @@ export default function WalletModal({
 
       // return rest of options
       return (
-        !isMobile &&
         !option.mobileOnly && (
           <Option
             id={`connect-${key}`}

@@ -1,7 +1,7 @@
 import React from 'react'
+import { Token } from '@uniswap/sdk'
 
 import PoolListItme from './PoolListItme'
-import { Token } from '@uniswap/sdk'
 
 interface PoolPair {
   id: string

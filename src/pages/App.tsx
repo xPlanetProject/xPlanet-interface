@@ -16,6 +16,7 @@ import {
   RedirectToAddLiquidity
 } from './AddLiquidity/redirects'
 import Pool from './Pool'
+import PoolDetail from './PoolDetail'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
@@ -93,7 +94,7 @@ export default function App() {
                 />
                 <Route exact strict path='/find' component={PoolFinder} />
                 <Route exact strict path='/pool' component={Pool} />
-                <Route exact strict path='/pool/:tokenId' component={Pool} />
+                <Route exact strict path='/pool/:tokenId' component={PoolDetail} />
                 <Route
                   exact
                   strict

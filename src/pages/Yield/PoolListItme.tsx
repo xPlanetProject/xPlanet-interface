@@ -18,7 +18,7 @@ const Row = styled(Link)`
   padding: 16px;
   text-decoration: none;
   font-weight: 500;
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: ${({ theme }) => theme.bg2};
 
   &:first-of-type {
     margin: 0 0 8px 0;
@@ -30,7 +30,7 @@ const Row = styled(Link)`
     text-align: right;
   }
   :hover {
-    background-color: ${({ theme }) => theme.bg2};
+    background-color: ${({ theme }) => theme.bg3};
   }
   @media screen and (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: row;

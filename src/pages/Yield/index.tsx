@@ -47,7 +47,6 @@ const BaseInfoItem = styled(AutoColumn)`
 
 export default function Yield() {
   const theme = useContext(ThemeContext)
-  console.log(theme)
 
   const poolInfo: Array<any> = [
     { key: 'Value of staked LP (XKEY)', value: 999999999 },
@@ -65,7 +64,6 @@ export default function Yield() {
                 <TYPE.mediumHeader>xPoker Mining</TYPE.mediumHeader>
               </HideSmall>
             </TitleRow>
-
             <DarkCard>
               <ResponsiveRow>
                 {poolInfo.map((item) => (
@@ -96,7 +94,6 @@ export default function Yield() {
                 </Text>
                 <Question text='When you add liquidity, you are given pool NFT that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.' />
               </RowBetween>
-
               <PoolList />
             </DarkCard>
           </AutoColumn>
