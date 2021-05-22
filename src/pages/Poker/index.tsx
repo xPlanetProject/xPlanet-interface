@@ -4,14 +4,15 @@ import {
   ResponsiveRow,
   PowerInfoDivider,
   PowerCard,
-  PokerImage
+  PokerImage,
+  StakeLink
 } from './styleds'
 import PokerImg from '@/assets/images/poker.jpeg'
 import { ButtonOutlined } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import Question from '@/components/QuestionHelper'
-import { RowBetween, RowEnd } from '@/components/Row'
+import { RowBetween, RowAround, RowEnd } from '@/components/Row'
 import { HideSmall, TYPE } from '@/theme'
 import styled, { ThemeContext } from 'styled-components'
 
@@ -81,7 +82,6 @@ export default function Poker() {
                 {pokerInfo.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
                     <TYPE.largeHeader
-                      color={theme.yellow3}
                       fontSize='1.5rem'
                       margin='0 0 0.5rem'
                       fontWeight={500}>
@@ -96,7 +96,6 @@ export default function Poker() {
                 {pokerPower.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
                     <TYPE.largeHeader
-                      color={theme.yellow3}
                       fontSize='1.5rem'
                       margin='0 0 0.5rem'
                       fontWeight={500}>
@@ -131,7 +130,9 @@ export default function Poker() {
               </PowerCard>
               <PowerCard>
                 <DarkCard>
-                  <TYPE.mediumHeader textAlign='center'>My Reward</TYPE.mediumHeader>
+                  <TYPE.mediumHeader textAlign='center'>
+                    My Reward
+                  </TYPE.mediumHeader>
                   <TYPE.mediumHeader textAlign='center' marginTop='20px'>
                     100
                   </TYPE.mediumHeader>
@@ -143,7 +144,7 @@ export default function Poker() {
                       fontSize: '12px',
                       margin: '20px auto 0'
                     }}>
-                    Staked xPoker
+                    Harvest
                   </ButtonOutlined>
                 </DarkCard>
               </PowerCard>
@@ -159,28 +160,33 @@ export default function Poker() {
                     <img src={PokerImg} alt={'poker img'} />
                   </PokerImage>
 
-                  <RowBetween>
-                    <ButtonOutlined
-                      style={{
-                        width: 'auto',
-                        padding: '0.4rem .6rem',
-                        borderRadius: '16px',
-                        fontSize: '12px',
-                        margin: '20px auto 0'
-                      }}>
-                      Stake
-                    </ButtonOutlined>
-                    <ButtonOutlined
-                      style={{
-                        width: 'auto',
-                        padding: '0.4rem .6rem',
-                        borderRadius: '16px',
-                        fontSize: '12px',
-                        margin: '20px auto 0'
-                      }}>
-                      Unstake
-                    </ButtonOutlined>
-                  </RowBetween>
+                  <RowAround>
+                    <StakeLink to='/stake'>
+                      <ButtonOutlined
+                        style={{
+                          width: 'auto',
+                          padding: '0.4rem .6rem',
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          margin: '20px auto 0'
+                        }}>
+                        Stake
+                      </ButtonOutlined>
+                    </StakeLink>
+
+                    <StakeLink to='/stake'>
+                      <ButtonOutlined
+                        style={{
+                          width: 'auto',
+                          padding: '0.4rem .6rem',
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          margin: '20px auto 0'
+                        }}>
+                        Unstake
+                      </ButtonOutlined>
+                    </StakeLink>
+                  </RowAround>
                 </DarkCard>
               </PowerCard>
               <PowerCard>
@@ -191,28 +197,33 @@ export default function Poker() {
                   <PokerImage>
                     <img src={PokerImg} alt={'poker img'} />
                   </PokerImage>
-                  <RowBetween>
-                    <ButtonOutlined
-                      style={{
-                        width: 'auto',
-                        padding: '0.4rem .6rem',
-                        borderRadius: '16px',
-                        fontSize: '12px',
-                        margin: '20px auto 0'
-                      }}>
-                      Stake
-                    </ButtonOutlined>
-                    <ButtonOutlined
-                      style={{
-                        width: 'auto',
-                        padding: '0.4rem .6rem',
-                        borderRadius: '16px',
-                        fontSize: '12px',
-                        margin: '20px auto 0'
-                      }}>
-                      Unstake
-                    </ButtonOutlined>
-                  </RowBetween>
+                  <RowAround>
+                    <StakeLink to='/stake'>
+                      <ButtonOutlined
+                        style={{
+                          width: 'auto',
+                          padding: '0.4rem .6rem',
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          margin: '20px auto 0'
+                        }}>
+                        Stake
+                      </ButtonOutlined>
+                    </StakeLink>
+
+                    <StakeLink to='/stake'>
+                      <ButtonOutlined
+                        style={{
+                          width: 'auto',
+                          padding: '0.4rem .6rem',
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          margin: '20px auto 0'
+                        }}>
+                        Unstake
+                      </ButtonOutlined>
+                    </StakeLink>
+                  </RowAround>
                 </DarkCard>
               </PowerCard>
             </ResponsiveRow>

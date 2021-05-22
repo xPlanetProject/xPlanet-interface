@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { RowBetween } from '@/components/Row'
 import styled from 'styled-components'
 
@@ -32,4 +34,8 @@ export const PokerImage = styled.div`
     width: 100%;
     height: 100%;
   }
+`
+
+export const StakeLink = styled(Link)`
+  text-decoration: none;
 `
