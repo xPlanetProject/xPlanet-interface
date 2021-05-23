@@ -116,16 +116,18 @@ export default function Poker() {
                   <TYPE.mediumHeader textAlign='center' marginTop='20px'>
                     100
                   </TYPE.mediumHeader>
-                  <ButtonOutlined
-                    style={{
-                      width: 'auto',
-                      padding: '0.4rem .6rem',
-                      borderRadius: '16px',
-                      fontSize: '12px',
-                      margin: '20px auto 0'
-                    }}>
-                    Staked xPoker
-                  </ButtonOutlined>
+                  <StakeLink to='/unstake'>
+                    <ButtonOutlined
+                      style={{
+                        width: 'auto',
+                        padding: '0.4rem .6rem',
+                        borderRadius: '16px',
+                        fontSize: '12px',
+                        margin: '20px auto 0'
+                      }}>
+                      Staked xPoker
+                    </ButtonOutlined>
+                  </StakeLink>
                 </DarkCard>
               </PowerCard>
               <PowerCard>
@@ -174,7 +176,7 @@ export default function Poker() {
                       </ButtonOutlined>
                     </StakeLink>
 
-                    <StakeLink to='/stake'>
+                    <StakeLink to='/unstake'>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
@@ -211,7 +213,7 @@ export default function Poker() {
                       </ButtonOutlined>
                     </StakeLink>
 
-                    <StakeLink to='/stake'>
+                    <StakeLink to='/unstake'>
                       <ButtonOutlined
                         style={{
                           width: 'auto',

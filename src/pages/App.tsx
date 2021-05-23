@@ -9,6 +9,7 @@ import {
 } from './AddLiquidity/redirects'
 import Poker from './Poker'
 import Stake from './Stake'
+import UnStake from './Stake/unstake'
 import Pool from './Pool'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
@@ -103,6 +104,7 @@ export default function App() {
                 <Route exact strict path='/yield' component={Yield} />
                 <Route exact strict path='/poker/:tokenId' component={Poker} />
                 <Route exact strict path='/stake' component={Stake} />
+                <Route exact strict path='/unstake' component={UnStake} />
                 
                 <Route exact strict path='/xmoon' component={TestComponent} />
                 <Route

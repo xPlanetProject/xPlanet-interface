@@ -4,6 +4,6 @@ export type PokerItemType = {
   id: string
   pokerType: PokerType
   pokerNumber: string
-  amount: string
-  miningPower: string
+  amount?: string
+  miningPower?: string
 }

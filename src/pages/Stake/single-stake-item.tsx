@@ -47,10 +47,10 @@ const SingleStakeItem: React.FC<ISingleStakeItemProps> = ({
           <TYPE.subHeader>{data?.id}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>{data?.amount}</TYPE.subHeader>
+          <TYPE.subHeader>{`${data?.pokerType} ${data?.pokerNumber}`}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>{`${data?.pokerType} ${data?.pokerNumber}`}</TYPE.subHeader>
+          <TYPE.subHeader>{data?.amount}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
           <TYPE.subHeader>{data?.miningPower}</TYPE.subHeader>

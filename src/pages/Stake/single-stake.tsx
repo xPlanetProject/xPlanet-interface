@@ -78,10 +78,10 @@ const SingleStake: React.FC = () => {
           <TYPE.subHeader>ID</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>流动性份额</TYPE.subHeader>
+          <TYPE.subHeader>Poker</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>Poker</TYPE.subHeader>
+          <TYPE.subHeader>流动性份额</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
           <TYPE.subHeader>算力</TYPE.subHeader>
@@ -95,7 +95,6 @@ const SingleStake: React.FC = () => {
       })}
       <RowBetween style={{ marginTop: 20 }}>
         <TYPE.subHeader>Currently Selected: 5/20</TYPE.subHeader>
-
         <ButtonLight
           style={{
             width: 'auto',
