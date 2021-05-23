@@ -7,3 +7,11 @@ export type PokerItemType = {
   amount?: string
   miningPower?: string
 }
+
+
+export type PokerGroupType = {
+  id: string
+  group: string;
+  amount?: string
+  miningPower?: string
+}

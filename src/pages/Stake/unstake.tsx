@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import UnStakeSingle from './unstake-poker-single'
+import UnStakeSynthetic from './unstake-poker-synthetic'
 import { TitleRow, PageWrapper, StakeTabConent } from './styleds'
 import { ButtonLight, ButtonGray } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
@@ -53,7 +54,7 @@ const UnStake: React.FC = () => {
             <DarkCard>
               <StakeTabConent>
                 {stakeType === 'SINGLE' && <UnStakeSingle />}
-                {stakeType === 'SYNTHETIC' && "SYNTHETIC"}
+                {stakeType === 'SYNTHETIC' && <UnStakeSynthetic />}
               </StakeTabConent>
             </DarkCard>
           </AutoColumn>
