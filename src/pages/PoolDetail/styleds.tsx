@@ -4,7 +4,6 @@ import { ButtonPrimary } from '@/components/Button'
 import { AutoColumn } from '@/components/Column'
 import { RowBetween } from '@/components/Row'
 import { TYPE } from '@/theme'
-import { expectation } from 'cypress/types/sinon'
 
 export const PageWrapper = styled(AutoColumn)`
   max-width: 870px;

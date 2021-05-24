@@ -1,7 +1,5 @@
-import React, { useMemo, useContext } from 'react'
+import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-
-import { ThemeContext } from 'styled-components'
 
 import { useTranslation } from 'react-i18next'
 
@@ -9,19 +7,14 @@ import { Pair } from '@uniswap/sdk'
 
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
-import DoubleCurrencyLogo from '@/components/DoubleLogo'
-import { RowFixed, RowBetween } from '@/components/Row'
-import { ButtonGray } from '@/components/Button'
 import { NFT } from '@/components/NFT'
 import { usePairs } from '@/data/Reserves'
 import { useActiveWeb3React } from '@/hooks'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '@/state/user/hooks'
 import { useTokenBalancesWithLoadingIndicator } from '@/state/wallet/hooks'
-import { TYPE } from '@/theme'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { currencyId } from '@/utils/currencyId'
 
-import { PageWrapper, ResponsiveRow, HoverText, ResponsiveButtonPrimary, Label } from './styleds'
+import { PageWrapper, ResponsiveRow, HoverText } from './styleds'
 import LiquidityInfo from './LiquidityInfo'
 import PriceInfo from './PriceInfo'
 

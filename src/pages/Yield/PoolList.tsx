@@ -1,7 +1,7 @@
 import React from 'react'
 import { Token } from '@uniswap/sdk'
 
-import PoolListItme from './PoolListItme'
+import PoolListItem from './PoolListItem'
 
 interface PoolPair {
   id: string
@@ -46,7 +46,7 @@ export default function PoolList() {
   return (
     <>
       {poolList.map((item) => (
-        <PoolListItme
+        <PoolListItem
           id={item.id}
           token0={item.token0}
           token1={item.token1}

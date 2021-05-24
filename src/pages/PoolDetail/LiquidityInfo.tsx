@@ -12,7 +12,6 @@ import Badge from '@/components/Badge'
 import { useActiveWeb3React } from '@/hooks'
 import { TYPE } from '@/theme'
 import { useTokenBalance } from '@/state/wallet/hooks'
-import { unwrappedToken } from '@/utils/wrappedCurrency'
 
 import { Label } from './styleds'
 

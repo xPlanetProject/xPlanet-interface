@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import Card, { GreyCard } from '@/components/Card'
+import Badge from '@/components/Badge'
 import { AutoColumn } from '@/components/Column'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { RowBetween, RowFixed } from '@/components/Row'
@@ -31,6 +32,20 @@ export const HoverCard = styled(Card)`
 const LinkRow = styled(RowBetween)`
   height: 24px;
   cursor: pointer;
+`
+
+const BadgeText = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size: 12px;
+  `};
+`
+
+const ExtentsText = styled.span`
+  color: ${({ theme }) => theme.text3};
+  font-size: 14px;
+  margin-right: 4px;
 `
 
 interface PositionCardProps {
@@ -180,6 +195,22 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   `${currency0.symbol}/${currency1.symbol}`
                 )}
               </Text>
+            </RowFixed>
+            <RowFixed>
+              <RowFixed>
+                <ExtentsText>Liquidity Value:</ExtentsText>
+                <Badge>
+                  <BadgeText>$100.99</BadgeText>
+                </Badge>
+              </RowFixed>
+              <RowFixed style={{
+                marginLeft: 15
+              }}>
+                <ExtentsText>Poker:</ExtentsText>
+                <Badge>
+                  <BadgeText>♠A</BadgeText>
+                </Badge>
+              </RowFixed>
             </RowFixed>
           </LinkRow>
       </AutoColumn>
