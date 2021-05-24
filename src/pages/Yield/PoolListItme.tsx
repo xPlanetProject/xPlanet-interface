@@ -96,7 +96,7 @@ interface PairProps {
 
 export default function PoolListItme({ id, token0, token1 }: PairProps) {
   return (
-    <Row to={`/yield/${id}`}>
+    <Row to={`/poker/${id}`}>
       <PoolIdData>
         <DoubleCurrencyLogo
           currency0={token0}

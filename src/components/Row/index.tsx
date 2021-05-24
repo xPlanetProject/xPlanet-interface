@@ -20,6 +20,15 @@ export const RowBetween = styled(Row)`
   justify-content: space-between;
 `
 
+export const RowAround = styled(Row)`
+  justify-content: space-around;
+`
+
+export const RowEnd = styled(Row)`
+  justify-content: flex-end;
+`
+
+
 export const RowFlat = styled.div`
   display: flex;
   align-items: flex-end;

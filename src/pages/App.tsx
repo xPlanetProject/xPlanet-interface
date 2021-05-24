@@ -1,13 +1,5 @@
-import styled from 'styled-components'
-
 import React, { Suspense } from 'react'
 import { HashRouter, Route, Switch, useLocation } from 'react-router-dom'
-
-import Header from '@/components/Header'
-import Popups from '@/components/Popups'
-import Web3ReactManager from '@/components/Web3ReactManager'
-import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
-import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
 
 import AddLiquidity from './AddLiquidity'
 import {
@@ -15,6 +7,9 @@ import {
   RedirectOldAddLiquidityPathStructure,
   RedirectToAddLiquidity
 } from './AddLiquidity/redirects'
+import Poker from './Poker'
+import Stake from './Stake'
+import UnStake from './Stake/unstake'
 import Pool from './Pool'
 import PoolDetail from './PoolDetail'
 import PoolFinder from './PoolFinder'
@@ -23,6 +18,12 @@ import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redir
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import Yield from './Yield'
+import Header from '@/components/Header'
+import Popups from '@/components/Popups'
+import Web3ReactManager from '@/components/Web3ReactManager'
+import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
+import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
+import styled from 'styled-components'
 
 const TestComponent = () => {
   const location = useLocation()
@@ -102,6 +103,10 @@ export default function App() {
                   component={RedirectToAddLiquidity}
                 />
                 <Route exact strict path='/yield' component={Yield} />
+                <Route exact strict path='/poker/:tokenId' component={Poker} />
+                <Route exact strict path='/stake' component={Stake} />
+                <Route exact strict path='/unstake' component={UnStake} />
+                
                 <Route exact strict path='/xmoon' component={TestComponent} />
                 <Route
                   exact
