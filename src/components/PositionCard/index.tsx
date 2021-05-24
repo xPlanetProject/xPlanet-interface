@@ -60,7 +60,6 @@ export function MinimalPositionCard({
   const [token0Deposited, token1Deposited] =
     !!totalPoolTokens &&
     !!userPoolBalance &&
-    // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
     JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
       ? [
           pair.getLiquidityValue(
@@ -161,42 +160,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
 
   const toDetail = useCallback(() => {
     history.push(`/pool/12355`)
-  }, [history])
-
-  console.log(pair, border)
-
-  // const userPoolBalance = useTokenBalance(
-  //   account ?? undefined,
-  //   pair.liquidityToken
-  // )
-  // const totalPoolTokens = useTotalSupply(pair.liquidityToken)
-
-  // const poolTokenPercentage =
-  //   !!userPoolBalance &&
-  //   !!totalPoolTokens &&
-  //   JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
-  //     ? new Percent(userPoolBalance.raw, totalPoolTokens.raw)
-  //     : undefined
-
-  // const [token0Deposited, token1Deposited] =
-  //   !!totalPoolTokens &&
-  //   !!userPoolBalance &&
-  //   JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
-  //     ? [
-  //         pair.getLiquidityValue(
-  //           pair.token0,
-  //           totalPoolTokens,
-  //           userPoolBalance,
-  //           false
-  //         ),
-  //         pair.getLiquidityValue(
-  //           pair.token1,
-  //           totalPoolTokens,
-  //           userPoolBalance,
-  //           false
-  //         )
-  //       ]
-  //     : [undefined, undefined]
+  }, [history, pair])
 
   return (
     <HoverCard border={border}>

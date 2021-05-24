@@ -30,18 +30,24 @@ const StyledToggle = styled.button<{
 
 export interface ToggleProps {
   id?: string
+  onText?: string
+  offText?: string
   isActive: boolean
   toggle: () => void
 }
 
-export default function Toggle({ id, isActive, toggle }: ToggleProps) {
+export default function Toggle({ id, onText, offText, isActive, toggle }: ToggleProps) {
   return (
     <StyledToggle id={id} isActive={isActive} onClick={toggle}>
       <ToggleElement isActive={isActive} isOnSwitch={true}>
-        On
+        {
+          onText ?? 'On'
+        }
       </ToggleElement>
       <ToggleElement isActive={!isActive} isOnSwitch={false}>
-        Off
+        {
+          offText ?? 'Off'
+        }
       </ToggleElement>
     </StyledToggle>
   )
