@@ -87,7 +87,7 @@ export default function PoolDetail() {
             to='/pool'>
             <HoverText>{'← Back to Pools Overview'}</HoverText>
           </Link>
-          <ResponsiveRow>
+          {/* <ResponsiveRow>
             <RowFixed>
               <DoubleCurrencyLogo
                 currency0={currency0}
@@ -132,7 +132,7 @@ export default function PoolDetail() {
               </ButtonGray>
             </RowFixed>
           </ResponsiveRow>
-          <RowBetween></RowBetween>
+          <RowBetween></RowBetween> */}
         </AutoColumn>
         <ResponsiveRow align='flex-start'>
           <DarkCard
