@@ -6,15 +6,21 @@ import { useTranslation } from 'react-i18next'
 import { Pair } from '@uniswap/sdk'
 
 import { DarkCard } from '@/components/Card'
+import { RowFixed } from '@/components/Row'
 import { AutoColumn } from '@/components/Column'
+import { ButtonGray } from '@/components/Button'
+import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { NFT } from '@/components/NFT'
 import { usePairs } from '@/data/Reserves'
 import { useActiveWeb3React } from '@/hooks'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '@/state/user/hooks'
 import { useTokenBalancesWithLoadingIndicator } from '@/state/wallet/hooks'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
+import { currencyId } from '@/utils/currencyId'
 
-import { PageWrapper, ResponsiveRow, HoverText } from './styleds'
+import { TYPE } from '@/theme'
+
+import { PageWrapper, ResponsiveRow, HoverText, ResponsiveButtonPrimary } from './styleds'
 import LiquidityInfo from './LiquidityInfo'
 import PriceInfo from './PriceInfo'
 
@@ -80,7 +86,7 @@ export default function PoolDetail() {
             to='/pool'>
             <HoverText>{'← Back to Pools Overview'}</HoverText>
           </Link>
-          {/* <ResponsiveRow>
+          <ResponsiveRow>
             <RowFixed>
               <DoubleCurrencyLogo
                 currency0={currency0}
@@ -125,7 +131,6 @@ export default function PoolDetail() {
               </ButtonGray>
             </RowFixed>
           </ResponsiveRow>
-          <RowBetween></RowBetween> */}
         </AutoColumn>
         <ResponsiveRow align='flex-start'>
           <DarkCard
