@@ -33,7 +33,7 @@ export const ResponsiveRow = styled(RowBetween)`
     flex-direction: column;
     align-items: flex-start;
     row-gap: 16px;
-    width: 100%:
+    width: 100%;
   `};
 `
 
