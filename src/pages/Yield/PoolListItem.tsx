@@ -1,93 +1,51 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Badge from '@/components/Badge'
+import { ButtonPrimary } from '@/components/Button'
+import { DarkCard } from '@/components/Card'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
-import { RowFixed } from '@/components/Row'
-import { MEDIA_WIDTHS } from '@/theme'
+import { RowBetween } from '@/components/Row'
 import { Token } from '@uniswap/sdk'
 import styled from 'styled-components'
 
-const Row = styled(Link)`
-  align-items: center;
-  border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg2};
-
-  &:first-of-type {
-    margin: 0 0 8px 0;
-  }
-  &:last-of-type {
-    margin: 8px 0 0 0;
-  }
-  & > div:not(:first-child) {
-    text-align: right;
-  }
-  :hover {
-    background-color: ${({ theme }) => theme.bg3};
-  }
-  @media screen and (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    flex-direction: row;
-  }
-
+const Card = styled(DarkCard)`
+  flex: 1;
+  display: grid;
+  margin: 0 32px 32px;
+  padding: 32px 64px;
+  text-align: center;
+  grid-row-gap: 18px;
+  border: 2px solid ${({ theme }) => theme.primary1};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-direction: column;
-    row-gap: 24px;
+    margin: 0 0 32px;
   `};
 `
 
-const PoolIdData = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  > * {
-    margin-right: 8px;
-  }
+const RowCenter = styled(RowBetween)`
+  justify-content: center;
 `
 
 const DataText = styled.div`
   font-weight: 600;
-  font-size: 18px;
+  font-size: 24px;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    font-size: 14px;
+    font-size: 18px;
   `};
 `
 
-const PoolData = styled.div`
-  font-size: 14px;
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  align-items: center;
-  justify-self: flex-end;
-
+const Text = styled.div`
+  font-weight: 600;
+  font-size: 16px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
-  flex-direction: column;
-  row-gap: 4px;
-`};
-`
-
-const BadgeText = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    font-size: 12px;
+    font-size: 14px;
   `};
 `
 
 const ExtentsText = styled.span`
   color: ${({ theme }) => theme.text3};
   font-size: 14px;
-  margin-right: 4px;
 `
-
 interface PairProps {
   id: string
   token0: Token
@@ -96,39 +54,46 @@ interface PairProps {
 
 export default function PoolListItme({ id, token0, token1 }: PairProps) {
   return (
-    <Row to={`/poker/${id}`}>
-      <PoolIdData>
+    <Card>
+      <RowCenter>
         <DoubleCurrencyLogo
           currency0={token0}
           currency1={token1}
-          size={24}
+          size={36}
           margin
         />
-        <DataText>
-          &nbsp;{token0?.symbol}&nbsp;/&nbsp;{token1?.symbol}
-        </DataText>
-      </PoolIdData>
+      </RowCenter>
 
-      <PoolData>
-        <RowFixed margin='0 1rem'>
-          <ExtentsText>TVL:</ExtentsText>
-          <Badge>
-            <BadgeText>201%</BadgeText>
-          </Badge>
-        </RowFixed>
-        <RowFixed margin='0 1rem'>
-          <ExtentsText>TVL:</ExtentsText>
-          <Badge>
-            <BadgeText>201%</BadgeText>
-          </Badge>
-        </RowFixed>
-        <RowFixed margin='0 1rem'>
-          <ExtentsText>TVL:</ExtentsText>
-          <Badge>
-            <BadgeText>201%</BadgeText>
-          </Badge>
-        </RowFixed>
-      </PoolData>
-    </Row>
+      <RowCenter>
+        <DataText>
+          {token0?.symbol}&nbsp;/&nbsp;{token1?.symbol}
+        </DataText>
+      </RowCenter>
+
+      <RowCenter>
+        <ExtentsText>
+          Deposit {token0?.symbol}-{token1?.symbol} xPoker <br />
+          Earn XKEY
+        </ExtentsText>
+      </RowCenter>
+
+      <RowBetween>
+        <ExtentsText>Staked:</ExtentsText>
+        <Text>201 xPoker</Text>
+      </RowBetween>
+      <RowBetween>
+        <ExtentsText>TVL:</ExtentsText>
+        <Text>$2010</Text>
+      </RowBetween>
+      <RowBetween>
+        <ExtentsText>APR:</ExtentsText>
+        <Text>201%</Text>
+      </RowBetween>
+      <RowCenter>
+        <ButtonPrimary padding='12px' as={Link} to={`/poker/${id}`}>
+          Select
+        </ButtonPrimary>
+      </RowCenter>
+    </Card>
   )
 }
