@@ -1,4 +1,4 @@
-import { Currency, currencyEquals, ETHER, WETH } from '@uniswap/sdk'
+import { Currency, currencyEquals, ETHER, WETH } from 'xplant-sdk'
 
 import { useMemo } from 'react'
 

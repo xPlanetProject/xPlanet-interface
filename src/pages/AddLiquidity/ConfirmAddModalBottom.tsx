@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent } from '@uniswap/sdk'
+import { Currency, CurrencyAmount, Fraction, Percent } from 'xplant-sdk'
 import { Text } from 'rebass'
 
 import React from 'react'

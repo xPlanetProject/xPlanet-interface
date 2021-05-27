@@ -1,4 +1,4 @@
-import { Trade } from '@uniswap/sdk'
+import { Trade } from 'xplant-sdk'
 import { Flex } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

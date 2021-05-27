@@ -1,4 +1,4 @@
-import { Token, TokenAmount } from '@uniswap/sdk'
+import { Token, TokenAmount } from 'xplant-sdk'
 
 import { useMemo } from 'react'
 

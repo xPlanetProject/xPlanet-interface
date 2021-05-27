@@ -7,7 +7,7 @@ import {
   Percent,
   Price,
   TokenAmount
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

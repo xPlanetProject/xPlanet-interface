@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Pair, Token, Trade } from '@uniswap/sdk'
+import { Currency, CurrencyAmount, Pair, Token, Trade } from 'xplant-sdk'
 import flatMap from 'lodash.flatmap'
 
 import { useMemo } from 'react'
@@ -106,6 +106,7 @@ export function useTradeExactIn(
   )
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
+      console.log(allowedPairs)
       return (
         Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {
           maxHops: 3,

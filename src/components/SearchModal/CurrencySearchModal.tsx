@@ -1,4 +1,4 @@
-import { Currency } from '@uniswap/sdk'
+import { Currency } from 'xplant-sdk'
 
 import React, { useCallback, useEffect, useState } from 'react'
 import ReactGA from 'react-ga'

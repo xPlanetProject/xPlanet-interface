@@ -5,7 +5,7 @@ import {
   JSBI,
   Price,
   WETH
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 
 import { useMemo } from 'react'
 

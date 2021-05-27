@@ -1,4 +1,4 @@
-import { Percent } from '@uniswap/sdk'
+import { Percent } from 'xplant-sdk'
 
 import React from 'react'
 

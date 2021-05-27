@@ -1,4 +1,4 @@
-import { Currency, ETHER, JSBI, TokenAmount } from '@uniswap/sdk'
+import { Currency, ETHER, JSBI, TokenAmount } from 'xplant-sdk'
 import { Text } from 'rebass'
 
 import React, { useCallback, useEffect, useState } from 'react'

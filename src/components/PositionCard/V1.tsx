@@ -1,4 +1,4 @@
-import { Token, TokenAmount, WETH } from '@uniswap/sdk'
+import { Token, TokenAmount, WETH } from 'xplant-sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

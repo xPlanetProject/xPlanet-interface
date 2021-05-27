@@ -1,4 +1,4 @@
-import { ChainId } from '@uniswap/sdk'
+import { ChainId } from 'xplant-sdk'
 import { createStore, Store } from 'redux'
 
 import {

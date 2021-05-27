@@ -5,7 +5,7 @@ import {
   Percent,
   TokenAmount,
   Trade
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 
 import { BLOCKED_PRICE_IMPACT_NON_EXPERT } from '@/constants'
 import {

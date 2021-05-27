@@ -1,4 +1,4 @@
-import { Token } from '@uniswap/sdk'
+import { Token } from 'xplant-sdk'
 
 import { isAddress } from '@/utils'
 

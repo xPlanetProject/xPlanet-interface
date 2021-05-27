@@ -5,7 +5,7 @@ import Badge from '@/components/Badge'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { RowFixed } from '@/components/Row'
 import { MEDIA_WIDTHS } from '@/theme'
-import { Token } from '@uniswap/sdk'
+import { Token } from 'xplant-sdk'
 import styled from 'styled-components'
 
 const Row = styled(Link)`

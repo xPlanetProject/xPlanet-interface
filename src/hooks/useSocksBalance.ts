@@ -1,4 +1,4 @@
-import { JSBI } from '@uniswap/sdk'
+import { JSBI } from 'xplant-sdk'
 
 import { useMemo } from 'react'
 

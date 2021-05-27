@@ -1,4 +1,4 @@
-import { Currency, Pair } from '@uniswap/sdk'
+import { Currency, Pair } from 'xplant-sdk'
 import { darken } from 'polished'
 import styled, { ThemeContext } from 'styled-components'
 

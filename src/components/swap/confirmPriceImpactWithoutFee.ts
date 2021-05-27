@@ -1,4 +1,4 @@
-import { Percent } from '@uniswap/sdk'
+import { Percent } from 'xplant-sdk'
 
 import {
   ALLOWED_PRICE_IMPACT_HIGH,

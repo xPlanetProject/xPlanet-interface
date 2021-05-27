@@ -5,7 +5,7 @@ import {
   Route,
   TokenAmount,
   Trade
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 
 import { DAI, USDC } from '@/constants'
 import { MockV1Pair } from '@/data/V1'

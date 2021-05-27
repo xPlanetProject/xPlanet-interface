@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { ChainId } from '@uniswap/sdk'
+import { ChainId } from 'xplant-sdk'
 import { TokenList } from '@uniswap/token-lists'
 
 import { useCallback } from 'react'

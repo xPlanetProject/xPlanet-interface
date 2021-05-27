@@ -7,7 +7,7 @@ import {
   TokenAmount,
   Trade,
   TradeType
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 
 import { computeTradePriceBreakdown } from './prices'
 

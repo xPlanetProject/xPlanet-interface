@@ -1,4 +1,4 @@
-import { Trade, TradeType } from '@uniswap/sdk'
+import { Trade, TradeType } from 'xplant-sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

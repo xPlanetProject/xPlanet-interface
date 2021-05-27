@@ -6,7 +6,7 @@ import {
   ETHER,
   TokenAmount,
   // WETH
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

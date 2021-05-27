@@ -1,5 +1,5 @@
 import React from 'react'
-import { Token } from '@uniswap/sdk'
+import { Token } from 'xplant-sdk'
 
 import PoolListItem from './PoolListItem'
 

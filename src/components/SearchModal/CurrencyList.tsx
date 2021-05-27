@@ -4,7 +4,7 @@ import {
   currencyEquals,
   ETHER,
   Token
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 

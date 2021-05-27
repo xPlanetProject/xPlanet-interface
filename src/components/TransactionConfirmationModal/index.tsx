@@ -1,4 +1,4 @@
-import { ChainId } from '@uniswap/sdk'
+import { ChainId } from 'xplant-sdk'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
 

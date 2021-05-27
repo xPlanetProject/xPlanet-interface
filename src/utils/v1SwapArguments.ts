@@ -7,7 +7,7 @@ import {
   Trade,
   TradeOptions,
   TradeType
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 
 import { getTradeVersion } from '@/data/V1'
 import { Version } from '@/hooks/useToggledVersion'

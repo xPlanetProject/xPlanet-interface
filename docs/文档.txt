@@ -1,0 +1,106 @@
+xkeydao合约                 挖矿
+1.增加单张token挖xkey
+function addSwaptokenShareSingle(uint256 _tokenId) swapTokenExistByTokenId(_tokenId) lock external
+2.增加组合token挖xkey
+function addSwaptokenShareCombine(uint256[5] calldata _tokenIds)lock external
+3.移除单张token
+function removeSwaptokenShareSingle(uint256 _tokenId) swapTokenExistByTokenId(_tokenId) lock external
+4.移除组合tokens
+function removeSwaptokenShareCombine(uint256 index) lock external //index的查询在XPokerPower中
+5.领取xkey收益
+function getSwaptokenReward(address _swaptoken_addr) swapTokenExist(_swaptoken_addr) lock external  //_swaptoken_addr 流动性币对地址（pairab、pairbweth）
+6.预估收益
+function predReward(address _swaptoken_addr) public swapTokenExist(_swaptoken_addr) view returns (uint)
+7.获取当前一个块的收益
+function getCurrentStagePrice()public view returns (uint256)
+8.获取当前用户拥有多少power
+function getUserShare(address _swaptoken_addr,address _user)public view returns (uint)
+
+xkeyrouter合约              对应uniswap合约
+1.增加流动性(不包括eth)
+function addLiquidity(
+        address tokenA,
+        address tokenB,
+        uint amountADesired,
+        uint amountBDesired,
+        uint amountAMin,
+        uint amountBMin,
+        uint deadline,
+        uint256 tokenId                 // = 0 新增（产生新tokenid）， != 0 添加
+    ) 
+2.增加流动性(包括eth)
+ function addLiquidityETH(
+        address token,
+        uint amountTokenDesired,
+        uint amountTokenMin,
+        uint amountETHMin,
+        uint deadline,
+        uint256 tokenId
+    )
+3.移除流动性(不包括以太)
+ function removeLiquidity(
+        address tokenA,
+        address tokenB,
+        uint liquidity,
+        uint amountAMin,
+        uint amountBMin,
+        address to,
+        uint deadline,
+        uint256 tokenId
+    )
+4.移除流动性(包括eth)
+function removeLiquidityETH(
+        address token,
+        uint liquidity,
+        uint amountTokenMin,
+        uint amountETHMin,
+        address to,
+        uint deadline,
+        uint256 tokenId
+    ) 
+5.兑换的六个接口
+function swapExactTokensForTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    )
+function swapTokensForExactTokens(
+        uint amountOut,
+        uint amountInMax,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) 
+function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
+function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
+function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
+
+XPokerPower
+1. 获取用户挖矿组合卡牌index长度
+compositeLength(address user)  index长度
+2. 获取用户挖矿指定index的卡牌组合
+function getTokenIdsByIndex(address user, uint256 index) external view returns(uint256[5] memory) 
+3. 获取用户挖矿单张卡牌index长度
+function getSinglePowerdByIndex(address user, uint256 index) external view returns(uint256)
+4. 获取用户挖矿指定index的单张卡牌
+function getTokenIdByIndex(address user, uint256 index) external view returns(uint256)
+5. 获取用户挖矿指定index的单张卡牌的算力
+function getSinglePowerdByIndex(address user, uint256 index) external view returns(uint256)
+6. 获取用户挖矿指定index的卡牌组合的算力
+function getCompositePowerdByIndex(address user, uint256 index) external view returns(uint256)
+
+XSwapLPNFT
+1.允许operator花费所有的NFT
+function setApprovalForAll(address operator, bool _approved) 
+2.允许to花费指定的NFT
+function approve(address to, uint256 tokenId) external;
+3.转移NFT
+function transfer(address to, uint256 tokenId)
+4.获取NFT对应的pair合约地址
+function getPair(uint256 _tokenId) public view returns(address)
+5.获取NFT的tokenURI
+function tokenURI(uint256 _tokenId) external view returns (string memory)
+       

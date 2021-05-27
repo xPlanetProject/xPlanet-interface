@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useTranslation } from 'react-i18next'
 
-import { Pair } from '@uniswap/sdk'
+import { Pair } from 'xplant-sdk'
 
 import { DarkCard } from '@/components/Card'
 import { RowFixed } from '@/components/Row'

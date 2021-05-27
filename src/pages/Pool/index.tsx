@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { Pair } from '@uniswap/sdk'
+import { Pair } from 'xplant-sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

@@ -1,4 +1,4 @@
-import { Price } from '@uniswap/sdk'
+import { Price } from 'xplant-sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

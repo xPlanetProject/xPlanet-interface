@@ -1,4 +1,4 @@
-import { ChainId, Currency, currencyEquals, ETHER, Token } from '@uniswap/sdk'
+import { ChainId, Currency, currencyEquals, ETHER, Token } from 'xplant-sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 

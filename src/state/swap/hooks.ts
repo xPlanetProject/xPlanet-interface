@@ -7,7 +7,7 @@ import {
   Token,
   TokenAmount,
   Trade
-} from '@uniswap/sdk'
+} from 'xplant-sdk'
 import { ParsedQs } from 'qs'
 
 import { useCallback, useEffect, useState } from 'react'

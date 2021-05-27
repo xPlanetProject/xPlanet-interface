@@ -1,4 +1,4 @@
-import { ChainId, Pair, Token } from '@uniswap/sdk'
+import { ChainId, Pair, Token } from 'xplant-sdk'
 import flatMap from 'lodash.flatmap'
 
 import { useCallback, useMemo } from 'react'
