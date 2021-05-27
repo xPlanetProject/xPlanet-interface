@@ -5,7 +5,7 @@ import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import Question from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
-import { HideSmall, TYPE } from '@/theme'
+import { TYPE } from '@/theme'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
 import { CountUp } from 'use-count-up'
@@ -60,9 +60,7 @@ export default function Yield() {
         <AutoColumn gap='lg' justify='center'>
           <AutoColumn gap='lg' style={{ width: '100%' }}>
             <TitleRow>
-              <HideSmall>
-                <TYPE.mediumHeader>xPoker Mining</TYPE.mediumHeader>
-              </HideSmall>
+              <TYPE.mediumHeader>xPoker Mining</TYPE.mediumHeader>
             </TitleRow>
             <DarkCard>
               <ResponsiveRow>
@@ -87,15 +85,13 @@ export default function Yield() {
                 ))}
               </ResponsiveRow>
             </DarkCard>
-            <DarkCard>
-              <RowBetween padding={'8px 8px 15px'}>
-                <Text color={theme.text1} fontWeight={500}>
-                  Pool List
-                </Text>
-                <Question text='When you add liquidity, you are given pool NFT that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.' />
-              </RowBetween>
-              <PoolList />
-            </DarkCard>
+            <RowBetween>
+              <Text color={theme.text1} fontWeight={500}>
+                Pool List
+              </Text>
+              <Question text='When you add liquidity, you are given pool NFT that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.' />
+            </RowBetween>
+            <PoolList />
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>

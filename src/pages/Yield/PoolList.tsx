@@ -2,6 +2,15 @@ import React from 'react'
 import { Token } from 'xplant-sdk'
 
 import PoolListItem from './PoolListItem'
+import { AutoColumn } from '@/components/Column'
+import { RowAround } from '@/components/Row'
+import styled from 'styled-components'
+
+const ColumnGrid = styled(RowAround)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: block;
+  `};
+`
 
 interface PoolPair {
   id: string
@@ -45,14 +54,16 @@ const poolList: Array<PoolPair> = [
 export default function PoolList() {
   return (
     <>
-      {poolList.map((item) => (
-        <PoolListItem
-          id={item.id}
-          token0={item.token0}
-          token1={item.token1}
-          key={item.id}
-        />
-      ))}
+      <ColumnGrid>
+        {poolList.map((item) => (
+          <PoolListItem
+            id={item.id}
+            token0={item.token0}
+            token1={item.token1}
+            key={item.id}
+          />
+        ))}
+      </ColumnGrid>
     </>
   )
 }
