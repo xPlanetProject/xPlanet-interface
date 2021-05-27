@@ -1,4 +1,4 @@
-import { Percent } from 'xplant-sdk'
+import { Percent } from '@xplanet/sdk'
 
 import React from 'react'
 

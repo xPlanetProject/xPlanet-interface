@@ -7,7 +7,7 @@ import {
   SwapParameters,
   Trade,
   TradeType
-} from 'xplant-sdk'
+} from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

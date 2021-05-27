@@ -1,4 +1,4 @@
-import { Trade, TradeType } from 'xplant-sdk'
+import { Trade, TradeType } from '@xplanet/sdk'
 import { ThemeContext } from 'styled-components'
 
 import React, { useContext } from 'react'

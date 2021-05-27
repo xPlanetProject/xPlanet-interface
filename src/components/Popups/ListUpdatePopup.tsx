@@ -1,4 +1,4 @@
-import { diffTokenLists, TokenList } from '@uniswap/token-lists'
+import { diffTokenLists, TokenList } from '@xplanet/token-lists'
 import { Text } from 'rebass'
 
 import React, { useCallback, useMemo } from 'react'

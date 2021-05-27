@@ -1,4 +1,4 @@
-import { ChainId, Pair, Token } from 'xplant-sdk'
+import { ChainId, Pair, Token } from '@xplanet/sdk'
 import flatMap from 'lodash.flatmap'
 
 import { useCallback, useMemo } from 'react'

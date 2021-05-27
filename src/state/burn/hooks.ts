@@ -5,7 +5,7 @@ import {
   Pair,
   Percent,
   TokenAmount
-} from 'xplant-sdk'
+} from '@xplanet/sdk'
 
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

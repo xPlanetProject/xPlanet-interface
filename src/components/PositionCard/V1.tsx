@@ -1,4 +1,4 @@
-import { Token, TokenAmount, WETH } from 'xplant-sdk'
+import { Token, TokenAmount, WETH } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

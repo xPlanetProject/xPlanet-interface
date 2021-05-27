@@ -1,4 +1,4 @@
-import { Currency, Pair } from 'xplant-sdk'
+import { Currency, Pair } from '@xplanet/sdk'
 import { darken } from 'polished'
 import styled, { ThemeContext } from 'styled-components'
 

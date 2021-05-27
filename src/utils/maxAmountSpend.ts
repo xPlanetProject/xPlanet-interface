@@ -1,4 +1,4 @@
-import { CurrencyAmount, ETHER, JSBI } from 'xplant-sdk'
+import { CurrencyAmount, ETHER, JSBI } from '@xplanet/sdk'
 
 import { MIN_ETH } from '@/constants'
 

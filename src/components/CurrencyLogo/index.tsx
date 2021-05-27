@@ -4,7 +4,7 @@ import EthereumLogo from '@/assets/images/ethereum-logo.png'
 import Logo from '@/components/Logo'
 import useHttpLocations from '@/hooks/useHttpLocations'
 import { WrappedTokenInfo } from '@/state/lists/hooks'
-import { Currency, ETHER, Token } from 'xplant-sdk'
+import { Currency, ETHER, Token } from '@xplanet/sdk'
 import styled from 'styled-components'
 
 const getTokenLogoURL = (address: string) =>

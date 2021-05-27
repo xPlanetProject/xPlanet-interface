@@ -7,7 +7,7 @@ import {
   TokenAmount,
   Trade,
   TradeType
-} from 'xplant-sdk'
+} from '@xplanet/sdk'
 
 import { computeTradePriceBreakdown } from './prices'
 

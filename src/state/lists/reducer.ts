@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
-import UNISWAP_DEFAULT_LIST from '@uniswap/default-token-list'
-import { getVersionUpgrade, VersionUpgrade } from '@uniswap/token-lists'
-import { TokenList } from '@uniswap/token-lists/dist/types'
+import UNISWAP_DEFAULT_LIST from '@xplanet/default-token-list'
+import { getVersionUpgrade, VersionUpgrade } from '@xplanet/token-lists'
+import { TokenList } from '@xplanet/token-lists/dist/types'
 
 import {
   DEFAULT_LIST_OF_LISTS,

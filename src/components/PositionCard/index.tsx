@@ -11,7 +11,7 @@ import { useTotalSupply } from '@/data/TotalSupply'
 import { useActiveWeb3React } from '@/hooks'
 import { useTokenBalance } from '@/state/wallet/hooks'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { JSBI, Pair } from 'xplant-sdk'
+import { JSBI, Pair } from '@xplanet/sdk'
 import { Text } from 'rebass'
 
 export const FixedHeightRow = styled(RowBetween)`

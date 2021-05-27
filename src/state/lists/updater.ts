@@ -2,7 +2,7 @@ import {
   getVersionUpgrade,
   minVersionBump,
   VersionUpgrade
-} from '@uniswap/token-lists'
+} from '@xplanet/token-lists'
 
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

@@ -5,7 +5,7 @@ import {
   JSBI,
   Token,
   TokenAmount
-} from 'xplant-sdk'
+} from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

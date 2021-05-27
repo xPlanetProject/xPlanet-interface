@@ -7,7 +7,7 @@ import {
   Trade,
   TradeOptions,
   TradeType
-} from 'xplant-sdk'
+} from '@xplanet/sdk'
 
 import { getTradeVersion } from '@/data/V1'
 import { Version } from '@/hooks/useToggledVersion'

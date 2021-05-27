@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { JSBI, Percent } from 'xplant-sdk'
+import { JSBI, Percent } from '@xplanet/sdk'
 
 import { DarkCard, LightCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'

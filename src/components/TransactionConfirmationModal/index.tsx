@@ -1,4 +1,4 @@
-import { ChainId } from 'xplant-sdk'
+import { ChainId } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
 

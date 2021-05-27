@@ -1,5 +1,5 @@
 import React from 'react'
-import { Token } from 'xplant-sdk'
+import { Token } from '@xplanet/sdk'
 
 import PoolListItem from './PoolListItem'
 import { AutoColumn } from '@/components/Column'

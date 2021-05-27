@@ -6,7 +6,7 @@ import {
   ETHER,
   TokenAmount,
   // WETH
-} from 'xplant-sdk'
+} from '@xplanet/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

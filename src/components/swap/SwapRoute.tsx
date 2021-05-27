@@ -1,4 +1,4 @@
-import { Trade } from 'xplant-sdk'
+import { Trade } from '@xplanet/sdk'
 import { Flex } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

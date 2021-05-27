@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import { ThemeContext } from 'styled-components'
 
-import { JSBI, Percent } from 'xplant-sdk'
+import { JSBI, Percent } from '@xplanet/sdk'
 
 import { DarkCard, LightCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'

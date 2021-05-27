@@ -1,4 +1,4 @@
-import { ChainId, JSBI, Percent, Token, WETH } from 'xplant-sdk'
+import { ChainId, JSBI, Percent, Token, WETH } from '@xplanet/sdk'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 
 import {

@@ -1,4 +1,4 @@
-import { Percent } from 'xplant-sdk'
+import { Percent } from '@xplanet/sdk'
 
 import {
   ALLOWED_PRICE_IMPACT_HIGH,

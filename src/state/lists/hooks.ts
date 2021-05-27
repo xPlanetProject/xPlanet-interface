@@ -1,5 +1,5 @@
-import { ChainId, Token } from 'xplant-sdk'
-import { Tags, TokenInfo, TokenList } from '@uniswap/token-lists'
+import { ChainId, Token } from '@xplanet/sdk'
+import { Tags, TokenInfo, TokenList } from '@xplanet/token-lists'
 
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'

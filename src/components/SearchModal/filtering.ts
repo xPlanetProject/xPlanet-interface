@@ -1,4 +1,4 @@
-import { Token } from 'xplant-sdk'
+import { Token } from '@xplanet/sdk'
 
 import { isAddress } from '@/utils'
 
