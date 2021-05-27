@@ -12,8 +12,8 @@ import {
   Currency,
   ETHER
 } from 'xplant-sdk'
-import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
-// import { abi as IUniswapV2Router02ABI } from '@/constants/build/XKeyRouter.json'
+// import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
+import { abi as IUniswapV2Router02ABI } from '@/constants/contracts/XKeyRouter.json'
 
 import { ROUTER_ADDRESS } from '@/constants'
 import { TokenAddressMap } from '@/state/lists/hooks'

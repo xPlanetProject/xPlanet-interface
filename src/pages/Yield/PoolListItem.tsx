@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { ButtonPrimary } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
+import { RowBetween } from '@/components/Row'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { Token } from 'xplant-sdk'
 import styled from 'styled-components'
