@@ -12,7 +12,6 @@ import {
   Currency,
   ETHER
 } from 'xplant-sdk'
-// import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import { abi as IUniswapV2Router02ABI } from '@/constants/contracts/XKeyRouter.json'
 
 import { ROUTER_ADDRESS } from '@/constants'
@@ -138,7 +137,6 @@ export function getRouterContract(
   library: Web3Provider,
   account?: string
 ): Contract {
-  console.trace('getRouterContract');
   return getContract(ROUTER_ADDRESS, IUniswapV2Router02ABI, library, account)
 }
 
