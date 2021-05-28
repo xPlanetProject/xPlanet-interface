@@ -2,10 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import {
   Currency,
-  // currencyEquals,
   ETHER,
-  TokenAmount,
-  // WETH
+  TokenAmount
 } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
@@ -13,7 +11,7 @@ import { ThemeContext } from 'styled-components'
 import React, { useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, useLocation } from 'react-router-dom'
 
 import {
   ButtonError,
@@ -25,7 +23,6 @@ import { AutoColumn, ColumnCenter } from '@/components/Column'
 import CurrencyInputPanel from '@/components/CurrencyInputPanel'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { AddRemoveTabs } from '@/components/NavigationTabs'
-// import { MinimalPositionCard } from '@/components/PositionCard'
 import Row, { RowBetween, RowFlat } from '@/components/Row'
 import TransactionConfirmationModal, {
   ConfirmationModalContent
@@ -38,6 +35,7 @@ import {
   ApprovalState,
   useApproveCallback
 } from '@/hooks/useApproveCallback'
+import useQueryString from '@/hooks/useQueryString'
 import { useWalletModalToggle } from '@/state/application/hooks'
 import { Field } from '@/state/mint/actions'
 import {
@@ -73,6 +71,9 @@ export default function AddLiquidity({
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
+
+  const location = useLocation()
+  const query = useQueryString()
 
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
@@ -183,12 +184,34 @@ export default function AddLiquidity({
 
     let estimate,
       method: (...args: any) => Promise<TransactionResponse>,
-      args: Array<string | string[] | number>,
+      args: Array<string | string[] | number | unknown>,
       value: BigNumber | null
     if (currencyA === ETHER || currencyB === ETHER) {
       const tokenBIsETH = currencyB === ETHER
       estimate = router.estimateGas.addLiquidityETH
       method = router.addLiquidityETH
+      // args = [
+      //   wrappedCurrency(tokenBIsETH ? currencyA : currencyB, chainId)
+      //     ?.address ?? '', // token
+      //   (tokenBIsETH ? parsedAmountA : parsedAmountB).raw.toString(), // token desired
+      //   amountsMin[
+      //     tokenBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B
+      //   ].toString(), // token min
+      //   amountsMin[
+      //     tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A
+      //   ].toString(), // eth min
+      //   account,
+      //   deadlineFromNow,
+      //   query.tokenId
+      // ]
+
+      // address token,
+      // uint amountTokenDesired,
+      // uint amountTokenMin,
+      // uint amountETHMin,
+      // uint deadline,
+      // uint256 tokenId
+
       args = [
         wrappedCurrency(tokenBIsETH ? currencyA : currencyB, chainId)
           ?.address ?? '', // token
@@ -199,15 +222,46 @@ export default function AddLiquidity({
         amountsMin[
           tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A
         ].toString(), // eth min
-        account,
-        deadlineFromNow
+        deadlineFromNow,
+        Number(query.tokenId)
       ]
+
       value = BigNumber.from(
         (tokenBIsETH ? parsedAmountB : parsedAmountA).raw.toString()
       )
+
+      // address tokenA,
+      // address tokenB,
+      // uint amountADesired,
+      // uint amountBDesired,
+      // uint amountAMin,
+      // uint amountBMin,
+      // uint deadline,
+      // uint256 tokenId
     } else {
       estimate = router.estimateGas.addLiquidity
       method = router.addLiquidity
+      // args = [
+      //   wrappedCurrency(currencyA, chainId)?.address ?? '',
+      //   wrappedCurrency(currencyB, chainId)?.address ?? '',
+      //   parsedAmountA.raw.toString(),
+      //   parsedAmountB.raw.toString(),
+      //   amountsMin[Field.CURRENCY_A].toString(),
+      //   amountsMin[Field.CURRENCY_B].toString(),
+      //   account,
+      //   deadlineFromNow,
+      //   query.tokenId
+      // ]
+
+      // address tokenA,
+      // address tokenB,
+      // uint amountADesired,
+      // uint amountBDesired,
+      // uint amountAMin,
+      // uint amountBMin,
+      // uint deadline,
+      // uint256 tokenId
+
       args = [
         wrappedCurrency(currencyA, chainId)?.address ?? '',
         wrappedCurrency(currencyB, chainId)?.address ?? '',
@@ -215,13 +269,14 @@ export default function AddLiquidity({
         parsedAmountB.raw.toString(),
         amountsMin[Field.CURRENCY_A].toString(),
         amountsMin[Field.CURRENCY_B].toString(),
-        account,
-        deadlineFromNow
+        deadlineFromNow,
+        Number(query.tokenId)
       ]
       value = null
     }
 
     setAttemptingTxn(true)
+
     await estimate(...args, value ? { value } : {})
       .then((estimatedGasLimit) =>
         method(...args, {
@@ -343,29 +398,29 @@ export default function AddLiquidity({
     (currencyA: Currency) => {
       const newCurrencyIdA = currencyId(currencyA)
       if (newCurrencyIdA === currencyIdB) {
-        history.push(`/add/${currencyIdB}/${currencyIdA}`)
+        history.push(`/add/${currencyIdB}/${currencyIdA}${location.search}`)
       } else {
-        history.push(`/add/${newCurrencyIdA}/${currencyIdB}`)
+        history.push(`/add/${newCurrencyIdA}/${currencyIdB}${location.search}`)
       }
     },
-    [currencyIdB, history, currencyIdA]
+    [currencyIdB, history, currencyIdA, location]
   )
   const handleCurrencyBSelect = useCallback(
     (currencyB: Currency) => {
       const newCurrencyIdB = currencyId(currencyB)
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
-          history.push(`/add/${currencyIdB}/${newCurrencyIdB}`)
+          history.push(`/add/${currencyIdB}/${newCurrencyIdB}${location.search}`)
         } else {
-          history.push(`/add/${newCurrencyIdB}`)
+          history.push(`/add/${newCurrencyIdB}${location.search}`)
         }
       } else {
         history.push(
-          `/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}`
+          `/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}${location.search}`
         )
       }
     },
-    [currencyIdA, history, currencyIdB]
+    [currencyIdA, history, currencyIdB, location]
   )
 
   const handleDismissConfirmation = useCallback(() => {

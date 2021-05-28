@@ -1,12 +1,28 @@
-Deploying 'XSwapLPNFT'
+Starting migrations...
+======================
+> Network name:    'heco'
+> Network id:      3
+> Block gas limit: 8000000 (0x7a1200)
+
+
+1_initial_migration.js
+======================
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+2_deploy_daoswap.js
+===================
+
+   Deploying 'XSwapLPNFT'
    ----------------------
-   > transaction hash:    0x4a5da391b04f87b2ecf3ba6ea3d17a1f66f2241ce530333f7e6a731cd3a5e971
-   > Blocks: 3            Seconds: 5
-   > contract address:    0x5607b6062b12E9a09c7a1780A445007310477665
-   > block number:        10310442
-   > block timestamp:     1622025183
+   > transaction hash:    0xa93cd168f7dd2b971ff81824ef5500823170310e2484331ef96284ef9c93b7ca
+   > Blocks: 1            Seconds: 37
+   > contract address:    0x98Ac4B9B86ee37763F688b8c330022a0C22e38c4
+   > block number:        10324115
+   > block timestamp:     1622179369
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.410387022931453763
+   > balance:             11.230602297931453763
    > gas used:            3447231 (0x3499bf)
    > gas price:           2 gwei
    > value sent:          0 ETH
@@ -15,13 +31,13 @@ Deploying 'XSwapLPNFT'
 
    Deploying 'XPokerPower'
    -----------------------
-   > transaction hash:    0x6000043c32684fa974db98a6c9a1d565e21dc28b12ad642ed7040c629a231fe4
-   > Blocks: 2            Seconds: 17
-   > contract address:    0x25A5F046C8B2481DCB0938E5ac38df1Be8867e47
-   > block number:        10310445
-   > block timestamp:     1622025202
+   > transaction hash:    0xcc160dd3d454c9067cab51549665128e0cc3db6531ef7ad75581adac256e072e
+   > Blocks: 4            Seconds: 29
+   > contract address:    0xb9193e2EFD5632eFb32CBeA7FFf49C77a7035F93
+   > block number:        10324117
+   > block timestamp:     1622179429
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.406067490931453763
+   > balance:             11.226282765931453763
    > gas used:            2159766 (0x20f496)
    > gas price:           2 gwei
    > value sent:          0 ETH
@@ -30,58 +46,58 @@ Deploying 'XSwapLPNFT'
 
    Deploying 'XKeyFactory'
    -----------------------
-   > transaction hash:    0xe288c7d197d85438b4910996dff543f65074e48863f4d381705e70f1475d5b8e
-   > Blocks: 4            Seconds: 26
-   > contract address:    0x422Fa5C8c789Ac8f34C6B7815cd5dbf2C60901ef
-   > block number:        10310450
-   > block timestamp:     1622025238
+   > transaction hash:    0x2504cd9cee8d6757fd22681e1cab38e5b11b80143f4100f5f1db9b9ae24c3c85
+   > Blocks: 2            Seconds: 20
+   > contract address:    0x910dc763427dbF5eF64AEC0ee7F058DA1Bf0E2FE
+   > block number:        10324121
+   > block timestamp:     1622179466
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.398380452931453763
-   > gas used:            3843519 (0x3aa5bf)
+   > balance:             11.218598319931453763
+   > gas used:            3842223 (0x3aa0af)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.007687038 ETH
+   > total cost:          0.007684446 ETH
 
 
    Deploying 'SWETH'
    -----------------
-   > transaction hash:    0x210c7b660cfee129306ccde33f7d5ae4f058f87df8ccaf84e7b0ba72d9aa943b
-   > Blocks: 2            Seconds: 30
-   > contract address:    0x1D2550a406B6AA99540833a8aAb6b2eBa9365eB8
-   > block number:        10310453
-   > block timestamp:     1622025280
+   > transaction hash:    0x9e794fe3b0352358fc77a45b6c3e5d464d2d9996d72e661f19bbb520d0f7ad07
+   > Blocks: 2            Seconds: 21
+   > contract address:    0xE654EA9AE2E68E2D5D286ec5826eE46d3696016a
+   > block number:        10324124
+   > block timestamp:     1622179496
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.396682458931453763
+   > balance:             11.216900325931453763
    > gas used:            848997 (0xcf465)
    > gas price:           2 gwei
    > value sent:          0 ETH
    > total cost:          0.001697994 ETH
 
 
-   Replacing 'XKeyRouter'
+   Deploying 'XKeyRouter'
    ----------------------
-   > transaction hash:    0xdffd88e67de0acc1385af1c8b4f8e3e459db76b0f9336b9454ef5f29d4e7d08e
-   > Blocks: 2            Seconds: 14
-   > contract address:    0x8d356CE329c6661f2bee9F61e5144815D219D73A
-   > block number:        10310457
-   > block timestamp:     1622025318
+   > transaction hash:    0x8f17fdb35a58c57aebb32814edd242e8b0181f8cd15b0d2ed7e4a2529a4b1533
+   > Blocks: 1            Seconds: 17
+   > contract address:    0xeCBe310c2025E7c3E12f03e71B20f08446063187
+   > block number:        10324125
+   > block timestamp:     1622179510
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.389549866931453763
-   > gas used:            3566296 (0x366ad8)
+   > balance:             11.209670339931453763
+   > gas used:            3614993 (0x372911)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.007132592 ETH
+   > total cost:          0.007229986 ETH
 
 
    Deploying 'ERC20'
    -----------------
-   > transaction hash:    0x597d30ef34db356e5c8fdd462d4be5e8f17d80b671efb00baf71e85cd604a4b5
-   > Blocks: 2            Seconds: 9
-   > contract address:    0xf72a99917A011BD03EECF28A45c251aBc7178E48
-   > block number:        10310461
-   > block timestamp:     1622025334
+   > transaction hash:    0xdb951d398208abb3874a1afd9b40f4439d57ec2a21a50f11e015b0d6eb364296
+   > Blocks: 1            Seconds: 17
+   > contract address:    0x0b69a926837035312D98dfCB419a6F971be63DA5
+   > block number:        10324126
+   > block timestamp:     1622179535
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.386823054931453763
+   > balance:             11.206943527931453763
    > gas used:            1363406 (0x14cdce)
    > gas price:           2 gwei
    > value sent:          0 ETH
@@ -90,34 +106,36 @@ Deploying 'XSwapLPNFT'
 
    Replacing 'ERC20'
    -----------------
-   > transaction hash:    0xb1927b0864e800dab8113ae38afd9bd7ddacfcb65443080857b21551b35504ab
-   > Blocks: 2            Seconds: 17
-   > contract address:    0x33B844BE42B22c64E1D08Ac4BD2e861df0CA08Aa
-   > block number:        10310464
-   > block timestamp:     1622025354
+   > transaction hash:    0xce4ede420008c7f1bdfb969c85d9e758b7adfb9773832186b544e272735fd5d2
+   > Blocks: 2            Seconds: 21
+   > contract address:    0x6773A8B809dd3CEE85Fc0dbC60762C9Ee3853284
+   > block number:        10324129
+   > block timestamp:     1622179572
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.384096242931453763
+   > balance:             11.204216715931453763
    > gas used:            1363406 (0x14cdce)
    > gas price:           2 gwei
    > value sent:          0 ETH
    > total cost:          0.002726812 ETH
 
-pairab:0xB1449D52AA57E5F96ADAD8A947f792980Be233d4     // 当成XKEY-USDT测试           4/10
-pairbweth:0x204bbD6dBAdE55fe457F4473C66C19C49803D207  // XKEY-ETH                   6/10
+0x6D6257a81958d813C5E44Cce3dE418ba0C15a3D4
+0x3B162Fa554e74dFbFE0D289D7166cBb4B4f16F6D
 
    Deploying 'XKeyToken'
    ---------------------
-   > transaction hash:    0x6ff19fc211b85377e8963f7c3952c728f3b5fed414500af71f20e12cf335d5a7
-   > Blocks: 3            Seconds: 9
-   > contract address:    0xd49f543126092606298D0fe76f569C84782b6569
-   > block number:        10310476
-   > block timestamp:     1622025487
+   > transaction hash:    0xb9994ea4ec668b21d8b697f7cf8140b5b2bf1d6d3391376ec8da1d5145c175b3
+   > Blocks: 2            Seconds: 17
+   > contract address:    0x05fEedD4bAC26e233ec57BC039424d6e58A951Ef
+   > block number:        10324138
+   > block timestamp:     1622179733
    > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
-   > balance:             11.369272278931453763
+   > balance:             11.189392791931453763
    > gas used:            1350404 (0x149b04)
    > gas price:           2 gwei
    > value sent:          0 ETH
    > total cost:          0.002700808 ETH
 
 
- xkeydao :0xc16Ea1c10647e837d2F4d377F49188d0426377ed
+   Deploying 'XkeyDao'：0x7d9FDd22eFC95eA6Cd4c2a237b7a07c19390F1Bd
+
+

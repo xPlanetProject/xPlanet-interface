@@ -84,13 +84,13 @@ export default function Pool() {
               <ResponsiveButtonSecondary
                 id='join-pool-button'
                 as={Link}
-                to='/add/ETH'>
+                to='/add/ETH?tokenId=0'>
                 {t('createPool')}
               </ResponsiveButtonSecondary>
               <ResponsiveButtonPrimary
                 id='join-pool-button'
                 as={Link}
-                to='/add/ETH'>
+                to='/add/ETH?tokenId=0'>
                 {t('newNFT')}
               </ResponsiveButtonPrimary>
             </ButtonRow>

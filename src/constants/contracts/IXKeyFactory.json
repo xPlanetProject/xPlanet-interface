@@ -134,23 +134,38 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pairCodeHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token0\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token1\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"PairCreated\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allPairs\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"allPairsLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"createPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"getPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"swapLPNFT\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol\":\"IXKeyFactory\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol\":{\"keccak256\":\"0x80a662988bd5d231206e6ab527eedbe87ac1c3c65939535596552eb8fb8191ce\",\"urls\":[\"bzz-raw://117c015a688110f4a31526f26dee7af2e8b80cdd6f3a4fdf9e58fbea212cbe7c\",\"dweb:/ipfs/QmPzPxGWmZEp2Lfunm525uSV2evs7EY7491dBMSeJ5tLpr\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token0\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token1\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"PairCreated\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allPairs\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"allPairsLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"createPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenB\",\"type\":\"address\"}],\"name\":\"getPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pair\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"pairCodeHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"swapLPNFT\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol\":\"IXKeyFactory\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol\":{\"keccak256\":\"0x0a10ad5f181d4a1783026bd0451dbc10fa2162ab2a0d21346138e464cee18e36\",\"urls\":[\"bzz-raw://1845bdaf357af7b8b1dfdc1aa6f8f15706f92d8759cc2aa56bb77ecaea98d0dc\",\"dweb:/ipfs/QmZ6VSGnMeoKvkzHFmiicJCdRL8ko1mueMYJwUHUaG7xiM\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity >=0.5.0;\r\n\r\ninterface IXKeyFactory {\r\n    event PairCreated(address indexed token0, address indexed token1, address pair, uint);\r\n\r\n\r\n    function getPair(address tokenA, address tokenB) external view returns (address pair);\r\n    function allPairs(uint) external view returns (address pair);\r\n    function allPairsLength() external view returns (uint);\r\n    function swapLPNFT()external view returns(address);\r\n    function createPair(address tokenA, address tokenB) external returns (address pair);\r\n\r\n}\r\n",
+  "source": "pragma solidity >=0.5.0;\r\n\r\ninterface IXKeyFactory {\r\n    event PairCreated(address indexed token0, address indexed token1, address pair, uint);\r\n\r\n\r\n    function getPair(address tokenA, address tokenB) external view returns (address pair);\r\n    function allPairs(uint) external view returns (address pair);\r\n    function allPairsLength() external view returns (uint);\r\n    function swapLPNFT()external view returns(address);\r\n    function createPair(address tokenA, address tokenB) external returns (address pair);\r\n    function pairCodeHash() external pure returns (bytes32);\r\n\r\n}\r\n",
   "sourcePath": "E:/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol",
   "ast": {
     "absolutePath": "/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol",
     "exportedSymbols": {
       "IXKeyFactory": [
-        445
+        450
       ]
     },
-    "id": 446,
+    "id": 451,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -170,9 +185,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 445,
+        "id": 450,
         "linearizedBaseContracts": [
-          445
+          450
         ],
         "name": "IXKeyFactory",
         "nodeType": "ContractDefinition",
@@ -407,7 +422,7 @@
               ],
               "src": "225:14:6"
             },
-            "scope": 445,
+            "scope": 450,
             "src": "154:86:6",
             "stateMutability": "view",
             "superFunction": null,
@@ -489,7 +504,7 @@
               ],
               "src": "292:14:6"
             },
-            "scope": 445,
+            "scope": 450,
             "src": "246:61:6",
             "stateMutability": "view",
             "superFunction": null,
@@ -543,7 +558,7 @@
               ],
               "src": "361:6:6"
             },
-            "scope": 445,
+            "scope": 450,
             "src": "313:55:6",
             "stateMutability": "view",
             "superFunction": null,
@@ -598,7 +613,7 @@
               ],
               "src": "415:9:6"
             },
-            "scope": 445,
+            "scope": 450,
             "src": "374:51:6",
             "stateMutability": "view",
             "superFunction": null,
@@ -708,25 +723,79 @@
               ],
               "src": "500:14:6"
             },
-            "scope": 445,
+            "scope": 450,
             "src": "431:84:6",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 449,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "pairCodeHash",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 445,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "542:2:6"
+            },
+            "returnParameters": {
+              "id": 448,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 447,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 449,
+                  "src": "568:7:6",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 446,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "568:7:6",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "567:9:6"
+            },
+            "scope": 450,
+            "src": "521:56:6",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
           }
         ],
-        "scope": 446,
-        "src": "28:492:6"
+        "scope": 451,
+        "src": "28:554:6"
       }
     ],
-    "src": "0:522:6"
+    "src": "0:584:6"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol",
       "exportedSymbols": {
         "IXKeyFactory": [
-          445
+          450
         ]
       }
     },
@@ -756,10 +825,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            445
+            450
           ],
           "name": "IXKeyFactory",
-          "scope": 446
+          "scope": 451
         },
         "children": [
           {
@@ -903,7 +972,7 @@
                 null
               ],
               "name": "getPair",
-              "scope": 445,
+              "scope": 450,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "external"
@@ -1020,7 +1089,7 @@
                 null
               ],
               "name": "allPairs",
-              "scope": 445,
+              "scope": 450,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "external"
@@ -1109,7 +1178,7 @@
                 null
               ],
               "name": "allPairsLength",
-              "scope": 445,
+              "scope": 450,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "external"
@@ -1175,7 +1244,7 @@
                 null
               ],
               "name": "swapLPNFT",
-              "scope": 445,
+              "scope": 450,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "external"
@@ -1242,7 +1311,7 @@
                 null
               ],
               "name": "createPair",
-              "scope": 445,
+              "scope": 450,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "external"
@@ -1347,16 +1416,82 @@
             "id": 444,
             "name": "FunctionDefinition",
             "src": "431:84:6"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "pairCodeHash",
+              "scope": 450,
+              "stateMutability": "pure",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 445,
+                "name": "ParameterList",
+                "src": "542:2:6"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 449,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 446,
+                        "name": "ElementaryTypeName",
+                        "src": "568:7:6"
+                      }
+                    ],
+                    "id": 447,
+                    "name": "VariableDeclaration",
+                    "src": "568:7:6"
+                  }
+                ],
+                "id": 448,
+                "name": "ParameterList",
+                "src": "567:9:6"
+              }
+            ],
+            "id": 449,
+            "name": "FunctionDefinition",
+            "src": "521:56:6"
           }
         ],
-        "id": 445,
+        "id": 450,
         "name": "ContractDefinition",
-        "src": "28:492:6"
+        "src": "28:554:6"
       }
     ],
-    "id": 446,
+    "id": 451,
     "name": "SourceUnit",
-    "src": "0:522:6"
+    "src": "0:584:6"
   },
   "compiler": {
     "name": "solc",
@@ -1364,7 +1499,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-05-26T09:57:30.781Z",
+  "updatedAt": "2021-05-28T05:22:54.803Z",
   "devdoc": {
     "methods": {}
   },
