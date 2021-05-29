@@ -5,8 +5,7 @@ import {
   Percent,
   Router,
   SwapParameters,
-  Trade,
-  TradeType
+  Trade
 } from '@xplanet/sdk'
 
 import { useMemo } from 'react'
@@ -25,7 +24,6 @@ import {
   shortenAddress
 } from '@/utils'
 import isZero from '@/utils/isZero'
-import v1SwapArguments from '@/utils/v1SwapArguments'
 import { useActiveWeb3React } from '@/hooks'
 import { useV1ExchangeContract } from './useContract'
 import useENS from './useENS'
@@ -99,47 +97,17 @@ function useSwapCallArguments(
 
     const swapMethods: Array<any> = []
 
-    switch (tradeVersion) {
-      case Version.v2:
-        swapMethods.push(
-          Router.swapCallParameters(trade, {
-            feeOnTransfer: false,
-            allowedSlippage: new Percent(
-              JSBI.BigInt(allowedSlippage),
-              BIPS_BASE
-            ),
-            recipient,
-            ttl: deadline
-          })
-        )
-
-        if (trade.tradeType === TradeType.EXACT_INPUT) {
-          swapMethods.push(
-            Router.swapCallParameters(trade, {
-              feeOnTransfer: true,
-              allowedSlippage: new Percent(
-                JSBI.BigInt(allowedSlippage),
-                BIPS_BASE
-              ),
-              recipient,
-              ttl: deadline
-            })
-          )
-        }
-        break
-      case Version.v1:
-        swapMethods.push(
-          v1SwapArguments(trade, {
-            allowedSlippage: new Percent(
-              JSBI.BigInt(allowedSlippage),
-              BIPS_BASE
-            ),
-            recipient,
-            ttl: deadline
-          })
-        )
-        break
-    }
+    swapMethods.push(
+      Router.swapCallParameters(trade, {
+        feeOnTransfer: false,
+        allowedSlippage: new Percent(
+          JSBI.BigInt(allowedSlippage),
+          BIPS_BASE
+        ),
+        recipient,
+        ttl: deadline
+      })
+    )
     return swapMethods.map((parameters) => ({ parameters, contract }))
   }, [
     account,
@@ -211,6 +179,8 @@ export function useSwapCallback(
               contract
             } = call
             const options = !value || isZero(value) ? {} : { value }
+
+            console.log(methodName)
 
             return contract.estimateGas[methodName](...args, options)
               .then((gasEstimate) => {

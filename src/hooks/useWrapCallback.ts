@@ -6,7 +6,7 @@ import { tryParseAmount } from '@/state/swap/hooks'
 import { useTransactionAdder } from '@/state/transactions/hooks'
 import { useCurrencyBalance } from '@/state/wallet/hooks'
 import { useActiveWeb3React } from '@/hooks'
-import { useWETHContract } from './useContract'
+import { useWETHContract } from '@/hooks/useContract'
 
 export enum WrapType {
   NOT_APPLICABLE,

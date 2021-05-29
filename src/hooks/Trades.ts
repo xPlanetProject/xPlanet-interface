@@ -106,7 +106,6 @@ export function useTradeExactIn(
   )
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
-      console.log(allowedPairs)
       return (
         Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {
           maxHops: 3,

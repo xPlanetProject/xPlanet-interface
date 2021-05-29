@@ -28,7 +28,6 @@ import { AutoRow, RowBetween } from '@/components/Row'
 import Settings from '@/components/Settings'
 import TokenWarningModal from '@/components/TokenWarningModal'
 import AdvancedSwapDetailsDropdown from '@/components/swap/AdvancedSwapDetailsDropdown'
-import BetterTradeLink from '@/components/swap/BetterTradeLink'
 import ConfirmSwapModal from '@/components/swap/ConfirmSwapModal'
 import TradePrice from '@/components/swap/TradePrice'
 import confirmPriceImpactWithoutFee from '@/components/swap/confirmPriceImpactWithoutFee'
@@ -39,7 +38,6 @@ import {
   Wrapper
 } from '@/components/swap/styleds'
 import {
-  BETTER_TRADE_LINK_THRESHOLD,
   INITIAL_ALLOWED_SLIPPAGE
 } from '@/constants'
 import { getTradeVersion, isTradeBetter } from '@/data/V1'
@@ -138,14 +136,6 @@ export default function Swap() {
         [Version.v2]: v2Trade
       }[toggledVersion]
 
-  const betterTradeLinkVersion: Version | undefined =
-    toggledVersion === Version.v2 &&
-    isTradeBetter(v2Trade, v1Trade, BETTER_TRADE_LINK_THRESHOLD)
-      ? Version.v1
-      : toggledVersion === Version.v1 && isTradeBetter(v1Trade, v2Trade)
-      ? Version.v2
-      : undefined
-
   const parsedAmounts = showWrap
     ? {
         [Field.INPUT]: parsedAmount,
@@ -212,6 +202,7 @@ export default function Swap() {
       currencies[Field.OUTPUT] &&
       parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
   )
+
   const noRoute = !route
 
   // check whether the user has approved the router on the input token
@@ -290,6 +281,7 @@ export default function Swap() {
         })
       })
       .catch((error) => {
+        console.log(error)
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,
@@ -622,9 +614,6 @@ export default function Swap() {
             {isExpertMode && swapErrorMessage ? (
               <SwapCallbackError error={swapErrorMessage} />
             ) : null}
-            {betterTradeLinkVersion && (
-              <BetterTradeLink version={betterTradeLinkVersion} />
-            )}
           </BottomGrouping>
         </Wrapper>
       </AppBody>
