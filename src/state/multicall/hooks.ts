@@ -26,7 +26,7 @@ type MethodArgs = Array<MethodArg | MethodArg[]>
 
 type OptionalMethodInputs =
   | Array<MethodArg | MethodArg[] | undefined>
-  | undefined
+  | undefined | any
 
 function isMethodArg(x: unknown): x is MethodArg {
   return ['string', 'number'].indexOf(typeof x) !== -1
@@ -85,7 +85,9 @@ function useCallsData(
   // update listeners when there is an actual change that persists for at least 100ms
   useEffect(() => {
     const callKeys: string[] = JSON.parse(serializedCallKeys)
-    if (!chainId || callKeys.length === 0) return undefined
+    if (!chainId || callKeys.length === 0) {
+      return undefined
+    }
     const calls = callKeys.map((key) => parseCallKey(key))
     dispatch(
       addMulticallListeners({
@@ -109,7 +111,9 @@ function useCallsData(
   return useMemo(
     () =>
       calls.map<CallResult>((call) => {
-        if (!chainId || !call) return INVALID_RESULT
+        if (!chainId || !call) {
+          return INVALID_RESULT
+        }
 
         const result = callResults[chainId]?.[toCallKey(call)]
         let data
@@ -158,12 +162,16 @@ function toCallState(
 ): CallState {
   if (!callResult) return INVALID_CALL_STATE
   const { valid, data, blockNumber } = callResult
-  if (!valid) return INVALID_CALL_STATE
-  if (valid && !blockNumber) return LOADING_CALL_STATE
+  if (!valid) {
+    return INVALID_CALL_STATE
+  }
+  if (!blockNumber) {
+    return LOADING_CALL_STATE
+  }
   if (!contractInterface || !fragment || !latestBlockNumber)
     return LOADING_CALL_STATE
   const success = data && data.length > 2
-  const syncing = (blockNumber ?? 0) < latestBlockNumber
+  const syncing = blockNumber < latestBlockNumber
   let result: Result | undefined = undefined
   if (success && data) {
     try {

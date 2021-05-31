@@ -12,11 +12,14 @@ import { MIGRATOR_ABI, MIGRATOR_ADDRESS } from '@/constants/abis/migrator'
 import UNISOCKS_ABI from '@/constants/abis/unisocks.json'
 import { abi as SWETH_ABI } from '@/constants/contracts/SWETH.json'
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from '@/constants/multicall'
+import { abi as NFTPositionManagerABI } from '@/constants/contracts/XSwapLPNFT.json'
+import { abi as XKeyDaoABI } from '@/constants/contracts/XkeyDao.json'
 import {
   V1_EXCHANGE_ABI,
   V1_FACTORY_ABI,
   V1_FACTORY_ADDRESSES
 } from '@/constants/v1'
+import { XSWAP_NFT_ADDRESS, XKEY_DAO_ADRESS } from '@/constants/adress'
 import { getContract } from '@/utils'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -137,6 +140,22 @@ export function useSocksController(): Contract | null {
       ? '0x65770b5283117639760beA3F867b69b3697a91dd'
       : undefined,
     UNISOCKS_ABI,
+    false
+  )
+}
+
+export function useNFTPositionManagerContract(): Contract | null {
+  return useContract(
+    XSWAP_NFT_ADDRESS,
+    NFTPositionManagerABI,
+    false
+  )
+}
+
+export function useXKeyDaoContract(): Contract | null {
+  return useContract(
+    XKEY_DAO_ADRESS,
+    XKeyDaoABI,
     false
   )
 }

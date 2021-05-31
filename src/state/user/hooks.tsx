@@ -172,6 +172,7 @@ export function usePairAdder(): (pair: Pair) => void {
 
   return useCallback(
     (pair: Pair) => {
+      console.log(pair)
       dispatch(addSerializedPair({ serializedPair: serializePair(pair) }))
     },
     [dispatch]

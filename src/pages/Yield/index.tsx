@@ -5,6 +5,7 @@ import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import Question from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
+import { useCurrentStagePrice } from '@/hooks/useCurrentStagePrice'
 import { TYPE } from '@/theme'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
@@ -47,6 +48,10 @@ const BaseInfoItem = styled(AutoColumn)`
 
 export default function Yield() {
   const theme = useContext(ThemeContext)
+
+  const price = useCurrentStagePrice()
+
+  console.log(price)
 
   const poolInfo: Array<any> = [
     { key: 'Value of staked LP (XKEY)', value: 999999999 },

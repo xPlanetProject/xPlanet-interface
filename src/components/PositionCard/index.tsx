@@ -21,6 +21,7 @@ export const FixedHeightRow = styled(RowBetween)`
 export const HoverCard = styled(Card)`
   padding: 10px;
   transition: all 0.2s;
+  margin: 0 0 10px;
   ${({ theme }) => `background: ${theme.bg2};`};
   :hover {
     background: ${({ theme }) => theme.bg3};
@@ -47,7 +48,7 @@ const ExtentsText = styled.span`
 `
 
 interface PositionCardProps {
-  pair: Pair
+  pair: Pair | any
   showUnwrapped?: boolean
   border?: string
 }
@@ -168,8 +169,8 @@ export function MinimalPositionCard({
 export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const history = useHistory()
 
-  const currency0 = unwrappedToken(pair.token0)
-  const currency1 = unwrappedToken(pair.token1)
+  // const currency0 = unwrappedToken(pair.token0)
+  // const currency1 = unwrappedToken(pair.token1)
 
   const toDetail = useCallback(() => {
     history.push(`/pool/12355`)
@@ -180,25 +181,26 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
       <AutoColumn gap='12px'>
           <LinkRow onClick={toDetail}>
             <RowFixed>
-              <DoubleCurrencyLogo
+              {/* <DoubleCurrencyLogo
                 currency0={currency0}
                 currency1={currency1}
                 margin={true}
                 size={20}
-              />
+              /> */}
               <Text fontWeight={500} fontSize={20}>
-                {!currency0 || !currency1 ? (
+                {/* {!currency0 || !currency1 ? (
                   <Dots>Loading</Dots>
                 ) : (
                   `${currency0.symbol}/${currency1.symbol}`
-                )}
+                )} */}
+                ETH/USDT
               </Text>
             </RowFixed>
             <RowFixed>
               <RowFixed>
                 <ExtentsText>Liquidity Value:</ExtentsText>
                 <Badge>
-                  <BadgeText>$100.99</BadgeText>
+                  <BadgeText>$ {pair.balanceOf.toNumber()}</BadgeText>
                 </Badge>
               </RowFixed>
               <RowFixed style={{

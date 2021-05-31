@@ -190,27 +190,6 @@ export default function AddLiquidity({
       const tokenBIsETH = currencyB === ETHER
       estimate = router.estimateGas.addLiquidityETH
       method = router.addLiquidityETH
-      // args = [
-      //   wrappedCurrency(tokenBIsETH ? currencyA : currencyB, chainId)
-      //     ?.address ?? '', // token
-      //   (tokenBIsETH ? parsedAmountA : parsedAmountB).raw.toString(), // token desired
-      //   amountsMin[
-      //     tokenBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B
-      //   ].toString(), // token min
-      //   amountsMin[
-      //     tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A
-      //   ].toString(), // eth min
-      //   account,
-      //   deadlineFromNow,
-      //   query.tokenId
-      // ]
-
-      // address token,
-      // uint amountTokenDesired,
-      // uint amountTokenMin,
-      // uint amountETHMin,
-      // uint deadline,
-      // uint256 tokenId
 
       args = [
         wrappedCurrency(tokenBIsETH ? currencyA : currencyB, chainId)
@@ -229,38 +208,9 @@ export default function AddLiquidity({
       value = BigNumber.from(
         (tokenBIsETH ? parsedAmountB : parsedAmountA).raw.toString()
       )
-
-      // address tokenA,
-      // address tokenB,
-      // uint amountADesired,
-      // uint amountBDesired,
-      // uint amountAMin,
-      // uint amountBMin,
-      // uint deadline,
-      // uint256 tokenId
     } else {
       estimate = router.estimateGas.addLiquidity
       method = router.addLiquidity
-      // args = [
-      //   wrappedCurrency(currencyA, chainId)?.address ?? '',
-      //   wrappedCurrency(currencyB, chainId)?.address ?? '',
-      //   parsedAmountA.raw.toString(),
-      //   parsedAmountB.raw.toString(),
-      //   amountsMin[Field.CURRENCY_A].toString(),
-      //   amountsMin[Field.CURRENCY_B].toString(),
-      //   account,
-      //   deadlineFromNow,
-      //   query.tokenId
-      // ]
-
-      // address tokenA,
-      // address tokenB,
-      // uint amountADesired,
-      // uint amountBDesired,
-      // uint amountAMin,
-      // uint amountBMin,
-      // uint deadline,
-      // uint256 tokenId
 
       args = [
         wrappedCurrency(currencyA, chainId)?.address ?? '',
