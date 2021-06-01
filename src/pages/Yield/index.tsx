@@ -5,7 +5,7 @@ import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import Question from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
-import { useCurrentStagePrice, swapTokenHadMint } from '@/hooks/useMining'
+import { useCurrentStagePrice, userSwapTokenHadMint } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
@@ -50,7 +50,7 @@ export default function Yield() {
   const theme = useContext(ThemeContext)
 
   const price = useCurrentStagePrice()
-  const mint = swapTokenHadMint()
+  const mint = userSwapTokenHadMint()
 
   const poolInfo: Array<any> = [
     { key: 'Value of staked LP (XKEY)', value: 999999999 },
