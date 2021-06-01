@@ -5,7 +5,7 @@ import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import Question from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
-import { useCurrentStagePrice } from '@/hooks/useCurrentStagePrice'
+import { useCurrentStagePrice, swapTokenHadMint } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
@@ -50,13 +50,12 @@ export default function Yield() {
   const theme = useContext(ThemeContext)
 
   const price = useCurrentStagePrice()
-
-  console.log(price)
+  const mint = swapTokenHadMint()
 
   const poolInfo: Array<any> = [
     { key: 'Value of staked LP (XKEY)', value: 999999999 },
-    { key: 'Yield (XKEY)', value: 10000000 },
-    { key: 'Rate (XKEY/Block)', value: 108 }
+    { key: 'Yielded (XKEY)', value: Number(mint) },
+    { key: 'Rate (XKEY/Block)', value: Number(price) }
   ]
 
   return (
@@ -94,7 +93,7 @@ export default function Yield() {
               <Text color={theme.text1} fontWeight={500}>
                 Pool List
               </Text>
-              <Question text='When you add liquidity, you are given pool NFT that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.' />
+              <Question text='xPoker Mining.' />
             </RowBetween>
             <PoolList />
           </AutoColumn>
