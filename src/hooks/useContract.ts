@@ -25,7 +25,7 @@ import { getContract } from '@/utils'
 import { useActiveWeb3React } from '@/hooks'
 
 // returns null on errors
-function useContract(
+export function useContract(
   address: string | undefined,
   ABI: any,
   withSignerIfPossible = true

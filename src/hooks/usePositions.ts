@@ -1,10 +1,10 @@
 import { useSingleCallResult, useSingleContractMultipleData, Result } from '@/state/multicall/hooks'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useAsyncMemo } from 'use-async-memo'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
-import { useNFTPositionManagerContract } from '@/hooks/useContract'
+import { useNFTPositionManagerContract, useContract, useXKeyDaoContract } from '@/hooks/useContract'
 import { useActiveWeb3React } from '@/hooks'
 import { getContract } from '@/utils'
 import { makeToken } from '@/utils/makeToken'
@@ -75,33 +75,57 @@ function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined): Array<Position
   return pairIds
 }
 
-function usePairBalanceOf(pairMaps: PairMapItem[]) {
-  let tradePairs: any = []
-  for (const pairMap of pairMaps) {
-    tradePairs.push(useSingleContractMultipleData(pairMap.contract, pairMap.method, pairMap.input))
-  }
-
-  // const loading = useMemo(() => tradePairs.some(({ loading }) => loading), [tradePairs])
-  // const error = useMemo(() => tradePairs.some(({ error }) => error), [tradePairs])
-
-  // const { result: balanceResult } = useSingleCallResult(positionManager, 'balanceOf', [
-  //   account
-  // ])
-}
-
 interface usePositionResults {
   loading: boolean
   position: PositionDetails | undefined
 }
 
-export function usePositionFromTokenId(tokenId: BigNumber | undefined): any {
-  const position = usePairsFromTokenIds(tokenId ? [tokenId] : undefined)
-  return []
+export function usePairById(pairId: string, tokenId: string): any {
+  const pairContract = useContract(pairId, XKeyPairABI)
+  const { library } = useActiveWeb3React()
+  const positionManager = useNFTPositionManagerContract()
+  const xKeyDaoContract = useXKeyDaoContract()
+  const tokenIdBN = useMemo(() => BigNumber.from(tokenId), [tokenId])
+  const { result: token0, loading: token0Loading } = useSingleCallResult(pairContract, 'token0')
+  const { result: token1, loading: token1Loading } = useSingleCallResult(pairContract, 'token1')
+  const tokenAddressResults = useSingleContractMultipleData(xKeyDaoContract, 'swaptoken_addrs', [
+    [0],
+    [1]
+  ])
+
+  const pairInfo = useAsyncMemo(async() => {
+    const info: any = {}
+    const balanceOf = await pairContract?.balanceOf(tokenIdBN)
+    const tokenURI = await positionManager?.tokenURI(tokenIdBN)
+
+    info.balanceOf = balanceOf
+    info.tokenURI = tokenURI
+
+    info.token0Address = Array.isArray(token0) && token0.length ? token0[0] : undefined
+    info.token1Address = Array.isArray(token1) && token1.length ? token1[0] : undefined
+
+    if (info.token0Address && library) {
+      info.token0 = await makeToken(info.token0Address, library)
+    }
+
+    if (info.token1Address && library) {
+      info.token1 = await makeToken(info.token1Address, library)
+    }
+
+    info.supportMining = tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
+    return info
+  }, [pairContract, positionManager, tokenIdBN, token0, token1, library, tokenAddressResults, pairId])
+
+  return {
+    loading: token0Loading || token1Loading,
+    pairInfo
+  }
 }
 
 export function usePositions(account: string | null | undefined): usePositionsResults | any {
   const positionManager = useNFTPositionManagerContract()
   const { library } = useActiveWeb3React()
+  const loading = useRef(true)
 
   const { result: balanceResult } = useSingleCallResult(positionManager, 'balanceOf', [
     account
@@ -144,7 +168,7 @@ export function usePositions(account: string | null | undefined): usePositionsRe
           library,
           account
         )
-    
+
         const token0Address = await contract.token0()
         const token1Address = await contract.token1()
         const balanceOf = await contract.balanceOf(tokenId)
@@ -157,6 +181,7 @@ export function usePositions(account: string | null | undefined): usePositionsRe
           token1Address,
           balanceOf,
           pairId,
+          tokenId,
           token0Token,
           token1Token,
           pokerInfo
@@ -164,11 +189,12 @@ export function usePositions(account: string | null | undefined): usePositionsRe
       }
     }
 
+    loading.current = false
     return res
   }, [library, account, pairIdResults])
 
   return {
-    loading: false,
+    loading: loading.current,
     positions: pairMaps
   }
 }

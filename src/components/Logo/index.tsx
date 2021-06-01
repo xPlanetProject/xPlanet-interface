@@ -25,7 +25,9 @@ export default function Logo({ srcs, alt, ...rest }: LogoProps) {
         alt={alt}
         src={src}
         onError={() => {
-          if (src) BAD_SRCS[src] = true
+          if (src) {
+            BAD_SRCS[src] = true
+          }
           refresh((i) => i + 1)
         }}
       />

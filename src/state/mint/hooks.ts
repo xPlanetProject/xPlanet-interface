@@ -162,7 +162,7 @@ export function useDerivedMintInfo(
         ? pair.priceOf(wrappedCurrencyA)
         : undefined
     }
-  }, [chainId, currencyA, noLiquidity, pair, parsedAmounts])
+  }, [chainId, currencyA, noLiquidity, pair])
 
   // liquidity minted
   const liquidityMinted = useMemo(() => {

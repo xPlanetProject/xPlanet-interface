@@ -174,7 +174,8 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const currency1 = unwrappedToken(pair.token1Token)
 
   const toDetail = useCallback(() => {
-    history.push(`/pool/${pair.pairId}`)
+    const tokenId = pair.tokenId.toString()
+    history.push(`/pool/${tokenId}/${pair.pairId}`)
   }, [history, pair])
 
   return (
