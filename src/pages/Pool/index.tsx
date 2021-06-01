@@ -35,12 +35,8 @@ export default function Pool() {
   const { account } = useActiveWeb3React()
   const [t] = useTranslation()
 
-  const trackedTokenPairs = useTrackedTokenPairs()
 
   const { positions, loading: positionsLoading } = usePositions(account)
-
-  console.log(trackedTokenPairs)
-
   
 
   // console.log(positions, positionsLoading)
@@ -132,10 +128,10 @@ export default function Pool() {
                 </LightCard>
               ) : positions?.length > 0 ? (
                 <>
-                  {positions.map((v2Pair, index) => (
+                  {positions.map((pair, index) => (
                     <FullPositionCard
                       key={index}
-                      pair={v2Pair}
+                      pair={pair}
                     />
                   ))}
                 </>

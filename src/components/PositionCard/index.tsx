@@ -11,7 +11,8 @@ import { useTotalSupply } from '@/data/TotalSupply'
 import { useActiveWeb3React } from '@/hooks'
 import { useTokenBalance } from '@/state/wallet/hooks'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { JSBI, Pair } from '@xplanet/sdk'
+import { JSBI } from '@xplanet/sdk'
+import { PositionTokenPair } from '@/hooks/usePositions'
 import { Text } from 'rebass'
 
 export const FixedHeightRow = styled(RowBetween)`
@@ -48,7 +49,7 @@ const ExtentsText = styled.span`
 `
 
 interface PositionCardProps {
-  pair: Pair | any
+  pair: PositionTokenPair | any
   showUnwrapped?: boolean
   border?: string
 }
@@ -169,11 +170,11 @@ export function MinimalPositionCard({
 export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const history = useHistory()
 
-  // const currency0 = unwrappedToken(pair.token0)
-  // const currency1 = unwrappedToken(pair.token1)
+  const currency0 = unwrappedToken(pair.token0Token)
+  const currency1 = unwrappedToken(pair.token1Token)
 
   const toDetail = useCallback(() => {
-    history.push(`/pool/12355`)
+    history.push(`/pool/${pair.pairId}`)
   }, [history, pair])
 
   return (
@@ -181,19 +182,18 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
       <AutoColumn gap='12px'>
           <LinkRow onClick={toDetail}>
             <RowFixed>
-              {/* <DoubleCurrencyLogo
+              <DoubleCurrencyLogo
                 currency0={currency0}
                 currency1={currency1}
                 margin={true}
                 size={20}
-              /> */}
+              />
               <Text fontWeight={500} fontSize={20}>
-                {/* {!currency0 || !currency1 ? (
+                {!currency0 || !currency1 ? (
                   <Dots>Loading</Dots>
                 ) : (
                   `${currency0.symbol}/${currency1.symbol}`
-                )} */}
-                ETH/USDT
+                )}
               </Text>
             </RowFixed>
             <RowFixed>
@@ -208,7 +208,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               }}>
                 <ExtentsText>Poker:</ExtentsText>
                 <Badge>
-                  <BadgeText>♠A</BadgeText>
+                  <BadgeText>{ pair.pokerInfo?.faceIcon } { pair.pokerInfo?.face }</BadgeText>
                 </Badge>
               </RowFixed>
             </RowFixed>

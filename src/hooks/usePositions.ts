@@ -7,6 +7,8 @@ import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useNFTPositionManagerContract } from '@/hooks/useContract'
 import { useActiveWeb3React } from '@/hooks'
 import { getContract } from '@/utils'
+import { makeToken } from '@/utils/makeToken'
+import { singlePokerMap, SinglePokerItem } from '@/pokers'
 
 type PositionDetails = {
   nonce: BigNumber
@@ -30,39 +32,45 @@ type PairMapItem = {
   method: string
 }
 
-type PositionTokenPairId = {
+export type PositionTokenPair = {
   tokenId: BigNumber
+  pokerInfo: SinglePokerItem | undefined
   pairId: string
 }
 
 interface usePositionsResults {
   loading: boolean
-  pairIds: Array<PositionTokenPairId>
+  pairIds: Array<PositionTokenPair>
 }
 
-function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined): Array<PositionTokenPairId> {
+function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined): Array<PositionTokenPair> {
   const positionManager = useNFTPositionManagerContract()
   const inputs = useMemo(() => (tokenIds ? tokenIds.map((tokenId) => [BigNumber.from(tokenId)]) : []), [tokenIds])
   const pairIdResults = useSingleContractMultipleData(positionManager, 'getPair', inputs)
+  const pokerPropertyResults = useSingleContractMultipleData(positionManager, 'getPokerProperty', inputs)
 
-  const loading = useMemo(() => pairIdResults.some(({ loading }) => loading), [pairIdResults])
-  const error = useMemo(() => pairIdResults.some(({ error }) => error), [pairIdResults])
+  const loading = useMemo(() => [...pairIdResults, ...pokerPropertyResults].some(({ loading }) => loading), [pairIdResults, pokerPropertyResults])
+  const error = useMemo(() => [...pairIdResults, ...pokerPropertyResults].some(({ error }) => error), [pairIdResults, pokerPropertyResults])
 
   const pairIds = useMemo(() => {
     if (!loading && !error && tokenIds) {
       return pairIdResults.map((call, i) => {
         const tokenId = tokenIds[i]
         const result = call.result as Result
+        const propertyResult = pokerPropertyResults[i].result as Result
+        const pokerRank = (propertyResult as any).rank as BigNumber
+        const pockerSuit = pokerRank.toNumber()
 
         return {
           tokenId,
+          pokerInfo: singlePokerMap.get(pockerSuit),
           pairId: result.length ? result[0] : ''
         }
       })
     }
 
     return []
-  }, [loading, error, tokenIds, pairIdResults])
+  }, [loading, error, tokenIds, pairIdResults, pokerPropertyResults])
 
   return pairIds
 }
@@ -75,8 +83,6 @@ function usePairBalanceOf(pairMaps: PairMapItem[]) {
 
   // const loading = useMemo(() => tradePairs.some(({ loading }) => loading), [tradePairs])
   // const error = useMemo(() => tradePairs.some(({ error }) => error), [tradePairs])
-
-  console.log(tradePairs)
 
   // const { result: balanceResult } = useSingleCallResult(positionManager, 'balanceOf', [
   //   account
@@ -130,7 +136,7 @@ export function usePositions(account: string | null | undefined): usePositionsRe
 
   const pairMaps = useAsyncMemo(async() => {
     const res: any = []
-    for (const { pairId, tokenId } of pairIdResults) {
+    for (const { pairId, tokenId, pokerInfo } of pairIdResults) {
       if (library && account) {
         const contract = getContract(
           pairId,
@@ -139,25 +145,27 @@ export function usePositions(account: string | null | undefined): usePositionsRe
           account
         )
     
-        const token0 = await contract.token0()
-        const token1 = await contract.token1()
+        const token0Address = await contract.token0()
+        const token1Address = await contract.token1()
         const balanceOf = await contract.balanceOf(tokenId)
 
-        console.log(contract)
+        const token0Token = await makeToken(token0Address, library)
+        const token1Token = await makeToken(token1Address, library)
 
         res.push({
-          token0,
-          token1,
+          token0Address,
+          token1Address,
           balanceOf,
-          pairId
+          pairId,
+          token0Token,
+          token1Token,
+          pokerInfo
         })
       }
     }
 
     return res
   }, [library, account, pairIdResults])
-
-  console.log(pairMaps)
 
   return {
     loading: false,
