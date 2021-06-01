@@ -14,12 +14,13 @@ import { abi as SWETH_ABI } from '@/constants/contracts/SWETH.json'
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from '@/constants/multicall'
 import { abi as NFTPositionManagerABI } from '@/constants/contracts/XSwapLPNFT.json'
 import { abi as XKeyDaoABI } from '@/constants/contracts/XkeyDao.json'
+import { abi as XPokerPowerABI } from '@/constants/contracts/XPokerPower.json'
 import {
   V1_EXCHANGE_ABI,
   V1_FACTORY_ABI,
   V1_FACTORY_ADDRESSES
 } from '@/constants/v1'
-import { XSWAP_NFT_ADDRESS, XKEY_DAO_ADRESS } from '@/constants/adress'
+import { XSWAP_NFT_ADDRESS, XKEY_DAO_ADRESS, XPOKER_POWER_ADDRESS } from '@/constants/adress'
 import { getContract } from '@/utils'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -156,6 +157,14 @@ export function useXKeyDaoContract(): Contract | null {
   return useContract(
     XKEY_DAO_ADRESS,
     XKeyDaoABI,
+    false
+  )
+}
+
+export function useXPokerPowerContract(): Contract | null {
+  return useContract(
+    XPOKER_POWER_ADDRESS,
+    XPokerPowerABI,
     false
   )
 }
