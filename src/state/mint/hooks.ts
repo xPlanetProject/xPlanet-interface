@@ -174,12 +174,16 @@ export function useDerivedMintInfo(
       wrappedCurrencyAmount(currencyAAmount, chainId),
       wrappedCurrencyAmount(currencyBAmount, chainId)
     ]
-    if (pair && totalSupply && tokenAmountA && tokenAmountB) {
-      return pair.getLiquidityMinted(totalSupply, tokenAmountA, tokenAmountB)
-    } else {
+    try {
+      if (pair && totalSupply && tokenAmountA && tokenAmountB) {
+        return pair.getLiquidityMinted(totalSupply, tokenAmountA, tokenAmountB)
+      } else {
+        return undefined
+      }
+    } catch (e) {
       return undefined
     }
-  }, [parsedAmounts, chainId, pair, totalSupply])
+  }, [chainId, pair, totalSupply])
 
   const poolTokenPercentage = useMemo(() => {
     if (liquidityMinted && totalSupply) {
