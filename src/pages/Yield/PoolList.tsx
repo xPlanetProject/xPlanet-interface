@@ -4,6 +4,7 @@ import { Token, ChainId } from '@xplanet/sdk'
 import PoolListItem from './PoolListItem'
 import { AutoColumn } from '@/components/Column'
 import { RowAround } from '@/components/Row'
+import { useMiningList } from '@/hooks/useMining'
 import styled from 'styled-components'
 
 const ColumnGrid = styled(RowAround)`
@@ -52,6 +53,9 @@ const poolList: Array<PoolPair> = [
 ]
 
 export default function PoolList() {
+  // const pairMaps = useMiningList()
+  // console.log(pairMaps)
+
   return (
     <>
       <ColumnGrid>
