@@ -52,12 +52,9 @@ const poolList: Array<PoolPair> = [
   }
 ]
 
-function PoolList() {
+export default function PoolList() {
   const pairMaps = useMiningList()
   // console.log(pairMaps)
-
-  console.log(1111111111)
-
   return (
     <>
       <ColumnGrid>
@@ -73,5 +70,3 @@ function PoolList() {
     </>
   )
 }
-
-export default React.memo(PoolList)

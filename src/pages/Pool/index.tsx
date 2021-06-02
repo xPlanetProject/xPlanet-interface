@@ -31,7 +31,7 @@ export default function Pool() {
   const { account } = useActiveWeb3React()
   const [t] = useTranslation()
 
-  const { positions, loading: positionsLoading } = usePositions(account)  
+  const { positions, loading: positionsLoading } = usePositions(account)
 
   return (
     <>

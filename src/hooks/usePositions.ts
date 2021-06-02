@@ -85,9 +85,12 @@ export function usePairById(pairId: string, tokenId: string): any {
   const { library } = useActiveWeb3React()
   const positionManager = useNFTPositionManagerContract()
   const xKeyDaoContract = useXKeyDaoContract()
-  const tokenIdBN = useMemo(() => BigNumber.from(tokenId), [tokenId])
+  const tokenIdBnStr = useMemo(() => BigNumber.from(tokenId), [tokenId]).toString()
   const { result: token0, loading: token0Loading } = useSingleCallResult(pairContract, 'token0')
   const { result: token1, loading: token1Loading } = useSingleCallResult(pairContract, 'token1')
+  const { result: balanceOfResult, loading: balanceOfLoading } = useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
+  const { result: tokenURIResult, loading: tokenURILoading } = useSingleCallResult(positionManager, 'tokenURI', [tokenIdBnStr])
+
   const tokenAddressResults = useSingleContractMultipleData(xKeyDaoContract, 'swaptoken_addrs', [
     [0],
     [1]
@@ -95,29 +98,42 @@ export function usePairById(pairId: string, tokenId: string): any {
 
   const pairInfo = useAsyncMemo(async() => {
     const info: any = {}
-    const balanceOf = await pairContract?.balanceOf(tokenIdBN)
-    const tokenURI = await positionManager?.tokenURI(tokenIdBN)
+    let decimals
 
-    info.balanceOf = balanceOf
-    info.tokenURI = tokenURI
+    info.balanceOf = Array.isArray(balanceOfResult) ? balanceOfResult[0].toNumber() : 0
+    info.tokenURI = Array.isArray(tokenURIResult) ? tokenURIResult[0] : ''
 
     info.token0Address = Array.isArray(token0) && token0.length ? token0[0] : undefined
     info.token1Address = Array.isArray(token1) && token1.length ? token1[0] : undefined
 
     if (info.token0Address && library) {
-      info.token0 = await makeToken(info.token0Address, library)
+      //  @ts-ignore
+      const { token, tokenContract } = await makeToken(info.token0Address, library, true)
+      decimals = BigNumber.from(Math.pow(10, token.decimals))
+      info.token0 = token
+      info.token0Amount = await tokenContract.balanceOf(pairId)
+      console.log(info.token0Amount.toString())
+      // info.token0Amount = new RealBigNumber(info.token0Amount).pow(0 - token.decimals)
+      console.log(info.token0Amount.toString())
+      // info.token0Amount = BigNumber.from(divide(info.token0Amount.toNumber(), Math.pow(10, token.decimals))).toString()
     }
 
     if (info.token1Address && library) {
-      info.token1 = await makeToken(info.token1Address, library)
+      //  @ts-ignore
+      const { token, tokenContract } = await makeToken(info.token1Address, library, true)
+      // decimals = BigNumber.from(Math.pow(10, token.decimals))
+      info.token1 = token
+      info.token1Amount = await tokenContract.balanceOf(pairId)
+      // info.token1Amount = divide(info.token1Amount.toNumber(), Math.pow(10, token.decimals))
     }
 
     info.supportMining = tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
+
     return info
-  }, [pairContract, positionManager, tokenIdBN, token0, token1, library, tokenAddressResults, pairId])
+  }, [token0, token1, library, tokenAddressResults, pairId, balanceOfResult, tokenURIResult])
 
   return {
-    loading: token0Loading || token1Loading,
+    loading: token0Loading || token1Loading || balanceOfLoading || tokenURILoading,
     pairInfo
   }
 }

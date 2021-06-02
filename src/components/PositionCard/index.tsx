@@ -201,7 +201,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               <RowFixed>
                 <ExtentsText>Liquidity Value:</ExtentsText>
                 <Badge>
-                  <BadgeText>$ {pair.balanceOf.toNumber()}</BadgeText>
+                  <BadgeText>$ {pair.balanceOf.toString()}</BadgeText>
                 </Badge>
               </RowFixed>
               <RowFixed style={{
