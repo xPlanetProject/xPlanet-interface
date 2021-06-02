@@ -52,9 +52,11 @@ const poolList: Array<PoolPair> = [
   }
 ]
 
-export default function PoolList() {
-  // const pairMaps = useMiningList()
+function PoolList() {
+  const pairMaps = useMiningList()
   // console.log(pairMaps)
+
+  console.log(1111111111)
 
   return (
     <>
@@ -71,3 +73,5 @@ export default function PoolList() {
     </>
   )
 }
+
+export default React.memo(PoolList)

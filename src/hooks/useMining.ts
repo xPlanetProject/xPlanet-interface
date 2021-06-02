@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useActiveWeb3React } from '@/hooks'
 import { useXKeyDaoContract } from '@/hooks/useContract'
@@ -10,7 +8,7 @@ import {
 import { getContract } from '@/utils'
 import { makeToken } from '@/utils/makeToken'
 import { utils } from 'ethers'
-import { useAsyncMemo } from 'use-async-memo'
+import { useAsyncMemo } from '@/hooks/useAsyncMemo'
 
 export function useCurrentStagePrice() {
   const xKeyDaoContract = useXKeyDaoContract()
@@ -49,13 +47,9 @@ export function useMiningList() {
     [[0], [1]]
   )
 
-  console.log(pairIdResults)
-
   const pairIds = pairIdResults.map((item) => {
     return item.result?.[0]
   })
-
-  console.log(pairIds)
 
   const pairMaps = useAsyncMemo(async () => {
     const res: any = []
