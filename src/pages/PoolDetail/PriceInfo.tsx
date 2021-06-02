@@ -65,7 +65,6 @@ const PriceInfo: React.FC<LiquidityInfoProps> = ({ pair }: LiquidityInfoProps) =
               currencyA={currency0}
               currencyB={currency1}
               handleRateToggle={() => {
-
               }}
             />
           </RowBetween>

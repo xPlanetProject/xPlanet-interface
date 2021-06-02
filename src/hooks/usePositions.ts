@@ -2,6 +2,7 @@ import { useSingleCallResult, useSingleContractMultipleData, Result } from '@/st
 import { useMemo, useRef } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
+import { formatUnits } from '@ethersproject/units'
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useNFTPositionManagerContract, useContract, useXKeyDaoContract } from '@/hooks/useContract'
 import { useAsyncMemo } from '@/hooks/useAsyncMemo'
@@ -98,9 +99,9 @@ export function usePairById(pairId: string, tokenId: string): any {
 
   const pairInfo = useAsyncMemo(async() => {
     const info: any = {}
-    let decimals
+    let tokenAmount
 
-    info.balanceOf = Array.isArray(balanceOfResult) ? balanceOfResult[0].toNumber() : 0
+    info.balanceOf = Array.isArray(balanceOfResult) ? formatUnits(balanceOfResult[0], 18) : 0
     info.tokenURI = Array.isArray(tokenURIResult) ? tokenURIResult[0] : ''
 
     info.token0Address = Array.isArray(token0) && token0.length ? token0[0] : undefined
@@ -109,22 +110,17 @@ export function usePairById(pairId: string, tokenId: string): any {
     if (info.token0Address && library) {
       //  @ts-ignore
       const { token, tokenContract } = await makeToken(info.token0Address, library, true)
-      decimals = BigNumber.from(Math.pow(10, token.decimals))
       info.token0 = token
-      info.token0Amount = await tokenContract.balanceOf(pairId)
-      console.log(info.token0Amount.toString())
-      // info.token0Amount = new RealBigNumber(info.token0Amount).pow(0 - token.decimals)
-      console.log(info.token0Amount.toString())
-      // info.token0Amount = BigNumber.from(divide(info.token0Amount.toNumber(), Math.pow(10, token.decimals))).toString()
+      tokenAmount = await tokenContract.balanceOf(pairId)
+      info.token0Amount = formatUnits(tokenAmount, token.decimals)
     }
 
     if (info.token1Address && library) {
       //  @ts-ignore
       const { token, tokenContract } = await makeToken(info.token1Address, library, true)
-      // decimals = BigNumber.from(Math.pow(10, token.decimals))
       info.token1 = token
-      info.token1Amount = await tokenContract.balanceOf(pairId)
-      // info.token1Amount = divide(info.token1Amount.toNumber(), Math.pow(10, token.decimals))
+      tokenAmount = await tokenContract.balanceOf(pairId)
+      info.token1Amount = formatUnits(tokenAmount, token.decimals)
     }
 
     info.supportMining = tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
@@ -195,7 +191,7 @@ export function usePositions(account: string | null | undefined): usePositionsRe
         res.push({
           token0Address,
           token1Address,
-          balanceOf,
+          balanceOf: formatUnits(balanceOf, 18),
           pairId,
           tokenId,
           token0Token,
