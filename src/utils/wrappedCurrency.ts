@@ -6,7 +6,7 @@ import {
   Token,
   TokenAmount,
   WETH
-} from '@xplanet/sdk'
+} from '@/xplanet-sdk'
 
 export function wrappedCurrency(
   currency: Currency | undefined,

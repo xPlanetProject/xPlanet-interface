@@ -1,4 +1,4 @@
-import { currencyEquals, Trade } from '@xplanet/sdk'
+import { currencyEquals, Trade } from '@/xplanet-sdk'
 
 import React, { useCallback, useMemo } from 'react'
 

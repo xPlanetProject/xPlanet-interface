@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { ChainId } from '@xplanet/sdk'
+import { ChainId } from '@/xplanet-sdk'
 import { TokenList } from '@xplanet/token-lists'
 
 import { useCallback } from 'react'

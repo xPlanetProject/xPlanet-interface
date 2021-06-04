@@ -127,7 +127,7 @@
     "@web3-react/walletlink-connector": "^6.0.9",
     "@welldone-software/why-did-you-render": "^6.1.4",
     "@xplanet/default-token-list": "^1.2.5",
-    "@xplanet/sdk": "^1.2.5",
+    "@xplanet/sdk": "1.2.4",
     "@xplanet/token-lists": "^1.2.5",
     "ajv": "^6.12.3",
     "cids": "^1.0.0",

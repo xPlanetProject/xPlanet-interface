@@ -1,5 +1,5 @@
 import { parseBytes32String } from '@ethersproject/strings'
-import { Currency, ETHER, Token, currencyEquals } from '@xplanet/sdk'
+import { Currency, ETHER, Token, currencyEquals } from '@/xplanet-sdk'
 
 import { useMemo } from 'react'
 

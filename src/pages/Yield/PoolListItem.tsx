@@ -5,7 +5,7 @@ import { ButtonPrimary } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { RowBetween } from '@/components/Row'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
-import { Token } from '@xplanet/sdk'
+import { Token } from '@/xplanet-sdk'
 import styled from 'styled-components'
 
 const Card = styled(DarkCard)`

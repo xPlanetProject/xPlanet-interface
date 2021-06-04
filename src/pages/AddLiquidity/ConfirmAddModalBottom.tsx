@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent } from '@xplanet/sdk'
+import { Currency, CurrencyAmount, Fraction, Percent } from '@/xplanet-sdk'
 import { Text } from 'rebass'
 
 import React from 'react'

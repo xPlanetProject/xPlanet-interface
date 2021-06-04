@@ -1,5 +1,5 @@
 import React from 'react'
-import { Currency } from '@xplanet/sdk'
+import { Currency } from '@/xplanet-sdk'
 import { ToggleElement, ToggleWrapper } from '@/components/Toggle/MultiToggle'
 import { useActiveWeb3React } from '@/hooks'
 import { wrappedCurrency } from '@/utils/wrappedCurrency'

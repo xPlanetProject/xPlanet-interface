@@ -11,7 +11,7 @@ import { useTotalSupply } from '@/data/TotalSupply'
 import { useActiveWeb3React } from '@/hooks'
 import { useTokenBalance } from '@/state/wallet/hooks'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { JSBI } from '@xplanet/sdk'
+import { JSBI } from '@/xplanet-sdk'
 import { PositionTokenPair } from '@/hooks/usePositions'
 import { Text } from 'rebass'
 

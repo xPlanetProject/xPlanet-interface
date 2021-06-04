@@ -1,4 +1,4 @@
-import { ChainId } from '@xplanet/sdk'
+import { ChainId } from '@/xplanet-sdk'
 
 import MULTICALL_ABI from './abi.json'
 

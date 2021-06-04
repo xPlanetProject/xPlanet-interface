@@ -5,7 +5,7 @@ import {
   JSBI,
   Price,
   WETH
-} from '@xplanet/sdk'
+} from '@/xplanet-sdk'
 
 import { useMemo } from 'react'
 

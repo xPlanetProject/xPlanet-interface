@@ -1,7 +1,7 @@
 import React from 'react'
 
 import CurrencyLogo from '@/components/CurrencyLogo'
-import { Currency } from '@xplanet/sdk'
+import { Currency } from '@/xplanet-sdk'
 import styled from 'styled-components'
 
 const Wrapper = styled.div<{ margin: boolean; sizeraw: number }>`

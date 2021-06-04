@@ -1,6 +1,6 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { ChainId } from '@xplanet/sdk'
+import { ChainId } from '@/xplanet-sdk'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 
