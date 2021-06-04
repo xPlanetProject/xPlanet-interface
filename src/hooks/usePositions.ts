@@ -1,14 +1,16 @@
 import { useSingleCallResult, useSingleContractMultipleData, Result } from '@/state/multicall/hooks'
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { formatUnits } from '@ethersproject/units'
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
-import { useNFTPositionManagerContract, useContract, useXKeyDaoContract } from '@/hooks/useContract'
+import { useNFTPositionManagerContract, useContract, useXKeyDaoContract, useTokenContract } from '@/hooks/useContract'
 import { useAsyncMemo } from '@/hooks/useAsyncMemo'
 import { useActiveWeb3React } from '@/hooks'
 import { getContract } from '@/utils'
 import { makeToken } from '@/utils/makeToken'
+import { useToken } from '@/hooks/Tokens'
+import { or } from '@/utils/or'
 import { singlePokerMap, SinglePokerItem } from '@/pokers'
 
 type PositionDetails = {
@@ -89,6 +91,7 @@ export function usePairById(pairId: string, tokenId: string): any {
   const tokenIdBnStr = useMemo(() => BigNumber.from(tokenId), [tokenId]).toString()
   const { result: token0, loading: token0Loading } = useSingleCallResult(pairContract, 'token0')
   const { result: token1, loading: token1Loading } = useSingleCallResult(pairContract, 'token1')
+  const { result: totalSupplyResult, loading: totalSupplyLoading } = useSingleCallResult(pairContract, 'totalSupply')
   const { result: balanceOfResult, loading: balanceOfLoading } = useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
   const { result: tokenURIResult, loading: tokenURILoading } = useSingleCallResult(positionManager, 'tokenURI', [tokenIdBnStr])
 
@@ -97,39 +100,50 @@ export function usePairById(pairId: string, tokenId: string): any {
     [1]
   ])
 
+  const token0Address = Array.isArray(token0) && token0.length ? token0[0] : ''
+  const token1Address = Array.isArray(token1) && token1.length ? token1[0] : ''
+
+  const token0Token = useToken(token0Address)
+  const token1Token = useToken(token1Address)
+
+  const token0Contract = useTokenContract(token0Address)
+  const token1Contract = useTokenContract(token1Address)
+
   const pairInfo = useAsyncMemo(async() => {
     const info: any = {}
+    const balanceOf = Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)
+    const totalSupply = Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)
     let tokenAmount
 
-    info.balanceOf = Array.isArray(balanceOfResult) ? formatUnits(balanceOfResult[0], 18) : 0
+    info.balanceOf = balanceOf.toString()
+
     info.tokenURI = Array.isArray(tokenURIResult) ? tokenURIResult[0] : ''
 
-    info.token0Address = Array.isArray(token0) && token0.length ? token0[0] : undefined
-    info.token1Address = Array.isArray(token1) && token1.length ? token1[0] : undefined
+    console.log(balanceOf.toString(), totalSupply.toString())
 
-    if (info.token0Address && library) {
-      //  @ts-ignore
-      const { token, tokenContract } = await makeToken(info.token0Address, library, true)
-      info.token0 = token
-      tokenAmount = await tokenContract.balanceOf(pairId)
-      info.token0Amount = formatUnits(tokenAmount, token.decimals)
+    info.shared = balanceOf.div(totalSupply).toNumber()
+
+    info.token0Address = token0Address
+    info.token1Address = token1Address
+    info.token0 = token0Token
+    info.token1 = token1Token
+
+    if (token0Contract && token0Token) {
+      tokenAmount = await token0Contract.balanceOf(pairId)
+      info.token0Amount = formatUnits(tokenAmount, token0Token.decimals)
     }
 
-    if (info.token1Address && library) {
-      //  @ts-ignore
-      const { token, tokenContract } = await makeToken(info.token1Address, library, true)
-      info.token1 = token
-      tokenAmount = await tokenContract.balanceOf(pairId)
-      info.token1Amount = formatUnits(tokenAmount, token.decimals)
+    if (token1Contract && token1Token) {
+      tokenAmount = await token1Contract.balanceOf(pairId)
+      info.token1Amount = formatUnits(tokenAmount, token1Token.decimals)
     }
 
     info.supportMining = tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
-
     return info
-  }, [token0, token1, library, tokenAddressResults, pairId, balanceOfResult, tokenURIResult])
+  }, [token0, token1, library, tokenAddressResults, pairId, balanceOfResult, tokenURIResult, totalSupplyResult])
 
   return {
-    loading: token0Loading || token1Loading || balanceOfLoading || tokenURILoading,
+    loading: or(token0Loading, token1Loading, balanceOfLoading, tokenURILoading, totalSupplyLoading),
     pairInfo
   }
 }
@@ -137,7 +151,6 @@ export function usePairById(pairId: string, tokenId: string): any {
 export function usePositions(account: string | null | undefined): usePositionsResults | any {
   const positionManager = useNFTPositionManagerContract()
   const { library } = useActiveWeb3React()
-  const loading = useRef(true)
 
   const { result: balanceResult } = useSingleCallResult(positionManager, 'balanceOf', [
     account
@@ -200,13 +213,11 @@ export function usePositions(account: string | null | undefined): usePositionsRe
         })
       }
     }
-
-    loading.current = false
     return res
   }, [library, account, pairIdResults])
 
   return {
-    loading: loading.current,
+    loading: Array.isArray(pairMaps) ? pairMaps.length !== pairIdResults.length : true,
     positions: pairMaps
   }
 }

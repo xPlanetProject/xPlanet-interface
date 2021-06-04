@@ -219,7 +219,9 @@ export function useDerivedSwapInfo(): {
   } else {
     if (
       BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
+      //  @ts-ignore
       (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
+      //  @ts-ignore
       (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
     ) {
       inputError = inputError ?? 'Invalid recipient'
@@ -231,11 +233,13 @@ export function useDerivedSwapInfo(): {
   const slippageAdjustedAmounts =
     v2Trade &&
     allowedSlippage &&
+    //  @ts-ignore
     computeSlippageAdjustedAmounts(v2Trade, allowedSlippage)
 
   const slippageAdjustedAmountsV1 =
     v1Trade &&
     allowedSlippage &&
+    //  @ts-ignore
     computeSlippageAdjustedAmounts(v1Trade, allowedSlippage)
 
   // compare input balance to max input based on version
@@ -258,6 +262,7 @@ export function useDerivedSwapInfo(): {
     currencies,
     currencyBalances,
     parsedAmount,
+    //  @ts-ignore
     v2Trade: v2Trade ?? undefined,
     inputError,
     v1Trade

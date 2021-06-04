@@ -7,6 +7,7 @@ import { AutoColumn } from '@/components/Column'
 import { RowBetween } from '@/components/Row'
 import Badge from '@/components/Badge'
 import { TYPE } from '@/theme'
+import useUSDCPrice from '@/utils/useUSDCPrice'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
 
 import { Label } from './styleds'
@@ -20,6 +21,9 @@ const LiquidityInfo: React.FC<LiquidityInfoProps> = ({ pair }: LiquidityInfoProp
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)
 
+  const token0UsdcPrice = useUSDCPrice(pair.token1)
+  const token1UsdcPrice = useUSDCPrice(currency1)
+
   return (
     <DarkCard>
       <AutoColumn gap='md' style={{ width: '100%' }}>
@@ -29,7 +33,7 @@ const LiquidityInfo: React.FC<LiquidityInfoProps> = ({ pair }: LiquidityInfoProp
               color={theme.text1}
               fontSize='28px'
               fontWeight={500}>
-              $ {pair.balanceOf}
+              $ {pair.balanceOfUSDT}
             </TYPE.largeHeader>
         </AutoColumn>
         <LightCard padding='12px 16px'>
@@ -48,11 +52,11 @@ const LiquidityInfo: React.FC<LiquidityInfoProps> = ({ pair }: LiquidityInfoProp
           <AutoColumn gap='md'>
             <RowBetween>
               <TYPE.main>Amount</TYPE.main>
-              {/* <Badge>{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Badge> */}
+              <Badge>{pair.balanceOf}</Badge>
             </RowBetween>
             <RowBetween>
               <TYPE.main>Share</TYPE.main>
-              {/* <Badge>{poolTokenPercentage ? poolTokenPercentage.toFixed(2) + '%' : '-'}</Badge> */}
+              <Badge>{pair.shared + '%'}</Badge>
             </RowBetween>
           </AutoColumn>
         </LightCard>

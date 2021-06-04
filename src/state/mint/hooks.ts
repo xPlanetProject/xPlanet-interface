@@ -231,6 +231,7 @@ export function useDerivedMintInfo(
   return {
     dependentField,
     currencies,
+    //  @ts-ignore
     pair,
     pairState,
     currencyBalances,

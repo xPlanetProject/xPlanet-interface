@@ -179,6 +179,7 @@ export function useDerivedBurnInfo(
     error = error ?? 'Enter an amount'
   }
 
+  //  @ts-ignore
   return { pair, parsedAmounts, error }
 }
 

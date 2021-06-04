@@ -7,10 +7,12 @@ import { wrappedCurrency } from '@/utils/wrappedCurrency'
 export default function RateToggle({
   currencyA,
   currencyB,
+  isReverse,
   handleRateToggle,
 }: {
   currencyA: Currency
   currencyB: Currency
+  isReverse: boolean
   handleRateToggle: () => void
 }) {
   const { chainId } = useActiveWeb3React()
@@ -18,16 +20,14 @@ export default function RateToggle({
   const tokenA = wrappedCurrency(currencyA, chainId)
   const tokenB = wrappedCurrency(currencyB, chainId)
 
-  const isSorted = tokenA && tokenB && tokenA.sortsBefore(tokenB)
-
   return tokenA && tokenB ? (
     <div style={{ width: 'fit-content', display: 'flex', alignItems: 'center' }}>
       <ToggleWrapper width="fit-content">
-        <ToggleElement isActive={isSorted} fontSize="12px" onClick={handleRateToggle}>
-          {isSorted ? currencyA.symbol + ' price ' : currencyB.symbol + ' price '}
+        <ToggleElement isActive={!isReverse} fontSize="12px" onClick={handleRateToggle}>
+          {currencyA.symbol + ' price '}
         </ToggleElement>
-        <ToggleElement isActive={!isSorted} fontSize="12px" onClick={handleRateToggle}>
-          {isSorted ? currencyB.symbol + ' price ' : currencyA.symbol + ' price '}
+        <ToggleElement isActive={isReverse} fontSize="12px" onClick={handleRateToggle}>
+          {currencyB.symbol + ' price '}
         </ToggleElement>
       </ToggleWrapper>
     </div>

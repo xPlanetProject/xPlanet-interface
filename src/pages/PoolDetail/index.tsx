@@ -10,10 +10,6 @@ import { AutoColumn } from '@/components/Column'
 import { ButtonGray } from '@/components/Button'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { NFT } from '@/components/NFT'
-import { usePairs } from '@/data/Reserves'
-import { useActiveWeb3React } from '@/hooks'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '@/state/user/hooks'
-import { useTokenBalancesWithLoadingIndicator } from '@/state/wallet/hooks'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
 import { currencyId } from '@/utils/currencyId'
 import { usePairById } from '@/hooks/usePositions'
@@ -32,48 +28,10 @@ type PageParams = {
 
 export default function PoolDetail() {
   const [ t ] = useTranslation()
-  const { account } = useActiveWeb3React()
   const params = useParams<PageParams>()
   const theme = useContext(ThemeContext)
 
   const { pairInfo } = usePairById(params.pairId, params.tokenId)
-
-  // const trackedTokenPairs = useTrackedTokenPairs()
-
-  // const tokenPairsWithLiquidityTokens = useMemo(
-  //   () =>
-  //     trackedTokenPairs.map((tokens) => ({
-  //       liquidityToken: toV2LiquidityToken(tokens),
-  //       tokens
-  //     })),
-  //   [trackedTokenPairs]
-  // )
-
-  // const liquidityTokens = useMemo(
-  //   () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
-  //   [tokenPairsWithLiquidityTokens]
-  // )
-  // const [v2PairsBalances, fetchingV2PairBalances] =
-  //   useTokenBalancesWithLoadingIndicator(account ?? undefined, liquidityTokens)
-
-  // // fetch the reserves for all V2 pools in which the user has a balance
-  // const liquidityTokensWithBalances = useMemo(
-  //   () =>
-  //     tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
-  //       v2PairsBalances[liquidityToken.address]?.greaterThan('0')
-  //     ),
-  //   [tokenPairsWithLiquidityTokens, v2PairsBalances]
-  // )
-
-  // const v2Pairs = usePairs(
-  //   liquidityTokensWithBalances.map(({ tokens }) => tokens)
-  // )
-  // const allV2PairsWithLiquidity = v2Pairs
-  //   .map(([, pair]) => pair)
-  //   .filter((v2Pair): v2Pair is Pair => Boolean(v2Pair))
-
-
-  // const pair = allV2PairsWithLiquidity?.[0]
 
   if (!pairInfo || !pairInfo.token0 || !pairInfo.token1) {
     return (
@@ -90,9 +48,6 @@ export default function PoolDetail() {
   const currency0 = unwrappedToken(pairInfo.token0)
   const currency1 = unwrappedToken(pairInfo.token1)
 
-  // to={`/increase/${currencyId(currency0)}/${currencyId(
-  //   currency1
-  // )}/1/2`}
   return (
     <PageWrapper>
       <AutoColumn gap='md'>
@@ -121,7 +76,7 @@ export default function PoolDetail() {
             <RowFixed>
               <ButtonGray
                 as={Link}
-                to={`/increase`}
+                to={`/add/${currencyId(currency1)}/${currencyId(currency0)}?tokenId=${params.tokenId}`}
                 width='fit-content'
                 padding='6px 8px'
                 borderRadius='12px'
@@ -130,7 +85,7 @@ export default function PoolDetail() {
               </ButtonGray>
               <ResponsiveButtonPrimary
                 as={Link}
-                to={`/remove/1111`}
+                to={`/remove/${currencyId(currency1)}/${currencyId(currency0)}?tokenId=${params.tokenId}`}
                 width='fit-content'
                 padding='6px 8px'
                 borderRadius='12px'>
