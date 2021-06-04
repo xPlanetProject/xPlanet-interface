@@ -43,7 +43,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"minerMint\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IERCMint20.sol\":\"IERCMint20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IERCMint20.sol\":{\"keccak256\":\"0x74818d7fbded10c865be6a59e931631033575517f90eb1adc70cef7a739daefb\",\"urls\":[\"bzz-raw://3fce049bbf47f0875a3e18e5a5440a594ebdfa59ceca59863ddf7b42d06613cc\",\"dweb:/ipfs/QmNqKe3TMnkgB79nGYjt6qAXC8fCDqQjCR2UdotK9HTBBd\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"minerMint\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IERCMint20.sol\":\"IERCMint20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IERCMint20.sol\":{\"keccak256\":\"0x74818d7fbded10c865be6a59e931631033575517f90eb1adc70cef7a739daefb\",\"urls\":[\"bzz-raw://3fce049bbf47f0875a3e18e5a5440a594ebdfa59ceca59863ddf7b42d06613cc\",\"dweb:/ipfs/QmNqKe3TMnkgB79nGYjt6qAXC8fCDqQjCR2UdotK9HTBBd\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
@@ -493,7 +493,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-05-28T05:22:54.789Z",
+  "updatedAt": "2021-06-04T06:02:22.402Z",
   "devdoc": {
     "methods": {}
   },

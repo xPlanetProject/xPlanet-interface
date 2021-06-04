@@ -23,7 +23,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":\"IPairERC20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":{\"keccak256\":\"0x00117e3e87c691aac4af07c8e78d1943d6b3549b78e5ebad486281d95dffe084\",\"urls\":[\"bzz-raw://818da472307df83f6421a4750950871ffad66f2066a303d51ede6779cc960084\",\"dweb:/ipfs/QmaCsEV8CQ1fdonnBt7PneWvLU28cVcVMXVNH1KKzJtUgd\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":\"IPairERC20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":{\"keccak256\":\"0x00117e3e87c691aac4af07c8e78d1943d6b3549b78e5ebad486281d95dffe084\",\"urls\":[\"bzz-raw://818da472307df83f6421a4750950871ffad66f2066a303d51ede6779cc960084\",\"dweb:/ipfs/QmaCsEV8CQ1fdonnBt7PneWvLU28cVcVMXVNH1KKzJtUgd\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
@@ -297,7 +297,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-05-28T05:22:54.791Z",
+  "updatedAt": "2021-06-04T06:02:22.403Z",
   "devdoc": {
     "methods": {}
   },

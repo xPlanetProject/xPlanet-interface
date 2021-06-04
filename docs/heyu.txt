@@ -1,0 +1,143 @@
+
+   Deploying 'XSwapLPNFT'
+   ----------------------
+   > transaction hash:    0x7bf7aae345980c366f9133ba3b5b
+d08bdef34e687dfc7ab45a80553a34c548c4
+   > Blocks: 2            Seconds: 173
+   > contract address:    0xe509FfaaE7132440eA970C9E9b5B
+fA8069530502
+   > block number:        10369049
+   > block timestamp:     1622786721
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c
+8c8C196fFDF8
+   > balance:             11.125895353931453763
+   > gas used:            2207807 (0x21b03f)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.04415614 ETH
+
+
+   Deploying 'XPokerPower'
+   -----------------------
+   > transaction hash:    0x1d9e9fc7fd446b680259617d9e88
+15fd4513cb3cd80cbfaecf3562d635d54b7e
+   > Blocks: 1            Seconds: 57
+   > contract address:    0xbab025605593052CCA4F495aC2EF5e715326097D
+   > block number:        10369050
+   > block timestamp:     1622786814
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c
+8c8C196fFDF8
+   > balance:             11.089796853931453763
+   > gas used:            1804925 (0x1b8a7d)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0360985 ETH
+
+
+   Deploying 'XKeyFactory'
+   -----------------------
+   > transaction hash:    0x521526123e753cd11fcd11d274e68c7b1b67054153de4f2e8808bb5a533929e1
+   > Blocks: 5            Seconds: 390
+   > contract address:    0xFEa3fE9F6c067bD9B329dA59Fd8B4b091EAC1139
+   > block number:        10369055
+   > block timestamp:     1622787160
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             11.042759373931453763
+   > gas used:            2351874 (0x23e302)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.04703748 ETH
+
+
+   Deploying 'SWETH'
+   -----------------
+   > transaction hash:    0xeb73ae1abb1b1651de025773d9fb218cd7fbe1d5cbfb3e6106a3e5950d218dff
+   > Blocks: 2            Seconds: 73
+   > contract address:    0xFa19D6e128D0a9EeAA2bFb56852812c11e3e94d2
+   > block number:        10369057
+   > block timestamp:     1622787336
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             11.032109213931453763
+   > gas used:            532508 (0x8201c)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01065016 ETH
+
+
+   Deploying 'XKeyRouter'
+   ----------------------
+   > transaction hash:    0xb20ff56b0cef3328bb35fada9c83c7f73cfbaf1b5fe0a3a38f485cffdea68398
+   > Blocks: 2            Seconds: 73
+   > contract address:    0xB069AC89761109Cd3d624c6eBeD3601830fB9ea2
+   > block number:        10369059
+   > block timestamp:     1622787439
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             10.959809673931453763
+   > gas used:            3614977 (0x372901)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.07229954 ETH
+
+
+   Deploying 'LPA'
+   ---------------------
+   > transaction hash:    0xe3d3b4ceb599da407e67aa1038f783f7514ee2f362fe36fda490459ba0ebea2f
+   > Blocks: 1            Seconds: 9
+   > contract address:    0x431447f402b0AA4c7D3E4CBB9F42b9b659f047DC
+   > block number:        10369061
+   > block timestamp:     1622787456
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             10.940717933931453763
+   > gas used:            954587 (0xe90db)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01909174 ETH
+
+
+   Replacing 'LPB'
+   ---------------------
+   > transaction hash:    0xe5d4775bb9302a3dcb816300d44168913c997cfeb57154b021959572735c84b2
+   > Blocks: 3            Seconds: 29
+   > contract address:    0x768573e52ccad7B5391B58BcAc3Be37A39a0F15b
+   > block number:        10369064
+   > block timestamp:     1622787490
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             10.921626193931453763
+   > gas used:            954587 (0xe90db)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01909174 ETH
+
+pairAB:0x455F3Cffaa04d3FF35D882C8bc063d122c7fbC3b
+pairBW:0xD2d9Ea6aFB26774402c5b436A60faFC20Ca1C189
+
+   Deploying 'XKeyToken'
+   ---------------------
+   > transaction hash:    0x9add86b90735b35294181674f420f5d255986c742478123402fa1d168d8f4d98
+   > Blocks: 1            Seconds: 53
+   > contract address:    0x6eD6ea1516C0Df4f81016825B9Ea636E5296f1Ea
+   > block number:        10369073
+   > block timestamp:     1622787773
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             10.823681453931453763
+   > gas used:            803746 (0xc43a2)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01607492 ETH
+
+
+   Deploying 'XkeyDao'
+   -------------------
+   > transaction hash:    0xa6f646b6fd5b1b8ff1309e498ec647833c94d4f53c38b0e222ffd14d56c219d0
+   > Blocks: 1            Seconds: 45
+   > contract address:    0xEc418D56FF2cbF1E62420F2A0fE187f26AAa7d52
+   > block number:        10369074
+   > block timestamp:     1622787825
+   > account:             0xa6f410Ef63f9FacE2b177eb8a38c8c8C196fFDF8
+   > balance:             10.755560473931453763
+   > gas used:            3406049 (0x33f8e1)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.06812098 ETH
+
+
