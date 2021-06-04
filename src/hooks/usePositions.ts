@@ -109,42 +109,32 @@ export function usePairById(pairId: string, tokenId: string): any {
   const token0Contract = useTokenContract(token0Address)
   const token1Contract = useTokenContract(token1Address)
 
-  const pairInfo = useAsyncMemo(async() => {
-    const info: any = {}
-    const balanceOf = Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)
-    const totalSupply = Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)
-    let tokenAmount
+  const { result: token0BalanceOf, loading: t0balanceOfLoading } = useSingleCallResult(token0Contract, 'balanceOf', [pairId])
+  const { result: token1BalanceOf, loading: t1balanceOfLoading } = useSingleCallResult(token1Contract, 'balanceOf', [pairId])
 
-    info.balanceOf = balanceOf.toString()
+  const balanceOf = Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)
+  const totalSupply = Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)
 
-    info.tokenURI = Array.isArray(tokenURIResult) ? tokenURIResult[0] : ''
-
-    console.log(balanceOf.toString(), totalSupply.toString())
-
-    info.shared = balanceOf.div(totalSupply).toNumber()
-
-    info.token0Address = token0Address
-    info.token1Address = token1Address
-    info.token0 = token0Token
-    info.token1 = token1Token
-
-    if (token0Contract && token0Token) {
-      tokenAmount = await token0Contract.balanceOf(pairId)
-      info.token0Amount = formatUnits(tokenAmount, token0Token.decimals)
-    }
-
-    if (token1Contract && token1Token) {
-      tokenAmount = await token1Contract.balanceOf(pairId)
-      info.token1Amount = formatUnits(tokenAmount, token1Token.decimals)
-    }
-
-    info.supportMining = tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
-    return info
-  }, [token0, token1, library, tokenAddressResults, pairId, balanceOfResult, tokenURIResult, totalSupplyResult])
+  const token0Amount = Array.isArray(token0BalanceOf) ? formatUnits(token0BalanceOf[0], token0Token?.decimals) : 0;
+  const token1Amount = Array.isArray(token1BalanceOf) ? formatUnits(token1BalanceOf[0], token1Token?.decimals) : 0;
 
   return {
-    loading: or(token0Loading, token1Loading, balanceOfLoading, tokenURILoading, totalSupplyLoading),
-    pairInfo
+    loading: or(token0Loading, token1Loading, balanceOfLoading, tokenURILoading, totalSupplyLoading, t0balanceOfLoading, t1balanceOfLoading),
+    pairInfo: {
+      token0Address,
+      token1Address,
+      token0Contract,
+      token1Contract,
+      token0Amount,
+      token1Amount,
+      token0: token0Token,
+      token1: token1Token,
+      balanceOf: balanceOf.toString(),
+      totalSupply: Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1),
+      tokenURI: Array.isArray(tokenURIResult) ? tokenURIResult[0] : '',
+      shared: balanceOf.toString() / totalSupply.toString() * 100,
+      supportMining: tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
+    }
   }
 }
 
