@@ -14,7 +14,7 @@ import {
   Trade,
   TradeType,
   WETH
-} from '@/xplanet-sdk'
+} from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

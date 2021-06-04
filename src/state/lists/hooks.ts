@@ -1,4 +1,4 @@
-import { ChainId, Token } from '@/xplanet-sdk'
+import { ChainId, Token } from '@xplanet/sdk'
 import { Tags, TokenInfo, TokenList } from '@xplanet/token-lists'
 
 import { useMemo } from 'react'

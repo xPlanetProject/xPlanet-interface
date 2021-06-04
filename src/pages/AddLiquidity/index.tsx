@@ -4,7 +4,7 @@ import {
   Currency,
   ETHER,
   TokenAmount
-} from '@/xplanet-sdk'
+} from '@xplanet/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

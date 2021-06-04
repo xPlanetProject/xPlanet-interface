@@ -1,4 +1,4 @@
-import { Price } from '@/xplanet-sdk'
+import { Price } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

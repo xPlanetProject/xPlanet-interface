@@ -1,4 +1,4 @@
-import { JSBI } from '@/xplanet-sdk'
+import { JSBI } from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

@@ -1,4 +1,4 @@
-import { Token, TokenAmount } from '@/xplanet-sdk'
+import { Token, TokenAmount } from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

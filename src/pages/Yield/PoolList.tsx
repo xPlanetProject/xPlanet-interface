@@ -5,7 +5,7 @@ import { LightCard } from '@/components/Card'
 import { RowAround } from '@/components/Row'
 import { useMiningList } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
-import { Token, ChainId } from '@/xplanet-sdk'
+import { Token, ChainId } from '@xplanet/sdk'
 import styled, { ThemeContext } from 'styled-components'
 
 const ColumnGrid = styled(RowAround)`

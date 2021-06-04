@@ -1,4 +1,4 @@
-import { ChainId } from '@/xplanet-sdk'
+import { ChainId } from '@xplanet/sdk'
 import { createStore, Store } from 'redux'
 
 import {

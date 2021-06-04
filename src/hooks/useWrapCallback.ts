@@ -1,4 +1,4 @@
-import { Currency, currencyEquals, ETHER, WETH } from '@/xplanet-sdk'
+import { Currency, currencyEquals, ETHER, WETH } from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

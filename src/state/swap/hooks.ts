@@ -7,7 +7,7 @@ import {
   Token,
   TokenAmount,
   Trade
-} from '@/xplanet-sdk'
+} from '@xplanet/sdk'
 import { ParsedQs } from 'qs'
 
 import { useCallback, useEffect, useState } from 'react'

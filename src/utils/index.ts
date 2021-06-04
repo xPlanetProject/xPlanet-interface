@@ -11,7 +11,7 @@ import {
   CurrencyAmount,
   Currency,
   ETHER
-} from '@/xplanet-sdk'
+} from '@xplanet/sdk'
 import { abi as IUniswapV2Router02ABI } from '@/constants/contracts/XKeyRouter.json'
 
 import { ROUTER_ADDRESS } from '@/constants'

@@ -1,4 +1,4 @@
-import { Currency, Percent, Price } from '@/xplanet-sdk'
+import { Currency, Percent, Price } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 

@@ -1,4 +1,4 @@
-import { ChainId, Token, WETH, ETHER } from '@/xplanet-sdk'
+import { ChainId, Token, WETH, ETHER } from '@xplanet/sdk'
 import { Web3Provider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
 import { abi as ERC20_ABI } from '@/constants/contracts/ERC20.json'

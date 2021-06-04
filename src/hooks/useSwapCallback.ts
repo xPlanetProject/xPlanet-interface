@@ -6,7 +6,7 @@ import {
   Router,
   SwapParameters,
   Trade
-} from '@/xplanet-sdk'
+} from '@xplanet/sdk'
 
 import { useMemo } from 'react'
 

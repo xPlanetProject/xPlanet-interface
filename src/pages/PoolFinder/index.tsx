@@ -1,4 +1,4 @@
-import { Currency, ETHER, JSBI, TokenAmount } from '@/xplanet-sdk'
+import { Currency, ETHER, JSBI, TokenAmount } from '@xplanet/sdk'
 import { Text } from 'rebass'
 
 import React, { useCallback, useEffect, useState } from 'react'

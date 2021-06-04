@@ -1,4 +1,4 @@
-import { Token } from '@/xplanet-sdk'
+import { Token } from '@xplanet/sdk'
 import { transparentize } from 'polished'
 import styled from 'styled-components'
 

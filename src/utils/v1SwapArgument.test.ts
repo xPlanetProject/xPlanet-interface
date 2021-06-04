@@ -5,7 +5,7 @@ import {
   Route,
   TokenAmount,
   Trade
-} from '@/xplanet-sdk'
+} from '@xplanet/sdk'
 
 import { DAI, USDC } from '@/constants'
 import { MockV1Pair } from '@/data/V1'

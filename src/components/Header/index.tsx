@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { MobileView, BrowserView } from 'react-device-detect'
 import { useLocation } from 'react-router-dom'
 
-import { ChainId } from '@/xplanet-sdk'
+import { ChainId } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 

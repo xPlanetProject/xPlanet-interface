@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
-import { ChainId } from '@/xplanet-sdk'
+import { ChainId } from '@xplanet/sdk'
 
 export interface SerializableTransactionReceipt {
   to: string
