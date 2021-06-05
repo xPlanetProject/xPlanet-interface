@@ -7,7 +7,7 @@ import { ThemeContext } from 'styled-components'
 
 import { LightCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
-import FullPositionCard from '@/components/PositionCard'
+import FullPositionCard from '@/components/PositionCard/FullPositionCard'
 import Question from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'

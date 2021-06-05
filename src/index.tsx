@@ -76,3 +76,6 @@ ReactDOM.render(
   </StrictMode>,
   document.getElementById('root')
 )
+
+
+//  TODO: useUSDCPRICE hook
