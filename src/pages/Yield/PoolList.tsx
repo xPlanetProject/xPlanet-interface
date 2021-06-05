@@ -26,7 +26,7 @@ function PoolList() {
         <ColumnGrid>
           {pairMaps.map((item) => (
             <PoolListItem
-              id={item.id}
+              pairId={item.pairId}
               token0={item.token0}
               token1={item.token1}
               key={item.id}

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import UnStakePokerSyntheticItem  from './unstake-poker-synthetic-item'
 import { PokerGroupType } from './stake-helpers'
+import UnStakePokerSyntheticItem from './unstake-poker-synthetic-item'
 import { ButtonLight } from '@/components/Button'
 import { RowBetween } from '@/components/Row'
 import { TYPE } from '@/theme'
@@ -51,8 +51,7 @@ const SyntheticStake: React.FC = () => {
       group: '同花顺',
       amount: '100',
       miningPower: '500'
-    },
-    
+    }
   ]
 
   return (

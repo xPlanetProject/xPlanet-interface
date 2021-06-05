@@ -1,7 +1,7 @@
-import styled from 'styled-components'
 import { AutoColumn } from '@/components/Column'
 import { RowBetween } from '@/components/Row'
-
+import { TYPE } from '@/theme'
+import styled from 'styled-components'
 
 export const PageWrapper = styled(AutoColumn)`
   max-width: 870px;
@@ -14,9 +14,7 @@ export const PageWrapper = styled(AutoColumn)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     max-width: 500px;
   `};
-  
 `
-
 
 export const TitleRow = styled(RowBetween)`
   color: ${({ theme }) => theme.text2};
@@ -30,4 +28,13 @@ export const TitleRow = styled(RowBetween)`
 
 export const StakeTabConent = styled.div`
   margin-top: 20px;
+`
+
+export const HoverText = styled(TYPE.main)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text3};
+  :hover {
+    color: ${({ theme }) => theme.text1};
+    text-decoration: none;
+  }
 `

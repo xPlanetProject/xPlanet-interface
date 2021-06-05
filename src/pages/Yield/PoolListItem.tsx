@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { ButtonPrimary } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
-import { RowBetween } from '@/components/Row'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
+import { RowBetween } from '@/components/Row'
+import { useMiningPoolData } from '@/hooks/useMining'
 import { Token } from '@xplanet/sdk'
 import styled from 'styled-components'
 
@@ -47,12 +48,22 @@ const ExtentsText = styled.span`
   font-size: 14px;
 `
 interface PairProps {
-  id: string
+  pairId: string
   token0: Token
   token1: Token
 }
 
-export default function PoolListItme({ id, token0, token1 }: PairProps) {
+export default function PoolListItme({ pairId, token0, token1 }: PairProps) {
+  const { singleLength, compositeLength, TVL, APR } =
+    useMiningPoolData(pairId) ?? {}
+
+  const xPokers = useMemo(() => {
+    if (singleLength && compositeLength) {
+      return singleLength + compositeLength
+    }
+    return '0'
+  }, [singleLength, compositeLength])
+
   return (
     <Card>
       <RowCenter>
@@ -79,18 +90,18 @@ export default function PoolListItme({ id, token0, token1 }: PairProps) {
 
       <RowBetween>
         <ExtentsText>Staked:</ExtentsText>
-        <Text>201 xPoker</Text>
+        <Text>{xPokers} xPoker</Text>
       </RowBetween>
       <RowBetween>
         <ExtentsText>TVL:</ExtentsText>
-        <Text>$2010</Text>
+        <Text>$ {TVL}</Text>
       </RowBetween>
       <RowBetween>
         <ExtentsText>APR:</ExtentsText>
         <Text>201%</Text>
       </RowBetween>
       <RowCenter>
-        <ButtonPrimary padding='12px' as={Link} to={`/poker/${id}`}>
+        <ButtonPrimary padding='12px' as={Link} to={`/poker/${pairId}`}>
           Select
         </ButtonPrimary>
       </RowCenter>

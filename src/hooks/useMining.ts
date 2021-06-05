@@ -72,7 +72,7 @@ export function useMiningList() {
         const token1 = await makeToken(token1Address, library)
 
         res.push({
-          id: pairId,
+          pairId,
           token0,
           token1
         })
@@ -137,14 +137,14 @@ type MiningPoolData = {
   powerAmount: string | undefined
   hadMintAmount: string | undefined
   yieldRate: string | undefined
+  TVL: string | undefined
   APR: string | undefined
 }
 
 export function useMiningPoolData(
-  pairId: string | undefined,
-  account: string | null | undefined
+  pairId: string | undefined
 ): MiningPoolData | null {
-  if (!pairId && !account) return null
+  if (!pairId) return null
 
   const xKeyDaoContract = useXKeyDaoContract()
   const xPokerPowerContract = useXPokerPowerContract()
@@ -194,14 +194,40 @@ export function useMiningPoolData(
     return undefined
   }, [pairWeight, currentStagePrice])
 
-  usePricePerLP(pairId)
-
   return {
     singleLength: singleLength?.[0].toString(),
     compositeLength: compositeLength?.[0].toString(),
     powerAmount: powerAmount?.[0].toString(),
     hadMintAmount: hadMintAmount?.[0].toString(),
     yieldRate: yieldRate && utils.formatUnits(yieldRate, 3).toString(),
+    TVL: '0.0',
     APR: '0.0'
+  }
+}
+
+type PowerRewardByAccount = {
+  powerByAccount: string | undefined
+  rewardByAccount: string | undefined
+}
+
+export function usePowerRewardByAccount(
+  pairId: string | undefined,
+  account: string | null | undefined
+): PowerRewardByAccount {
+  const xKeyDaoContract = useXKeyDaoContract()
+  const { result: powerByAccount } = useSingleCallResult(
+    xKeyDaoContract,
+    'getUserShare',
+    [pairId, account]
+  )
+  const { result: rewardByAccount } = useSingleCallResult(
+    xKeyDaoContract,
+    'predReward',
+    [pairId]
+  )
+
+  return {
+    powerByAccount: powerByAccount?.[0].toString(),
+    rewardByAccount: rewardByAccount?.[0].toString()
   }
 }
