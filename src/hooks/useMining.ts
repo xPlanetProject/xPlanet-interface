@@ -1,15 +1,22 @@
+import { useMemo } from 'react'
+
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useActiveWeb3React } from '@/hooks'
 import { useToken } from '@/hooks/Tokens'
 import { useAsyncMemo } from '@/hooks/useAsyncMemo'
-import { useContract, useXKeyDaoContract } from '@/hooks/useContract'
+import {
+  useContract,
+  useTokenContract,
+  useXKeyDaoContract,
+  useXPokerPowerContract
+} from '@/hooks/useContract'
 import {
   useSingleCallResult,
   useSingleContractMultipleData
 } from '@/state/multicall/hooks'
 import { getContract } from '@/utils'
 import { makeToken } from '@/utils/makeToken'
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 export function useCurrentStagePrice() {
   const xKeyDaoContract = useXKeyDaoContract()
@@ -93,5 +100,108 @@ export function useMiningPool(pairId: string | undefined): any {
     token1Address: token1Address?.[0],
     token0,
     token1
+  }
+}
+
+export function usePricePerLP(pairId: string | undefined) {
+  const pairContract = useContract(pairId, XKeyPairABI)
+  const { result: LPAmountByPair } = useSingleCallResult(
+    pairContract,
+    'totalSupply',
+    []
+  )
+  const { token0Address, token1Address } = useMiningPool(pairId)
+  const token0Contract = useTokenContract(token0Address)
+  const token1Contract = useTokenContract(token1Address)
+  const { result: token0AmountByPair } = useSingleCallResult(
+    token0Contract,
+    'balanceOf',
+    [pairId]
+  )
+  const { result: token1AmountByPair } = useSingleCallResult(
+    token1Contract,
+    'balanceOf',
+    [pairId]
+  )
+
+  // TODO
+}
+
+export function usePoolTVL(pairId: string | undefined) {
+  // TODO
+}
+
+type MiningPoolData = {
+  singleLength: string | undefined
+  compositeLength: string | undefined
+  powerAmount: string | undefined
+  hadMintAmount: string | undefined
+  yieldRate: string | undefined
+  APR: string | undefined
+}
+
+export function useMiningPoolData(
+  pairId: string | undefined,
+  account: string | null | undefined
+): MiningPoolData | null {
+  if (!pairId && !account) return null
+
+  const xKeyDaoContract = useXKeyDaoContract()
+  const xPokerPowerContract = useXPokerPowerContract()
+
+  const { result: singleLength } = useSingleCallResult(
+    xPokerPowerContract,
+    'swapTokenSingleLength',
+    [pairId]
+  )
+
+  const { result: compositeLength } = useSingleCallResult(
+    xPokerPowerContract,
+    'swapTokenCompositeLength',
+    [pairId]
+  )
+
+  const { result: swapTokenAllLiquid } = useSingleCallResult(
+    xPokerPowerContract,
+    'swapTokenAllLiquid',
+    [pairId]
+  )
+
+  const { result: powerAmount } = useSingleCallResult(
+    xKeyDaoContract,
+    'swaptoken_allAmount',
+    [pairId]
+  )
+
+  const { result: hadMintAmount } = useSingleCallResult(
+    xKeyDaoContract,
+    'swaptoken_hadmint',
+    [pairId]
+  )
+
+  const currentStagePrice = useCurrentStagePrice()
+
+  const { result: pairWeight } = useSingleCallResult(
+    xKeyDaoContract,
+    'swaptoken_weight',
+    [pairId]
+  )
+
+  const yieldRate = useMemo(() => {
+    if (pairWeight && currentStagePrice) {
+      return BigNumber.from(utils.parseUnits(currentStagePrice, 3).toString())
+    }
+    return undefined
+  }, [pairWeight, currentStagePrice])
+
+  usePricePerLP(pairId)
+
+  return {
+    singleLength: singleLength?.[0].toString(),
+    compositeLength: compositeLength?.[0].toString(),
+    powerAmount: powerAmount?.[0].toString(),
+    hadMintAmount: hadMintAmount?.[0].toString(),
+    yieldRate: yieldRate && utils.formatUnits(yieldRate, 3).toString(),
+    APR: '0.0'
   }
 }

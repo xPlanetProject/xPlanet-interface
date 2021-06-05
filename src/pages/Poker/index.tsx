@@ -16,7 +16,7 @@ import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import Question from '@/components/QuestionHelper'
 import { RowFixed, RowBetween, RowAround, RowEnd } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
-import { useMiningPool } from '@/hooks/useMining'
+import { useMiningPool, useMiningPoolData } from '@/hooks/useMining'
 import useTheme from '@/hooks/useTheme'
 import { HideSmall, TYPE } from '@/theme'
 import styled from 'styled-components'
@@ -62,21 +62,39 @@ export default function Poker({
     params: { pairId }
   }
 }: RouteComponentProps<{ pairId?: string }>) {
-  const { chainId, account, library } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const theme = useTheme()
 
   const poolInfo = useMiningPool(pairId)
+  const {
+    singleLength,
+    compositeLength,
+    powerAmount,
+    hadMintAmount,
+    yieldRate,
+    APR
+  } = useMiningPoolData(pairId, account) ?? {}
+
+  console.log(poolInfo)
+  console.log(
+    singleLength,
+    compositeLength,
+    powerAmount,
+    hadMintAmount,
+    yieldRate,
+    APR
+  )
 
   const pokerInfo: Array<any> = [
-    { key: 'Staked Amount', value: '1,000 xPoker' },
-    { key: 'Synthetic Asset Amount', value: '100 xPoker' },
-    { key: 'Total Mining Power', value: '5,000' }
+    { key: 'Staked Amount', value: `${singleLength} xPoker` },
+    { key: 'Synthetic Asset Amount', value: `${compositeLength} xPoker` },
+    { key: 'Total Mining Power', value: powerAmount }
   ]
 
   const pokerPower: Array<any> = [
-    { key: 'Yielded', value: '5,000 XKEY' },
-    { key: 'Yield Rate per block', value: '162/Block' },
-    { key: 'APY for 1 Unt of Mining Power', value: '207%' }
+    { key: 'Yielded', value: `${hadMintAmount} XKEY` },
+    { key: 'Yield Rate per block', value: `${yieldRate}/Block` },
+    { key: 'APY for 1 Unt of Mining Power', value: `${APR}%` }
   ]
   return (
     <>
