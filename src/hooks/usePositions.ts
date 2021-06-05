@@ -173,6 +173,8 @@ export function usePositions(account: string | null | undefined): usePositionsRe
 
   const pairIdResults = usePairsFromTokenIds(tokenIds)
 
+  console.log(pairIdResults)
+
   const pairMaps = useAsyncMemo(async() => {
     const res: any = []
     for (const { pairId, tokenId, pokerInfo } of pairIdResults) {
