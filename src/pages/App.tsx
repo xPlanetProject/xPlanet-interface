@@ -8,13 +8,13 @@ import {
   RedirectToAddLiquidity
 } from './AddLiquidity/redirects'
 import Poker from './Poker'
-import Stake from './Stake'
-import UnStake from './Stake/unstake'
 import Pool from './Pool'
 import PoolDetail from './PoolDetail'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
+import Stake from './Stake'
+import UnStake from './Stake/unstake'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import Yield from './Yield'
@@ -95,7 +95,12 @@ export default function App() {
                 />
                 <Route exact strict path='/find' component={PoolFinder} />
                 <Route exact strict path='/pool' component={Pool} />
-                <Route exact strict path='/pool/:tokenId/:pairId' component={PoolDetail} />
+                <Route
+                  exact
+                  strict
+                  path='/pool/:tokenId/:pairId'
+                  component={PoolDetail}
+                />
                 <Route
                   exact
                   strict
@@ -103,10 +108,10 @@ export default function App() {
                   component={RedirectToAddLiquidity}
                 />
                 <Route exact strict path='/yield' component={Yield} />
-                <Route exact strict path='/poker/:tokenId' component={Poker} />
+                <Route exact strict path='/poker/:pairId' component={Poker} />
                 <Route exact strict path='/stake' component={Stake} />
                 <Route exact strict path='/unstake' component={UnStake} />
-                
+
                 <Route exact strict path='/xmoon' component={TestComponent} />
                 <Route
                   exact

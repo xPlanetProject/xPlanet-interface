@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { RouteComponentProps, Link } from 'react-router-dom'
 
 import {
   ResponsiveRow,
@@ -11,15 +12,14 @@ import PokerImg from '@/assets/images/poker.jpeg'
 import { ButtonOutlined } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
+import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import Question from '@/components/QuestionHelper'
-import { RowBetween, RowAround, RowEnd } from '@/components/Row'
+import { RowFixed, RowBetween, RowAround, RowEnd } from '@/components/Row'
+import { useActiveWeb3React } from '@/hooks'
+import { useMiningPool } from '@/hooks/useMining'
+import useTheme from '@/hooks/useTheme'
 import { HideSmall, TYPE } from '@/theme'
-import styled, { ThemeContext } from 'styled-components'
-
-export type PokerType = {
-  key: string
-  value: string
-}
+import styled from 'styled-components'
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 870px;
@@ -32,6 +32,15 @@ const PageWrapper = styled(AutoColumn)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     max-width: 500px;
   `};
+`
+
+const HoverText = styled(TYPE.main)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text3};
+  :hover {
+    color: ${({ theme }) => theme.text1};
+    text-decoration: none;
+  }
 `
 
 const TitleRow = styled(RowBetween)`
@@ -48,9 +57,15 @@ const BaseInfoItem = styled(AutoColumn)`
   flex: 1;
 `
 
-export default function Poker() {
-  const theme = useContext(ThemeContext)
-  console.log(theme)
+export default function Poker({
+  match: {
+    params: { pairId }
+  }
+}: RouteComponentProps<{ pairId?: string }>) {
+  const { chainId, account, library } = useActiveWeb3React()
+  const theme = useTheme()
+
+  const poolInfo = useMiningPool(pairId)
 
   const pokerInfo: Array<any> = [
     { key: 'Staked Amount', value: '1,000 xPoker' },
@@ -68,12 +83,30 @@ export default function Poker() {
       <PageWrapper>
         <AutoColumn gap='lg' justify='center'>
           <AutoColumn gap='lg' style={{ width: '100%' }}>
-            <TitleRow>
-              <HideSmall>
-                <TYPE.mediumHeader>PokerMine</TYPE.mediumHeader>
-              </HideSmall>
-            </TitleRow>
+            <Link
+              style={{
+                textDecoration: 'none',
+                width: 'fit-content',
+                marginBottom: '0.5rem'
+              }}
+              to='/yield'>
+              <HoverText>{'← Back to xPoker Mining'}</HoverText>
+            </Link>
+            <RowFixed>
+              <DoubleCurrencyLogo
+                currency0={poolInfo?.token0}
+                currency1={poolInfo?.token1}
+                size={24}
+                margin={true}
+              />
+              <TYPE.label fontSize={'24px'} mr='10px'>
+                &nbsp;{poolInfo?.token0?.symbol}&nbsp;/&nbsp;
+                {poolInfo?.token1?.symbol}
+              </TYPE.label>
+            </RowFixed>
+          </AutoColumn>
 
+          <AutoColumn gap='lg' style={{ width: '100%' }}>
             <DarkCard>
               <RowEnd>
                 <Question text='Question for Pokermine...' />

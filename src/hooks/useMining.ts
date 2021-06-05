@@ -1,7 +1,8 @@
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useActiveWeb3React } from '@/hooks'
+import { useToken } from '@/hooks/Tokens'
 import { useAsyncMemo } from '@/hooks/useAsyncMemo'
-import { useXKeyDaoContract } from '@/hooks/useContract'
+import { useContract, useXKeyDaoContract } from '@/hooks/useContract'
 import {
   useSingleCallResult,
   useSingleContractMultipleData
@@ -74,4 +75,23 @@ export function useMiningList() {
   }, [library, pairIdResults])
 
   return pairMaps
+}
+
+export function useMiningPool(pairId: string | undefined): any {
+  if (!pairId) return null
+
+  const pairContract = useContract(pairId, XKeyPairABI)
+  const { result: token0Address } = useSingleCallResult(pairContract, 'token0')
+  const { result: token1Address } = useSingleCallResult(pairContract, 'token1')
+
+  const token0 = useToken(token0Address?.[0])
+  const token1 = useToken(token1Address?.[0])
+
+  return {
+    id: pairId,
+    token0Address: token0Address?.[0],
+    token1Address: token1Address?.[0],
+    token0,
+    token1
+  }
 }
