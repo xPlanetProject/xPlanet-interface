@@ -85,7 +85,6 @@ interface usePositionResults {
 
 export function usePairById(pairId: string, tokenId: string): any {
   const pairContract = useContract(pairId, XKeyPairABI)
-  const { library } = useActiveWeb3React()
   const positionManager = useNFTPositionManagerContract()
   const xKeyDaoContract = useXKeyDaoContract()
   const tokenIdBnStr = useMemo(() => BigNumber.from(tokenId), [tokenId]).toString()
@@ -140,9 +139,8 @@ export function usePairById(pairId: string, tokenId: string): any {
 
 export function usePositions(account: string | null | undefined): usePositionsResults | any {
   const positionManager = useNFTPositionManagerContract()
-  const { library } = useActiveWeb3React()
 
-  const { result: balanceResult } = useSingleCallResult(positionManager, 'balanceOf', [
+  const { result: balanceResult, loading: balanceOfLoading } = useSingleCallResult(positionManager, 'balanceOf', [
     account
   ])
 
@@ -161,6 +159,11 @@ export function usePositions(account: string | null | undefined): usePositionsRe
 
   const tokenIdResults = useSingleContractMultipleData(positionManager, 'tokenOfOwnerByIndex', tokenIdsArgs)
 
+  const anyLoading: boolean = useMemo(
+    () => tokenIdResults.some((callState) => callState.loading),
+    [tokenIdResults]
+  )
+
   const tokenIds = useMemo(() => {
     if (account) {
       return tokenIdResults
@@ -173,41 +176,8 @@ export function usePositions(account: string | null | undefined): usePositionsRe
 
   const pairIdResults = usePairsFromTokenIds(tokenIds)
 
-  const pairMaps = useAsyncMemo(async() => {
-    const res: any = []
-    for (const { pairId, tokenId, pokerInfo } of pairIdResults) {
-      if (library && account) {
-        const contract = getContract(
-          pairId,
-          XKeyPairABI,
-          library,
-          account
-        )
-
-        const token0Address = await contract.token0()
-        const token1Address = await contract.token1()
-        const balanceOf = await contract.balanceOf(tokenId)
-
-        const token0Token = await makeToken(token0Address, library)
-        const token1Token = await makeToken(token1Address, library)
-
-        res.push({
-          token0Address,
-          token1Address,
-          balanceOf: formatUnits(balanceOf, 18),
-          pairId,
-          tokenId,
-          token0Token,
-          token1Token,
-          pokerInfo
-        })
-      }
-    }
-    return res
-  }, [library, account, pairIdResults])
-
   return {
-    loading: Array.isArray(pairMaps) ? pairMaps.length !== pairIdResults.length : true,
-    positions: pairMaps
+    loading: or(balanceOfLoading, anyLoading),
+    positions: pairIdResults
   }
 }
