@@ -16,7 +16,11 @@ import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import Question from '@/components/QuestionHelper'
 import { RowFixed, RowBetween, RowAround, RowEnd } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
-import { useMiningPool, useMiningPoolData } from '@/hooks/useMining'
+import {
+  useMiningPool,
+  useMiningPoolData,
+  usePowerRewardByAccount
+} from '@/hooks/useMining'
 import useTheme from '@/hooks/useTheme'
 import { HideSmall, TYPE } from '@/theme'
 import styled from 'styled-components'
@@ -73,17 +77,9 @@ export default function Poker({
     hadMintAmount,
     yieldRate,
     APR
-  } = useMiningPoolData(pairId, account) ?? {}
-
-  console.log(poolInfo)
-  console.log(
-    singleLength,
-    compositeLength,
-    powerAmount,
-    hadMintAmount,
-    yieldRate,
-    APR
-  )
+  } = useMiningPoolData(pairId) ?? {}
+  const { powerByAccount, rewardByAccount } =
+    usePowerRewardByAccount(pairId, account) ?? {}
 
   const pokerInfo: Array<any> = [
     { key: 'Staked Amount', value: `${singleLength} xPoker` },
@@ -94,7 +90,7 @@ export default function Poker({
   const pokerPower: Array<any> = [
     { key: 'Yielded', value: `${hadMintAmount} XKEY` },
     { key: 'Yield Rate per block', value: `${yieldRate}/Block` },
-    { key: 'APY for 1 Unt of Mining Power', value: `${APR}%` }
+    { key: 'APR for 1 Unt of Mining Power', value: `${APR}%` }
   ]
   return (
     <>
@@ -165,9 +161,9 @@ export default function Poker({
                     My Mining Power
                   </TYPE.mediumHeader>
                   <TYPE.mediumHeader textAlign='center' marginTop='20px'>
-                    100
+                    {powerByAccount}
                   </TYPE.mediumHeader>
-                  <StakeLink to='/unstake'>
+                  <StakeLink to={`/unstake/${pairId}`}>
                     <ButtonOutlined
                       style={{
                         width: 'auto',
@@ -187,7 +183,7 @@ export default function Poker({
                     My Reward
                   </TYPE.mediumHeader>
                   <TYPE.mediumHeader textAlign='center' marginTop='20px'>
-                    100
+                    {rewardByAccount}
                   </TYPE.mediumHeader>
                   <ButtonOutlined
                     style={{
@@ -214,7 +210,7 @@ export default function Poker({
                   </PokerImage>
 
                   <RowAround>
-                    <StakeLink to='/stake'>
+                    <StakeLink to={`/stake/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
@@ -227,7 +223,7 @@ export default function Poker({
                       </ButtonOutlined>
                     </StakeLink>
 
-                    <StakeLink to='/unstake'>
+                    <StakeLink to={`/unstake/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
@@ -251,7 +247,7 @@ export default function Poker({
                     <img src={PokerImg} alt={'poker img'} />
                   </PokerImage>
                   <RowAround>
-                    <StakeLink to='/stake'>
+                    <StakeLink to={`/stake/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
@@ -264,7 +260,7 @@ export default function Poker({
                       </ButtonOutlined>
                     </StakeLink>
 
-                    <StakeLink to='/unstake'>
+                    <StakeLink to={`/unstake/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',

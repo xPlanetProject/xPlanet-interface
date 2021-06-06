@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { ButtonPrimary } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
-import { RowBetween } from '@/components/Row'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { unwrappedToken } from '@/utils/wrappedCurrency'
 import { Dots } from '@/components/swap/styleds'
-import { useTokensFromPair } from '@/hooks/useMining'
+import { RowBetween } from '@/components/Row'
+import { useMiningPoolData, useTokensFromPair } from '@/hooks/useMining'
 import styled from 'styled-components'
 
 const Card = styled(DarkCard)`
@@ -62,11 +62,21 @@ const ExtentsText = styled.span`
   font-size: 14px;
 `
 interface PairProps {
-  id: string
+  pairId: string
 }
 
-export default function PoolListItme({ id }: PairProps) {
-  const { token0, token1, loading } = useTokensFromPair(id)
+export default function PoolListIteme({ pairId }: PairProps) {
+  const { token0, token1, loading } = useTokensFromPair(pairId)
+
+  const { singleLength, compositeLength, TVL, APR } =
+    useMiningPoolData(pairId) ?? {}
+
+  const xPokers = useMemo(() => {
+    if (singleLength && compositeLength) {
+      return singleLength + compositeLength
+    }
+    return '0'
+  }, [singleLength, compositeLength])
 
   if (loading) {
     return (
@@ -106,18 +116,18 @@ export default function PoolListItme({ id }: PairProps) {
 
       <RowBetween>
         <ExtentsText>Staked:</ExtentsText>
-        <Text>201 xPoker</Text>
+        <Text>{xPokers} xPoker</Text>
       </RowBetween>
       <RowBetween>
         <ExtentsText>TVL:</ExtentsText>
-        <Text>$2010</Text>
+        <Text>$ {TVL}</Text>
       </RowBetween>
       <RowBetween>
         <ExtentsText>APR:</ExtentsText>
         <Text>201%</Text>
       </RowBetween>
       <RowCenter>
-        <ButtonPrimary padding='12px' as={Link} to={`/poker/${id}`}>
+        <ButtonPrimary padding='12px' as={Link} to={`/poker/${pairId}`}>
           Select
         </ButtonPrimary>
       </RowCenter>

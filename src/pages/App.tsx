@@ -109,8 +109,13 @@ export default function App() {
                 />
                 <Route exact strict path='/yield' component={Yield} />
                 <Route exact strict path='/poker/:pairId' component={Poker} />
-                <Route exact strict path='/stake' component={Stake} />
-                <Route exact strict path='/unstake' component={UnStake} />
+                <Route exact strict path='/stake/:pairId' component={Stake} />
+                <Route
+                  exact
+                  strict
+                  path='/unstake/:pairId'
+                  component={UnStake}
+                />
 
                 <Route exact strict path='/xmoon' component={TestComponent} />
                 <Route

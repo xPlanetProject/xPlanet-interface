@@ -32,7 +32,7 @@ function PoolList() {
           <ColumnGrid>
             {pairIds.map((item) => (
               <PoolListItem
-                id={item.id}
+                pairId={item.id}
                 key={item.id}
               />
             ))}
