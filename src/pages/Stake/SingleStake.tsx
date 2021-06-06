@@ -1,12 +1,21 @@
 import React, { useContext } from 'react'
 
-import SingleStakeItem from './single-stake-item'
-import { PokerItemType } from './stake-helpers'
+import SingleStakeItem from './SingleStakeItem'
+import { PokerItemType } from './StakeHelpers'
 import { ButtonLight } from '@/components/Button'
 import { RowBetween } from '@/components/Row'
+import { Dots } from '@/pages/Pool/styleds'
+import { LightCard } from '@/components/Card'
 import { TYPE } from '@/theme'
 import { PokerType } from '@/utils/poker'
+import { useUserPokers } from '@/hooks/useStake'
+import { useActiveWeb3React } from '@/hooks'
+import { PageWrapper } from '@/pages/PoolDetail/styleds'
 import styled, { ThemeContext } from 'styled-components'
+
+type SingleStakeProps = {
+  pairId: string
+}
 
 const Row = styled.div`
   align-items: center;
@@ -33,36 +42,12 @@ const StakeCheckouSection = styled.div`
   flex: 1;
 `
 
-const PokerItem = styled.div`
-  flex: 1;
-  border-radius: 8px;
-  padding: 24px;
-  margin: 0 10px;
-  background-color: ${({ theme }) => theme.bg2};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  min-height: 180px;
-  :hover {
-    background-color: ${({ theme }) => theme.bg3};
-  }
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    min-height: 100px;
-    padding: 12px;
-    margin: 0 4px;
-  `};
-`
-
-const PokerResult = styled.div`
-  text-align: center;
-  margin: 20px 0;
-`
-
-const SyntheticStake: React.FC = () => {
+const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) => {
   const theme = useContext(ThemeContext)
+  const { account } = useActiveWeb3React()
+  const { pokers, loading } = useUserPokers(account, pairId)
 
-  const AllPokers: PokerItemType[] = [
+  const PokerList: PokerItemType[] = [
     {
       id: '1',
       pokerType: PokerType.GRASS,
@@ -100,55 +85,22 @@ const SyntheticStake: React.FC = () => {
     }
   ]
 
-  const PokerList: PokerItemType[] = [
-    {
-      id: '1',
-      pokerType: PokerType.GRASS,
-      pokerNumber: 'A'
-    },
-    {
-      id: '2',
-      pokerType: PokerType.HEART,
-      pokerNumber: 'K'
-    },
-    {
-      id: '3',
-      pokerType: PokerType.CUBE,
-      pokerNumber: 'Q'
-    },
-    {
-      id: '4',
-      pokerType: PokerType.SPADES,
-      pokerNumber: 'J'
-    }
-  ]
+  console.log(pokers)
+
+  if (loading) {
+    return (
+      <PageWrapper>
+        <LightCard padding='40px'>
+          <TYPE.body color={theme.text3} textAlign='center'>
+            <Dots>Loading</Dots>
+          </TYPE.body>
+        </LightCard>
+      </PageWrapper>
+    )
+  }
+
   return (
     <>
-      <RowBetween>
-        <PokerItem>
-          {PokerList[0] &&
-            `${PokerList[0].pokerType} ${PokerList[0].pokerNumber}`}
-        </PokerItem>
-        <PokerItem>
-          {PokerList[1] &&
-            `${PokerList[1].pokerType} ${PokerList[1].pokerNumber}`}
-        </PokerItem>
-        <PokerItem>
-          {PokerList[2] &&
-            `${PokerList[2].pokerType} ${PokerList[2].pokerNumber}`}
-        </PokerItem>
-        <PokerItem>
-          {PokerList[3] &&
-            `${PokerList[3].pokerType} ${PokerList[3].pokerNumber}`}
-        </PokerItem>
-        <PokerItem>
-          {PokerList[4] &&
-            `${PokerList[4].pokerType} ${PokerList[5].pokerNumber}`}
-        </PokerItem>
-      </RowBetween>
-      <PokerResult>
-        <TYPE.subHeader>牌型：黑桃 A 算力：5000 总份额：50000</TYPE.subHeader>
-      </PokerResult>
       <Row>
         <StakeCheckouSection>
           <TYPE.subHeader>ID</TYPE.subHeader>
@@ -166,11 +118,11 @@ const SyntheticStake: React.FC = () => {
           <TYPE.subHeader>操作</TYPE.subHeader>
         </StakeCheckouSection>
       </Row>
-      {AllPokers?.map((item) => {
+      {PokerList?.map((item) => {
         return <SingleStakeItem data={item} key={item.id} />
       })}
       <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>Currently Selected: 4/20</TYPE.subHeader>
+        <TYPE.subHeader>Currently Selected: 5/20</TYPE.subHeader>
         <ButtonLight
           style={{
             width: 'auto',
@@ -185,4 +137,4 @@ const SyntheticStake: React.FC = () => {
   )
 }
 
-export default SyntheticStake
+export default SingleStake

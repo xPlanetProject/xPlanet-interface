@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PokerItemType } from './stake-helpers'
+import { PokerItemType } from './StakeHelpers'
 import { TYPE } from '@/theme'
 import styled from 'styled-components'
 

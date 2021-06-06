@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { PokerGroupType, PokerItemType } from './stake-helpers'
+import { PokerGroupType, PokerItemType } from './StakeHelpers'
 import { ReactComponent as DropDown } from '@/assets/images/dropdown.svg'
 import { TYPE } from '@/theme'
 import { PokerType } from '@/utils/poker'

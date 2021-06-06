@@ -31,9 +31,9 @@ export default function PoolDetail() {
   const params = useParams<PageParams>()
   const theme = useContext(ThemeContext)
 
-  const { pairInfo } = usePairById(params.pairId, params.tokenId)
+  const { loading, pairInfo } = usePairById(params.pairId, params.tokenId)
 
-  if (!pairInfo || !pairInfo.token0 || !pairInfo.token1) {
+  if (loading) {
     return (
       <PageWrapper>
         <LightCard padding='40px'>

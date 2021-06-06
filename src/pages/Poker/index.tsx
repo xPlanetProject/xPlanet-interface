@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
 import {
@@ -21,8 +21,7 @@ import {
   useMiningPoolData,
   usePowerRewardByAccount
 } from '@/hooks/useMining'
-import useTheme from '@/hooks/useTheme'
-import { HideSmall, TYPE } from '@/theme'
+import { TYPE } from '@/theme'
 import styled from 'styled-components'
 
 const PageWrapper = styled(AutoColumn)`
@@ -47,16 +46,6 @@ const HoverText = styled(TYPE.main)`
   }
 `
 
-const TitleRow = styled(RowBetween)`
-  color: ${({ theme }) => theme.text2};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-wrap: wrap;
-    gap: 12px;
-    width: 100%;
-    flex-direction: column-reverse;
-  `};
-`
-
 const BaseInfoItem = styled(AutoColumn)`
   flex: 1;
 `
@@ -67,7 +56,6 @@ export default function Poker({
   }
 }: RouteComponentProps<{ pairId?: string }>) {
   const { account } = useActiveWeb3React()
-  const theme = useTheme()
 
   const poolInfo = useMiningPool(pairId)
   const {
@@ -210,7 +198,7 @@ export default function Poker({
                   </PokerImage>
 
                   <RowAround>
-                    <StakeLink to={`/stake/${pairId}`}>
+                    <StakeLink to={`/stake/SINGLE/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
@@ -247,7 +235,7 @@ export default function Poker({
                     <img src={PokerImg} alt={'poker img'} />
                   </PokerImage>
                   <RowAround>
-                    <StakeLink to={`/stake/${pairId}`}>
+                    <StakeLink to={`/stake/SYNTHETIC/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
