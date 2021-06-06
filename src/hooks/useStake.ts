@@ -1,10 +1,20 @@
-import { useSingleCallResult, useSingleContractMultipleData, Result } from '@/state/multicall/hooks'
 import { useMemo } from 'react'
+
+import { useNFTPositionManagerContract } from '@/hooks/useContract'
+import {
+  singlePokerMap,
+  SinglePokerItem,
+  groupPokerMap,
+  GroupPokerItem
+} from '@/pokers'
+import {
+  useSingleCallResult,
+  useSingleContractMultipleData,
+  Result
+} from '@/state/multicall/hooks'
+import { or } from '@/utils/or'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { useNFTPositionManagerContract } from '@/hooks/useContract'
-import { or } from '@/utils/or'
-import { singlePokerMap, SinglePokerItem, groupPokerMap, GroupPokerItem } from '@/pokers'
 
 type PositionDetails = {
   nonce: BigNumber
@@ -41,35 +51,63 @@ interface usePositionsResults {
   pairIds: Array<PositionTokenPair>
 }
 
-function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined, pairId: string): Array<PositionTokenPair> {
+export function usePairsFromTokenIds(
+  tokenIds: BigNumber[] | undefined,
+  pairId: string
+): Array<PositionTokenPair> {
   const positionManager = useNFTPositionManagerContract()
-  const inputs = useMemo(() => (tokenIds ? tokenIds.map((tokenId) => [BigNumber.from(tokenId)]) : []), [tokenIds])
-  const pairIdResults = useSingleContractMultipleData(positionManager, 'getPair', inputs)
-  const pokerPropertyResults = useSingleContractMultipleData(positionManager, 'getPokerProperty', inputs)
+  const inputs = useMemo(
+    () =>
+      tokenIds ? tokenIds.map((tokenId) => [BigNumber.from(tokenId)]) : [],
+    [tokenIds]
+  )
+  const pairIdResults = useSingleContractMultipleData(
+    positionManager,
+    'getPair',
+    inputs
+  )
+  const pokerPropertyResults = useSingleContractMultipleData(
+    positionManager,
+    'getPokerProperty',
+    inputs
+  )
 
-  const loading = useMemo(() => [...pairIdResults, ...pokerPropertyResults].some(({ loading }) => loading), [pairIdResults, pokerPropertyResults])
-  const error = useMemo(() => [...pairIdResults, ...pokerPropertyResults].some(({ error }) => error), [pairIdResults, pokerPropertyResults])
+  const loading = useMemo(
+    () =>
+      [...pairIdResults, ...pokerPropertyResults].some(
+        ({ loading }) => loading
+      ),
+    [pairIdResults, pokerPropertyResults]
+  )
+  const error = useMemo(
+    () =>
+      [...pairIdResults, ...pokerPropertyResults].some(({ error }) => error),
+    [pairIdResults, pokerPropertyResults]
+  )
 
   const pairIds = useMemo(() => {
     if (!loading && !error && tokenIds) {
-      return pairIdResults.map((call, i) => {
-        const tokenId = tokenIds[i]
-        const result = call.result as Result
-        const propertyResult = pokerPropertyResults[i].result as Result
-        const pokerRank = (propertyResult as any).rank as BigNumber
-        const pockerSuit = pokerRank.toNumber()
-        const isSingle = singlePokerMap.has(pockerSuit)
-        const isGroup = groupPokerMap.has(pockerSuit)
+      return pairIdResults
+        .map((call, i) => {
+          const tokenId = tokenIds[i]
+          const result = call.result as Result
+          const propertyResult = pokerPropertyResults[i].result as Result
+          const pokerRank = (propertyResult as any).rank as BigNumber
+          const pockerSuit = pokerRank.toNumber()
+          const isSingle = singlePokerMap.has(pockerSuit)
+          const isGroup = groupPokerMap.has(pockerSuit)
 
-        return {
-          tokenId,
-          pokerInfo: singlePokerMap.get(pockerSuit) ?? groupPokerMap.get(pockerSuit),
-          pokerProperty: result,
-          isSingle,
-          isGroup,
-          pairId: result.length ? result[0] : ''
-        }
-      }).filter((item) => item.pairId === pairId)
+          return {
+            tokenId,
+            pokerInfo:
+              singlePokerMap.get(pockerSuit) ?? groupPokerMap.get(pockerSuit),
+            pokerProperty: result,
+            isSingle,
+            isGroup,
+            pairId: result.length ? result[0] : ''
+          }
+        })
+        .filter((item) => item.pairId === pairId)
     }
 
     return []
@@ -83,12 +121,14 @@ interface usePositionResults {
   position: PositionDetails | undefined
 }
 
-export function useUserPokers(account: string | null | undefined, pairId: string): usePositionsResults | any {
+export function useUserPokers(
+  account: string | null | undefined,
+  pairId: string
+): usePositionsResults | any {
   const positionManager = useNFTPositionManagerContract()
 
-  const { result: balanceResult, loading: balanceOfLoading } = useSingleCallResult(positionManager, 'balanceOf', [
-    account
-  ])
+  const { result: balanceResult, loading: balanceOfLoading } =
+    useSingleCallResult(positionManager, 'balanceOf', [account])
 
   const accountBalance: number | undefined = balanceResult?.[0]?.toNumber()
 
@@ -103,7 +143,11 @@ export function useUserPokers(account: string | null | undefined, pairId: string
     return []
   }, [account, accountBalance])
 
-  const tokenIdResults = useSingleContractMultipleData(positionManager, 'tokenOfOwnerByIndex', tokenIdsArgs)
+  const tokenIdResults = useSingleContractMultipleData(
+    positionManager,
+    'tokenOfOwnerByIndex',
+    tokenIdsArgs
+  )
 
   const anyLoading: boolean = useMemo(
     () => tokenIdResults.some((callState) => callState.loading),
