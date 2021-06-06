@@ -64,6 +64,7 @@ function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined, pairId: string)
         return {
           tokenId,
           pokerInfo: singlePokerMap.get(pockerSuit) ?? groupPokerMap.get(pockerSuit),
+          pokerProperty: result,
           isSingle,
           isGroup,
           pairId: result.length ? result[0] : ''

@@ -1,4 +1,5 @@
 import { useSingleCallResult, useSingleContractMultipleData, Result } from '@/state/multicall/hooks'
+import { JSBI } from '@xplanet/sdk'
 import { useMemo } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
@@ -8,6 +9,8 @@ import { useNFTPositionManagerContract, useContract, useXKeyDaoContract, useToke
 import { useToken } from '@/hooks/Tokens'
 import { or } from '@/utils/or'
 import { singlePokerMap, SinglePokerItem } from '@/pokers'
+
+const { BigInt, divide, multiply } = JSBI
 
 type PositionDetails = {
   nonce: BigNumber
@@ -107,11 +110,11 @@ export function usePairById(pairId: string, tokenId: string): any {
   const { result: token0BalanceOf, loading: t0balanceOfLoading } = useSingleCallResult(token0Contract, 'balanceOf', [pairId])
   const { result: token1BalanceOf, loading: t1balanceOfLoading } = useSingleCallResult(token1Contract, 'balanceOf', [pairId])
 
-  const balanceOf = Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)
-  const totalSupply = Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)
+  const balanceOf = (Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)).toString()
+  const totalSupply = (Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)).toString()
 
-  const token0Amount = Array.isArray(token0BalanceOf) ? formatUnits(token0BalanceOf[0], token0Token?.decimals) : 0;
-  const token1Amount = Array.isArray(token1BalanceOf) ? formatUnits(token1BalanceOf[0], token1Token?.decimals) : 0;
+  const token0Amount = (Array.isArray(token0BalanceOf) ? token0BalanceOf[0] : BigNumber.from(0)).toString()
+  const token1Amount = (Array.isArray(token1BalanceOf) ? token1BalanceOf[0] : BigNumber.from(0)).toString()
 
   return {
     loading: or(token0Loading, token1Loading, balanceOfLoading, tokenURILoading, totalSupplyLoading, t0balanceOfLoading, t1balanceOfLoading),
@@ -120,14 +123,14 @@ export function usePairById(pairId: string, tokenId: string): any {
       token1Address,
       token0Contract,
       token1Contract,
-      token0Amount,
-      token1Amount,
+      token0Amount: formatUnits(divide(multiply(BigInt(token0Amount), BigInt(balanceOf)), BigInt(totalSupply)).toString(), token0Token?.decimals),
+      token1Amount: formatUnits(divide(multiply(BigInt(token1Amount), BigInt(balanceOf)), BigInt(totalSupply)).toString(), token1Token?.decimals),
       token0: token0Token,
       token1: token1Token,
       balanceOf: balanceOf.toString(),
       totalSupply: Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1),
       tokenURI: Array.isArray(tokenURIResult) ? tokenURIResult[0] : '',
-      shared: balanceOf.toString() / totalSupply.toString() * 100,
+      shared: formatUnits(BigNumber.from(multiply(divide(BigInt(balanceOf), BigInt(totalSupply)), BigInt(100)).toString()), 2),
       supportMining: tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
     }
   }
