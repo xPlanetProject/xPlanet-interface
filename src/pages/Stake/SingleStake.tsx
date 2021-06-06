@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
 import { PokerItemType } from './StakeHelpers'
@@ -11,6 +11,8 @@ import { PokerType } from '@/utils/poker'
 import { useUserPokers } from '@/hooks/useStake'
 import { useActiveWeb3React } from '@/hooks'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
+import { useXKeyDaoContract, useNFTPositionManagerContract } from '@/hooks/useContract'
+import { calculateGasMargin } from '@/utils'
 import styled, { ThemeContext } from 'styled-components'
 
 type SingleStakeProps = {
@@ -46,6 +48,64 @@ const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) =
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
   const { pokers, loading } = useUserPokers(account, pairId)
+
+  const xKeyDaoContract = useXKeyDaoContract()
+  const positionManager = useNFTPositionManagerContract()
+
+  const stateSingle = useCallback(async() => {
+    console.log(pokers)
+    if (pokers.length) {
+      const poker = pokers[0]
+
+      const estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
+      const addSwaptokenShareSingle = xKeyDaoContract?.addSwaptokenShareSingle
+      const address = xKeyDaoContract?.address
+      const estimateApprove = positionManager?.approve
+      const approve = positionManager?.approve
+
+      const args = [poker.tokenId]
+      const approveArgs = [address, poker.tokenId]
+
+      if (estimateApprove && approve) {
+
+        approve(...approveArgs, {
+        })
+        .then(() => {
+          if (estimate && addSwaptokenShareSingle) {
+            estimate(...args, {})
+            .then(estimatedGasLimit => {
+              addSwaptokenShareSingle(...args, {
+                gasLimit: calculateGasMargin(estimatedGasLimit)
+              }).then((res) => {
+                console.log(res)
+              }).catch((e) => {
+                console.log(e)
+              })
+            })
+          }
+        })
+
+        // estimateApprove(...approveArgs, {})
+        // .then((estimatedGasLimit) => {
+        //   console.log(estimatedGasLimit)
+        //   approve(...approveArgs, {
+        //     gasLimit: calculateGasMargin(estimatedGasLimit)
+        //   })
+        //   .then(() => {
+        //     if (estimate && addSwaptokenShareSingle) {
+        //       estimate(...args, {})
+        //       .then(estimatedGasLimit => {
+        //         addSwaptokenShareSingle(...args, {
+        //           gasLimit: calculateGasMargin(estimatedGasLimit)
+        //         })
+        //       })
+        //     }
+        //   })
+        // })
+      }
+
+    }
+  }, [pokers, xKeyDaoContract, positionManager])
 
   const PokerList: PokerItemType[] = [
     {
@@ -85,8 +145,6 @@ const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) =
     }
   ]
 
-  console.log(pokers)
-
   if (loading) {
     return (
       <PageWrapper>
@@ -124,6 +182,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) =
       <RowBetween style={{ marginTop: 20 }}>
         <TYPE.subHeader>Currently Selected: 5/20</TYPE.subHeader>
         <ButtonLight
+          onClick={stateSingle}
           style={{
             width: 'auto',
             padding: '0.4rem .6rem',

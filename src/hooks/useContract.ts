@@ -145,26 +145,26 @@ export function useSocksController(): Contract | null {
   )
 }
 
-export function useNFTPositionManagerContract(): Contract | null {
+export function useNFTPositionManagerContract(withSignerIfPossible?: boolean): Contract | null {
   return useContract(
     XSWAP_NFT_ADDRESS,
     NFTPositionManagerABI,
-    false
+    withSignerIfPossible
   )
 }
 
-export function useXKeyDaoContract(): Contract | null {
+export function useXKeyDaoContract(withSignerIfPossible?: boolean): Contract | null {
   return useContract(
     XKEY_DAO_ADRESS,
     XKeyDaoABI,
-    false
+    withSignerIfPossible
   )
 }
 
-export function useXPokerPowerContract(): Contract | null {
+export function useXPokerPowerContract(withSignerIfPossible?: boolean): Contract | null {
   return useContract(
     XPOKER_POWER_ADDRESS,
     XPokerPowerABI,
-    false
+    withSignerIfPossible
   )
 }
