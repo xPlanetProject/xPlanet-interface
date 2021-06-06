@@ -45,10 +45,11 @@ export function userSwapTokenHadMint() {
 
 export function useMiningList() {
   const xKeyDaoContract = useXKeyDaoContract()
-  const tokenAddressResults = useSingleContractMultipleData(xKeyDaoContract, 'swaptoken_addrs', [
-    [0],
-    [1]
-  ])
+  const tokenAddressResults = useSingleContractMultipleData(
+    xKeyDaoContract,
+    'swaptoken_addrs',
+    [[0], [1]]
+  )
 
   const anyLoading: boolean = useMemo(
     () => tokenAddressResults.some((callState) => callState.loading),
@@ -67,8 +68,14 @@ export function useMiningList() {
 
 export function useTokensFromPair(pairId) {
   const pairContract = useContract(pairId, XKeyPairABI)
-  const { result: token0, loading: token0Loading } = useSingleCallResult(pairContract, 'token0')
-  const { result: token1, loading: token1Loading } = useSingleCallResult(pairContract, 'token1')
+  const { result: token0, loading: token0Loading } = useSingleCallResult(
+    pairContract,
+    'token0'
+  )
+  const { result: token1, loading: token1Loading } = useSingleCallResult(
+    pairContract,
+    'token1'
+  )
 
   const token0Address = Array.isArray(token0) && token0.length ? token0[0] : ''
   const token1Address = Array.isArray(token1) && token1.length ? token1[0] : ''
@@ -191,6 +198,8 @@ export function useMiningPoolData(
   const yieldRate = useMemo(() => {
     if (pairWeight && currentStagePrice) {
       return BigNumber.from(utils.parseUnits(currentStagePrice, 3).toString())
+        .div('10')
+        .mul(pairWeight.toString())
     }
     return undefined
   }, [pairWeight, currentStagePrice])
