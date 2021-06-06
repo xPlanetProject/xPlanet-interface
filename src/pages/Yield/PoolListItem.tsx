@@ -5,7 +5,9 @@ import { ButtonPrimary } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { RowBetween } from '@/components/Row'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
-import { Token } from '@xplanet/sdk'
+import { unwrappedToken } from '@/utils/wrappedCurrency'
+import { Dots } from '@/components/swap/styleds'
+import { useTokensFromPair } from '@/hooks/useMining'
 import styled from 'styled-components'
 
 const Card = styled(DarkCard)`
@@ -15,6 +17,19 @@ const Card = styled(DarkCard)`
   padding: 32px 64px;
   text-align: center;
   grid-row-gap: 18px;
+  border: 2px solid ${({ theme }) => theme.primary1};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin: 0 0 32px;
+  `};
+`
+
+const CardFlexCenter = styled(DarkCard)`
+  flex: 1;
+  display: flex;
+  margin: 0 32px 32px;
+  padding: 32px 64px;
+  justify-content: center;
+  align-items: center;
   border: 2px solid ${({ theme }) => theme.primary1};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0 0 32px;
@@ -48,20 +63,32 @@ const ExtentsText = styled.span`
 `
 interface PairProps {
   id: string
-  token0: Token
-  token1: Token
 }
 
-export default function PoolListItme({ id, token0, token1 }: PairProps) {
+export default function PoolListItme({ id }: PairProps) {
+  const { token0, token1, loading } = useTokensFromPair(id)
+
+  if (loading) {
+    return (
+      <CardFlexCenter>
+        <Dots>Loading Pair</Dots>
+      </CardFlexCenter>
+    )
+  }
+
   return (
     <Card>
       <RowCenter>
-        <DoubleCurrencyLogo
-          currency0={token0}
-          currency1={token1}
-          size={36}
-          margin
-        />
+        {
+          token0 && token1 && (
+            <DoubleCurrencyLogo
+              currency0={unwrappedToken(token0)}
+              currency1={unwrappedToken(token1)}
+              size={36}
+              margin
+            />
+          )
+        }
       </RowCenter>
 
       <RowCenter>

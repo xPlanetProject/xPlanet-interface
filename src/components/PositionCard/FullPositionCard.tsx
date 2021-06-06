@@ -13,11 +13,7 @@ import { unwrappedToken } from '@/utils/wrappedCurrency'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 
-export const FixedHeightRow = styled(RowBetween)`
-  height: 24px;
-`
-
-export const HoverCard = styled(Card)`
+const HoverCard = styled(Card)`
   padding: 10px;
   transition: all 0.2s;
   margin: 0 0 10px;
@@ -25,6 +21,10 @@ export const HoverCard = styled(Card)`
   :hover {
     background: ${({ theme }) => theme.bg3};
   }
+`
+
+const CenterAutoColumn = styled(AutoColumn)`
+  text-align: center;
 `
 
 const LinkRow = styled(RowBetween)`
@@ -65,9 +65,9 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
   if (loading) {
     return (
       <HoverCard border={border}>
-        <AutoColumn gap='12px'>
-          <Dots>Loading PoolItem...</Dots>
-        </AutoColumn>
+        <CenterAutoColumn gap='12px'>
+          <Dots>Loading Liquidity Item...</Dots>
+        </CenterAutoColumn>
       </HoverCard>
     )
   }

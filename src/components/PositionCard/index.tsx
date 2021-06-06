@@ -1,12 +1,9 @@
-import React, { useState, useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Card, { GreyCard } from '@/components/Card'
-import Badge from '@/components/Badge'
 import { AutoColumn } from '@/components/Column'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { RowBetween, RowFixed } from '@/components/Row'
-import { Dots } from '@/components/swap/styleds'
 import { useTotalSupply } from '@/data/TotalSupply'
 import { useActiveWeb3React } from '@/hooks'
 import { useTokenBalance } from '@/state/wallet/hooks'
@@ -27,25 +24,6 @@ export const HoverCard = styled(Card)`
   :hover {
     background: ${({ theme }) => theme.bg3};
   }
-`
-
-const LinkRow = styled(RowBetween)`
-  height: 24px;
-  cursor: pointer;
-`
-
-const BadgeText = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    font-size: 12px;
-  `};
-`
-
-const ExtentsText = styled.span`
-  color: ${({ theme }) => theme.text3};
-  font-size: 14px;
-  margin-right: 4px;
 `
 
 interface PositionCardProps {
@@ -164,57 +142,5 @@ export function MinimalPositionCard({
         </GreyCard>
       )}
     </>
-  )
-}
-
-export default function FullPositionCard({ pair, border }: PositionCardProps) {
-  const history = useHistory()
-
-  const currency0 = unwrappedToken(pair.token0Token)
-  const currency1 = unwrappedToken(pair.token1Token)
-
-  const toDetail = useCallback(() => {
-    const tokenId = pair.tokenId.toString()
-    history.push(`/pool/${tokenId}/${pair.pairId}`)
-  }, [history, pair])
-
-  return (
-    <HoverCard border={border}>
-      <AutoColumn gap='12px'>
-          <LinkRow onClick={toDetail}>
-            <RowFixed>
-              <DoubleCurrencyLogo
-                currency0={currency0}
-                currency1={currency1}
-                margin={true}
-                size={20}
-              />
-              <Text fontWeight={500} fontSize={20}>
-                {!currency0 || !currency1 ? (
-                  <Dots>Loading</Dots>
-                ) : (
-                  `${currency0.symbol}/${currency1.symbol}`
-                )}
-              </Text>
-            </RowFixed>
-            <RowFixed>
-              <RowFixed>
-                <ExtentsText>Liquidity Value:</ExtentsText>
-                <Badge>
-                  <BadgeText>$ {pair.balanceOf.toString()}</BadgeText>
-                </Badge>
-              </RowFixed>
-              <RowFixed style={{
-                marginLeft: 15
-              }}>
-                <ExtentsText>Poker:</ExtentsText>
-                <Badge>
-                  <BadgeText>{ pair.pokerInfo?.faceIcon } { pair.pokerInfo?.face }</BadgeText>
-                </Badge>
-              </RowFixed>
-            </RowFixed>
-          </LinkRow>
-      </AutoColumn>
-    </HoverCard>
   )
 }

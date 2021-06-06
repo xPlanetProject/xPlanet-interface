@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
-import { useActiveWeb3React } from '@/hooks'
 import { useToken } from '@/hooks/Tokens'
-import { useAsyncMemo } from '@/hooks/useAsyncMemo'
 import {
   useContract,
   useTokenContract,
@@ -14,8 +12,7 @@ import {
   useSingleCallResult,
   useSingleContractMultipleData
 } from '@/state/multicall/hooks'
-import { getContract } from '@/utils'
-import { makeToken } from '@/utils/makeToken'
+import { or } from '@/utils/or'
 import { BigNumber, utils } from 'ethers'
 
 export function useCurrentStagePrice() {
@@ -47,41 +44,45 @@ export function userSwapTokenHadMint() {
 }
 
 export function useMiningList() {
-  const { library } = useActiveWeb3React()
   const xKeyDaoContract = useXKeyDaoContract()
-  const pairIdResults = useSingleContractMultipleData(
-    xKeyDaoContract,
-    'swaptoken_addrs',
-    [[0], [1]]
+  const tokenAddressResults = useSingleContractMultipleData(xKeyDaoContract, 'swaptoken_addrs', [
+    [0],
+    [1]
+  ])
+
+  const anyLoading: boolean = useMemo(
+    () => tokenAddressResults.some((callState) => callState.loading),
+    [tokenAddressResults]
   )
 
-  const pairIds = pairIdResults.map((item) => {
-    return item.result?.[0]
-  })
-
-  const pairMaps = useAsyncMemo(async () => {
-    const res: Array<any> | any = []
-    for (const pairId of pairIds) {
-      if (library && pairId) {
-        const contract = getContract(pairId, XKeyPairABI, library)
-
-        const token0Address = await contract.token0()
-        const token1Address = await contract.token1()
-
-        const token0 = await makeToken(token0Address, library)
-        const token1 = await makeToken(token1Address, library)
-
-        res.push({
-          id: pairId,
-          token0,
-          token1
-        })
+  return {
+    loading: anyLoading,
+    pairIds: tokenAddressResults.map((item) => {
+      return {
+        id: item.result?.[0]
       }
-    }
-    return res
-  }, [library, pairIdResults])
+    })
+  }
+}
 
-  return pairMaps
+export function useTokensFromPair(pairId) {
+  const pairContract = useContract(pairId, XKeyPairABI)
+  const { result: token0, loading: token0Loading } = useSingleCallResult(pairContract, 'token0')
+  const { result: token1, loading: token1Loading } = useSingleCallResult(pairContract, 'token1')
+
+  const token0Address = Array.isArray(token0) && token0.length ? token0[0] : ''
+  const token1Address = Array.isArray(token1) && token1.length ? token1[0] : ''
+
+  const token0Token = useToken(token0Address)
+  const token1Token = useToken(token1Address)
+
+  return useMemo(() => {
+    return {
+      loading: or(!token0Token, !token1Token),
+      token0: token0Token,
+      token1: token1Token
+    }
+  }, [token0Loading, token1Loading, token0Token, token1Token])
 }
 
 export function useMiningPool(pairId: string | undefined): any {

@@ -5,7 +5,7 @@ import { LightCard } from '@/components/Card'
 import { RowAround } from '@/components/Row'
 import { useMiningList } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
-import { Token, ChainId } from '@xplanet/sdk'
+import { Dots } from '@/components/swap/styleds'
 import styled, { ThemeContext } from 'styled-components'
 
 const ColumnGrid = styled(RowAround)`
@@ -16,30 +16,35 @@ const ColumnGrid = styled(RowAround)`
 
 function PoolList() {
   const theme = useContext(ThemeContext)
-
-  const pairMaps: any = useMiningList()
-  console.log(pairMaps)
+  const { loading, pairIds } = useMiningList()
 
   return (
     <>
-      {pairMaps?.length > 0 ? (
-        <ColumnGrid>
-          {pairMaps.map((item) => (
-            <PoolListItem
-              id={item.id}
-              token0={item.token0}
-              token1={item.token1}
-              key={item.id}
-            />
-          ))}
-        </ColumnGrid>
-      ) : (
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            No data.
-          </TYPE.body>
-        </LightCard>
-      )}
+      {
+        loading ?  (
+          <LightCard padding='40px'>
+            <TYPE.body color={theme.text3} textAlign='center'>
+              <Dots>Loading</Dots>
+            </TYPE.body>
+          </LightCard>
+        ) : 
+        pairIds.length > 0 ? (
+          <ColumnGrid>
+            {pairIds.map((item) => (
+              <PoolListItem
+                id={item.id}
+                key={item.id}
+              />
+            ))}
+          </ColumnGrid>
+        ) : (
+          <LightCard padding='40px'>
+            <TYPE.body color={theme.text3} textAlign='center'>
+              No data.
+            </TYPE.body>
+          </LightCard>
+        )
+      }
     </>
   )
 }
