@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext, useCallback, useState, useEffect } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
 import { PokerItemType } from './StakeHelpers'
@@ -47,13 +47,16 @@ const StakeCheckouSection = styled.div`
 const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) => {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
+
+  const [ pokerList, setPokerList ] = useState([])
+  const [ needApprove, setNeedApprove ] = useState([])
+
   const { pokers, loading } = useUserPokers(account, pairId)
 
   const xKeyDaoContract = useXKeyDaoContract()
   const positionManager = useNFTPositionManagerContract()
 
   const stateSingle = useCallback(async() => {
-    console.log(pokers)
     if (pokers.length) {
       const poker = pokers[0]
 
@@ -144,6 +147,10 @@ const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) =
       miningPower: '500'
     }
   ]
+
+  useEffect(() => {
+    setPokerList(() => pokers)
+  }, [pokers])
 
   if (loading) {
     return (
