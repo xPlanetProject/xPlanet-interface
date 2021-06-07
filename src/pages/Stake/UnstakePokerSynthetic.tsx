@@ -4,8 +4,15 @@ import { PokerGroupType } from './StakeHelpers'
 import UnStakePokerSyntheticItem from './UnstakePokerSyntheticItem'
 import { ButtonLight } from '@/components/Button'
 import { RowBetween } from '@/components/Row'
+import { useActiveWeb3React } from '@/hooks'
+import { useUserPokers } from '@/hooks/useStake'
+import useTheme from '@/hooks/useTheme'
 import { TYPE } from '@/theme'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
+
+type PageProps = {
+  pairId: string
+}
 
 const Row = styled.div`
   align-items: center;
@@ -37,8 +44,11 @@ const DropDownWrapper = styled.div`
   justify-content: flex-end;
 `
 
-const SyntheticStake: React.FC = () => {
-  const theme = useContext(ThemeContext)
+const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
+  const theme = useTheme()
+  const { account } = useActiveWeb3React()
+  const { pokers, loading } = useUserPokers(account, pairId)
+
   const AllPokers: PokerGroupType[] = [
     {
       id: '1',

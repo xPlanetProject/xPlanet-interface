@@ -1,18 +1,20 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
-import { PokerItemType } from './StakeHelpers'
 import { ButtonLight } from '@/components/Button'
-import { RowBetween } from '@/components/Row'
-import { Dots } from '@/pages/Pool/styleds'
 import { LightCard } from '@/components/Card'
-import { TYPE } from '@/theme'
-import { PokerType } from '@/utils/poker'
-import { useUserPokers } from '@/hooks/useStake'
+import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
+import {
+  useXKeyDaoContract,
+  useNFTPositionManagerContract
+} from '@/hooks/useContract'
+import { useUserPokers, useNeedApprove } from '@/hooks/useStake'
+import { Dots } from '@/pages/Pool/styleds'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
-import { useXKeyDaoContract, useNFTPositionManagerContract } from '@/hooks/useContract'
+import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
+import { PokerType } from '@/utils/poker'
 import styled, { ThemeContext } from 'styled-components'
 
 type SingleStakeProps = {
@@ -44,113 +46,67 @@ const StakeCheckouSection = styled.div`
   flex: 1;
 `
 
-const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) => {
+const SingleStake: React.FC<SingleStakeProps> = ({
+  pairId
+}: SingleStakeProps) => {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
 
-  const [ pokerList, setPokerList ] = useState([])
-  const [ needApprove, setNeedApprove ] = useState([])
+  const [selectIds, selectPokerId] = useState<any>([])
+  const [needApprove, setApprove] = useState<any>(false)
+  const [approving, setApproving] = useState<any>(false)
 
   const { pokers, loading } = useUserPokers(account, pairId)
 
   const xKeyDaoContract = useXKeyDaoContract()
   const positionManager = useNFTPositionManagerContract()
 
-  const stateSingle = useCallback(async() => {
-    if (pokers.length) {
-      const poker = pokers[0]
+  useEffect(() => {
+    setApprove(() => selectIds.length > 0)
+  }, [selectIds])
 
+  const approve = useCallback(async () => {
+    const address = xKeyDaoContract?.address
+    const approve = positionManager?.setApprovalForAll
+
+    const approveArgs = [address, true]
+
+    if (approve) {
+      setApproving(() => true)
+      await approve(...approveArgs, {})
+      setApproving(() => false)
+      setApprove(() => false)
+    }
+  }, [xKeyDaoContract, positionManager])
+
+  const stateSingle = useCallback(async () => {
+    if (selectIds.length) {
       const estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
       const addSwaptokenShareSingle = xKeyDaoContract?.addSwaptokenShareSingle
-      const address = xKeyDaoContract?.address
-      const estimateApprove = positionManager?.approve
-      const approve = positionManager?.approve
+      const args = selectIds
 
-      const args = [poker.tokenId]
-      const approveArgs = [address, poker.tokenId]
-
-      if (estimateApprove && approve) {
-
-        approve(...approveArgs, {
+      if (estimate && addSwaptokenShareSingle) {
+        estimate(...args, {}).then((estimatedGasLimit) => {
+          addSwaptokenShareSingle(...args, {
+            gasLimit: calculateGasMargin(estimatedGasLimit)
+          })
         })
-        .then(() => {
-          if (estimate && addSwaptokenShareSingle) {
-            estimate(...args, {})
-            .then(estimatedGasLimit => {
-              addSwaptokenShareSingle(...args, {
-                gasLimit: calculateGasMargin(estimatedGasLimit)
-              }).then((res) => {
-                console.log(res)
-              }).catch((e) => {
-                console.log(e)
-              })
-            })
-          }
-        })
-
-        // estimateApprove(...approveArgs, {})
-        // .then((estimatedGasLimit) => {
-        //   console.log(estimatedGasLimit)
-        //   approve(...approveArgs, {
-        //     gasLimit: calculateGasMargin(estimatedGasLimit)
-        //   })
-        //   .then(() => {
-        //     if (estimate && addSwaptokenShareSingle) {
-        //       estimate(...args, {})
-        //       .then(estimatedGasLimit => {
-        //         addSwaptokenShareSingle(...args, {
-        //           gasLimit: calculateGasMargin(estimatedGasLimit)
-        //         })
-        //       })
-        //     }
-        //   })
-        // })
       }
-
     }
-  }, [pokers, xKeyDaoContract, positionManager])
+  }, [selectIds, xKeyDaoContract, positionManager])
 
-  const PokerList: PokerItemType[] = [
-    {
-      id: '1',
-      pokerType: PokerType.GRASS,
-      pokerNumber: 'A',
-      amount: '100',
-      miningPower: '500'
+  const selectPoker = useCallback(
+    (tokenId) => {
+      selectPokerId((ids) => {
+        if (ids.includes(tokenId)) {
+          return ids.filter((id) => id !== tokenId)
+        } else {
+          return ids.concat([tokenId])
+        }
+      })
     },
-    {
-      id: '2',
-      pokerType: PokerType.HEART,
-      pokerNumber: 'K',
-      amount: '100',
-      miningPower: '500'
-    },
-    {
-      id: '3',
-      pokerType: PokerType.CUBE,
-      pokerNumber: 'Q',
-      amount: '100',
-      miningPower: '500'
-    },
-    {
-      id: '4',
-      pokerType: PokerType.SPADES,
-      pokerNumber: 'J',
-      amount: '100',
-      miningPower: '500'
-    },
-    {
-      id: '5',
-      pokerType: PokerType.GRASS,
-      pokerNumber: '10',
-      amount: '100',
-      miningPower: '500'
-    }
-  ]
-
-  useEffect(() => {
-    setPokerList(() => pokers)
-  }, [pokers])
+    [selectIds]
+  )
 
   if (loading) {
     return (
@@ -176,28 +132,68 @@ const SingleStake: React.FC<SingleStakeProps> = ({ pairId }: SingleStakeProps) =
         <StakeCheckouSection>
           <TYPE.subHeader>流动性份额</TYPE.subHeader>
         </StakeCheckouSection>
-        <StakeCheckouSection>
+        {/* <StakeCheckouSection>
           <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection>
+        </StakeCheckouSection> */}
         <StakeCheckouSection>
           <TYPE.subHeader>操作</TYPE.subHeader>
         </StakeCheckouSection>
       </Row>
-      {PokerList?.map((item) => {
-        return <SingleStakeItem data={item} key={item.id} />
-      })}
+      {pokers.length ? (
+        pokers.map((item) => {
+          return (
+            <SingleStakeItem
+              data={item}
+              key={item.tokenIdStr}
+              selectIds={selectIds}
+              selectPoker={selectPoker}
+            />
+          )
+        })
+      ) : (
+        <LightCard padding='40px'>
+          <TYPE.body color={theme.text3} textAlign='center'>
+            No data.
+          </TYPE.body>
+        </LightCard>
+      )}
       <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>Currently Selected: 5/20</TYPE.subHeader>
-        <ButtonLight
-          onClick={stateSingle}
-          style={{
-            width: 'auto',
-            padding: '0.4rem .6rem',
-            borderRadius: '16px',
-            fontSize: '12px'
-          }}>
-          Stake
-        </ButtonLight>
+        <TYPE.subHeader>Currently Selected: {selectIds.length}/{pokers.length}</TYPE.subHeader>
+        {needApprove ? (
+          approving ? (
+            <ButtonLight
+              style={{
+                width: 'auto',
+                padding: '0.4rem .6rem',
+                borderRadius: '16px',
+                fontSize: '12px'
+              }}>
+              <Dots>Approving</Dots>
+            </ButtonLight>
+          ) : (
+            <ButtonLight
+              onClick={approve}
+              style={{
+                width: 'auto',
+                padding: '0.4rem .6rem',
+                borderRadius: '16px',
+                fontSize: '12px'
+              }}>
+              Approve
+            </ButtonLight>
+          )
+        ) : (
+          <ButtonLight
+            onClick={stateSingle}
+            style={{
+              width: 'auto',
+              padding: '0.4rem .6rem',
+              borderRadius: '16px',
+              fontSize: '12px'
+            }}>
+            Stake
+          </ButtonLight>
+        )}
       </RowBetween>
     </>
   )

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import { TitleRow, PageWrapper, StakeTabConent, HoverText } from './styleds'
 import UnStakeSingle from './UnstakePokerSingle'
 import UnStakeSynthetic from './UnstakePokerSynthetic'
+import { TitleRow, PageWrapper, StakeTabConent, HoverText } from './styleds'
 import { ButtonLight, ButtonGray } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
@@ -15,9 +15,9 @@ import { HideSmall, TYPE } from '@/theme'
 type StakeType = 'SINGLE' | 'SYNTHETIC'
 
 const UnStake: React.FC = () => {
-  const [stakeType, setStakeType] = useState<StakeType>('SINGLE')
-  const { pairId } = useParams<{ pairId: string }>()
+  const { pairId, type } = useParams<{ pairId: string; type: StakeType }>()
   const poolInfo = useMiningPool(pairId)
+  const [stakeType, setStakeType] = useState<StakeType>(type)
 
   return (
     <>
@@ -81,8 +81,10 @@ const UnStake: React.FC = () => {
             </RowFixed>
             <DarkCard>
               <StakeTabConent>
-                {stakeType === 'SINGLE' && <UnStakeSingle />}
-                {stakeType === 'SYNTHETIC' && <UnStakeSynthetic />}
+                {stakeType === 'SINGLE' && <UnStakeSingle pairId={pairId} />}
+                {stakeType === 'SYNTHETIC' && (
+                  <UnStakeSynthetic pairId={pairId} />
+                )}
               </StakeTabConent>
             </DarkCard>
           </AutoColumn>

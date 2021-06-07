@@ -109,11 +109,16 @@ export default function App() {
                 />
                 <Route exact strict path='/yield' component={Yield} />
                 <Route exact strict path='/poker/:pairId' component={Poker} />
-                <Route exact strict path='/stake/:type/:pairId' component={Stake} />
                 <Route
                   exact
                   strict
-                  path='/unstake/:pairId'
+                  path='/stake/:type/:pairId'
+                  component={Stake}
+                />
+                <Route
+                  exact
+                  strict
+                  path='/unstake/:type/:pairId'
                   component={UnStake}
                 />
 

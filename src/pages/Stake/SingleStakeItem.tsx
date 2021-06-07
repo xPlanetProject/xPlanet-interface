@@ -2,6 +2,7 @@ import React from 'react'
 
 import { PokerItemType } from './StakeHelpers'
 import { TYPE } from '@/theme'
+import { useLiquidityPower } from '@/hooks/useStake'
 import styled from 'styled-components'
 
 const Row = styled.div`
@@ -36,31 +37,36 @@ interface ISingleStakeItemProps {
   handleClick?: (id: string) => void
 }
 
-const SingleStakeItem: React.FC<ISingleStakeItemProps> = ({
+const SingleStakeItem: React.FC<any> = ({
   data,
-  checked
+  checked,
+  selectIds,
+  selectPoker
 }) => {
+
+  const { power, liquidity } = useLiquidityPower(data.pairId, data.tokenIdStr)
+
   return (
     <>
       <Row>
         <StakeCheckouSection>
-          <TYPE.subHeader>{data?.id}</TYPE.subHeader>
+          <TYPE.subHeader>{data.tokenIdStr}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>{`${data?.pokerType} ${data?.pokerNumber}`}</TYPE.subHeader>
+          <TYPE.subHeader>{`${data.pokerInfo.faceIcon} ${data.pokerInfo.face}`}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>{data?.amount}</TYPE.subHeader>
+          <TYPE.subHeader>{liquidity}</TYPE.subHeader>
         </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>{data?.miningPower}</TYPE.subHeader>
-        </StakeCheckouSection>
+        {/* <StakeCheckouSection>
+          <TYPE.subHeader>{data.miningPower}</TYPE.subHeader>
+        </StakeCheckouSection> */}
         <StakeCheckouSection>
           <input
             type='checkbox'
-            checked={checked}
+            checked={selectIds.includes(data.tokenIdStr)}
             onChange={() => {
-              console.log(data?.id)
+              selectPoker(data.tokenIdStr)
             }}
             style={{ width: 18, height: 18 }}
           />

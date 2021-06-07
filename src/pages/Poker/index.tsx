@@ -59,12 +59,12 @@ export default function Poker({
 
   const poolInfo = useMiningPool(pairId)
   const {
-    singleLength,
-    compositeLength,
-    powerAmount,
-    hadMintAmount,
-    yieldRate,
-    APR
+    singleLength = '0',
+    compositeLength = '0',
+    powerAmount = '0',
+    hadMintAmount = '0',
+    yieldRate = '0',
+    APR = '0'
   } = useMiningPoolData(pairId) ?? {}
   const { powerByAccount, rewardByAccount } =
     usePowerRewardByAccount(pairId, account) ?? {}
@@ -151,7 +151,7 @@ export default function Poker({
                   <TYPE.mediumHeader textAlign='center' marginTop='20px'>
                     {powerByAccount}
                   </TYPE.mediumHeader>
-                  <StakeLink to={`/unstake/${pairId}`}>
+                  <StakeLink to={`/unstake/SINGLE/${pairId}`}>
                     <ButtonOutlined
                       style={{
                         width: 'auto',
@@ -211,7 +211,7 @@ export default function Poker({
                       </ButtonOutlined>
                     </StakeLink>
 
-                    <StakeLink to={`/unstake/${pairId}`}>
+                    <StakeLink to={`/unstake/SINGLE/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',
@@ -248,7 +248,7 @@ export default function Poker({
                       </ButtonOutlined>
                     </StakeLink>
 
-                    <StakeLink to={`/unstake/${pairId}`}>
+                    <StakeLink to={`/unstake/SYNTHETIC/${pairId}`}>
                       <ButtonOutlined
                         style={{
                           width: 'auto',

@@ -58,6 +58,8 @@ const Stake: React.FC = () => {
             </TitleRow>
             <RowFixed>
               <ButtonLight
+                as={Link}
+                to={`/stake/SINGLE/${pairId}`}
                 onClick={() => {
                   setStakeType('SINGLE')
                 }}
@@ -70,6 +72,8 @@ const Stake: React.FC = () => {
                 Stake Single xPoker
               </ButtonLight>
               <ButtonGray
+                as={Link}
+                to={`/stake/SYNTHETIC/${pairId}`}
                 onClick={() => {
                   setStakeType('SYNTHETIC')
                 }}
