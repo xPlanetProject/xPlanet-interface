@@ -1,14 +1,23 @@
 import { useMemo } from 'react'
 
-import { useXPokerPowerContract } from '@/hooks/useContract'
+import {
+  useNFTPositionManagerContract,
+  useXPokerPowerContract
+} from '@/hooks/useContract'
 import { usePairsFromTokenIds } from '@/hooks/useStake'
-import { SinglePokerItem, GroupPokerItem } from '@/pokers'
+import {
+  SinglePokerItem,
+  GroupPokerItem,
+  singlePokerRankMap,
+  singlePokerSuitMap
+} from '@/pokers'
 import {
   useSingleCallResult,
   useSingleContractMultipleData,
   Result
 } from '@/state/multicall/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
+import { utils } from 'ethers'
 
 export type PositionTokenPair = {
   tokenId: BigNumber
@@ -92,7 +101,173 @@ export function uesSingleMaps(
   }
 }
 
-export function useCompositeLength(
+export function uesUserCombineMaps(
   account: string | null | undefined,
   pairId: string
-) {}
+) {
+  const xPokerPowerContract = useXPokerPowerContract()
+
+  const { result: combineLengthRes } = useSingleCallResult(
+    xPokerPowerContract,
+    'compositeLength',
+    [account]
+  )
+
+  const combineLength = combineLengthRes?.[0].toNumber() || 0
+
+  const indexs = useMemo(() => {
+    if (account && combineLength) {
+      const indexs: Array<unknown> = []
+      if (combineLength && account) {
+        for (let i = 0; i < combineLength; i++) {
+          indexs.push([account, i])
+        }
+      }
+      return indexs
+    }
+    return []
+  }, [account, combineLength])
+
+  const combinePowerResults: Array<any> = useSingleContractMultipleData(
+    xPokerPowerContract,
+    'getCompositePowerdByIndex',
+    indexs
+  )
+
+  const tokenIdResults: Array<any> = useSingleContractMultipleData(
+    xPokerPowerContract,
+    'getTokenIdsByIndex',
+    indexs
+  )
+
+  const loading: boolean = useMemo(
+    () =>
+      tokenIdResults.some((callState) => callState.loading) &&
+      combinePowerResults.some((callState) => callState.loading),
+    [tokenIdResults, combinePowerResults]
+  )
+
+  const combineMap = useMemo(() => {
+    if (
+      !loading &&
+      combinePowerResults &&
+      combinePowerResults.length &&
+      tokenIdResults &&
+      tokenIdResults.length
+    ) {
+      if (!tokenIdResults[0]) {
+        return []
+      }
+      return combinePowerResults.map((call, i) => {
+        const pokers = tokenIdResults[i]?.result[0].map((tokenId) =>
+          BigNumber.from(tokenId)
+        )
+
+        return {
+          index: i,
+          combineType: '',
+          combinePower:
+            call?.result[0].toString() &&
+            Number(utils.formatUnits(call?.result[0].toString(), 18)).toFixed(
+              4
+            ),
+          combineLPAmount: '',
+          pokers: pokers
+        }
+      })
+    }
+    return []
+  }, [loading, combinePowerResults, tokenIdResults])
+
+  const pairIdResults = usePairsFromTokenIdsMap(combineMap, pairId)
+
+  return {
+    loading: loading,
+    pokers: pairIdResults
+  }
+}
+
+export function usePairsFromTokenIdsMap(
+  combineMap: Array<any> | undefined,
+  pairId: string
+): any {
+  const positionManager = useNFTPositionManagerContract()
+
+  const inputs = useMemo(() => {
+    if (combineMap && combineMap.length) {
+      let idsMap: Array<any> = []
+      for (let i = 0; i < combineMap.length; i++) {
+        idsMap = [...idsMap, ...combineMap[i].pokers]
+      }
+      return idsMap.map((tokenId) => [BigNumber.from(tokenId)])
+    }
+    return []
+  }, [combineMap])
+
+  const pairIdsResults = useSingleContractMultipleData(
+    positionManager,
+    'getPair',
+    inputs
+  )
+  const pokerPropertyResults = useSingleContractMultipleData(
+    positionManager,
+    'getPokerProperty',
+    inputs
+  )
+
+  const pairIds = pairIdsResults
+    .map(({ result }) => result)
+    .filter((result): result is Result => !!result)
+
+  const pokerProperty = pokerPropertyResults
+    .map(({ result }) => result)
+    .filter((result): result is Result => !!result)
+
+  const pokerMap = useMemo(() => {
+    if (
+      inputs &&
+      pairIds &&
+      pokerProperty &&
+      inputs.length &&
+      pairIds.length &&
+      pokerProperty.length
+    ) {
+      return pokerProperty.map((call, i) => {
+        const tokenId = inputs[i]?.[0]
+        const pairIdResult = pairIds[i]?.[0]
+        const propertyResult = call
+
+        const pokerRank = singlePokerRankMap.get(propertyResult.rank.toNumber())
+        const pockerSuit = singlePokerSuitMap.get(
+          propertyResult.suit.toNumber()
+        )
+        const pokerInfo = {
+          ...pokerRank,
+          ...pockerSuit
+        }
+
+        return {
+          tokenId,
+          tokenIdStr: tokenId.toString(),
+          pokerInfo: pokerInfo,
+          pairId: pairIdResult
+        }
+      })
+    }
+    return []
+  }, [inputs, pairIds, pokerProperty])
+
+  const combineMapRes = useMemo(() => {
+    if (combineMap && pokerMap && combineMap.length && pokerMap.length) {
+      return combineMap.map((call, i) => {
+        call.pokers = call.pokers.map((poker, pi) => {
+          return pokerMap.find((item) => poker.toString() == item.tokenIdStr)
+        })
+        return call
+      })
+    }
+    return []
+  }, [combineMap, pokerMap])
+
+  return combineMapRes
+}

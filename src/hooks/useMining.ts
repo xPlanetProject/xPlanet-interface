@@ -207,8 +207,12 @@ export function useMiningPoolData(
   return {
     singleLength: singleLength?.[0].toString(),
     compositeLength: compositeLength?.[0].toString(),
-    powerAmount: powerAmount?.[0].toString(),
-    hadMintAmount: hadMintAmount?.[0].toString(),
+    powerAmount:
+      powerAmount?.[0].toString() &&
+      Number(utils.formatUnits(powerAmount?.[0].toString(), 18)).toFixed(4),
+    hadMintAmount:
+      hadMintAmount?.[0].toString() &&
+      Number(utils.formatUnits(hadMintAmount?.[0].toString(), 18)).toFixed(4),
     yieldRate: yieldRate && utils.formatUnits(yieldRate, 3).toString(),
     TVL: '0.0',
     APR: '0.0'
@@ -237,7 +241,11 @@ export function usePowerRewardByAccount(
   )
 
   return {
-    powerByAccount: powerByAccount?.[0].toString(),
-    rewardByAccount: rewardByAccount?.[0].toString()
+    powerByAccount:
+      powerByAccount?.[0].toString() &&
+      Number(utils.formatUnits(powerByAccount?.[0].toString())).toFixed(4),
+    rewardByAccount:
+      rewardByAccount?.[0].toString() &&
+      Number(utils.formatUnits(rewardByAccount?.[0].toString())).toFixed(4)
   }
 }

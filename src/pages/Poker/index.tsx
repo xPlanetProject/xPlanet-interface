@@ -70,13 +70,13 @@ export default function Poker({
     usePowerRewardByAccount(pairId, account) ?? {}
 
   const pokerInfo: Array<any> = [
-    { key: 'Staked Amount', value: `${singleLength} xPoker` },
-    { key: 'Synthetic Asset Amount', value: `${compositeLength} xPoker` },
+    { key: 'Staked Amount (xPoker)', value: `${singleLength}` },
+    { key: 'Synthetic Asset Amount (xPoker)', value: `${compositeLength}` },
     { key: 'Total Mining Power', value: powerAmount }
   ]
 
   const pokerPower: Array<any> = [
-    { key: 'Yielded', value: `${hadMintAmount} XKEY` },
+    { key: 'Yielded (XKEY)', value: `${hadMintAmount}` },
     { key: 'Yield Rate per block', value: `${yieldRate}/Block` },
     { key: 'APR for 1 Unt of Mining Power', value: `${APR}%` }
   ]

@@ -86,5 +86,87 @@ pokerMap.set(2, {
   faceIcon: '♠'
 })
 
-export const singlePokerMap = pokerMap
+type SinglePokerRankItem = {
+  rank: number
+  face: string | Array<string>
+}
+type SinglePokerSuitItem = {
+  suit: number | string
+  faceIcon: string
+}
+const pokerRankMap = new Map<number, SinglePokerRankItem>()
+const pokerSuitMap = new Map<number, SinglePokerSuitItem>()
 
+pokerRankMap.set(14, {
+  rank: 14,
+  face: 'A'
+})
+pokerRankMap.set(13, {
+  rank: 13,
+  face: 'K'
+})
+pokerRankMap.set(12, {
+  rank: 12,
+  face: 'Q'
+})
+pokerRankMap.set(11, {
+  rank: 11,
+  face: 'J'
+})
+pokerRankMap.set(10, {
+  rank: 10,
+  face: '10'
+})
+pokerRankMap.set(9, {
+  rank: 9,
+  face: '9'
+})
+pokerRankMap.set(8, {
+  rank: 8,
+  face: '8'
+})
+pokerRankMap.set(7, {
+  rank: 7,
+  face: '7'
+})
+pokerRankMap.set(6, {
+  rank: 6,
+  face: '6'
+})
+pokerRankMap.set(5, {
+  rank: 5,
+  face: '5'
+})
+pokerRankMap.set(4, {
+  rank: 4,
+  face: '4'
+})
+pokerRankMap.set(3, {
+  rank: 3,
+  face: '3'
+})
+pokerRankMap.set(2, {
+  rank: 2,
+  face: '2'
+})
+
+pokerSuitMap.set(1, {
+  suit: 'Heart',
+  faceIcon: '♥'
+})
+pokerSuitMap.set(2, {
+  suit: 'Spade',
+  faceIcon: '♠'
+})
+pokerSuitMap.set(3, {
+  suit: 'Club',
+  faceIcon: '♣'
+})
+pokerSuitMap.set(4, {
+  suit: 'Diamond',
+  faceIcon: '♦'
+})
+
+export const singlePokerMap = pokerMap
+export const singlePokerRankMap = pokerRankMap
+export const singlePokerSuitMap = pokerSuitMap
