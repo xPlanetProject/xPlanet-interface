@@ -1,18 +1,20 @@
 import { useMemo } from 'react'
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
-import { useNFTPositionManagerContract, useContract, useXPokerPowerContract } from '@/hooks/useContract'
+import { useNFTPositionManagerContract, useContract } from '@/hooks/useContract'
 import {
   singlePokerMap,
   SinglePokerItem,
   groupPokerMap,
   GroupPokerItem
 } from '@/pokers'
-import { useActiveWeb3React } from '@/hooks'
+import { formatUnits } from '@ethersproject/units'
 import {
   useSingleCallResult,
   useSingleContractMultipleData,
   Result
 } from '@/state/multicall/hooks'
+import { XKEY_DAO_ADRESS } from '@/constants/adress'
+import { useActiveWeb3React } from '@/hooks'
 import { or } from '@/utils/or'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
@@ -174,16 +176,15 @@ export function useUserPokers(
   }
 }
 
-export function useNeedApprove(tokenIds: Array<String>) {
+export function useNeedApprove() {
   const positionManager = useNFTPositionManagerContract()
-
-  const tokenIdsArgs = tokenIds.map((tokenId) => [BigNumber.from(tokenId).toString()])
-
-  const tokenIdResults = useSingleContractMultipleData(
+  const { account } = useActiveWeb3React()
+  const approveResult = useSingleCallResult(
     positionManager,
-    'getApproved',
-    tokenIdsArgs
+    'isApprovedForAll',
+    [account, XKEY_DAO_ADRESS]
   )
+  return (approveResult.result?.[0]) ?? false
 }
 
 export function useLiquidityPower(pairId: string, tokenId: string): any {
@@ -192,6 +193,6 @@ export function useLiquidityPower(pairId: string, tokenId: string): any {
   const { result: balanceOfResult } = useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
 
   return {
-    liquidity: Array.isArray(balanceOfResult) ? balanceOfResult[0].toString() : 0
+    liquidity: Array.isArray(balanceOfResult) ? formatUnits(balanceOfResult[0], 18).toString() : 0
   }
 }

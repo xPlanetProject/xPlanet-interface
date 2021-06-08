@@ -59,7 +59,7 @@ const SingleStakeItem: React.FC<any> = ({
           <TYPE.subHeader>{liquidity}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>{data.pokerInfo.rank}</TYPE.subHeader>
+          <TYPE.subHeader>{data.pokerInfo.rank * (liquidity ?? 1)}</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
           <input
