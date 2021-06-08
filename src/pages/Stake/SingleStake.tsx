@@ -61,6 +61,8 @@ const SingleStake: React.FC<SingleStakeProps> = ({
   const xKeyDaoContract = useXKeyDaoContract()
   const positionManager = useNFTPositionManagerContract()
 
+  // const needApprove = useNeedApprove()
+
   useEffect(() => {
     setApprove(() => selectIds.length > 0)
   }, [selectIds])
@@ -81,16 +83,29 @@ const SingleStake: React.FC<SingleStakeProps> = ({
 
   const stateSingle = useCallback(async () => {
     if (selectIds.length) {
-      const estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
-      const addSwaptokenShareSingle = xKeyDaoContract?.addSwaptokenShareSingle
       const args = selectIds
+      let estimate
+      let method
+      if (selectIds.length === 1) {
+        estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
+        method = xKeyDaoContract?.addSwaptokenShareSingle
 
-      if (estimate && addSwaptokenShareSingle) {
-        estimate(...args, {}).then((estimatedGasLimit) => {
-          addSwaptokenShareSingle(...args, {
-            gasLimit: calculateGasMargin(estimatedGasLimit)
+        if (estimate && method) {
+          estimate(...args, {}).then((estimatedGasLimit) => {
+            method(...args, {
+              gasLimit: calculateGasMargin(estimatedGasLimit)
+            })
           })
-        })
+        }
+      } else {
+        estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
+        method = xKeyDaoContract?.addSwaptokenShareSingle
+
+        // estimate(...args, {}).then((estimatedGasLimit) => {
+        //   method(...args, {
+        //     gasLimit: calculateGasMargin(estimatedGasLimit)
+        //   })
+        // })
       }
     }
   }, [selectIds, xKeyDaoContract, positionManager])
@@ -101,7 +116,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
         if (ids.includes(tokenId)) {
           return ids.filter((id) => id !== tokenId)
         } else {
-          return ids.concat([tokenId])
+          return ids.length < 5 ? ids.concat([tokenId]) : ids
         }
       })
     },
@@ -132,9 +147,9 @@ const SingleStake: React.FC<SingleStakeProps> = ({
         <StakeCheckouSection>
           <TYPE.subHeader>流动性份额</TYPE.subHeader>
         </StakeCheckouSection>
-        {/* <StakeCheckouSection>
+        <StakeCheckouSection>
           <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection> */}
+        </StakeCheckouSection>
         <StakeCheckouSection>
           <TYPE.subHeader>操作</TYPE.subHeader>
         </StakeCheckouSection>

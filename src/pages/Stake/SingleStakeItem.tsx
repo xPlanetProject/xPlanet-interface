@@ -44,7 +44,7 @@ const SingleStakeItem: React.FC<any> = ({
   selectPoker
 }) => {
 
-  const { power, liquidity } = useLiquidityPower(data.pairId, data.tokenIdStr)
+  const { liquidity } = useLiquidityPower(data.pairId, data.tokenIdStr)
 
   return (
     <>
@@ -58,9 +58,9 @@ const SingleStakeItem: React.FC<any> = ({
         <StakeCheckouSection>
           <TYPE.subHeader>{liquidity}</TYPE.subHeader>
         </StakeCheckouSection>
-        {/* <StakeCheckouSection>
-          <TYPE.subHeader>{data.miningPower}</TYPE.subHeader>
-        </StakeCheckouSection> */}
+        <StakeCheckouSection>
+          <TYPE.subHeader>{data.pokerInfo.rank * (liquidity ?? 1)}</TYPE.subHeader>
+        </StakeCheckouSection>
         <StakeCheckouSection>
           <input
             type='checkbox'
