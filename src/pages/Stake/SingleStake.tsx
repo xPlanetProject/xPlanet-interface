@@ -132,9 +132,9 @@ const SingleStake: React.FC<SingleStakeProps> = ({
         <StakeCheckouSection>
           <TYPE.subHeader>流动性份额</TYPE.subHeader>
         </StakeCheckouSection>
-        {/* <StakeCheckouSection>
+        <StakeCheckouSection>
           <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection> */}
+        </StakeCheckouSection>
         <StakeCheckouSection>
           <TYPE.subHeader>操作</TYPE.subHeader>
         </StakeCheckouSection>

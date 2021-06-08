@@ -58,9 +58,9 @@ const SingleStakeItem: React.FC<any> = ({
         <StakeCheckouSection>
           <TYPE.subHeader>{liquidity}</TYPE.subHeader>
         </StakeCheckouSection>
-        {/* <StakeCheckouSection>
-          <TYPE.subHeader>{data.miningPower}</TYPE.subHeader>
-        </StakeCheckouSection> */}
+        <StakeCheckouSection>
+          <TYPE.subHeader>{data.pokerInfo.rank}</TYPE.subHeader>
+        </StakeCheckouSection>
         <StakeCheckouSection>
           <input
             type='checkbox'
