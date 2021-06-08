@@ -101,7 +101,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
         if (ids.includes(tokenId)) {
           return ids.filter((id) => id !== tokenId)
         } else {
-          return ids.concat([tokenId])
+          return ids.length < 5 ? ids.concat([tokenId]) : ids
         }
       })
     },

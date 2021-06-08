@@ -44,7 +44,7 @@ const SingleStakeItem: React.FC<any> = ({
   selectPoker
 }) => {
 
-  const { power, liquidity } = useLiquidityPower(data.pairId, data.tokenIdStr)
+  const { liquidity } = useLiquidityPower(data.pairId, data.tokenIdStr)
 
   return (
     <>

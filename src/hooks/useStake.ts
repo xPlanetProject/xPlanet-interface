@@ -184,8 +184,6 @@ export function useNeedApprove(tokenIds: Array<String>) {
     'getApproved',
     tokenIdsArgs
   )
-
-  console.log(tokenIdResults);
 }
 
 export function useLiquidityPower(pairId: string, tokenId: string): any {
@@ -194,7 +192,6 @@ export function useLiquidityPower(pairId: string, tokenId: string): any {
   const { result: balanceOfResult } = useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
 
   return {
-    power: 1,
     liquidity: Array.isArray(balanceOfResult) ? balanceOfResult[0].toString() : 0
   }
 }
