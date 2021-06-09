@@ -77,8 +77,9 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
 
   const [selectIds, selectPokerId] = useState<any>([])
   const [selectPokers, setSelectPokers] = useState<any>([])
-  const [needApprove, setApprove] = useState<any>(false)
   const [approving, setApproving] = useState<any>(false)
+
+  const needApprove = useNeedApprove()
 
   const { pokers, loading } = useUserPokers(account, pairId)
 
@@ -95,7 +96,6 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
       setApproving(() => true)
       await approve(...approveArgs, {})
       setApproving(() => false)
-      setApprove(() => false)
     }
   }, [xKeyDaoContract, positionManager])
 
@@ -132,7 +132,6 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
     setSelectPokers(() => {
       return selectIds.map((tokenId) => pokers.find(({ tokenIdStr }) => tokenIdStr === tokenId))
     })
-    setApprove(() => selectIds.length > 0)
   }, [selectIds, pokers])
 
   if (loading) {

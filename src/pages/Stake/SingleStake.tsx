@@ -14,7 +14,6 @@ import { Dots } from '@/pages/Pool/styleds'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
-import { PokerType } from '@/utils/poker'
 import styled, { ThemeContext } from 'styled-components'
 
 type SingleStakeProps = {
@@ -53,7 +52,6 @@ const SingleStake: React.FC<SingleStakeProps> = ({
   const { account } = useActiveWeb3React()
 
   const [selectIds, selectPokerId] = useState<any>([])
-  const [needApprove, setApprove] = useState<any>(false)
   const [approving, setApproving] = useState<any>(false)
 
   const { pokers, loading } = useUserPokers(account, pairId)
@@ -61,11 +59,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
   const xKeyDaoContract = useXKeyDaoContract()
   const positionManager = useNFTPositionManagerContract()
 
-  // const needApprove = useNeedApprove()
-
-  useEffect(() => {
-    setApprove(() => selectIds.length > 0)
-  }, [selectIds])
+  const needApprove = useNeedApprove()
 
   const approve = useCallback(async () => {
     const address = xKeyDaoContract?.address
@@ -77,7 +71,6 @@ const SingleStake: React.FC<SingleStakeProps> = ({
       setApproving(() => true)
       await approve(...approveArgs, {})
       setApproving(() => false)
-      setApprove(() => false)
     }
   }, [xKeyDaoContract, positionManager])
 
