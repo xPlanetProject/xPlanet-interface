@@ -9,9 +9,9 @@ import {
   walletlink
 } from '@/connectors'
 
-// export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-// export const ROUTER_ADDRESS = '0x05322b67de2a6f708609dd842f395397dAB8b483'
-export const ROUTER_ADDRESS = '0xB069AC89761109Cd3d624c6eBeD3601830fB9ea2'
+import { XKEY_ROUTER_ADDRESS } from '@/constants/adress'
+
+export const ROUTER_ADDRESS = XKEY_ROUTER_ADDRESS
 
 // a list of tokens by chain
 type ChainTokenList = {

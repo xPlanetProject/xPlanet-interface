@@ -23,25 +23,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":\"IPairERC20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":{\"keccak256\":\"0x00117e3e87c691aac4af07c8e78d1943d6b3549b78e5ebad486281d95dffe084\",\"urls\":[\"bzz-raw://818da472307df83f6421a4750950871ffad66f2066a303d51ede6779cc960084\",\"dweb:/ipfs/QmaCsEV8CQ1fdonnBt7PneWvLU28cVcVMXVNH1KKzJtUgd\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":\"IPairERC20\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol\":{\"keccak256\":\"0x00117e3e87c691aac4af07c8e78d1943d6b3549b78e5ebad486281d95dffe084\",\"urls\":[\"bzz-raw://818da472307df83f6421a4750950871ffad66f2066a303d51ede6779cc960084\",\"dweb:/ipfs/QmaCsEV8CQ1fdonnBt7PneWvLU28cVcVMXVNH1KKzJtUgd\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity >=0.5.0;\r\n\r\ninterface IPairERC20 {\r\n    function balanceOf(uint256 tokenId) external view returns (uint256);\r\n}\r\n",
-  "sourcePath": "E:/codingproject/xkey/contracts/interfaces/IPairERC20.sol",
+  "sourcePath": "E:\\codingproject\\xkey\\contracts\\interfaces\\IPairERC20.sol",
   "ast": {
     "absolutePath": "/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol",
     "exportedSymbols": {
       "IPairERC20": [
-        280
+        2180
       ]
     },
-    "id": 281,
+    "id": 2181,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 272,
+        "id": 2172,
         "literals": [
           "solidity",
           ">=",
@@ -49,7 +49,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:3"
+        "src": "0:24:8"
       },
       {
         "baseContracts": [],
@@ -57,9 +57,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 280,
+        "id": 2180,
         "linearizedBaseContracts": [
-          280
+          2180
         ],
         "name": "IPairERC20",
         "nodeType": "ContractDefinition",
@@ -67,23 +67,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 279,
+            "id": 2179,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "balanceOf",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 275,
+              "id": 2175,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 274,
+                  "id": 2174,
                   "name": "tokenId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 279,
-                  "src": "75:15:3",
+                  "scope": 2179,
+                  "src": "75:15:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -91,10 +91,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 273,
+                    "id": 2173,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "75:7:3",
+                    "src": "75:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -104,19 +104,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "74:17:3"
+              "src": "74:17:8"
             },
             "returnParameters": {
-              "id": 278,
+              "id": 2178,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 277,
+                  "id": 2177,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 279,
-                  "src": "115:7:3",
+                  "scope": 2179,
+                  "src": "115:7:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -124,10 +124,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 276,
+                    "id": 2176,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "115:7:3",
+                    "src": "115:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -137,27 +137,27 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "114:9:3"
+              "src": "114:9:8"
             },
-            "scope": 280,
-            "src": "56:68:3",
+            "scope": 2180,
+            "src": "56:68:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 281,
-        "src": "28:99:3"
+        "scope": 2181,
+        "src": "28:99:8"
       }
     ],
-    "src": "0:129:3"
+    "src": "0:129:8"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/E/codingproject/xkey/contracts/interfaces/IPairERC20.sol",
       "exportedSymbols": {
         "IPairERC20": [
-          280
+          2180
         ]
       }
     },
@@ -171,9 +171,9 @@
             ".0"
           ]
         },
-        "id": 272,
+        "id": 2172,
         "name": "PragmaDirective",
-        "src": "0:24:3"
+        "src": "0:24:8"
       },
       {
         "attributes": {
@@ -187,10 +187,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            280
+            2180
           ],
           "name": "IPairERC20",
-          "scope": 281
+          "scope": 2181
         },
         "children": [
           {
@@ -204,7 +204,7 @@
                 null
               ],
               "name": "balanceOf",
-              "scope": 280,
+              "scope": 2180,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "external"
@@ -216,7 +216,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "tokenId",
-                      "scope": 279,
+                      "scope": 2179,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -229,19 +229,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 273,
+                        "id": 2173,
                         "name": "ElementaryTypeName",
-                        "src": "75:7:3"
+                        "src": "75:7:8"
                       }
                     ],
-                    "id": 274,
+                    "id": 2174,
                     "name": "VariableDeclaration",
-                    "src": "75:15:3"
+                    "src": "75:15:8"
                   }
                 ],
-                "id": 275,
+                "id": 2175,
                 "name": "ParameterList",
-                "src": "74:17:3"
+                "src": "74:17:8"
               },
               {
                 "children": [
@@ -249,7 +249,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 279,
+                      "scope": 2179,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -262,34 +262,34 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 276,
+                        "id": 2176,
                         "name": "ElementaryTypeName",
-                        "src": "115:7:3"
+                        "src": "115:7:8"
                       }
                     ],
-                    "id": 277,
+                    "id": 2177,
                     "name": "VariableDeclaration",
-                    "src": "115:7:3"
+                    "src": "115:7:8"
                   }
                 ],
-                "id": 278,
+                "id": 2178,
                 "name": "ParameterList",
-                "src": "114:9:3"
+                "src": "114:9:8"
               }
             ],
-            "id": 279,
+            "id": 2179,
             "name": "FunctionDefinition",
-            "src": "56:68:3"
+            "src": "56:68:8"
           }
         ],
-        "id": 280,
+        "id": 2180,
         "name": "ContractDefinition",
-        "src": "28:99:3"
+        "src": "28:99:8"
       }
     ],
-    "id": 281,
+    "id": 2181,
     "name": "SourceUnit",
-    "src": "0:129:3"
+    "src": "0:129:8"
   },
   "compiler": {
     "name": "solc",
@@ -297,7 +297,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-06-04T06:02:22.403Z",
+  "updatedAt": "2021-06-09T09:08:20.654Z",
   "devdoc": {
     "methods": {}
   },

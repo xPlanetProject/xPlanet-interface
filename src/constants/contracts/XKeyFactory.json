@@ -242,7 +242,7 @@
         "id": 1655,
         "nodeType": "ImportDirective",
         "scope": 1883,
-        "sourceUnit": 10371,
+        "sourceUnit": 10455,
         "src": "28:39:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -267,10 +267,10 @@
               "id": 1657,
               "name": "IXKeyFactory",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 10370,
+              "referencedDeclaration": 10454,
               "src": "121:12:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IXKeyFactory_$10370",
+                "typeIdentifier": "t_contract$_IXKeyFactory_$10454",
                 "typeString": "contract IXKeyFactory"
               }
             },
@@ -281,7 +281,7 @@
         ],
         "contractDependencies": [
           4607,
-          10370
+          10454
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -289,7 +289,7 @@
         "id": 1882,
         "linearizedBaseContracts": [
           1882,
-          10370
+          10454
         ],
         "name": "XKeyFactory",
         "nodeType": "ContractDefinition",
@@ -632,7 +632,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 14990,
+                            "referencedDeclaration": 15074,
                             "src": "467:3:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -686,10 +686,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        14993,
-                        14994
+                        15077,
+                        15078
                       ],
-                      "referencedDeclaration": 14993,
+                      "referencedDeclaration": 15077,
                       "src": "459:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -854,7 +854,7 @@
                             "name": "type",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 15003,
+                            "referencedDeclaration": 15087,
                             "src": "686:4:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_metatype_pure$_t_address_$returns$__$",
@@ -901,7 +901,7 @@
                       "name": "keccak256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 14984,
+                      "referencedDeclaration": 15068,
                       "src": "676:9:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
@@ -978,7 +978,7 @@
             "scope": 1882,
             "src": "602:120:5",
             "stateMutability": "pure",
-            "superFunction": 10369,
+            "superFunction": 10453,
             "visibility": "external"
           },
           {
@@ -1064,7 +1064,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 14990,
+                        "referencedDeclaration": 15074,
                         "src": "819:3:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -1369,7 +1369,7 @@
             "scope": 1882,
             "src": "956:96:5",
             "stateMutability": "view",
-            "superFunction": 10350,
+            "superFunction": 10434,
             "visibility": "external"
           },
           {
@@ -1461,10 +1461,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        14993,
-                        14994
+                        15077,
+                        15078
                       ],
-                      "referencedDeclaration": 14994,
+                      "referencedDeclaration": 15078,
                       "src": "1155:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1825,10 +1825,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        14993,
-                        14994
+                        15077,
+                        15078
                       ],
-                      "referencedDeclaration": 14994,
+                      "referencedDeclaration": 15078,
                       "src": "1319:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1979,10 +1979,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        14993,
-                        14994
+                        15077,
+                        15078
                       ],
-                      "referencedDeclaration": 14994,
+                      "referencedDeclaration": 15078,
                       "src": "1381:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2133,10 +2133,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        14993,
-                        14994
+                        15077,
+                        15078
                       ],
-                      "referencedDeclaration": 14994,
+                      "referencedDeclaration": 15078,
                       "src": "1444:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2341,10 +2341,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        14993,
-                        14994
+                        15077,
+                        15078
                       ],
-                      "referencedDeclaration": 14994,
+                      "referencedDeclaration": 15078,
                       "src": "1506:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2432,7 +2432,7 @@
                         "name": "type",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 15003,
+                        "referencedDeclaration": 15087,
                         "src": "1638:4:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_metatype_pure$_t_address_$returns$__$",
@@ -2553,7 +2553,7 @@
                             "name": "abi",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 14977,
+                            "referencedDeclaration": 15061,
                             "src": "1701:3:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_abi",
@@ -2600,7 +2600,7 @@
                       "name": "keccak256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 14984,
+                      "referencedDeclaration": 15068,
                       "src": "1691:9:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
@@ -2772,10 +2772,10 @@
                           "name": "IXKeyPair",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 10529,
+                          "referencedDeclaration": 10613,
                           "src": "1850:9:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_IXKeyPair_$10529_$",
+                            "typeIdentifier": "t_type$_t_contract$_IXKeyPair_$10613_$",
                             "typeString": "type(contract IXKeyPair)"
                           }
                         },
@@ -2789,7 +2789,7 @@
                         "nodeType": "FunctionCall",
                         "src": "1850:15:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IXKeyPair_$10529",
+                          "typeIdentifier": "t_contract$_IXKeyPair_$10613",
                           "typeString": "contract IXKeyPair"
                         }
                       },
@@ -2800,7 +2800,7 @@
                       "lValueRequested": false,
                       "memberName": "initialize",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 10528,
+                      "referencedDeclaration": 10612,
                       "src": "1850:26:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_address_$_t_address_$returns$__$",
@@ -3325,7 +3325,7 @@
             "scope": 1882,
             "src": "1060:1086:5",
             "stateMutability": "nonpayable",
-            "superFunction": 10364,
+            "superFunction": 10448,
             "visibility": "external"
           }
         ],
@@ -3360,7 +3360,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 10371,
+          "SourceUnit": 10455,
           "absolutePath": "/E/codingproject/xkey/contracts/interfaces/IXKeyFactory.sol",
           "file": "./interfaces/IXKeyFactory.sol",
           "scope": 1883,
@@ -3392,14 +3392,14 @@
         "attributes": {
           "contractDependencies": [
             4607,
-            10370
+            10454
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             1882,
-            10370
+            10454
           ],
           "name": "XKeyFactory",
           "scope": 1883
@@ -3414,7 +3414,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "IXKeyFactory",
-                  "referencedDeclaration": 10370,
+                  "referencedDeclaration": 10454,
                   "type": "contract IXKeyFactory"
                 },
                 "id": 1657,
@@ -3786,10 +3786,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                14993,
-                                14994
+                                15077,
+                                15078
                               ],
-                              "referencedDeclaration": 14993,
+                              "referencedDeclaration": 15077,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3830,7 +3830,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 14990,
+                                      "referencedDeclaration": 15074,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3996,7 +3996,7 @@
               "name": "pairCodeHash",
               "scope": 1882,
               "stateMutability": "pure",
-              "superFunction": 10369,
+              "superFunction": 10453,
               "visibility": "external"
             },
             "children": [
@@ -4077,7 +4077,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 14984,
+                              "referencedDeclaration": 15068,
                               "type": "function (bytes memory) pure returns (bytes32)",
                               "value": "keccak256"
                             },
@@ -4123,7 +4123,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 15003,
+                                      "referencedDeclaration": 15087,
                                       "type": "function (address) pure",
                                       "value": "type"
                                     },
@@ -4334,7 +4334,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 14990,
+                                  "referencedDeclaration": 15074,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -4524,7 +4524,7 @@
               "name": "allPairsLength",
               "scope": 1882,
               "stateMutability": "view",
-              "superFunction": 10350,
+              "superFunction": 10434,
               "visibility": "external"
             },
             "children": [
@@ -4637,7 +4637,7 @@
               "name": "createPair",
               "scope": 1882,
               "stateMutability": "nonpayable",
-              "superFunction": 10364,
+              "superFunction": 10448,
               "visibility": "external"
             },
             "children": [
@@ -4768,10 +4768,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                14993,
-                                14994
+                                15077,
+                                15078
                               ],
-                              "referencedDeclaration": 14994,
+                              "referencedDeclaration": 15078,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -5102,10 +5102,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                14993,
-                                14994
+                                15077,
+                                15078
                               ],
-                              "referencedDeclaration": 14994,
+                              "referencedDeclaration": 15078,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -5260,10 +5260,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                14993,
-                                14994
+                                15077,
+                                15078
                               ],
-                              "referencedDeclaration": 14994,
+                              "referencedDeclaration": 15078,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -5418,10 +5418,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                14993,
-                                14994
+                                15077,
+                                15078
                               ],
-                              "referencedDeclaration": 14994,
+                              "referencedDeclaration": 15078,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -5576,10 +5576,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                14993,
-                                14994
+                                15077,
+                                15078
                               ],
-                              "referencedDeclaration": 14994,
+                              "referencedDeclaration": 15078,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -5833,7 +5833,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 15003,
+                                  "referencedDeclaration": 15087,
                                   "type": "function (address) pure",
                                   "value": "type"
                                 },
@@ -5929,7 +5929,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 14984,
+                              "referencedDeclaration": 15068,
                               "type": "function (bytes memory) pure returns (bytes32)",
                               "value": "keccak256"
                             },
@@ -5979,7 +5979,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 14977,
+                                      "referencedDeclaration": 15061,
                                       "type": "abi",
                                       "value": "abi"
                                     },
@@ -6124,7 +6124,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "initialize",
-                              "referencedDeclaration": 10528,
+                              "referencedDeclaration": 10612,
                               "type": "function (address,address,address,address) external"
                             },
                             "children": [
@@ -6154,7 +6154,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 10529,
+                                      "referencedDeclaration": 10613,
                                       "type": "type(contract IXKeyPair)",
                                       "value": "IXKeyPair"
                                     },
@@ -6704,7 +6704,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-06-04T05:56:25.587Z",
+  "updatedAt": "2021-06-09T09:07:09.072Z",
   "devdoc": {
     "methods": {}
   },
