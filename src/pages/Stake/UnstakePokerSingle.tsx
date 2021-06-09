@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
 import { PokerItemType } from './StakeHelpers'
@@ -51,6 +51,9 @@ const StakeCheckouSection = styled.div`
 const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
   const theme = useTheme()
   const { account } = useActiveWeb3React()
+
+  const [selectIds, selectPokerId] = useState<any>([])
+
   const { pokers, loading } = uesSingleMaps(account, pairId)
   console.log(pokers)
 
@@ -58,76 +61,34 @@ const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
   const positionManager = useNFTPositionManagerContract()
 
   const unStateSingle = useCallback(async () => {
-    if (pokers.length) {
-      const poker = pokers[0]
-
+    if (selectIds.length) {
       const estimate = xKeyDaoContract?.estimateGas?.removeSwaptokenShareSingle
       const removeSwaptokenShareSingle =
         xKeyDaoContract?.removeSwaptokenShareSingle
-      const address = xKeyDaoContract?.address
-      const estimateApprove = positionManager?.approve
-      const approve = positionManager?.approve
+      const args = selectIds
 
-      const args = [poker.tokenId]
-      const approveArgs = [address, poker.tokenId]
-
-      if (estimateApprove && approve) {
-        approve(...approveArgs, {}).then(() => {
-          if (estimate && removeSwaptokenShareSingle) {
-            estimate(...args, {}).then((estimatedGasLimit) => {
-              removeSwaptokenShareSingle(...args, {
-                gasLimit: calculateGasMargin(estimatedGasLimit)
-              })
-                .then((res) => {
-                  console.log(res)
-                })
-                .catch((e) => {
-                  console.log(e)
-                })
-            })
-          }
+      if (estimate && removeSwaptokenShareSingle) {
+        estimate(...args, {}).then((estimatedGasLimit) => {
+          removeSwaptokenShareSingle(...args, {
+            gasLimit: calculateGasMargin(estimatedGasLimit)
+          })
         })
       }
     }
-  }, [pokers, xKeyDaoContract, positionManager])
+  }, [selectIds, xKeyDaoContract, positionManager])
 
-  const PokerList: PokerItemType[] = [
-    {
-      id: '1',
-      pokerType: PokerType.GRASS,
-      pokerNumber: 'A',
-      amount: '100',
-      miningPower: '500'
+  const selectPoker = useCallback(
+    (tokenId) => {
+      selectPokerId((ids) => {
+        if (ids.includes(tokenId)) {
+          return ids.filter((id) => id !== tokenId)
+        } else {
+          return ids.concat([tokenId])
+        }
+      })
     },
-    {
-      id: '2',
-      pokerType: PokerType.HEART,
-      pokerNumber: 'K',
-      amount: '100',
-      miningPower: '500'
-    },
-    {
-      id: '3',
-      pokerType: PokerType.CUBE,
-      pokerNumber: 'Q',
-      amount: '100',
-      miningPower: '500'
-    },
-    {
-      id: '4',
-      pokerType: PokerType.SPADES,
-      pokerNumber: 'J',
-      amount: '100',
-      miningPower: '500'
-    },
-    {
-      id: '5',
-      pokerType: PokerType.GRASS,
-      pokerNumber: '10',
-      amount: '100',
-      miningPower: '500'
-    }
-  ]
+    [selectIds]
+  )
 
   if (loading) {
     return (
@@ -154,17 +115,31 @@ const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
           <TYPE.subHeader>流动性份额</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
-          <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
           <TYPE.subHeader>操作</TYPE.subHeader>
         </StakeCheckouSection>
       </Row>
-      {PokerList?.map((item) => {
-        return <SingleStakeItem data={item} key={item.id} />
-      })}
+      {pokers.length ? (
+        pokers.map((item) => {
+          return (
+            <SingleStakeItem
+              data={item}
+              key={item.tokenIdStr}
+              selectIds={selectIds}
+              selectPoker={selectPoker}
+            />
+          )
+        })
+      ) : (
+        <LightCard padding='40px'>
+          <TYPE.body color={theme.text3} textAlign='center'>
+            No data.
+          </TYPE.body>
+        </LightCard>
+      )}
       <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>Currently Selected: 5/20</TYPE.subHeader>
+        <TYPE.subHeader>
+          Currently Selected: {selectIds.length}/{pokers.length}
+        </TYPE.subHeader>
         <ButtonLight
           onClick={unStateSingle}
           style={{
