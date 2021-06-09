@@ -184,7 +184,7 @@ export function useNeedApprove() {
     'isApprovedForAll',
     [account, XKEY_DAO_ADRESS]
   )
-  return approveResult.result?.[0] ?? false
+  return !(approveResult.result?.[0] ?? false)
 }
 
 export function useLiquidityPower(pairId: string, tokenId: string): any {

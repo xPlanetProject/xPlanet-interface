@@ -104,7 +104,7 @@ export function uesSingleMaps(
 export function uesUserCombineMaps(
   account: string | null | undefined,
   pairId: string
-) {
+): any {
   const xPokerPowerContract = useXPokerPowerContract()
 
   const { result: combineLengthRes } = useSingleCallResult(
@@ -118,10 +118,8 @@ export function uesUserCombineMaps(
   const indexs = useMemo(() => {
     if (account && combineLength) {
       const indexs: Array<unknown> = []
-      if (combineLength && account) {
-        for (let i = 0; i < combineLength; i++) {
-          indexs.push([account, i])
-        }
+      for (let i = 0; i < combineLength; i++) {
+        indexs.push([account, i])
       }
       return indexs
     }
@@ -147,37 +145,36 @@ export function uesUserCombineMaps(
     [tokenIdResults, combinePowerResults]
   )
 
-  const combineMap = useMemo(() => {
-    if (
-      !loading &&
-      combinePowerResults &&
-      combinePowerResults.length &&
-      tokenIdResults &&
-      tokenIdResults.length
-    ) {
-      if (!tokenIdResults[0]) {
-        return []
-      }
-      return combinePowerResults.map((call, i) => {
-        const pokers = tokenIdResults[i]?.result[0].map((tokenId) =>
-          BigNumber.from(tokenId)
-        )
+  let combineMap: any = [];
 
-        return {
-          index: i,
-          combineType: '',
-          combinePower:
-            call?.result[0].toString() &&
-            Number(utils.formatUnits(call?.result[0].toString(), 18)).toFixed(
-              4
-            ),
-          combineLPAmount: '',
-          pokers: pokers
-        }
-      })
+  if (
+    !loading &&
+    combinePowerResults &&
+    combinePowerResults.length &&
+    tokenIdResults &&
+    tokenIdResults.length
+  ) {
+    if (!tokenIdResults[0]) {
+      return []
     }
-    return []
-  }, [loading, combinePowerResults, tokenIdResults])
+    combineMap = combinePowerResults.map((call, i) => {
+      const pokers = tokenIdResults[i]?.result[0].map((tokenId) =>
+        BigNumber.from(tokenId)
+      )
+
+      return {
+        index: i,
+        combineType: '',
+        combinePower:
+          call?.result[0].toString() &&
+          Number(utils.formatUnits(call?.result[0].toString(), 18)).toFixed(
+            4
+          ),
+        combineLPAmount: '',
+        pokers: pokers
+      }
+    })
+  }
 
   const pairIdResults = usePairsFromTokenIdsMap(combineMap, pairId)
 
@@ -194,14 +191,9 @@ export function usePairsFromTokenIdsMap(
   const positionManager = useNFTPositionManagerContract()
 
   const inputs = useMemo(() => {
-    if (combineMap && combineMap.length) {
-      let idsMap: Array<any> = []
-      for (let i = 0; i < combineMap.length; i++) {
-        idsMap = [...idsMap, ...combineMap[i].pokers]
-      }
-      return idsMap.map((tokenId) => [BigNumber.from(tokenId)])
-    }
-    return []
+    return Array.isArray(combineMap) ? combineMap.map(({ pokers }) => {
+      return pokers
+    }).flat(2).map((item) => [item]) : []
   }, [combineMap])
 
   const pairIdsResults = useSingleContractMultipleData(
@@ -225,7 +217,6 @@ export function usePairsFromTokenIdsMap(
 
   const pokerMap = useMemo(() => {
     if (
-      inputs &&
       pairIds &&
       pokerProperty &&
       inputs.length &&
@@ -248,7 +239,7 @@ export function usePairsFromTokenIdsMap(
 
         return {
           tokenId,
-          tokenIdStr: tokenId.toString(),
+          tokenIdStr: tokenId?.toString(),
           pokerInfo: pokerInfo,
           pairId: pairIdResult
         }
@@ -260,7 +251,7 @@ export function usePairsFromTokenIdsMap(
   const combineMapRes = useMemo(() => {
     if (combineMap && pokerMap && combineMap.length && pokerMap.length) {
       return combineMap.map((call, i) => {
-        call.pokers = call.pokers.map((poker, pi) => {
+        call.pokers = call.pokers.filter((poker) => !!poker).map((poker, pi) => {
           return pokerMap.find((item) => poker.toString() == item.tokenIdStr)
         })
         return call
