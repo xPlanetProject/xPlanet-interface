@@ -34,7 +34,8 @@
   },
   "exclude": [
     "node_modules",
-    "cypress"
+    "cypress",
+    "./src/xplanet/sdk/*.ts",
   ],
   "include": [
     "src",
