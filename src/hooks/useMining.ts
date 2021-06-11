@@ -228,7 +228,7 @@ export function usePowerRewardByAccount(
   pairId: string | undefined,
   account: string | null | undefined
 ): PowerRewardByAccount {
-  const xKeyDaoContract = useXKeyDaoContract()
+  const xKeyDaoContract = useXKeyDaoContract(true)
   const { result: powerByAccount } = useSingleCallResult(
     xKeyDaoContract,
     'getUserShare',

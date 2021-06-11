@@ -83,6 +83,8 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
 
   const { pokers, loading } = useUserPokers(account, pairId)
 
+  console.log(pokers)
+
   const xKeyDaoContract = useXKeyDaoContract()
   const positionManager = useNFTPositionManagerContract()
 
@@ -130,7 +132,9 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
 
   useEffect(() => {
     setSelectPokers(() => {
-      return selectIds.map((tokenId) => pokers.find(({ tokenIdStr }) => tokenIdStr === tokenId))
+      return selectIds.map((tokenId) =>
+        pokers.find(({ tokenIdStr }) => tokenIdStr === tokenId)
+      )
     })
   }, [selectIds, pokers])
 
@@ -149,20 +153,16 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   return (
     <>
       <RowBetween>
-        {
-          selectPokers.map((poker) => {
-            return (
-              <PokerItem key={poker.tokenIdStr}>
-                {poker.pokerInfo.faceIcon} {poker.pokerInfo.face}
-              </PokerItem>
-            )    
-          })
-        }
-        {
-          new Array(5 - selectPokers.length).fill('poker').map((item, index) => {
-            return (<PokerItem key={`${item}${index}`}></PokerItem>)
-          })
-        }
+        {selectPokers.map((poker) => {
+          return (
+            <PokerItem key={poker?.tokenIdStr}>
+              {poker?.pokerInfo?.faceIcon} {poker?.pokerInfo?.face}
+            </PokerItem>
+          )
+        })}
+        {new Array(5 - selectPokers.length).fill('poker').map((item, index) => {
+          return <PokerItem key={`${item}${index}`}></PokerItem>
+        })}
       </RowBetween>
       {/* <PokerResult>
         <TYPE.subHeader>牌型：黑桃 A 算力：5000 总份额：50000</TYPE.subHeader>
@@ -189,7 +189,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
           return (
             <SingleStakeItem
               data={item}
-              key={item.tokenIdStr}
+              key={item?.tokenIdStr}
               selectIds={selectIds}
               selectPoker={selectPoker}
             />
