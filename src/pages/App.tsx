@@ -20,9 +20,6 @@ import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import Yield from './Yield'
 import Header from '@/components/Header'
 import Popups from '@/components/Popups'
-import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { useToken } from '@/hooks/Tokens'
-import useUSDCPrice from '@/utils/useUSDCPrice'
 import Web3ReactManager from '@/components/Web3ReactManager'
 import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
 import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
@@ -70,18 +67,6 @@ const Marginer = styled.div`
 `
 
 export default function App() {
-
-  const token = useToken('0xaD6D458402F60fD3Bd25163575031ACDce07538D')
-  const currency = token ? unwrappedToken(token) : undefined
-
-  console.log(currency, token)
-
-  const price = useUSDCPrice(currency)
-
-  if (price) {
-    console.log(price)
-  }
-
   return (
     <Suspense fallback={null}>
       <HashRouter>

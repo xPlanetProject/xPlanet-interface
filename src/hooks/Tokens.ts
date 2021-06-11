@@ -104,7 +104,6 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
     if (token) return token
     if (!chainId || !address) return undefined
     if (decimals.loading || symbol.loading || tokenName.loading) return null
-    console.log(decimals)
     if (decimals.result) {
       return new Token(
         chainId,

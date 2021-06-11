@@ -12,6 +12,7 @@ import {
   useSingleCallResult,
   useSingleContractMultipleData
 } from '@/state/multicall/hooks'
+import usePromiseifyCall from '@/hooks/usePromiseifyCall'
 import { or } from '@/utils/or'
 import { BigNumber, utils } from 'ethers'
 
@@ -228,17 +229,18 @@ export function usePowerRewardByAccount(
   pairId: string | undefined,
   account: string | null | undefined
 ): PowerRewardByAccount {
-  const xKeyDaoContract = useXKeyDaoContract()
+  const xKeyDaoContract = useXKeyDaoContract(true)
   const { result: powerByAccount } = useSingleCallResult(
     xKeyDaoContract,
     'getUserShare',
     [pairId, account]
   )
-  const { result: rewardByAccount } = useSingleCallResult(
+
+  const { result: rewardByAccount } = usePromiseifyCall(
     xKeyDaoContract,
     'predReward',
     [pairId]
-  )
+  );
 
   return {
     powerByAccount:
