@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
 import {
@@ -16,12 +16,14 @@ import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import Question from '@/components/QuestionHelper'
 import { RowFixed, RowBetween, RowAround, RowEnd } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
+import { useXKeyDaoContract } from '@/hooks/useContract'
 import {
   useMiningPool,
   useMiningPoolData,
   usePowerRewardByAccount
 } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
+import { calculateGasMargin } from '@/utils'
 import styled from 'styled-components'
 
 const PageWrapper = styled(AutoColumn)`
@@ -56,6 +58,7 @@ export default function Poker({
   }
 }: RouteComponentProps<{ pairId?: string }>) {
   const { account } = useActiveWeb3React()
+  const xKeyDaoContract = useXKeyDaoContract()
 
   const poolInfo = useMiningPool(pairId)
   const {
@@ -80,6 +83,23 @@ export default function Poker({
     { key: 'Yield Rate per block', value: `${yieldRate}/Block` },
     { key: 'APR for 1 Unt of Mining Power', value: `${APR}%` }
   ]
+
+  const harvest = useCallback(async () => {
+    if (account && pairId) {
+      let args = [pairId]
+      let estimate = xKeyDaoContract?.estimateGas?.getSwaptokenReward
+      let method = xKeyDaoContract?.getSwaptokenReward
+
+      if (estimate && method) {
+        estimate(...args, {}).then((estimatedGasLimit) => {
+          method(...args, {
+            gasLimit: calculateGasMargin(estimatedGasLimit)
+          })
+        })
+      }
+    }
+  }, [account, pairId])
+
   return (
     <>
       <PageWrapper>
@@ -174,6 +194,7 @@ export default function Poker({
                     {rewardByAccount}
                   </TYPE.mediumHeader>
                   <ButtonOutlined
+                    onClick={harvest}
                     style={{
                       width: 'auto',
                       padding: '0.4rem .6rem',
