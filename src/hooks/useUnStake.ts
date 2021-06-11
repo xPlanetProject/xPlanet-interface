@@ -145,7 +145,7 @@ export function uesUserCombineMaps(
     [tokenIdResults, combinePowerResults]
   )
 
-  let combineMap: any = [];
+  let combineMap: any = []
 
   if (
     !loading &&
@@ -158,7 +158,7 @@ export function uesUserCombineMaps(
       return []
     }
     combineMap = combinePowerResults.map((call, i) => {
-      const pokers = tokenIdResults[i]?.result[0].map((tokenId) =>
+      const pokers = tokenIdResults[i]?.result?.[0].map((tokenId) =>
         BigNumber.from(tokenId)
       )
 
@@ -166,10 +166,8 @@ export function uesUserCombineMaps(
         index: i,
         combineType: '',
         combinePower:
-          call?.result[0].toString() &&
-          Number(utils.formatUnits(call?.result[0].toString(), 18)).toFixed(
-            4
-          ),
+          call?.result?.[0].toString() &&
+          Number(utils.formatUnits(call?.result[0].toString(), 18)).toFixed(4),
         combineLPAmount: '',
         pokers: pokers
       }
@@ -191,9 +189,14 @@ export function usePairsFromTokenIdsMap(
   const positionManager = useNFTPositionManagerContract()
 
   const inputs = useMemo(() => {
-    return Array.isArray(combineMap) ? combineMap.map(({ pokers }) => {
-      return pokers
-    }).flat(2).map((item) => [item]) : []
+    return Array.isArray(combineMap)
+      ? combineMap
+          .map(({ pokers }) => {
+            return pokers
+          })
+          .flat(2)
+          .map((item) => [item])
+      : []
   }, [combineMap])
 
   const pairIdsResults = useSingleContractMultipleData(
@@ -229,6 +232,10 @@ export function usePairsFromTokenIdsMap(
         const propertyResult = call
 
         const pokerRank = singlePokerRankMap.get(propertyResult.rank.toNumber())
+        console.log(propertyResult)
+        console.log(propertyResult.rank.toNumber())
+        console.log(pokerRank)
+
         const pockerSuit = singlePokerSuitMap.get(
           propertyResult.suit.toNumber()
         )
@@ -251,9 +258,11 @@ export function usePairsFromTokenIdsMap(
   const combineMapRes = useMemo(() => {
     if (combineMap && pokerMap && combineMap.length && pokerMap.length) {
       return combineMap.map((call, i) => {
-        call.pokers = call.pokers.filter((poker) => !!poker).map((poker, pi) => {
-          return pokerMap.find((item) => poker.toString() == item.tokenIdStr)
-        })
+        call.pokers = call.pokers
+          .filter((poker) => !!poker)
+          .map((poker, pi) => {
+            return pokerMap.find((item) => poker.toString() == item.tokenIdStr)
+          })
         return call
       })
     }

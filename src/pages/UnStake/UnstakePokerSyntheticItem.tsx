@@ -133,7 +133,7 @@ const SingleStakeItem: React.FC<any> = ({
                 <TYPE.subHeader>{item.tokenIdStr}</TYPE.subHeader>
               </RowPokerSection>
               <RowPokerSection>
-                <TYPE.subHeader>{`${item.pokerInfo.faceIcon} ${item.pokerInfo.rank}`}</TYPE.subHeader>
+                <TYPE.subHeader>{`${item.pokerInfo.faceIcon} ${item.pokerInfo.face}`}</TYPE.subHeader>
               </RowPokerSection>
             </RowPoker>
           )

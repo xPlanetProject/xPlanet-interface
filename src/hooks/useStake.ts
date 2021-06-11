@@ -1,5 +1,8 @@
 import { useMemo } from 'react'
+
+import { XKEY_DAO_ADRESS } from '@/constants/adress'
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
+import { useActiveWeb3React } from '@/hooks'
 import { useNFTPositionManagerContract, useContract } from '@/hooks/useContract'
 import {
   singlePokerMap,
@@ -7,17 +10,15 @@ import {
   groupPokerMap,
   GroupPokerItem
 } from '@/pokers'
-import { formatUnits } from '@ethersproject/units'
 import {
   useSingleCallResult,
   useSingleContractMultipleData,
   Result
 } from '@/state/multicall/hooks'
-import { XKEY_DAO_ADRESS } from '@/constants/adress'
-import { useActiveWeb3React } from '@/hooks'
 import { or } from '@/utils/or'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
+import { formatUnits } from '@ethersproject/units'
 
 type PositionDetails = {
   nonce: BigNumber
@@ -75,6 +76,9 @@ export function usePairsFromTokenIds(
     inputs
   )
 
+  console.log(pairIdResults)
+  console.log(pokerPropertyResults)
+
   const loading = useMemo(
     () =>
       [...pairIdResults, ...pokerPropertyResults].some(
@@ -89,7 +93,7 @@ export function usePairsFromTokenIds(
   )
 
   const pairIds = useMemo(() => {
-    if (!loading && !error && tokenIds) {
+    if (!loading && !error && tokenIds && tokenIds?.length) {
       return pairIdResults
         .map((call, i) => {
           const tokenId = tokenIds[i]
@@ -136,6 +140,8 @@ export function useUserPokers(
 
   const accountBalance: number | undefined = balanceResult?.[0]?.toNumber()
 
+  console.log(accountBalance)
+
   const tokenIdsArgs = useMemo(() => {
     if (accountBalance && account) {
       const tokenRequests: Array<unknown> = []
@@ -168,6 +174,8 @@ export function useUserPokers(
     return []
   }, [account, tokenIdResults])
 
+  console.log(tokenIds)
+
   const pairIdResults = usePairsFromTokenIds(tokenIds, pairId)
 
   return {
@@ -189,10 +197,19 @@ export function useNeedApprove() {
 
 export function useLiquidityPower(pairId: string, tokenId: string): any {
   const pairContract = useContract(pairId, XKeyPairABI)
-  const tokenIdBnStr = useMemo(() => BigNumber.from(tokenId), [tokenId]).toString()
-  const { result: balanceOfResult } = useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
+  const tokenIdBnStr = useMemo(
+    () => BigNumber.from(tokenId),
+    [tokenId]
+  ).toString()
+  const { result: balanceOfResult } = useSingleCallResult(
+    pairContract,
+    'balanceOf',
+    [tokenIdBnStr]
+  )
 
   return {
-    liquidity: Array.isArray(balanceOfResult) ? formatUnits(balanceOfResult[0], 18).toString() : 0
+    liquidity: Array.isArray(balanceOfResult)
+      ? formatUnits(balanceOfResult[0], 18).toString()
+      : 0
   }
 }
