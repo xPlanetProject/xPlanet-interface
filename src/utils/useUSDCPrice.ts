@@ -1,18 +1,29 @@
+// import {
+//   ChainId,
+//   Currency,
+//   currencyEquals,
+//   JSBI,
+//   Price,
+//   WETH,
+//   Token
+// } from '@xplanet/sdk'
+
+import { useMemo } from 'react'
+
+import { USDC } from '@/constants'
+import { PairState, useUniPairs } from '@/data/useUniswapPair'
+import { useActiveWeb3React } from '@/hooks'
+import { wrappedCurrency } from './wrappedCurrency'
+
 import {
   ChainId,
   Currency,
   currencyEquals,
   JSBI,
   Price,
-  WETH
+  WETH,
+  Token
 } from '@xplanet/sdk'
-
-import { useMemo } from 'react'
-
-import { USDC } from '@/constants'
-import { PairState, usePairs } from '@/data/Reserves'
-import { useActiveWeb3React } from '@/hooks'
-import { wrappedCurrency } from './wrappedCurrency'
 
 /**
  * Returns the price in USDC of the input currency
@@ -21,12 +32,14 @@ import { wrappedCurrency } from './wrappedCurrency'
 export default function useUSDCPrice(currency?: Currency): Price | undefined {
   const { chainId } = useActiveWeb3React()
   const wrapped = wrappedCurrency(currency, chainId)
+
   const tokenPairs: [Currency | undefined, Currency | undefined][] = useMemo(
     () => [
       [
-        chainId && wrapped && currencyEquals(WETH[chainId], wrapped)
-          ? undefined
-          : currency,
+        // chainId && wrapped && currencyEquals(WETH[chainId], wrapped)
+        //   ? undefined
+        //   : currency,
+        currency,
         chainId ? WETH[chainId] : undefined
       ],
       [
@@ -40,11 +53,12 @@ export default function useUSDCPrice(currency?: Currency): Price | undefined {
     ],
     [chainId, currency, wrapped]
   )
+
   const [
     [ethPairState, ethPair],
     [usdcPairState, usdcPair],
     [usdcEthPairState, usdcEthPair]
-  ] = usePairs(tokenPairs)
+  ] = useUniPairs(tokenPairs)
 
   return useMemo(() => {
     if (!currency || !wrapped || !chainId) {
@@ -101,6 +115,17 @@ export default function useUSDCPrice(currency?: Currency): Price | undefined {
         )
       }
     }
+
+    if (chainId !== ChainId.MAINNET && currency) {
+      const FAKE_USDC = new Token(ChainId.ROPSTEN, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'fUSDC', 'Fake USDC')
+      return new Price(
+        currency,
+        FAKE_USDC,
+        JSBI.BigInt(10 ** Math.max(0, currency.decimals - 6)),
+        JSBI.BigInt(15 * 10 ** Math.max(6 - currency.decimals, 0))
+      )
+    }
+
     return undefined
   }, [
     chainId,
