@@ -1,18 +1,15 @@
 import React, { useMemo, useState, useCallback } from 'react'
+import { Menu, X } from 'react-feather'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import { Menu, X } from 'react-feather'
-
-import { darken } from 'polished'
-import styled from 'styled-components'
-
-import { useDarkModeManager } from '@/state/user/hooks'
-
-import { RowBetween, AutoRow } from '@/components/Row'
-import MobileLogo from '@/assets/svg/mobile_logo_yellow.svg'
-import MobileLogoDark from '@/assets/svg/mobile_logo_dark.svg'
 
 import getMenus, { MenuItem } from './menus'
+import LogoBlack from '@/assets/svg/Logo_Black.svg'
+import LogoWhite from '@/assets/svg/Logo_White.svg'
+import { RowBetween, AutoRow } from '@/components/Row'
+import { useDarkModeManager } from '@/state/user/hooks'
+import { darken } from 'polished'
+import styled from 'styled-components'
 
 const activeClassName = 'ACTIVE'
 
@@ -29,20 +26,19 @@ const StyledMenu = styled(Menu)`
 const LogoIcon = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem;
   img {
     width: 2rem;
   }
 `
 
 const StyledX = styled(X)`
-path {
-  stroke: ${({ theme }) => theme.text1};
-}
+  path {
+    stroke: ${({ theme }) => theme.text1};
+  }
 
-> * {
-  stroke: ${({ theme }) => theme.text1};
-}
+  > * {
+    stroke: ${({ theme }) => theme.text1};
+  }
 `
 
 const StyledMenuButton = styled.button`
@@ -53,15 +49,7 @@ const StyledMenuButton = styled.button`
   margin: 0;
   padding: 0;
   height: 35px;
-  background-color: ${({ theme }) => theme.bg3};
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.5rem;
 
-  :focus {
-    cursor: pointer;
-    outline: none;
-    background-color: ${({ theme }) => theme.bg4};
-  }
   svg {
     margin-top: 2px;
   }
@@ -75,32 +63,35 @@ const StyledNavLink = styled(NavLink).attrs({
   outline: none;
   cursor: pointer;
   text-decoration: none;
-  color: ${({ theme }) => theme.text3};
-  font-size: 14px;
+  color: ${({ theme }) => theme.text2};
+  font-size: 18px;
+  font-weight: bold;
   display: inline-block;
-  margin: 0 0 0 1rem;
+  padding: 1rem 1.25rem;
+  margin: 2px 0;
   text-align: left;
+  border-radius: 5rem;
 
   &.${activeClassName} {
-    font-weight: 500;
-    color: ${({ theme }) => theme.text1};
+    color: ${({ theme }) => theme.text5};
+    background: ${({ theme }) => theme.bg6};
   }
 
-  :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
+  :not(.${activeClassName}):focus {
+    background: ${({ theme }) => theme.bg2};
   }
 `
 
-const StyledRowBetween = styled(RowBetween)`
-  padding: 1rem;
+const NavContainer = styled.div`
+  padding: 16px;
 `
 
 const StyledAutoRow = styled(AutoRow)`
-  padding: 0.5rem;
+  padding: 1.75rem 1rem 1rem;
 `
 
 const MenuFlyout = styled.div`
-  background-color: ${({ theme }) => theme.bg2};
+  background-color: ${({ theme }) => theme.bg0};
   position: fixed;
   top: 0;
   leff: 0;
@@ -111,14 +102,14 @@ const MenuFlyout = styled.div`
 `
 
 export function SwapPoolTabsMobile({ active }: { active: string }) {
-  const [ linkMenu, setLinkMenu ] = useState<boolean>(false)
+  const [linkMenu, setLinkMenu] = useState<boolean>(false)
   const { t } = useTranslation()
 
   const [isDark] = useDarkModeManager()
 
   const toggleLinkMenu = useCallback(() => {
     setLinkMenu((oldValue) => !oldValue)
-  },[])
+  }, [])
 
   const menus: Array<MenuItem> = useMemo<Array<MenuItem>>(() => {
     return getMenus(t, active)
@@ -127,33 +118,31 @@ export function SwapPoolTabsMobile({ active }: { active: string }) {
   return (
     <StyledMenuButton>
       <StyledMenu onClick={toggleLinkMenu} />
-      {
-        linkMenu && (
-          <MenuFlyout>
-            <StyledAutoRow justify="space-between">
-              <LogoIcon>
-                <img src={isDark ? MobileLogo : MobileLogoDark} alt='logo' />
-              </LogoIcon>
-              <StyledX onClick={toggleLinkMenu} />
-            </StyledAutoRow>
-            {
-              menus.map((menu: MenuItem) => {
-                return (
-                  <StyledRowBetween key={menu.id} onClick={toggleLinkMenu}>
-                    <StyledNavLink
-                      key={menu.id}
-                      id={menu.linkId}
-                      to={menu.to}
-                      isActive={() => menu.isActive}>
-                      {menu.text}
-                    </StyledNavLink>
-                  </StyledRowBetween>
-                )
-              })
-            }
-          </MenuFlyout>
-        )
-      }
+      {linkMenu && (
+        <MenuFlyout>
+          <StyledAutoRow justify='space-between'>
+            <LogoIcon>
+              <img src={isDark ? LogoWhite : LogoBlack} alt='logo' />
+            </LogoIcon>
+            <StyledX onClick={toggleLinkMenu} />
+          </StyledAutoRow>
+          <NavContainer>
+            {menus.map((menu: MenuItem) => {
+              return (
+                <RowBetween key={menu.id} onClick={toggleLinkMenu}>
+                  <StyledNavLink
+                    key={menu.id}
+                    id={menu.linkId}
+                    to={menu.to}
+                    isActive={() => menu.isActive}>
+                    {menu.text}
+                  </StyledNavLink>
+                </RowBetween>
+              )
+            })}
+          </NavContainer>
+        </MenuFlyout>
+      )}
     </StyledMenuButton>
   )
 }

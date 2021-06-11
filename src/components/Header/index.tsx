@@ -2,24 +2,21 @@ import React, { useMemo } from 'react'
 import { MobileView, BrowserView } from 'react-device-detect'
 import { useLocation } from 'react-router-dom'
 
-import { ChainId } from '@xplanet/sdk'
-import { Text } from 'rebass'
-import styled from 'styled-components'
-
-import Logo from '@/assets/svg/logo_yellow.svg'
-import LogoDark from '@/assets/svg/logo_dark.svg'
-import MobileLogo from '@/assets/svg/mobile_logo_yellow.svg'
-import MobileLogoDark from '@/assets/svg/mobile_logo_dark.svg'
+import LogoBlack from '@/assets/svg/Logo_Black.svg'
+import LogoWhite from '@/assets/svg/Logo_White.svg'
 import { YellowCard } from '@/components/Card'
 import Menu from '@/components/Menu'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
 import { SwapPoolTabsMobile } from '@/components/NavigationTabs/mobile'
 import Row, { RowBetween } from '@/components/Row'
-import Web3Status from '@/components/Web3Status'
 import SwithTheme from '@/components/SwitchTheme'
+import Web3Status from '@/components/Web3Status'
 import { useActiveWeb3React } from '@/hooks'
 import { useDarkModeManager } from '@/state/user/hooks'
 import { useETHBalances } from '@/state/wallet/hooks'
+import { ChainId } from '@xplanet/sdk'
+import { Text } from 'rebass'
+import styled from 'styled-components'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -104,7 +101,7 @@ const LogoIcon = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 6rem;
+    width: 2rem;
   }
   ${({ theme }) => {
     return theme.mediaWidth.upToSmall`
@@ -171,16 +168,16 @@ export default function Header() {
         <HeaderMemuRow>
           <HeaderElement>
             <Title href='.'>
-                <MobileView>
-                  <LogoIconMobile>
-                    <img src={isDark ? MobileLogo : MobileLogoDark} alt='logo' />  
-                  </LogoIconMobile>
-                </MobileView>
-                <BrowserView>
-                  <LogoIcon>
-                    <img src={isDark ? Logo : LogoDark} alt='logo' />
-                  </LogoIcon>
-                </BrowserView>
+              <MobileView>
+                <LogoIconMobile>
+                  <img src={isDark ? LogoWhite : LogoBlack} alt='logo' />
+                </LogoIconMobile>
+              </MobileView>
+              <BrowserView>
+                <LogoIcon>
+                  <img src={isDark ? LogoWhite : LogoBlack} alt='logo' />
+                </LogoIcon>
+              </BrowserView>
             </Title>
           </HeaderElement>
           <BrowserView>

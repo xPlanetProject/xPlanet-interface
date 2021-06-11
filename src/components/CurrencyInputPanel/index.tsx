@@ -1,23 +1,23 @@
-import { Currency, Pair } from '@xplanet/sdk'
-import { darken } from 'polished'
-import styled, { ThemeContext } from 'styled-components'
-
 import React, { useState, useContext, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ReactComponent as DropDown } from '@/assets/images/dropdown.svg'
-import { useActiveWeb3React } from '@/hooks'
-import { useCurrencyBalance } from '@/state/wallet/hooks'
-import { TYPE } from '@/theme'
 import CurrencyLogo from '@/components/CurrencyLogo'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { Input as NumericalInput } from '@/components/NumericalInput'
 import { RowBetween } from '@/components/Row'
 import CurrencySearchModal from '@/components/SearchModal/CurrencySearchModal'
+import { useActiveWeb3React } from '@/hooks'
+import { useCurrencyBalance } from '@/state/wallet/hooks'
+import { TYPE } from '@/theme'
+import { Currency, Pair } from '@xplanet/sdk'
+import { darken } from 'polished'
+import styled, { ThemeContext } from 'styled-components'
 
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
+  border-radius: 3.5rem;
   padding: ${({ selected }) =>
     selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem'};
 `
@@ -42,7 +42,7 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   :focus,
   :hover {
     background-color: ${({ selected, theme }) =>
-      selected ? theme.bg2 : darken(0.05, theme.primary1)};
+      selected ? theme.bg2 : darken(0.1, theme.primary1)};
   }
 `
 
@@ -85,7 +85,6 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
 
 const Container = styled.div<{ hideInput: boolean }>`
   border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
-  border: 1px solid ${({ theme }) => theme.bg2};
   background-color: ${({ theme }) => theme.bg1};
 `
 

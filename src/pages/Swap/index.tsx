@@ -1,7 +1,3 @@
-import { CurrencyAmount, JSBI, Token, Trade } from '@xplanet/sdk'
-import { Text } from 'rebass'
-import { ThemeContext } from 'styled-components'
-
 import React, {
   useCallback,
   useContext,
@@ -37,9 +33,7 @@ import {
   SwapCallbackError,
   Wrapper
 } from '@/components/swap/styleds'
-import {
-  INITIAL_ALLOWED_SLIPPAGE
-} from '@/constants'
+import { INITIAL_ALLOWED_SLIPPAGE } from '@/constants'
 import { getTradeVersion, isTradeBetter } from '@/data/V1'
 import { useActiveWeb3React } from '@/hooks'
 import { useCurrency } from '@/hooks/Tokens'
@@ -72,6 +66,9 @@ import {
 import { LinkStyledButton, TYPE } from '@/theme'
 import { maxAmountSpend } from '@/utils/maxAmountSpend'
 import { computeTradePriceBreakdown, warningSeverity } from '@/utils/prices'
+import { CurrencyAmount, JSBI, Token, Trade } from '@xplanet/sdk'
+import { Text } from 'rebass'
+import { ThemeContext } from 'styled-components'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -370,7 +367,7 @@ export default function Swap() {
             marginBottom: '20px',
             padding: '0 0.2rem'
           }}>
-          <Text>Swap</Text>
+          <Text fontWeight='bold'>Swap</Text>
           <Settings />
         </RowBetween>
         <Wrapper id='swap-page'>

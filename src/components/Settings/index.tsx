@@ -1,10 +1,13 @@
-import { Text } from 'rebass'
-import styled from 'styled-components'
-import { ThemeContext } from 'styled-components'
-
 import React, { useRef, useContext, useState } from 'react'
 import { Settings, X } from 'react-feather'
 
+import { ButtonError } from '@/components/Button'
+import { AutoColumn } from '@/components/Column'
+import Modal from '@/components/Modal'
+import QuestionHelper from '@/components/QuestionHelper'
+import { RowFixed, RowBetween } from '@/components/Row'
+import Toggle from '@/components/Toggle'
+import TransactionSettings from '@/components/TransactionSettings'
 import { useOnClickOutside } from '@/hooks/useOnClickOutside'
 import {
   useSettingsMenuOpen,
@@ -16,13 +19,9 @@ import {
   useUserDeadline
 } from '@/state/user/hooks'
 import { TYPE } from '@/theme'
-import { ButtonError } from '@/components/Button'
-import { AutoColumn } from '@/components/Column'
-import Modal from '@/components/Modal'
-import QuestionHelper from '@/components/QuestionHelper'
-import { RowFixed, RowBetween } from '@/components/Row'
-import Toggle from '@/components/Toggle'
-import TransactionSettings from '@/components/TransactionSettings'
+import { Text } from 'rebass'
+import styled from 'styled-components'
+import { ThemeContext } from 'styled-components'
 
 const StyledMenuIcon = styled(Settings)`
   height: 20px;
@@ -54,7 +53,6 @@ const StyledMenuButton = styled.button`
   margin: 0;
   padding: 0;
   height: 35px;
-  background-color: ${({ theme }) => theme.bg3};
 
   padding: 0.15rem 0.5rem;
   border-radius: 0.5rem;

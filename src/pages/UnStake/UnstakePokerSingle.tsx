@@ -114,6 +114,9 @@ const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
           <TYPE.subHeader>流动性份额</TYPE.subHeader>
         </StakeCheckouSection>
         <StakeCheckouSection>
+          <TYPE.subHeader>算力</TYPE.subHeader>
+        </StakeCheckouSection>
+        <StakeCheckouSection>
           <TYPE.subHeader>操作</TYPE.subHeader>
         </StakeCheckouSection>
       </Row>

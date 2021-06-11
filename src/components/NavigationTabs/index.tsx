@@ -3,13 +3,11 @@ import { ArrowLeft } from 'react-feather'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Link as HistoryLink } from 'react-router-dom'
 
-import { darken } from 'polished'
-import styled from 'styled-components'
-
+import getMenus, { MenuItem } from './menus'
 import QuestionHelper from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
-
-import getMenus, { MenuItem } from './menus'
+import { darken } from 'polished'
+import styled from 'styled-components'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -29,20 +27,22 @@ const StyledNavLink = styled(NavLink).attrs({
   outline: none;
   cursor: pointer;
   text-decoration: none;
-  color: ${({ theme }) => theme.text3};
+  color: ${({ theme }) => theme.text2};
   font-size: 18px;
+  font-weight: bold;
   display: inline-block;
-  margin: 0 0 0 1rem;
+  padding: 0.5rem 0.75rem;
+  margin: 0 2px;
+  border-radius: 3rem;
 
   &.${activeClassName} {
-    border-radius: 12px;
-    font-weight: 500;
-    color: ${({ theme }) => theme.text1};
+    color: ${({ theme }) => theme.text5};
+    background: ${({ theme }) => theme.bg6};
   }
 
-  :hover,
-  :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
+  :not(.${activeClassName}):hover,
+  :not(.${activeClassName}):focus {
+    background: ${({ theme }) => theme.bg2};
   }
 `
 

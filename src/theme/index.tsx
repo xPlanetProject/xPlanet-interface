@@ -1,4 +1,9 @@
 import React, { useMemo } from 'react'
+import { isMobile, isDesktop } from 'react-device-detect'
+
+import { Colors } from './styled'
+import BodyBackground from '@/assets/images/page-bg.png'
+import { useIsDarkMode } from '@/state/user/hooks'
 import { transparentize } from 'polished'
 import { Text, TextProps } from 'rebass'
 import styled, {
@@ -7,12 +12,6 @@ import styled, {
   css,
   DefaultTheme
 } from 'styled-components'
-
-import { isMobile, isDesktop } from 'react-device-detect'
-
-import BodyBackground from '@/assets/images/page-bg.png'
-import { useIsDarkMode } from '@/state/user/hooks'
-import { Colors } from './styled'
 
 export * from './components'
 
@@ -45,26 +44,26 @@ export function colors(darkMode: boolean): Colors {
 
     // text
     text1: darkMode ? '#FFFFFF' : '#000000',
-    text2: darkMode ? '#C3C5CB' : '#565A69',
-    text3: darkMode ? '#BFBFBF' : '#333',
-    text4: darkMode ? '#565A69' : '#C3C5CB',
-    text5: darkMode ? '#2C2F36' : '#EDEEF2',
+    text2: darkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.6)',
+    text3: darkMode ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.4)',
+    text4: darkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.2)',
+    text5: darkMode ? '#000000' : '#FFFFFF',
 
     // backgrounds / greys
-    bg0: darkMode ? '#191B1F' : '#FFF',
-    bg1: darkMode ? '#212429' : '#F7F8FA',
+    bg0: darkMode ? '#000' : '#FFF',
+    bg1: darkMode ? '#1f1f1f' : '#FFF',
     bg2: darkMode ? '#2C2F36' : '#EDEEF2',
     bg3: darkMode ? '#40444F' : '#CED0D9',
     bg4: darkMode ? '#565A69' : '#888D9B',
-    bg5: darkMode ? '#6C7284' : '#888D9B',
-    bg6: darkMode ? '#1A2028' : '#6C7284',
+    bg5: darkMode ? '#1A2028' : '#6C7284',
+    bg6: darkMode ? '#ffffff' : '#000000',
 
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    primary1: darkMode ? '#2172E5' : '#82336d',
+    primary1: darkMode ? '#2172E5' : '#E1DD22',
     primary2: darkMode ? '#3680E7' : '#FF8CC3',
     primary3: darkMode ? '#4D8FEA' : '#FF99C9',
     primary4: darkMode ? '#376bad70' : '#F6DDE8',
@@ -218,13 +217,13 @@ export const TYPE = {
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
-  font-family: FT Base,-apple-system,system-ui,BlinkMacSystemFont,SF Pro Text,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-family: Roboto,-apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
   letter-spacing: -0.018em;
   font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
-    font-family: FT Base,-apple-system,system-ui,BlinkMacSystemFont,SF Pro Text,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    font-family: Roboto,-apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
   }
 }
 
@@ -263,15 +262,12 @@ body {
   background-repeat: ${({ theme }) => {
     return theme.darkMode ? 'no-repeat;' : 'repeat;'
   }};
-  background-image: ${({ theme }) => {
+  background-color : ${({ theme }) => {
     if (theme.darkMode) {
-      return `radial-gradient(50% 50% at 50% 50%, ${transparentize(
-        0.9,
-        theme.primary1
-      )} 0%, ${transparentize(1, theme.bg1)} 100%)`
+      return `#000000`
     }
 
-    return `url(${BodyBackground})`
+    return `#DEE8F7`
   }};
 }
 `
