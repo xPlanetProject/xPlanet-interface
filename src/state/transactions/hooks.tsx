@@ -10,7 +10,7 @@ import { TransactionDetails } from './reducer'
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useTransactionAdder(): (
-  response: TransactionResponse,
+  response: TransactionResponse | any,
   customData?: {
     summary?: string
     approval?: { tokenAddress: string; spender: string }
@@ -21,7 +21,7 @@ export function useTransactionAdder(): (
 
   return useCallback(
     (
-      response: TransactionResponse,
+      response: TransactionResponse | any,
       {
         summary,
         approval

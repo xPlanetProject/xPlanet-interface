@@ -76,9 +76,6 @@ export function usePairsFromTokenIds(
     inputs
   )
 
-  console.log(pairIdResults)
-  console.log(pokerPropertyResults)
-
   const loading = useMemo(
     () =>
       [...pairIdResults, ...pokerPropertyResults].some(
@@ -140,8 +137,6 @@ export function useUserPokers(
 
   const accountBalance: number | undefined = balanceResult?.[0]?.toNumber()
 
-  console.log(accountBalance)
-
   const tokenIdsArgs = useMemo(() => {
     if (accountBalance && account) {
       const tokenRequests: Array<unknown> = []
@@ -173,8 +168,6 @@ export function useUserPokers(
     }
     return []
   }, [account, tokenIdResults])
-
-  console.log(tokenIds)
 
   const pairIdResults = usePairsFromTokenIds(tokenIds, pairId)
 

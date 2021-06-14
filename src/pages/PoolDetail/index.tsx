@@ -85,7 +85,7 @@ export default function PoolDetail() {
               </ButtonGray>
               <ResponsiveButtonPrimary
                 as={Link}
-                to={`/remove/${currencyId(currency1)}/${currencyId(currency0)}?tokenId=${params.tokenId}`}
+                to={`/remove/${currencyId(currency1)}/${currencyId(currency0)}?tokenId=${params.tokenId}&pairId=${params.pairId}`}
                 width='fit-content'
                 padding='6px 8px'
                 borderRadius='12px'>

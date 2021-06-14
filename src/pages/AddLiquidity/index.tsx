@@ -202,7 +202,7 @@ export default function AddLiquidity({
           tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A
         ].toString(), // eth min
         deadlineFromNow,
-        Number(query.tokenId)
+        query.tokenId
       ]
 
       value = BigNumber.from(
@@ -220,7 +220,7 @@ export default function AddLiquidity({
         amountsMin[Field.CURRENCY_A].toString(),
         amountsMin[Field.CURRENCY_B].toString(),
         deadlineFromNow,
-        Number(query.tokenId)
+        query.tokenId
       ]
       value = null
     }

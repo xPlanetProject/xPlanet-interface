@@ -1,7 +1,6 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
-import { PokerItemType } from './StakeHelpers'
 import { ButtonLight } from '@/components/Button'
 import { LightCard } from '@/components/Card'
 import { RowBetween } from '@/components/Row'
@@ -15,7 +14,7 @@ import { Dots } from '@/pages/Pool/styleds'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
-import { PokerType } from '@/utils/poker'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import styled, { ThemeContext } from 'styled-components'
 
 type SyntheticStakeProps = {
@@ -74,6 +73,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   const theme = useContext(ThemeContext)
 
   const { account } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
 
   const [selectIds, selectPokerId] = useState<any>([])
   const [selectPokers, setSelectPokers] = useState<any>([])
@@ -82,8 +82,6 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   const needApprove = useNeedApprove()
 
   const { pokers, loading } = useUserPokers(account, pairId)
-
-  console.log(pokers)
 
   const xKeyDaoContract = useXKeyDaoContract()
   const positionManager = useNFTPositionManagerContract()
@@ -96,8 +94,14 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
 
     if (approve) {
       setApproving(() => true)
-      await approve(...approveArgs, {})
-      setApproving(() => false)
+      approve(...approveArgs, {}).then((response) => {
+        addTransaction(response, {
+          summary:
+            'Approve all of NFTS to ' +
+            address
+        })
+        setApproving(() => false)
+      })
     }
   }, [xKeyDaoContract, positionManager])
 
@@ -111,6 +115,11 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
         estimate(args, {}).then((estimatedGasLimit) => {
           addSwaptokenShareCombine(args, {
             gasLimit: calculateGasMargin(estimatedGasLimit)
+          }).then(response => {
+            addTransaction(response, {
+              summary:
+                'SyntheticStake Nfts to Mining'
+            })
           })
         })
       }

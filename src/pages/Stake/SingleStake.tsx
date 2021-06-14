@@ -10,6 +10,7 @@ import {
   useNFTPositionManagerContract
 } from '@/hooks/useContract'
 import { useUserPokers, useNeedApprove } from '@/hooks/useStake'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import { Dots } from '@/pages/Pool/styleds'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
 import { TYPE } from '@/theme'
@@ -61,6 +62,8 @@ const SingleStake: React.FC<SingleStakeProps> = ({
 
   const needApprove = useNeedApprove()
 
+  const addTransaction = useTransactionAdder()
+
   const approve = useCallback(async () => {
     const address = xKeyDaoContract?.address
     const approve = positionManager?.setApprovalForAll
@@ -69,13 +72,20 @@ const SingleStake: React.FC<SingleStakeProps> = ({
 
     if (approve) {
       setApproving(() => true)
-      await approve(...approveArgs, {})
-      setApproving(() => false)
+      approve(...approveArgs, {}).then((response) => {
+        addTransaction(response, {
+          summary:
+            'Approve all of Nfts to ' +
+            address
+        })
+        setApproving(() => false)
+      })
     }
   }, [xKeyDaoContract, positionManager])
 
   const stateSingle = useCallback(async () => {
-    if (selectIds.length) {
+    const { length } = selectIds
+    if (length) {
       const args = selectIds
       let estimate
       let method
@@ -87,6 +97,10 @@ const SingleStake: React.FC<SingleStakeProps> = ({
           estimate(...args, {}).then((estimatedGasLimit) => {
             method(...args, {
               gasLimit: calculateGasMargin(estimatedGasLimit)
+            }).then((response) => {
+              addTransaction(response, {
+                summary: 'Stake 1 NFT to Mining'
+              })
             })
           })
         }

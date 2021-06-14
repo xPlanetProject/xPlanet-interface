@@ -232,10 +232,6 @@ export function usePairsFromTokenIdsMap(
         const propertyResult = call
 
         const pokerRank = singlePokerRankMap.get(propertyResult.rank.toNumber())
-        console.log(propertyResult)
-        console.log(propertyResult.rank.toNumber())
-        console.log(pokerRank)
-
         const pockerSuit = singlePokerSuitMap.get(
           propertyResult.suit.toNumber()
         )
