@@ -1,3 +1,8 @@
+import { constructSameAddressMap } from '@/utils/constructSameAddressMap'
+import { SupportedChainId } from './chains'
+
+type AddressMap = { [chainId: number]: string }
+
 export const SWETH_ADRESS = '0x343f99E0db67E4795d7835d8ABE24D70D847Ba22'
 
 export const ERC20_ADRESS = '0x0b69a926837035312D98dfCB419a6F971be63DA5'
@@ -15,3 +20,7 @@ export const XPOKER_POWER_ADDRESS = '0xC599FF92ffB1ACD8939555b9512c6f2Cc13D883C'
 export const LPA_ADDRESS = '0x431447f402b0AA4c7D3E4CBB9F42b9b659f047DC'
 
 export const LPB_ADDRESS = '0x768573e52ccad7B5391B58BcAc3Be37A39a0F15b'
+
+export const QUOTER_ADDRESSES = '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6'
+
+export const UNI_ADDRESS: AddressMap = constructSameAddressMap('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', false)

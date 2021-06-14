@@ -5,7 +5,8 @@ import { TokenList } from '@xplanet/token-lists/dist/types'
 
 import {
   DEFAULT_LIST_OF_LISTS,
-  DEFAULT_TOKEN_LIST_URL
+  DEFAULT_TOKEN_LIST_URL,
+  DEFAULT_ACTIVE_LIST_URLS
 } from '@/constants/lists'
 import { updateVersion } from '@/state/global/actions'
 import {
@@ -28,6 +29,7 @@ export interface ListsState {
   // this contains the default list of lists from the last time the updateVersion was called, i.e. the app was reloaded
   readonly lastInitializedDefaultListOfLists?: string[]
   readonly selectedListUrl: string | undefined
+  readonly activeListUrls: string[] | undefined
 }
 
 const NEW_LIST_STATE: ListsState['byUrl'][string] = {
@@ -58,7 +60,8 @@ const initialState: ListsState = {
       pendingUpdate: null
     }
   },
-  selectedListUrl: undefined
+  selectedListUrl: undefined,
+  activeListUrls: undefined
 }
 
 export default createReducer(initialState, (builder) =>
@@ -141,6 +144,9 @@ export default createReducer(initialState, (builder) =>
       if (state.byUrl[url]) {
         delete state.byUrl[url]
       }
+      if (state.activeListUrls && state.activeListUrls.includes(url)) {
+        state.activeListUrls = state.activeListUrls.filter((u) => u !== url)
+      }
       if (state.selectedListUrl === url) {
         state.selectedListUrl = Object.keys(state.byUrl)[0]
       }
@@ -159,6 +165,7 @@ export default createReducer(initialState, (builder) =>
       // state loaded from localStorage, but new lists have never been initialized
       if (!state.lastInitializedDefaultListOfLists) {
         state.byUrl = initialState.byUrl
+        state.activeListUrls = initialState.activeListUrls
         state.selectedListUrl = undefined
       } else if (state.lastInitializedDefaultListOfLists) {
         const lastInitializedSet =
@@ -185,5 +192,17 @@ export default createReducer(initialState, (builder) =>
       }
 
       state.lastInitializedDefaultListOfLists = DEFAULT_LIST_OF_LISTS
+
+      if (!state.activeListUrls) {
+        state.activeListUrls = DEFAULT_ACTIVE_LIST_URLS
+
+        // for each list on default list, initialize if needed
+        DEFAULT_ACTIVE_LIST_URLS.map((listUrl: string) => {
+          if (!state.byUrl[listUrl]) {
+            state.byUrl[listUrl] = NEW_LIST_STATE
+          }
+          return true
+        })
+      }
     })
 )

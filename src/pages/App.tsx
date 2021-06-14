@@ -24,6 +24,8 @@ import Web3ReactManager from '@/components/Web3ReactManager'
 import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
 import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
 import styled from 'styled-components'
+import { useV3Token } from '@/hooks/TokensV3'
+import useUSDCPrice from '@/usdc-price'
 
 const TestComponent = () => {
   const location = useLocation()
@@ -67,6 +69,10 @@ const Marginer = styled.div`
 `
 
 export default function App() {
+  const uni = useV3Token('0x6B175474E89094C44Da98b954EedeAC495271d0F') ?? undefined
+  const uniPrice = useUSDCPrice(uni)
+  console.log(uniPrice)
+
   return (
     <Suspense fallback={null}>
       <HashRouter>

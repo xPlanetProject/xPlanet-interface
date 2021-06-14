@@ -43,3 +43,4 @@ export const removeSerializedPair = createAction<{
   tokenAAddress: string
   tokenBAddress: string
 }>('user/removeSerializedPair')
+export const updateUserSingleHopOnly = createAction<{ userSingleHopOnly: boolean }>('user/updateUserSingleHopOnly')

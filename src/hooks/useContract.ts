@@ -1,6 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { ChainId, WETH } from '@xplanet/sdk'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+import { abi as QuoterABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
 
 import { useMemo } from 'react'
 
@@ -20,7 +21,7 @@ import {
   V1_FACTORY_ABI,
   V1_FACTORY_ADDRESSES
 } from '@/constants/v1'
-import { XSWAP_NFT_ADDRESS, XKEY_DAO_ADRESS, XPOKER_POWER_ADDRESS } from '@/constants/adress'
+import { XSWAP_NFT_ADDRESS, XKEY_DAO_ADRESS, XPOKER_POWER_ADDRESS, QUOTER_ADDRESSES} from '@/constants/adress'
 import { getContract } from '@/utils'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -167,4 +168,9 @@ export function useXPokerPowerContract(withSignerIfPossible?: boolean): Contract
     XPokerPowerABI,
     withSignerIfPossible
   )
+}
+
+
+export function useV3Quoter() {
+  return useContract(QUOTER_ADDRESSES, QuoterABI)
 }

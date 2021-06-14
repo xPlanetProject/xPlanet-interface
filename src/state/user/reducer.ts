@@ -16,6 +16,7 @@ import {
   updateUserDarkMode,
   updateUserExpertMode,
   updateUserSlippageTolerance,
+  updateUserSingleHopOnly,
   updateUserDeadline
 } from './actions'
 
@@ -35,6 +36,8 @@ export interface UserState {
 
   // deadline set by user in minutes, used in all txns
   userDeadline: number
+
+  userSingleHopOnly: boolean
 
   tokens: {
     [chainId: number]: {
@@ -62,6 +65,7 @@ export const initialState: UserState = {
   userExpertMode: false,
   userSlippageTolerance: INITIAL_ALLOWED_SLIPPAGE,
   userDeadline: DEFAULT_DEADLINE_FROM_NOW,
+  userSingleHopOnly: false,
   tokens: {},
   pairs: {},
   timestamp: currentTimestamp()
@@ -143,4 +147,7 @@ export default createReducer(initialState, (builder) =>
         state.timestamp = currentTimestamp()
       }
     )
+    .addCase(updateUserSingleHopOnly, (state, action) => {
+      state.userSingleHopOnly = action.payload.userSingleHopOnly
+    })
 )

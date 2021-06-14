@@ -210,8 +210,8 @@ const ONE_HUNDRED_PERCENT = new Percent('1')
 
 // returns whether tradeB is better than tradeA by at least a threshold percentage amount
 export function isTradeBetter(
-  tradeA: Trade | undefined,
-  tradeB: Trade | undefined,
+  tradeA: Trade | undefined | any,
+  tradeB: Trade | undefined | any,
   minimumDelta: Percent = ZERO_PERCENT
 ): boolean | undefined {
   if (tradeA && !tradeB) return false

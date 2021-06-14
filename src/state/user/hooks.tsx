@@ -17,7 +17,8 @@ import {
   updateUserDarkMode,
   updateUserDeadline,
   updateUserExpertMode,
-  updateUserSlippageTolerance
+  updateUserSlippageTolerance,
+  updateUserSingleHopOnly
 } from './actions'
 
 function serializeToken(token: Token): SerializedToken {
@@ -165,6 +166,21 @@ function serializePair(pair: Pair): SerializedPair {
     token0: serializeToken(pair.token0),
     token1: serializeToken(pair.token1)
   }
+}
+
+export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const singleHopOnly = useSelector<AppState, AppState['user']['userSingleHopOnly']>((state) => state.user.userSingleHopOnly)
+
+  const setSingleHopOnly = useCallback(
+    (newSingleHopOnly: boolean) => {
+      dispatch(updateUserSingleHopOnly({ userSingleHopOnly: newSingleHopOnly }))
+    },
+    [dispatch]
+  )
+
+  return [singleHopOnly, setSingleHopOnly]
 }
 
 export function usePairAdder(): (pair: Pair) => void {
