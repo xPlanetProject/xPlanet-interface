@@ -1,18 +1,25 @@
-import { transparentize } from 'polished'
-import { Text } from 'rebass'
-import styled, { css } from 'styled-components'
-
 import React from 'react'
 import { AlertTriangle } from 'react-feather'
 
 import { AutoColumn } from '@/components/Column'
+import { transparentize } from 'polished'
+import { Text } from 'rebass'
+import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.div`
   position: relative;
 `
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
-  padding: 2px;
+  padding: 4px;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.bg2};
+  z-index: 2;
 
   ${({ clickable }) =>
     clickable

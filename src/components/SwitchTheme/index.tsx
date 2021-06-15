@@ -1,8 +1,8 @@
 import React from 'react'
 import { Sun, Moon } from 'react-feather'
-import styled from 'styled-components'
 
 import { useDarkModeManager } from '@/state/user/hooks'
+import styled from 'styled-components'
 
 const StyledMenu = styled.div`
   margin-left: 0.5rem;
@@ -23,16 +23,16 @@ const StyledMenuButton = styled.button`
   margin: 0;
   padding: 0;
   height: 35px;
-  background-color: ${({ theme }) => theme.bg3};
+  background-color: ${({ theme }) => theme.bg2};
 
   padding: 0.15rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 50%;
 
   :hover,
   :focus {
     cursor: pointer;
     outline: none;
-    background-color: ${({ theme }) => theme.bg4};
+    background-color: ${({ theme }) => theme.bg3};
   }
 
   svg {
@@ -65,9 +65,7 @@ export default function SwithTheme() {
   return (
     <StyledMenu>
       <StyledMenuButton onClick={toggleDarkMode}>
-        {
-          darkMode ? <StyledMoonIcon /> : <StyledSunIcon />
-        }
+        {darkMode ? <StyledMoonIcon /> : <StyledSunIcon />}
       </StyledMenuButton>
     </StyledMenu>
   )

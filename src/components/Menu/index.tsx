@@ -1,5 +1,3 @@
-import styled from 'styled-components'
-
 import React, { useRef } from 'react'
 import { Info, BookOpen, Code, PieChart, MessageCircle } from 'react-feather'
 
@@ -7,6 +5,7 @@ import { ReactComponent as MenuIcon } from '@/assets/images/menu.svg'
 import { useOnClickOutside } from '@/hooks/useOnClickOutside'
 import useToggle from '@/hooks/useToggle'
 import { ExternalLink } from '@/theme'
+import styled from 'styled-components'
 
 const StyledMenuIcon = styled(MenuIcon)`
   path {
@@ -15,23 +14,23 @@ const StyledMenuIcon = styled(MenuIcon)`
 `
 
 const StyledMenuButton = styled.button`
-  width: 100%;
-  height: 100%;
-  border: none;
-  background-color: transparent;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  width: 35px;
   height: 35px;
-  background-color: ${({ theme }) => theme.bg3};
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  background-color: ${({ theme }) => theme.bg2};
 
   padding: 0.15rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 50%;
 
   :hover,
   :focus {
     cursor: pointer;
     outline: none;
-    background-color: ${({ theme }) => theme.bg4};
+    background-color: ${({ theme }) => theme.bg3};
   }
 
   svg {

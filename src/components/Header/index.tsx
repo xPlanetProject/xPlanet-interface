@@ -66,8 +66,10 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg3)};
-  border-radius: 12px;
+  background-color: ${({ theme }) => theme.bg2};
+
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
   white-space: nowrap;
   width: 100%;
 
@@ -189,6 +191,13 @@ export default function Header() {
         </HeaderMemuRow>
         <HeaderControls>
           <HeaderElement>
+            <BrowserView>
+              <TestnetWrapper>
+                {chainId && NETWORK_LABELS[chainId] && (
+                  <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>
+                )}
+              </TestnetWrapper>
+            </BrowserView>
             <AccountElement
               active={!!account}
               style={{ pointerEvents: 'auto' }}>
@@ -203,13 +212,6 @@ export default function Header() {
               ) : null}
               <Web3Status />
             </AccountElement>
-            <BrowserView>
-              <TestnetWrapper>
-                {chainId && NETWORK_LABELS[chainId] && (
-                  <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>
-                )}
-              </TestnetWrapper>
-            </BrowserView>
           </HeaderElement>
           <HeaderElementWrap>
             <SwithTheme />

@@ -406,7 +406,7 @@ export default function Swap() {
                 style={{ padding: '0 1rem' }}>
                 <ArrowWrapper clickable>
                   <ArrowDown
-                    size='16'
+                    size='20'
                     onClick={() => {
                       setApprovalSubmitted(false) // reset 2 step UI for approvals
                       onSwitchTokens()
@@ -414,7 +414,7 @@ export default function Swap() {
                     color={
                       currencies[Field.INPUT] && currencies[Field.OUTPUT]
                         ? theme.primary1
-                        : theme.text2
+                        : theme.text1
                     }
                   />
                 </ArrowWrapper>

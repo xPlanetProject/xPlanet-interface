@@ -1,6 +1,6 @@
-import styled, { keyframes } from 'styled-components'
-
 import React from 'react'
+
+import styled, { keyframes } from 'styled-components'
 
 const rotate = keyframes`
   from {
@@ -16,7 +16,7 @@ const StyledSVG = styled.svg<{ size: string; stroke?: string }>`
   height: ${({ size }) => size};
   width: ${({ size }) => size};
   path {
-    stroke: ${({ stroke, theme }) => stroke ?? theme.primary1};
+    stroke: ${({ stroke, theme }) => stroke ?? theme.bg6};
   }
 `
 

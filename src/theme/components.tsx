@@ -1,14 +1,15 @@
 import React, { HTMLProps, useCallback } from 'react'
-import ReactGA from 'react-ga'
-import { Link } from 'react-router-dom'
-import styled, { keyframes } from 'styled-components'
-import { darken } from 'polished'
 import {
   ArrowLeft,
   X,
   ExternalLink as LinkIconFeather,
   Trash
 } from 'react-feather'
+import ReactGA from 'react-ga'
+import { Link } from 'react-router-dom'
+
+import { darken } from 'polished'
+import styled, { keyframes } from 'styled-components'
 
 export const ButtonText = styled.button`
   outline: none;
@@ -91,8 +92,8 @@ export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
   background: none;
 
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.primary1)};
-  font-weight: 500;
+  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.text1)};
+  font-weight: bold;
 
   :hover {
     text-decoration: ${({ disabled }) => (disabled ? null : 'underline')};

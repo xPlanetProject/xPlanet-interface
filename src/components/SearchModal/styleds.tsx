@@ -1,7 +1,6 @@
-import styled from 'styled-components'
-
 import { AutoColumn } from '@/components/Column'
 import { RowBetween, RowFixed } from '@/components/Row'
+import styled from 'styled-components'
 
 export const ModalInfo = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -40,27 +39,29 @@ export const MenuItem = styled(RowBetween)`
 export const SearchInput = styled.input`
   position: relative;
   display: flex;
-  padding: 16px;
+  padding: 12px 16px;
   align-items: center;
   width: 100%;
   white-space: nowrap;
   background: none;
   border: none;
   outline: none;
-  border-radius: 20px;
+  border-radius: 24px;
   color: ${({ theme }) => theme.text1};
+  background: ${({ theme }) => theme.bg2};
   border-style: solid;
-  border: 1px solid ${({ theme }) => theme.bg3};
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.bg2};
   -webkit-appearance: none;
 
-  font-size: 18px;
+  font-size: 14px;
 
   ::placeholder {
     color: ${({ theme }) => theme.text3};
   }
   transition: border 100ms;
   :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
+    border-color: ${({ theme }) => theme.bg4};
     outline: none;
   }
 `

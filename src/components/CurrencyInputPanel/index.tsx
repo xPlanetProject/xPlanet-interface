@@ -19,7 +19,8 @@ const InputRow = styled.div<{ selected: boolean }>`
   align-items: center;
   border-radius: 3.5rem;
   padding: ${({ selected }) =>
-    selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem'};
+    selected ? '0.5rem 0.5rem 0.5rem 1rem' : '0.5rem 0.75rem 0.5rem 1rem'};
+  background-color: ${({ theme }) => theme.bg2};
 `
 
 const CurrencySelect = styled.button<{ selected: boolean }>`
@@ -27,23 +28,14 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   height: 2.2rem;
   font-size: 20px;
   font-weight: 500;
-  background-color: ${({ selected, theme }) =>
-    selected ? theme.bg1 : theme.primary1};
-  color: ${({ selected, theme }) => (selected ? theme.text1 : theme.white)};
-  border-radius: 12px;
-  box-shadow: ${({ selected }) =>
-    selected ? 'none' : '0px 6px 10px rgba(0, 0, 0, 0.075)'};
+  background-color: transparent;
+  color: ${({ theme }) => theme.text1};
+  box-shadow: none;
   outline: none;
   cursor: pointer;
   user-select: none;
   border: none;
   padding: 0 0.5rem;
-
-  :focus,
-  :hover {
-    background-color: ${({ selected, theme }) =>
-      selected ? theme.bg2 : darken(0.1, theme.primary1)};
-  }
 `
 
 const LabelRow = styled.div`
@@ -52,7 +44,7 @@ const LabelRow = styled.div`
   color: ${({ theme }) => theme.text1};
   font-size: 0.75rem;
   line-height: 1rem;
-  padding: 0.75rem 1rem 0 1rem;
+  padding: 0.75rem 1rem 0.5rem 1rem;
   span:hover {
     cursor: pointer;
     color: ${({ theme }) => darken(0.2, theme.text2)};
@@ -65,12 +57,12 @@ const Aligner = styled.span`
   justify-content: space-between;
 `
 
-const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
+const StyledDropDown = styled(DropDown)`
   margin: 0 0.25rem 0 0.5rem;
   height: 35%;
 
   path {
-    stroke: ${({ selected, theme }) => (selected ? theme.text1 : theme.white)};
+    stroke: ${({ theme }) => theme.text1};
     stroke-width: 1.5px;
   }
 `
@@ -98,21 +90,18 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
 
 const StyledBalanceMax = styled.button`
   height: 28px;
-  background-color: ${({ theme }) => theme.primary5};
-  border: 1px solid ${({ theme }) => theme.primary5};
-  border-radius: 0.5rem;
+  background-color: transparent;
+  border: none;
   font-size: 0.875rem;
-
+  color: #8f8c00;
   font-weight: 500;
   cursor: pointer;
   margin-right: 0.5rem;
-  color: ${({ theme }) => theme.primaryText1};
   :hover {
-    border: 1px solid ${({ theme }) => theme.primary1};
+    color: ${darken(0.2, '#8F8C00')};
   }
   :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
-    outline: none;
+    color: ${darken(0.2, '#8F8C00')};
   }
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -191,14 +180,13 @@ export default function CurrencyInputPanel({
             </RowBetween>
           </LabelRow>
         )}
-        <InputRow
-          style={hideInput ? { padding: '0', borderRadius: '8px' } : {}}
-          selected={disableCurrencySelect}>
+        <InputRow selected={disableCurrencySelect}>
           {!hideInput && (
             <>
               <NumericalInput
                 className='token-amount-input'
                 value={value}
+                fontSize='20px'
                 onUserInput={(val) => {
                   onUserInput(val)
                 }}
@@ -245,9 +233,7 @@ export default function CurrencyInputPanel({
                     : currency?.symbol) || t('selectToken')}
                 </StyledTokenName>
               )}
-              {!disableCurrencySelect && (
-                <StyledDropDown selected={!!currency} />
-              )}
+              {!disableCurrencySelect && <StyledDropDown />}
             </Aligner>
           </CurrencySelect>
         </InputRow>

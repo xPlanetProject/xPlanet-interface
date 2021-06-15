@@ -1,8 +1,7 @@
-import styled from 'styled-components'
-
 import React from 'react'
 
 import { escapeRegExp } from '@/utils'
+import styled from 'styled-components'
 
 const StyledInput = styled.input<{
   error?: boolean
@@ -16,7 +15,7 @@ const StyledInput = styled.input<{
   outline: none;
   border: none;
   flex: 1 1 auto;
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: transparent;
   font-size: ${({ fontSize }) => fontSize ?? '24px'};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;

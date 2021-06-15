@@ -1,33 +1,33 @@
-import { Text } from 'rebass'
-import styled from 'styled-components'
-
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react'
 import { ArrowLeft } from 'react-feather'
+import { MoreHorizontal, ArrowUpRight } from 'react-feather'
 import ReactGA from 'react-ga'
 import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ReactComponent as DropDown } from '@/assets/images/dropdown.svg'
+import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds'
+import {
+  ButtonOutlined,
+  ButtonPrimary,
+  ButtonSecondary
+} from '@/components/Button'
+import Column from '@/components/Column'
+import ListLogo from '@/components/ListLogo'
+import QuestionHelper from '@/components/QuestionHelper'
+import Row, { RowBetween } from '@/components/Row'
 import { useFetchListCallback } from '@/hooks/useFetchListCallback'
 import { useOnClickOutside } from '@/hooks/useOnClickOutside'
 import useToggle from '@/hooks/useToggle'
 import { AppDispatch, AppState } from '@/state'
-import {
-  acceptListUpdate,
-  removeList,
-  selectList
-} from '@/state/lists/actions'
+import { acceptListUpdate, removeList, selectList } from '@/state/lists/actions'
 import { useSelectedListUrl } from '@/state/lists/hooks'
 import { CloseIcon, ExternalLink, LinkStyledButton, TYPE } from '@/theme'
 import listVersionLabel from '@/utils/listVersionLabel'
 import { parseENSAddress } from '@/utils/parseENSAddress'
 import uriToHttp from '@/utils/uriToHttp'
-import { ButtonOutlined, ButtonPrimary, ButtonSecondary } from '@/components/Button'
-import Column from '@/components/Column'
-import ListLogo from '@/components/ListLogo'
-import QuestionHelper from '@/components/QuestionHelper'
-import Row, { RowBetween } from '@/components/Row'
-import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds'
+import { darken } from 'polished'
+import { Text } from 'rebass'
+import styled from 'styled-components'
 
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   padding: 0;
@@ -69,6 +69,46 @@ const StyledListUrlText = styled.div`
   font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
+`
+
+const MoreButton = styled(ButtonOutlined)`
+  padding: 6px;
+  margin-right: 6px;
+  border: none;
+  background-color: transparent;
+  color: ${({ theme }) => theme.text1};
+
+  &:hover {
+    border: none;
+    box-shadow: none;
+    background-color: ${({ theme }) => theme.bg2};
+  }
+`
+
+const StyledExternalLink = styled(ExternalLink)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.bg2};
+  color: ${({ theme }) => theme.text1};
+  font-weight: bold;
+  padding: 12px 18px;
+  width: 100%;
+  border-radius: 28px;
+
+  > svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
+    background-color: ${({ theme, disabled }) =>
+      !disabled && darken(0.05, theme.bg2)};
+  }
 `
 
 function ListOrigin({ listUrl }: { listUrl: string }) {
@@ -203,18 +243,9 @@ const ListRow = memo(function ListRow({
         </Row>
       </Column>
       <StyledMenu ref={node as any}>
-        <ButtonOutlined
-          style={{
-            width: '2rem',
-            padding: '.8rem .35rem',
-            borderRadius: '12px',
-            fontSize: '14px',
-            marginRight: '0.5rem'
-          }}
-          onClick={toggle}
-          ref={setReferenceElement}>
-          <DropDown />
-        </ButtonOutlined>
+        <MoreButton onClick={toggle} ref={setReferenceElement}>
+          <MoreHorizontal />
+        </MoreButton>
 
         {open && (
           <PopoverContainer
@@ -249,7 +280,6 @@ const ListRow = memo(function ListRow({
             width: '5rem',
             minWidth: '5rem',
             padding: '0.5rem .35rem',
-            borderRadius: '12px',
             fontSize: '14px'
           }}>
           Selected
@@ -262,7 +292,6 @@ const ListRow = memo(function ListRow({
               width: '5rem',
               minWidth: '4.5rem',
               padding: '0.5rem .35rem',
-              borderRadius: '12px',
               fontSize: '14px'
             }}
             onClick={selectThisList}>
@@ -275,10 +304,8 @@ const ListRow = memo(function ListRow({
 })
 
 const AddListButton = styled(ButtonSecondary)`
-  /* height: 1.8rem; */
   max-width: 4rem;
   margin-left: 1rem;
-  border-radius: 12px;
   padding: 10px 18px;
 `
 
@@ -399,7 +426,6 @@ export function ListSelect({
             value={listUrlInput}
             onChange={handleInput}
             onKeyDown={handleEnterKey}
-            style={{ height: '2.75rem', borderRadius: 12, padding: '12px' }}
           />
           <AddListButton onClick={handleAddList} disabled={!validUrl}>
             Add
@@ -422,10 +448,14 @@ export function ListSelect({
           <ListRow key={listUrl} listUrl={listUrl} onBack={onBack} />
         ))}
       </ListContainer>
+
       <Separator />
 
       <div style={{ padding: '16px', textAlign: 'center' }}>
-        <ExternalLink href='https://tokenlists.org'>Browse lists</ExternalLink>
+        <StyledExternalLink href='https://tokenlists.org'>
+          Browse lists
+          <ArrowUpRight />
+        </StyledExternalLink>
       </div>
     </Column>
   )

@@ -1,9 +1,8 @@
-import styled from 'styled-components'
-
 import React, { useCallback, useState } from 'react'
-import { HelpCircle as Question } from 'react-feather'
+import { AlertCircle as Question } from 'react-feather'
 
 import Tooltip from '@/components/Tooltip'
+import styled from 'styled-components'
 
 const QuestionWrapper = styled.div`
   display: flex;
@@ -15,7 +14,6 @@ const QuestionWrapper = styled.div`
   outline: none;
   cursor: default;
   border-radius: 36px;
-  background-color: ${({ theme }) => theme.bg2};
   color: ${({ theme }) => theme.text2};
 
   :hover,

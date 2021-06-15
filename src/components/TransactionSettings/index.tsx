@@ -1,12 +1,11 @@
-import { darken } from 'polished'
-import styled, { ThemeContext } from 'styled-components'
-
 import React, { useState, useRef, useContext } from 'react'
 
-import { TYPE } from '@/theme'
 import { AutoColumn } from '@/components/Column'
 import QuestionHelper from '@/components/QuestionHelper'
 import { RowBetween, RowFixed } from '@/components/Row'
+import { TYPE } from '@/theme'
+import { darken } from 'polished'
+import styled, { ThemeContext } from 'styled-components'
 
 enum SlippageError {
   InvalidInput = 'InvalidInput',
@@ -24,6 +23,7 @@ const FancyButton = styled.button`
   height: 2rem;
   border-radius: 36px;
   font-size: 12px;
+  font-weight: bold;
   width: auto;
   min-width: 3rem;
   border: 1px solid ${({ theme }) => theme.bg3};
@@ -38,17 +38,20 @@ const FancyButton = styled.button`
 `
 
 const Option = styled(FancyButton)<{ active: boolean }>`
+  border: none;
   margin-right: 8px;
   :hover {
     cursor: pointer;
   }
-  background-color: ${({ active, theme }) => active && theme.primary1};
-  color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
+  background-color: ${({ active, theme }) =>
+    active ? theme.primary1 : theme.bg2};
+  color: ${({ active, theme }) => (active ? theme.primaryText1 : theme.text1)};
 `
 
 const Input = styled.input`
   background: ${({ theme }) => theme.bg1};
   font-size: 16px;
+  font-weight: bold;
   width: auto;
   outline: none;
   &::-webkit-outer-spin-button,

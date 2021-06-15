@@ -1,7 +1,3 @@
-import { Currency, ETHER, Token } from '@xplanet/sdk'
-import { Text } from 'rebass'
-import { ThemeContext } from 'styled-components'
-
 import React, {
   KeyboardEvent,
   RefObject,
@@ -17,22 +13,26 @@ import { useTranslation } from 'react-i18next'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
 
-import { useActiveWeb3React } from '@/hooks'
-import { useAllTokens, useToken } from '@/hooks/Tokens'
-import { useSelectedListInfo } from '@/state/lists/hooks'
-import { CloseIcon, LinkStyledButton, TYPE } from '@/theme'
-import { isAddress } from '@/utils'
-import Card from '@/components/Card'
-import Column from '@/components/Column'
-import ListLogo from '@/components/ListLogo'
-import QuestionHelper from '@/components/QuestionHelper'
-import Row, { RowBetween } from '@/components/Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import SortButton from './SortButton'
 import { filterTokens } from './filtering'
 import { useTokenComparator } from './sorting'
 import { PaddedColumn, SearchInput, Separator } from './styleds'
+import { ButtonBlack } from '@/components/Button'
+import Card from '@/components/Card'
+import Column from '@/components/Column'
+import ListLogo from '@/components/ListLogo'
+import QuestionHelper from '@/components/QuestionHelper'
+import Row, { RowBetween } from '@/components/Row'
+import { useActiveWeb3React } from '@/hooks'
+import { useAllTokens, useToken } from '@/hooks/Tokens'
+import { useSelectedListInfo } from '@/state/lists/hooks'
+import { CloseIcon, TYPE } from '@/theme'
+import { isAddress } from '@/utils'
+import { Currency, ETHER, Token } from '@xplanet/sdk'
+import { Text } from 'rebass'
+import { ThemeContext } from 'styled-components'
 
 interface CurrencySearchProps {
   isOpen: boolean
@@ -225,12 +225,13 @@ export function CurrencySearch({
               </TYPE.main>
             </Row>
           ) : null}
-          <LinkStyledButton
-            style={{ fontWeight: 500, color: theme.text2, fontSize: 16 }}
+          <ButtonBlack
+            padding='10px 18px'
+            width='auto'
             onClick={onChangeList}
             id='currency-search-change-list-button'>
             {selectedListInfo.current ? 'Change' : 'Select a list'}
-          </LinkStyledButton>
+          </ButtonBlack>
         </RowBetween>
       </Card>
     </Column>
