@@ -14,10 +14,11 @@ import { Text } from 'rebass'
 import styled from 'styled-components'
 
 const HoverCard = styled(Card)`
-  padding: 10px;
+  padding: 14px 10px;
   transition: all 0.2s;
   margin: 0 0 10px;
-  ${({ theme }) => `background: ${theme.bg2};`};
+  border-radius: 8px;
+
   :hover {
     background: ${({ theme }) => theme.bg3};
   }

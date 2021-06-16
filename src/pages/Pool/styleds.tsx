@@ -1,8 +1,9 @@
-import { Text } from 'rebass'
-import styled from 'styled-components'
+import { ButtonPrimary, ButtonSecondary } from '@/components/Button'
 import { AutoColumn } from '@/components/Column'
 import { RowBetween, RowFixed } from '@/components/Row'
-import { ButtonPrimary, ButtonSecondary } from '@/components/Button'
+import { darken } from 'polished'
+import { Text } from 'rebass'
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -93,24 +94,36 @@ export const ButtonRow = styled(RowFixed)`
 `
 
 export const ResponsiveButtonPrimary = styled(ButtonPrimary)`
-  border-radius: 12px;
-  padding: 6px 8px;
+  border-radius: 28px;
+  padding: 10px 18px;
   width: fit-content;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex: 1 1 auto;
+    width: 49%;
+    `};
+`
+
+export const ResponsiveButtonSecondary = styled(ButtonSecondary)`
+  border-radius: 28px;
+  padding: 10px 18px;
+  width: fit-content;
+  background-color: ${({ theme }) => theme.bg6};
+  color: ${({ theme }) => theme.text5};
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: ${({ theme }) => darken(0.05, theme.bg6)};
+    box-shadow: none;
+  }
+
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex: 1 1 auto;
     width: 49%;
   `};
 `
 
-export const ResponsiveButtonSecondary = styled(ButtonSecondary)`
-  border-radius: 12px;
-  padding: 6px 8px;
-  width: fit-content;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex: 1 1 auto;
-    width: 49%;
-  `};
-`
 export const LiquidityWrapper = styled.div`
   border-radius: 20px;
   padding: 8px;

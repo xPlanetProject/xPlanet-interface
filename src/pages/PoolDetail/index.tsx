@@ -1,25 +1,28 @@
 import React, { useContext } from 'react'
-import { Link, useParams } from 'react-router-dom'
-
 import { useTranslation } from 'react-i18next'
-import { ThemeContext } from 'styled-components'
-
-import { DarkCard, LightCard } from '@/components/Card'
-import { RowFixed } from '@/components/Row'
-import { AutoColumn } from '@/components/Column'
-import { ButtonGray } from '@/components/Button'
-import DoubleCurrencyLogo from '@/components/DoubleLogo'
-import { NFT } from '@/components/NFT'
-import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { currencyId } from '@/utils/currencyId'
-import { usePairById } from '@/hooks/usePositions'
-import { Dots } from '@/pages/Pool/styleds'
-import { TYPE } from '@/theme'
-
-import { PageWrapper, ResponsiveRow, HoverText, ResponsiveButtonPrimary } from './styleds'
+import { Link, useParams } from 'react-router-dom'
 
 import LiquidityInfo from './LiquidityInfo'
 import PriceInfo from './PriceInfo'
+import {
+  PageWrapper,
+  ResponsiveRow,
+  HoverText,
+  ResponsiveButtonPrimary,
+  ResponsiveButtonSecondary
+} from './styleds'
+import { ButtonGray } from '@/components/Button'
+import { DarkCard, LightCard } from '@/components/Card'
+import { AutoColumn } from '@/components/Column'
+import DoubleCurrencyLogo from '@/components/DoubleLogo'
+import { NFT } from '@/components/NFT'
+import { RowFixed } from '@/components/Row'
+import { usePairById } from '@/hooks/usePositions'
+import { Dots } from '@/pages/Pool/styleds'
+import { TYPE } from '@/theme'
+import { currencyId } from '@/utils/currencyId'
+import { unwrappedToken } from '@/utils/wrappedCurrency'
+import { ThemeContext } from 'styled-components'
 
 type PageParams = {
   pairId: string
@@ -27,7 +30,7 @@ type PageParams = {
 }
 
 export default function PoolDetail() {
-  const [ t ] = useTranslation()
+  const [t] = useTranslation()
   const params = useParams<PageParams>()
   const theme = useContext(ThemeContext)
 
@@ -74,37 +77,38 @@ export default function PoolDetail() {
               </TYPE.label>
             </RowFixed>
             <RowFixed>
-              <ButtonGray
+              <ResponsiveButtonSecondary
                 as={Link}
-                to={`/add/${currencyId(currency1)}/${currencyId(currency0)}?tokenId=${params.tokenId}`}
+                to={`/add/${currencyId(currency1)}/${currencyId(
+                  currency0
+                )}?tokenId=${params.tokenId}`}
                 width='fit-content'
                 padding='6px 8px'
                 borderRadius='12px'
                 style={{ marginRight: '8px' }}>
                 {t('Increase Liquidity')}
-              </ButtonGray>
-              <ResponsiveButtonPrimary
+              </ResponsiveButtonSecondary>
+              <ResponsiveButtonSecondary
                 as={Link}
-                to={`/remove/${currencyId(currency1)}/${currencyId(currency0)}?tokenId=${params.tokenId}&pairId=${params.pairId}`}
+                to={`/remove/${currencyId(currency1)}/${currencyId(
+                  currency0
+                )}?tokenId=${params.tokenId}&pairId=${params.pairId}`}
                 width='fit-content'
                 padding='6px 8px'
                 borderRadius='12px'>
                 {t('Remove Liquidity')}
-              </ResponsiveButtonPrimary>
-              {
-                pairInfo.supportMining &&
-                (
-                  <ButtonGray
-                    as={Link}
-                    to={`/poker/${params.pairId}`}
-                    width='fit-content'
-                    padding='6px 8px'
-                    borderRadius='12px'
-                    style={{ marginLeft: '8px' }}>
-                    {t('Mining')}
-                  </ButtonGray>
-                )
-              }
+              </ResponsiveButtonSecondary>
+              {pairInfo.supportMining && (
+                <ResponsiveButtonPrimary
+                  as={Link}
+                  to={`/poker/${params.pairId}`}
+                  width='fit-content'
+                  padding='6px 8px'
+                  borderRadius='12px'
+                  style={{ marginLeft: '8px' }}>
+                  {t('Mining')}
+                </ResponsiveButtonPrimary>
+              )}
             </RowFixed>
           </ResponsiveRow>
         </AutoColumn>

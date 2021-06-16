@@ -1,9 +1,9 @@
-import styled from 'styled-components'
-
-import { ButtonPrimary } from '@/components/Button'
+import { ButtonPrimary, ButtonSecondary } from '@/components/Button'
 import { AutoColumn } from '@/components/Column'
 import { RowBetween } from '@/components/Row'
 import { TYPE } from '@/theme'
+import { darken } from 'polished'
+import styled from 'styled-components'
 
 export const PageWrapper = styled(AutoColumn)`
   max-width: 870px;
@@ -19,9 +19,32 @@ export const PageWrapper = styled(AutoColumn)`
 `
 
 export const ResponsiveButtonPrimary = styled(ButtonPrimary)`
-  border-radius: 12px;
-  padding: 6px 8px;
+  border-radius: 28px;
+  padding: 10px;
   width: fit-content;
+  font-size: 14px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex: 1 1 auto;
+    width: 49%;
+    `};
+`
+
+export const ResponsiveButtonSecondary = styled(ButtonSecondary)`
+  border-radius: 28px;
+  padding: 10px;
+  width: fit-content;
+  background-color: ${({ theme }) => theme.bg6};
+  color: ${({ theme }) => theme.text5};
+  font-size: 14px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: ${({ theme }) => darken(0.05, theme.bg6)};
+    box-shadow: none;
+  }
+
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex: 1 1 auto;
     width: 49%;

@@ -413,8 +413,8 @@ export default function Swap() {
                     }}
                     color={
                       currencies[Field.INPUT] && currencies[Field.OUTPUT]
-                        ? theme.primary1
-                        : theme.text1
+                        ? theme.text1
+                        : theme.text2
                     }
                   />
                 </ArrowWrapper>

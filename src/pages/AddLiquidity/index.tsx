@@ -1,23 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { TransactionResponse } from '@ethersproject/providers'
-import {
-  Currency,
-  ETHER,
-  TokenAmount
-} from '@xplanet/sdk'
-import { Text } from 'rebass'
-import { ThemeContext } from 'styled-components'
-
 import React, { useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps, useLocation } from 'react-router-dom'
 
-import {
-  ButtonError,
-  ButtonLight,
-  ButtonPrimary
-} from '@/components/Button'
+import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
+import { PoolPriceBar } from './PoolPriceBar'
+import { ButtonError, ButtonLight, ButtonPrimary } from '@/components/Button'
 import { BlueCard, GreyCard, LightCard } from '@/components/Card'
 import { AutoColumn, ColumnCenter } from '@/components/Column'
 import CurrencyInputPanel from '@/components/CurrencyInputPanel'
@@ -27,15 +15,15 @@ import Row, { RowBetween, RowFlat } from '@/components/Row'
 import TransactionConfirmationModal, {
   ConfirmationModalContent
 } from '@/components/TransactionConfirmationModal'
+import { ArrowWrapper } from '@/components/swap/styleds'
 import { ROUTER_ADDRESS } from '@/constants'
 import { PairState } from '@/data/Reserves'
 import { useActiveWeb3React } from '@/hooks'
 import { useCurrency } from '@/hooks/Tokens'
-import {
-  ApprovalState,
-  useApproveCallback
-} from '@/hooks/useApproveCallback'
+import { ApprovalState, useApproveCallback } from '@/hooks/useApproveCallback'
 import useQueryString from '@/hooks/useQueryString'
+import AppBody from '@/pages/AppBody'
+import { Dots, Wrapper } from '@/pages/Pool/styleds'
 import { useWalletModalToggle } from '@/state/application/hooks'
 import { Field } from '@/state/mint/actions'
 import {
@@ -58,10 +46,11 @@ import {
 import { currencyId } from '@/utils/currencyId'
 import { maxAmountSpend } from '@/utils/maxAmountSpend'
 import { wrappedCurrency } from '@/utils/wrappedCurrency'
-import AppBody from '@/pages/AppBody'
-import { Dots, Wrapper } from '@/pages/Pool/styleds'
-import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
-import { PoolPriceBar } from './PoolPriceBar'
+import { BigNumber } from '@ethersproject/bignumber'
+import { TransactionResponse } from '@ethersproject/providers'
+import { Currency, ETHER, TokenAmount } from '@xplanet/sdk'
+import { Text } from 'rebass'
+import { ThemeContext } from 'styled-components'
 
 export default function AddLiquidity({
   match: {
@@ -360,13 +349,17 @@ export default function AddLiquidity({
       const newCurrencyIdB = currencyId(currencyB)
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
-          history.push(`/add/${currencyIdB}/${newCurrencyIdB}${location.search}`)
+          history.push(
+            `/add/${currencyIdB}/${newCurrencyIdB}${location.search}`
+          )
         } else {
           history.push(`/add/${newCurrencyIdB}${location.search}`)
         }
       } else {
         history.push(
-          `/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}${location.search}`
+          `/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}${
+            location.search
+          }`
         )
       }
     },
@@ -436,7 +429,9 @@ export default function AddLiquidity({
               showCommonBases
             />
             <ColumnCenter>
-              <Plus size='16' color={theme.text2} />
+              <ArrowWrapper clickable={false}>
+                <Plus size='16' color={theme.text2} />
+              </ArrowWrapper>
             </ColumnCenter>
             <CurrencyInputPanel
               value={formattedAmounts[Field.CURRENCY_B]}

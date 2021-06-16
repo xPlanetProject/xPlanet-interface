@@ -4,40 +4,42 @@ import { Link } from 'react-router-dom'
 import { ButtonPrimary } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
-import { unwrappedToken } from '@/utils/wrappedCurrency'
-import { Dots } from '@/components/swap/styleds'
 import { RowBetween } from '@/components/Row'
+import { Dots } from '@/components/swap/styleds'
 import { useMiningPoolData, useTokensFromPair } from '@/hooks/useMining'
+import { unwrappedToken } from '@/utils/wrappedCurrency'
 import styled from 'styled-components'
 
 const Card = styled(DarkCard)`
   flex: 1;
   display: grid;
-  margin: 0 32px 32px;
-  padding: 32px 64px;
+  padding: 2rem 6rem;
   text-align: center;
-  grid-row-gap: 18px;
-  border: 2px solid ${({ theme }) => theme.primary1};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    margin: 0 0 32px;
-  `};
-`
 
-const CardFlexCenter = styled(DarkCard)`
-  flex: 1;
-  display: flex;
-  margin: 0 32px 32px;
-  padding: 32px 64px;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid ${({ theme }) => theme.primary1};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    margin: 0 0 32px;
+    padding: 2rem;
+    text-align: left;
   `};
 `
 
 const RowCenter = styled(RowBetween)`
   justify-content: center;
+`
+
+const RowCenterSmallLeft = styled(RowCenter)`
+  justify-content: center;
+  margin: 0.5rem 0;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    text-align: left;
+  `};
+`
+
+const RowBetweenItem = styled(RowBetween)`
+  margin: 0.5rem 0;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  `};
 `
 
 const DataText = styled.div`
@@ -50,8 +52,10 @@ const DataText = styled.div`
 `
 
 const Text = styled.div`
-  font-weight: 600;
+  color: ${({ theme }) => theme.text2};
   font-size: 16px;
+  font-weight: bold;
+
   ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 14px;
   `};
@@ -59,6 +63,7 @@ const Text = styled.div`
 
 const ExtentsText = styled.span`
   color: ${({ theme }) => theme.text3};
+  font-weight: 500;
   font-size: 14px;
 `
 interface PairProps {
@@ -80,57 +85,55 @@ export default function PoolListIteme({ pairId }: PairProps) {
 
   if (loading) {
     return (
-      <CardFlexCenter>
+      <Card>
         <Dots>Loading Pair</Dots>
-      </CardFlexCenter>
+      </Card>
     )
   }
 
   return (
     <Card>
       <RowCenter>
-        {
-          token0 && token1 && (
-            <DoubleCurrencyLogo
-              currency0={unwrappedToken(token0)}
-              currency1={unwrappedToken(token1)}
-              size={36}
-              margin
-            />
-          )
-        }
+        {token0 && token1 && (
+          <DoubleCurrencyLogo
+            currency0={unwrappedToken(token0)}
+            currency1={unwrappedToken(token1)}
+            size={36}
+            margin
+          />
+        )}
       </RowCenter>
 
-      <RowCenter>
+      <RowCenterSmallLeft>
         <DataText>
           {token0?.symbol}&nbsp;/&nbsp;{token1?.symbol}
         </DataText>
-      </RowCenter>
+      </RowCenterSmallLeft>
 
-      <RowCenter>
+      <RowCenterSmallLeft>
         <ExtentsText>
           Deposit {token0?.symbol}-{token1?.symbol} xPoker <br />
           Earn XKEY
         </ExtentsText>
-      </RowCenter>
+      </RowCenterSmallLeft>
 
-      <RowBetween>
+      <RowBetweenItem>
         <ExtentsText>Staked:</ExtentsText>
         <Text>{xPokers} xPoker</Text>
-      </RowBetween>
-      <RowBetween>
+      </RowBetweenItem>
+      <RowBetweenItem>
         <ExtentsText>TVL:</ExtentsText>
         <Text>$ {TVL}</Text>
-      </RowBetween>
-      <RowBetween>
+      </RowBetweenItem>
+      <RowBetweenItem>
         <ExtentsText>APR:</ExtentsText>
         <Text>201%</Text>
-      </RowBetween>
-      <RowCenter>
+      </RowBetweenItem>
+      <RowBetweenItem>
         <ButtonPrimary padding='12px' as={Link} to={`/poker/${pairId}`}>
           Select
         </ButtonPrimary>
-      </RowCenter>
+      </RowBetweenItem>
     </Card>
   )
 }

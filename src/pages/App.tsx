@@ -14,18 +14,18 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
 import Stake from './Stake'
-import UnStake from './UnStake'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import UnStake from './UnStake'
 import Yield from './Yield'
 import Header from '@/components/Header'
 import Popups from '@/components/Popups'
 import Web3ReactManager from '@/components/Web3ReactManager'
 import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
-import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
-import styled from 'styled-components'
 import { useV3Token } from '@/hooks/TokensV3'
+import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
 import useUSDCPrice from '@/usdc-price'
+import styled from 'styled-components'
 
 const TestComponent = () => {
   const location = useLocation()
@@ -69,9 +69,9 @@ const Marginer = styled.div`
 `
 
 export default function App() {
-  const uni = useV3Token('0x6B175474E89094C44Da98b954EedeAC495271d0F') ?? undefined
-  const uniPrice = useUSDCPrice(uni)
-  console.log(uniPrice)
+  // const uni = useV3Token('0x6B175474E89094C44Da98b954EedeAC495271d0F') ?? undefined
+  // const uniPrice = useUSDCPrice(uni)
+  // console.log(uniPrice)
 
   return (
     <Suspense fallback={null}>

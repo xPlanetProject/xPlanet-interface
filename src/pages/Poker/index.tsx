@@ -4,9 +4,11 @@ import { RouteComponentProps, Link } from 'react-router-dom'
 import {
   ResponsiveRow,
   PowerInfoDivider,
+  PowerRow,
   PowerCard,
   PokerImage,
-  StakeLink
+  StakeLink,
+  Separator
 } from './styleds'
 import PokerImg from '@/assets/images/poker.jpeg'
 import { ButtonOutlined } from '@/components/Button'
@@ -137,12 +139,12 @@ export default function Poker({
                 {pokerInfo.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
                     <TYPE.largeHeader
-                      fontSize='1.5rem'
+                      fontSize='1.25rem'
                       margin='0 0 0.5rem'
-                      fontWeight={500}>
+                      fontWeight='bold'>
                       {item.value}
                     </TYPE.largeHeader>
-                    <TYPE.subHeader>{item.key}</TYPE.subHeader>
+                    <TYPE.darkGray fontSize='0.5rem'>{item.key}</TYPE.darkGray>
                   </BaseInfoItem>
                 ))}
               </ResponsiveRow>
@@ -151,28 +153,50 @@ export default function Poker({
                 {pokerPower.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
                     <TYPE.largeHeader
-                      fontSize='1.5rem'
+                      fontSize='1.25rem'
                       margin='0 0 0.5rem'
-                      fontWeight={500}>
+                      fontWeight='bold'>
                       {item.value}
                     </TYPE.largeHeader>
-                    <TYPE.subHeader>{item.key}</TYPE.subHeader>
+                    <TYPE.darkGray fontSize='0.5rem'>{item.key}</TYPE.darkGray>
                   </BaseInfoItem>
                 ))}
               </ResponsiveRow>
             </DarkCard>
 
             <ResponsiveRow>
-              <PowerCard>
-                <DarkCard>
-                  <TYPE.mediumHeader textAlign='center'>
-                    My Mining Power
-                  </TYPE.mediumHeader>
-                  <TYPE.mediumHeader textAlign='center' marginTop='20px'>
-                    {powerByAccount}
-                  </TYPE.mediumHeader>
-                  <StakeLink to={`/unstake/SINGLE/${pairId}`}>
+              <DarkCard>
+                <PowerRow>
+                  <PowerCard>
+                    <TYPE.mediumHeader textAlign='center'>
+                      My Mining Power
+                    </TYPE.mediumHeader>
+                    <TYPE.mediumHeader textAlign='center' marginTop='20px'>
+                      {powerByAccount}
+                    </TYPE.mediumHeader>
+                    <StakeLink to={`/unstake/SINGLE/${pairId}`}>
+                      <ButtonOutlined
+                        style={{
+                          width: 'auto',
+                          padding: '0.4rem .6rem',
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          margin: '20px auto 0'
+                        }}>
+                        Staked xPoker
+                      </ButtonOutlined>
+                    </StakeLink>
+                  </PowerCard>
+                  <Separator />
+                  <PowerCard>
+                    <TYPE.mediumHeader textAlign='center'>
+                      My Reward
+                    </TYPE.mediumHeader>
+                    <TYPE.mediumHeader textAlign='center' marginTop='20px'>
+                      {rewardByAccount}
+                    </TYPE.mediumHeader>
                     <ButtonOutlined
+                      onClick={harvest}
                       style={{
                         width: 'auto',
                         padding: '0.4rem .6rem',
@@ -180,32 +204,11 @@ export default function Poker({
                         fontSize: '12px',
                         margin: '20px auto 0'
                       }}>
-                      Staked xPoker
+                      Harvest
                     </ButtonOutlined>
-                  </StakeLink>
-                </DarkCard>
-              </PowerCard>
-              <PowerCard>
-                <DarkCard>
-                  <TYPE.mediumHeader textAlign='center'>
-                    My Reward
-                  </TYPE.mediumHeader>
-                  <TYPE.mediumHeader textAlign='center' marginTop='20px'>
-                    {rewardByAccount}
-                  </TYPE.mediumHeader>
-                  <ButtonOutlined
-                    onClick={harvest}
-                    style={{
-                      width: 'auto',
-                      padding: '0.4rem .6rem',
-                      borderRadius: '16px',
-                      fontSize: '12px',
-                      margin: '20px auto 0'
-                    }}>
-                    Harvest
-                  </ButtonOutlined>
-                </DarkCard>
-              </PowerCard>
+                  </PowerCard>
+                </PowerRow>
+              </DarkCard>
             </ResponsiveRow>
 
             <ResponsiveRow>

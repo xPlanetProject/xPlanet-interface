@@ -1,8 +1,8 @@
+import React from 'react'
+
 import { CardProps, Text } from 'rebass'
 import { Box } from 'rebass/styled-components'
 import styled from 'styled-components'
-
-import React from 'react'
 
 const Card = styled(Box)<{
   padding?: string
@@ -19,7 +19,7 @@ const Card = styled(Box)<{
 export default Card
 
 export const DarkCard = styled(Card)`
-  background-color: ${({ theme }) => theme.bg0};
+  background-color: ${({ theme }) => theme.bg1};
 `
 
 export const LightCard = styled(Card)`

@@ -4,7 +4,7 @@ import PoolList from './PoolList'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import Question from '@/components/QuestionHelper'
-import { RowBetween } from '@/components/Row'
+import { AutoRow, RowBetween } from '@/components/Row'
 import { useCurrentStagePrice, userSwapTokenHadMint } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
 import { Text } from 'rebass'
@@ -36,14 +36,20 @@ const TitleRow = styled(RowBetween)`
 
 const ResponsiveRow = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
+    align-items: flex-start;
     flex-direction: column;
     row-gap: 16px;
-    width: 100%:
   `};
 `
 
 const BaseInfoItem = styled(AutoColumn)`
+  padding: 1.5rem 1.25rem;
   flex: 1;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 1rem 0.5rem;
+    justify-items: flex-start;
+  `};
 `
 
 export default function Yield() {
@@ -64,7 +70,9 @@ export default function Yield() {
         <AutoColumn gap='lg' justify='center'>
           <AutoColumn gap='lg' style={{ width: '100%' }}>
             <TitleRow>
-              <TYPE.mediumHeader>xPoker Mining</TYPE.mediumHeader>
+              <TYPE.gray fontWeight='bold' fontSize='20px'>
+                xPoker Mining
+              </TYPE.gray>
             </TitleRow>
             <DarkCard>
               <ResponsiveRow>
@@ -72,9 +80,9 @@ export default function Yield() {
                   <BaseInfoItem justify='center' key={item.key}>
                     <TYPE.largeHeader
                       color={theme.text1}
-                      fontSize='1.5rem'
+                      fontSize='1.75rem'
                       margin='0 0 0.5rem'
-                      fontWeight={500}>
+                      fontWeight='bold'>
                       <CountUp
                         isCounting
                         thousandsSeparator=','
@@ -82,19 +90,19 @@ export default function Yield() {
                         duration={3.2}
                       />
                     </TYPE.largeHeader>
-                    <TYPE.subHeader color={theme.text3}>
+                    <TYPE.subHeader color={theme.text2} fontWeight={500}>
                       {item.key}
                     </TYPE.subHeader>
                   </BaseInfoItem>
                 ))}
               </ResponsiveRow>
             </DarkCard>
-            <RowBetween>
-              <Text color={theme.text1} fontWeight={500}>
+            <AutoRow>
+              <TYPE.gray fontWeight='bold' fontSize='20px'>
                 Pool List
-              </Text>
+              </TYPE.gray>
               <Question text='xPoker Mining.' />
-            </RowBetween>
+            </AutoRow>
             <PoolList />
           </AutoColumn>
         </AutoColumn>
