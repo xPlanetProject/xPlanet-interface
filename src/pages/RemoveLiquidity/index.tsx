@@ -135,8 +135,12 @@ export default function RemoveLiquidity({
   )
 
   // allowance handling
-  const [signatureData, setSignatureData] =
-    useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
+  const [signatureData, setSignatureData] = useState<{
+    v: number
+    r: string
+    s: string
+    deadline: number
+  } | null>(null)
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
     ROUTER_ADDRESS
@@ -580,7 +584,7 @@ export default function RemoveLiquidity({
             <LightCard>
               <AutoColumn gap='20px'>
                 <RowBetween>
-                  <Text fontWeight={500}>Amount</Text>
+                  <Text fontWeight='bold'>Amount</Text>
                   {/* <ClickableText
                     fontWeight={500}
                     onClick={() => {
@@ -590,7 +594,7 @@ export default function RemoveLiquidity({
                   </ClickableText> */}
                 </RowBetween>
                 <Row style={{ alignItems: 'flex-end' }}>
-                  <Text fontSize={72} fontWeight={500}>
+                  <Text fontSize={72} fontWeight='bold'>
                     {formattedAmounts[Field.LIQUIDITY_PERCENT]}%
                   </Text>
                 </Row>
