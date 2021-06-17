@@ -1,8 +1,6 @@
 import React, { useState, useCallback } from 'react'
 
-import { ButtonLight } from '@/components/Button'
 import { LightCard } from '@/components/Card'
-import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
 import {
   useXKeyDaoContract,
@@ -11,42 +9,20 @@ import {
 import useTheme from '@/hooks/useTheme'
 import { uesSingleMaps } from '@/hooks/useUnStake'
 import { Dots } from '@/pages/Pool/styleds'
-import { PageWrapper } from '@/pages/PoolDetail/styleds'
 import SingleStakeItem from '@/pages/Stake/SingleStakeItem'
-import { PokerItemType } from '@/pages/Stake/StakeHelpers'
+import {
+  Row,
+  Column,
+  ActionRow,
+  WarpperDarkCard,
+  ResponsiveButtonPrimary
+} from '@/pages/Stake/styleds'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
-import { PokerType } from '@/utils/poker'
-import styled from 'styled-components'
 
 type PageProps = {
   pairId: string
 }
-
-const Row = styled.div`
-  align-items: center;
-  border-radius: 20px;
-  display: flex;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg1};
-
-  & > div:not(:first-child) {
-    text-align: center;
-  }
-  & > div:last-child {
-    text-align: right;
-  }
-  :hover {
-    background-color: ${({ theme }) => theme.bg2};
-  }
-`
-const StakeCheckouSection = styled.div`
-  flex: 1;
-`
 
 const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
   const theme = useTheme()
@@ -91,68 +67,70 @@ const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
 
   if (loading) {
     return (
-      <PageWrapper>
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            <Dots>Loading</Dots>
-          </TYPE.body>
-        </LightCard>
-      </PageWrapper>
+      <WarpperDarkCard>
+        <TYPE.body color={theme.text3} textAlign='center' padding='40px'>
+          <Dots>Loading</Dots>
+        </TYPE.body>
+      </WarpperDarkCard>
     )
   }
 
   return (
     <>
-      <Row>
-        <StakeCheckouSection>
-          <TYPE.subHeader>ID</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>Poker</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>流动性份额</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>操作</TYPE.subHeader>
-        </StakeCheckouSection>
-      </Row>
-      {pokers.length ? (
-        pokers.map((item) => {
-          return (
-            <SingleStakeItem
-              data={item}
-              key={item.tokenIdStr}
-              selectIds={selectIds}
-              selectPoker={selectPoker}
-            />
-          )
-        })
-      ) : (
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            No data.
-          </TYPE.body>
-        </LightCard>
-      )}
-      <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>
-          Currently Selected: {selectIds.length}/{pokers.length}
-        </TYPE.subHeader>
-        <ButtonLight
-          onClick={unStateSingle}
-          style={{
-            width: 'auto',
-            padding: '0.4rem .6rem',
-            borderRadius: '16px',
-            fontSize: '12px'
-          }}>
+      <WarpperDarkCard>
+        <Row isHeader={true}>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'></TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Poker
+            </TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              ID
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Liquidity Share
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Calculating power
+            </TYPE.darkGray>
+          </Column>
+        </Row>
+        {pokers.length ? (
+          pokers.map((item, index) => {
+            return (
+              <SingleStakeItem
+                data={item}
+                key={item?.tokenIdStr || index}
+                selectIds={selectIds}
+                selectPoker={selectPoker}
+              />
+            )
+          })
+        ) : (
+          <LightCard padding='40px'>
+            <TYPE.body color={theme.text3} textAlign='center'>
+              No data.
+            </TYPE.body>
+          </LightCard>
+        )}
+      </WarpperDarkCard>
+
+      <ActionRow style={{ marginTop: 20 }}>
+        <TYPE.darkGray fontWeight='bold' fontSize='14px'>
+          {selectIds.length}/{pokers.length} Selected
+        </TYPE.darkGray>
+        <ResponsiveButtonPrimary onClick={unStateSingle}>
           UnStake
-        </ButtonLight>
-      </RowBetween>
+        </ResponsiveButtonPrimary>
+      </ActionRow>
     </>
   )
 }

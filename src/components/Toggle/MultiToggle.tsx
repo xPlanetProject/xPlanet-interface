@@ -1,4 +1,5 @@
 import React from 'react'
+
 import styled from 'styled-components/macro'
 
 export const ToggleWrapper = styled.button<{ width?: string }>`
@@ -6,19 +7,22 @@ export const ToggleWrapper = styled.button<{ width?: string }>`
   align-items: center;
   width: ${({ width }) => width ?? '100%'};
   padding: 1px;
-  background: ${({ theme }) => theme.bg1};
-  border-radius: 8px;
+  background: ${({ theme }) => theme.bg2};
+  border-radius: 24px;
   border: ${({ theme }) => '1px solid ' + theme.bg2};
   cursor: pointer;
   outline: none;
 `
 
-export const ToggleElement = styled.span<{ isActive?: boolean; fontSize?: string }>`
+export const ToggleElement = styled.span<{
+  isActive?: boolean
+  fontSize?: string
+}>`
   display: flex;
   align-items: center;
   width: 100%;
   padding: 4px 0.5rem;
-  border-radius: 6px;
+  border-radius: 20px;
   justify-content: center;
   height: 100%;
   background: ${({ theme, isActive }) => (isActive ? theme.bg0 : 'none')};
@@ -49,11 +53,20 @@ export interface ToggleProps {
   width?: string
 }
 
-export default function MultiToggle({ id, options, activeIndex, toggle, width }: ToggleProps) {
+export default function MultiToggle({
+  id,
+  options,
+  activeIndex,
+  toggle,
+  width
+}: ToggleProps) {
   return (
     <ToggleWrapper id={id} width={width}>
       {options.map((option, index) => (
-        <ToggleElement key={id + '-' + index} isActive={index === activeIndex} onClick={() => toggle(index)}>
+        <ToggleElement
+          key={id + '-' + index}
+          isActive={index === activeIndex}
+          onClick={() => toggle(index)}>
           {option}
         </ToggleElement>
       ))}

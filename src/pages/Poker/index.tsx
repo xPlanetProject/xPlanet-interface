@@ -2,21 +2,27 @@ import React, { useCallback } from 'react'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
 import {
+  PageWrapper,
+  HoverText,
   ResponsiveRow,
+  GridRow,
+  BaseInfoItem,
   PowerInfoDivider,
   PowerRow,
   PowerCard,
   PokerImage,
-  StakeLink,
-  Separator
+  Separator,
+  ResponsiveButtonPrimary,
+  ResponsiveButtonSecondary,
+  RowCenterSmallLeft
 } from './styleds'
-import PokerImg from '@/assets/images/poker.jpeg'
-import { ButtonOutlined } from '@/components/Button'
+import Poker1Img from '@/assets/images/poker1.svg'
+import Poker5Img from '@/assets/images/poker5.svg'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import Question from '@/components/QuestionHelper'
-import { RowFixed, RowBetween, RowAround, RowEnd } from '@/components/Row'
+import { RowFixed, RowBetween, RowEnd } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
 import { useXKeyDaoContract } from '@/hooks/useContract'
 import {
@@ -26,33 +32,6 @@ import {
 } from '@/hooks/useMining'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
-import styled from 'styled-components'
-
-const PageWrapper = styled(AutoColumn)`
-  max-width: 870px;
-  width: 100%;
-
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    max-width: 800px;
-  `};
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    max-width: 500px;
-  `};
-`
-
-const HoverText = styled(TYPE.main)`
-  text-decoration: none;
-  color: ${({ theme }) => theme.text3};
-  :hover {
-    color: ${({ theme }) => theme.text1};
-    text-decoration: none;
-  }
-`
-
-const BaseInfoItem = styled(AutoColumn)`
-  flex: 1;
-`
 
 export default function Poker({
   match: {
@@ -138,13 +117,19 @@ export default function Poker({
               <ResponsiveRow>
                 {pokerInfo.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
-                    <TYPE.largeHeader
-                      fontSize='1.25rem'
-                      margin='0 0 0.5rem'
-                      fontWeight='bold'>
-                      {item.value}
-                    </TYPE.largeHeader>
-                    <TYPE.darkGray fontSize='0.5rem'>{item.key}</TYPE.darkGray>
+                    <RowCenterSmallLeft>
+                      <TYPE.largeHeader
+                        fontSize='1.25rem'
+                        margin='0 0 0.5rem'
+                        fontWeight='bold'>
+                        {item.value}
+                      </TYPE.largeHeader>
+                    </RowCenterSmallLeft>
+                    <RowCenterSmallLeft>
+                      <TYPE.darkGray fontSize='0.5rem'>
+                        {item.key}
+                      </TYPE.darkGray>
+                    </RowCenterSmallLeft>
                   </BaseInfoItem>
                 ))}
               </ResponsiveRow>
@@ -152,13 +137,19 @@ export default function Poker({
               <ResponsiveRow>
                 {pokerPower.map((item) => (
                   <BaseInfoItem justify='center' key={item.key}>
-                    <TYPE.largeHeader
-                      fontSize='1.25rem'
-                      margin='0 0 0.5rem'
-                      fontWeight='bold'>
-                      {item.value}
-                    </TYPE.largeHeader>
-                    <TYPE.darkGray fontSize='0.5rem'>{item.key}</TYPE.darkGray>
+                    <RowCenterSmallLeft>
+                      <TYPE.largeHeader
+                        fontSize='1.25rem'
+                        margin='0 0 0.5rem'
+                        fontWeight='bold'>
+                        {item.value}
+                      </TYPE.largeHeader>
+                    </RowCenterSmallLeft>
+                    <RowCenterSmallLeft>
+                      <TYPE.darkGray fontSize='0.5rem'>
+                        {item.key}
+                      </TYPE.darkGray>
+                    </RowCenterSmallLeft>
                   </BaseInfoItem>
                 ))}
               </ResponsiveRow>
@@ -168,126 +159,106 @@ export default function Poker({
               <DarkCard>
                 <PowerRow>
                   <PowerCard>
-                    <TYPE.mediumHeader textAlign='center'>
-                      My Mining Power
-                    </TYPE.mediumHeader>
-                    <TYPE.mediumHeader textAlign='center' marginTop='20px'>
-                      {powerByAccount}
-                    </TYPE.mediumHeader>
-                    <StakeLink to={`/unstake/SINGLE/${pairId}`}>
-                      <ButtonOutlined
-                        style={{
-                          width: 'auto',
-                          padding: '0.4rem .6rem',
-                          borderRadius: '16px',
-                          fontSize: '12px',
-                          margin: '20px auto 0'
-                        }}>
+                    <RowCenterSmallLeft>
+                      <TYPE.mediumHeader
+                        textAlign='center'
+                        fontSize='16px'
+                        fontWeight={500}>
+                        My Mining Power
+                      </TYPE.mediumHeader>
+                    </RowCenterSmallLeft>
+                    <RowCenterSmallLeft>
+                      <TYPE.mediumHeader
+                        textAlign='center'
+                        fontSize='26px'
+                        margin='1rem 0'
+                        fontWeight='bold'>
+                        {powerByAccount}
+                      </TYPE.mediumHeader>
+                    </RowCenterSmallLeft>
+                    <RowCenterSmallLeft>
+                      <ResponsiveButtonPrimary
+                        as={Link}
+                        to={`/unstake/SINGLE/${pairId}`}>
                         Staked xPoker
-                      </ButtonOutlined>
-                    </StakeLink>
+                      </ResponsiveButtonPrimary>
+                    </RowCenterSmallLeft>
                   </PowerCard>
                   <Separator />
                   <PowerCard>
-                    <TYPE.mediumHeader textAlign='center'>
-                      My Reward
-                    </TYPE.mediumHeader>
-                    <TYPE.mediumHeader textAlign='center' marginTop='20px'>
-                      {rewardByAccount}
-                    </TYPE.mediumHeader>
-                    <ButtonOutlined
-                      onClick={harvest}
-                      style={{
-                        width: 'auto',
-                        padding: '0.4rem .6rem',
-                        borderRadius: '16px',
-                        fontSize: '12px',
-                        margin: '20px auto 0'
-                      }}>
-                      Harvest
-                    </ButtonOutlined>
+                    <RowCenterSmallLeft>
+                      <TYPE.mediumHeader
+                        textAlign='center'
+                        fontSize='16px'
+                        fontWeight={500}>
+                        My Reward
+                      </TYPE.mediumHeader>
+                    </RowCenterSmallLeft>
+                    <RowCenterSmallLeft>
+                      <TYPE.mediumHeader
+                        textAlign='center'
+                        fontSize='26px'
+                        margin='1rem 0'
+                        fontWeight='bold'>
+                        {rewardByAccount}
+                      </TYPE.mediumHeader>
+                    </RowCenterSmallLeft>
+                    <RowCenterSmallLeft>
+                      <ResponsiveButtonPrimary onClick={harvest}>
+                        Harvest
+                      </ResponsiveButtonPrimary>
+                    </RowCenterSmallLeft>
                   </PowerCard>
                 </PowerRow>
               </DarkCard>
             </ResponsiveRow>
 
-            <ResponsiveRow>
-              <PowerCard>
-                <DarkCard>
-                  <TYPE.mediumHeader textAlign='center'>
+            <GridRow>
+              <DarkCard>
+                <PowerCard>
+                  <PokerImage>
+                    <img src={Poker1Img} alt={'poker img'} />
+                  </PokerImage>
+                  <TYPE.mediumHeader textAlign='center' margin='1rem 0'>
                     Single Poker Mining
                   </TYPE.mediumHeader>
+                  <RowBetween margin='1rem 0'>
+                    <ResponsiveButtonSecondary
+                      as={Link}
+                      to={`/stake/SINGLE/${pairId}`}>
+                      Stake
+                    </ResponsiveButtonSecondary>
+                    <ResponsiveButtonSecondary
+                      as={Link}
+                      to={`/unstake/SINGLE/${pairId}`}>
+                      Unstake
+                    </ResponsiveButtonSecondary>
+                  </RowBetween>
+                </PowerCard>
+              </DarkCard>
+              <DarkCard>
+                <PowerCard>
                   <PokerImage>
-                    <img src={PokerImg} alt={'poker img'} />
+                    <img src={Poker5Img} alt={'poker img'} />
                   </PokerImage>
-
-                  <RowAround>
-                    <StakeLink to={`/stake/SINGLE/${pairId}`}>
-                      <ButtonOutlined
-                        style={{
-                          width: 'auto',
-                          padding: '0.4rem .6rem',
-                          borderRadius: '16px',
-                          fontSize: '12px',
-                          margin: '20px auto 0'
-                        }}>
-                        Stake
-                      </ButtonOutlined>
-                    </StakeLink>
-
-                    <StakeLink to={`/unstake/SINGLE/${pairId}`}>
-                      <ButtonOutlined
-                        style={{
-                          width: 'auto',
-                          padding: '0.4rem .6rem',
-                          borderRadius: '16px',
-                          fontSize: '12px',
-                          margin: '20px auto 0'
-                        }}>
-                        Unstake
-                      </ButtonOutlined>
-                    </StakeLink>
-                  </RowAround>
-                </DarkCard>
-              </PowerCard>
-              <PowerCard>
-                <DarkCard>
-                  <TYPE.mediumHeader textAlign='center'>
+                  <TYPE.mediumHeader textAlign='center' margin='1rem 0'>
                     Sythetic Poker Mining
                   </TYPE.mediumHeader>
-                  <PokerImage>
-                    <img src={PokerImg} alt={'poker img'} />
-                  </PokerImage>
-                  <RowAround>
-                    <StakeLink to={`/stake/SYNTHETIC/${pairId}`}>
-                      <ButtonOutlined
-                        style={{
-                          width: 'auto',
-                          padding: '0.4rem .6rem',
-                          borderRadius: '16px',
-                          fontSize: '12px',
-                          margin: '20px auto 0'
-                        }}>
-                        Stake
-                      </ButtonOutlined>
-                    </StakeLink>
-
-                    <StakeLink to={`/unstake/SYNTHETIC/${pairId}`}>
-                      <ButtonOutlined
-                        style={{
-                          width: 'auto',
-                          padding: '0.4rem .6rem',
-                          borderRadius: '16px',
-                          fontSize: '12px',
-                          margin: '20px auto 0'
-                        }}>
-                        Unstake
-                      </ButtonOutlined>
-                    </StakeLink>
-                  </RowAround>
-                </DarkCard>
-              </PowerCard>
-            </ResponsiveRow>
+                  <RowBetween margin='1rem 0'>
+                    <ResponsiveButtonSecondary
+                      as={Link}
+                      to={`/stake/SYNTHETIC/${pairId}`}>
+                      Stake
+                    </ResponsiveButtonSecondary>
+                    <ResponsiveButtonSecondary
+                      as={Link}
+                      to={`/unstake/SYNTHETIC/${pairId}`}>
+                      Unstake
+                    </ResponsiveButtonSecondary>
+                  </RowBetween>
+                </PowerCard>
+              </DarkCard>
+            </GridRow>
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>

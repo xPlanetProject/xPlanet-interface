@@ -83,3 +83,9 @@ export const ExtentsText = styled.span`
   margin-right: 4px;
   font-weight: 500;
 `
+
+export const Separator = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.bg2};
+`

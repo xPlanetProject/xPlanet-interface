@@ -2,20 +2,18 @@ import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import SingleStake from './SingleStake'
-import { TitleRow, PageWrapper, StakeTabConent, HoverText } from './styleds'
 import SyntheticStake from './SyntheticStake'
-import { ButtonLight, ButtonGray } from '@/components/Button'
-import { DarkCard } from '@/components/Card'
+import { PageWrapper, NavTitleTab, TabConent, HoverText } from './styleds'
 import { AutoColumn } from '@/components/Column'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { RowFixed } from '@/components/Row'
 import { useMiningPool } from '@/hooks/useMining'
-import { HideSmall, TYPE } from '@/theme'
+import { TYPE } from '@/theme'
 
 type StakeType = 'SINGLE' | 'SYNTHETIC'
 
 const Stake: React.FC = () => {
-  const { pairId, type } = useParams<{ pairId: string, type: StakeType }>()
+  const { pairId, type } = useParams<{ pairId: string; type: StakeType }>()
   const poolInfo = useMiningPool(pairId)
   const [stakeType, setStakeType] = useState<StakeType>(type)
 
@@ -41,58 +39,40 @@ const Stake: React.FC = () => {
                 margin={true}
               />
               <TYPE.label fontSize={'24px'} mr='10px'>
-                &nbsp;{poolInfo?.token0?.symbol}&nbsp;/&nbsp;
-                {poolInfo?.token1?.symbol}
+                &nbsp;{poolInfo?.token0?.symbol}/{poolInfo?.token1?.symbol}
               </TYPE.label>
+              <TYPE.mediumHeader fontWeight='bold' marginLeft='10px'>
+                {stakeType === 'SINGLE'
+                  ? 'Stake Single xPoker'
+                  : 'Stake Synthetic xPoker'}
+              </TYPE.mediumHeader>
             </RowFixed>
           </AutoColumn>
           <AutoColumn gap='lg' style={{ width: '100%' }}>
-            <TitleRow>
-              <HideSmall>
-                <TYPE.mediumHeader>
-                  {stakeType === 'SINGLE'
-                    ? 'Stake Single xPoker'
-                    : 'Stake Synthetic xPoker'}
-                </TYPE.mediumHeader>
-              </HideSmall>
-            </TitleRow>
             <RowFixed>
-              <ButtonLight
+              <NavTitleTab
                 as={Link}
                 to={`/stake/SINGLE/${pairId}`}
+                className={stakeType == 'SINGLE' ? 'ACTIVE' : ''}
                 onClick={() => {
                   setStakeType('SINGLE')
-                }}
-                style={{
-                  width: 'auto',
-                  padding: '0.4rem .6rem',
-                  borderRadius: '16px',
-                  fontSize: '12px'
                 }}>
                 Stake Single xPoker
-              </ButtonLight>
-              <ButtonGray
+              </NavTitleTab>
+              <NavTitleTab
                 as={Link}
                 to={`/stake/SYNTHETIC/${pairId}`}
+                className={stakeType == 'SYNTHETIC' ? 'ACTIVE' : ''}
                 onClick={() => {
                   setStakeType('SYNTHETIC')
-                }}
-                style={{
-                  width: 'auto',
-                  padding: '0.4rem .6rem',
-                  borderRadius: '16px',
-                  fontSize: '12px',
-                  marginLeft: '20px'
                 }}>
                 Stake Synthetic xPoker
-              </ButtonGray>
+              </NavTitleTab>
             </RowFixed>
-            <DarkCard>
-              <StakeTabConent>
-                {stakeType === 'SINGLE' && <SingleStake pairId={pairId} />}
-                {stakeType === 'SYNTHETIC' && <SyntheticStake pairId={pairId} />}
-              </StakeTabConent>
-            </DarkCard>
+            <TabConent>
+              {stakeType === 'SINGLE' && <SingleStake pairId={pairId} />}
+              {stakeType === 'SYNTHETIC' && <SyntheticStake pairId={pairId} />}
+            </TabConent>
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>

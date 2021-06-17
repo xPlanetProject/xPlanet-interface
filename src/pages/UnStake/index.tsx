@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import {
-  TitleRow,
-  PageWrapper,
-  StakeTabConent,
-  HoverText
-} from '../Stake/styleds'
 import UnStakeSingle from './UnstakePokerSingle'
 import UnStakeSynthetic from './UnstakePokerSynthetic'
-import { ButtonLight, ButtonGray } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
 import { RowFixed } from '@/components/Row'
 import { useMiningPool } from '@/hooks/useMining'
-import { HideSmall, TYPE } from '@/theme'
+import {
+  NavTitleTab,
+  PageWrapper,
+  StakeTabConent,
+  TabConent,
+  HoverText
+} from '@/pages/Stake/styleds'
+import { TYPE } from '@/theme'
 
 type StakeType = 'SINGLE' | 'SYNTHETIC'
 
@@ -46,56 +46,40 @@ const UnStake: React.FC = () => {
                 margin={true}
               />
               <TYPE.label fontSize={'24px'} mr='10px'>
-                &nbsp;{poolInfo?.token0?.symbol}&nbsp;/&nbsp;
-                {poolInfo?.token1?.symbol}
+                &nbsp;{poolInfo?.token0?.symbol}/{poolInfo?.token1?.symbol}
               </TYPE.label>
+              <TYPE.mediumHeader fontWeight='bold' marginLeft='10px'>
+                My Staked xPoker List
+              </TYPE.mediumHeader>
             </RowFixed>
           </AutoColumn>
           <AutoColumn gap='lg' style={{ width: '100%' }}>
-            <TitleRow>
-              <HideSmall>
-                <TYPE.mediumHeader>My Staked xPoker List</TYPE.mediumHeader>
-              </HideSmall>
-            </TitleRow>
             <RowFixed>
-              <ButtonLight
+              <NavTitleTab
                 as={Link}
                 to={`/unstake/SINGLE/${pairId}`}
+                className={stakeType == 'SINGLE' ? 'ACTIVE' : ''}
                 onClick={() => {
                   setStakeType('SINGLE')
-                }}
-                style={{
-                  width: 'auto',
-                  padding: '0.4rem .6rem',
-                  borderRadius: '16px',
-                  fontSize: '12px'
                 }}>
                 Single xPoker
-              </ButtonLight>
-              <ButtonGray
+              </NavTitleTab>
+              <NavTitleTab
                 as={Link}
                 to={`/unstake/SYNTHETIC/${pairId}`}
+                className={stakeType == 'SYNTHETIC' ? 'ACTIVE' : ''}
                 onClick={() => {
                   setStakeType('SYNTHETIC')
-                }}
-                style={{
-                  width: 'auto',
-                  padding: '0.4rem .6rem',
-                  borderRadius: '16px',
-                  fontSize: '12px',
-                  marginLeft: '20px'
                 }}>
                 Synthetic xPoker
-              </ButtonGray>
+              </NavTitleTab>
             </RowFixed>
-            <DarkCard>
-              <StakeTabConent>
-                {stakeType === 'SINGLE' && <UnStakeSingle pairId={pairId} />}
-                {stakeType === 'SYNTHETIC' && (
-                  <UnStakeSynthetic pairId={pairId} />
-                )}
-              </StakeTabConent>
-            </DarkCard>
+            <TabConent>
+              {stakeType === 'SINGLE' && <UnStakeSingle pairId={pairId} />}
+              {stakeType === 'SYNTHETIC' && (
+                <UnStakeSynthetic pairId={pairId} />
+              )}
+            </TabConent>
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>

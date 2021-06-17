@@ -15,6 +15,13 @@ import { uesUserCombineMaps } from '@/hooks/useUnStake'
 import { Dots } from '@/pages/Pool/styleds'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
 import { PokerGroupType } from '@/pages/Stake/StakeHelpers'
+import {
+  Row,
+  Column,
+  ActionRow,
+  WarpperDarkCard,
+  ResponsiveButtonPrimary
+} from '@/pages/Stake/styleds'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
 import styled from 'styled-components'
@@ -23,26 +30,6 @@ type PageProps = {
   pairId: string
 }
 
-const Row = styled.div`
-  align-items: center;
-  border-radius: 20px;
-  display: flex;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg1};
-  & > div:first-child {
-    max-width: 80px;
-  }
-  & > div:not(:first-child) {
-    text-align: center;
-  }
-  :hover {
-    background-color: ${({ theme }) => theme.bg2};
-  }
-`
 const StakeCheckouSection = styled.div`
   flex: 1;
 `
@@ -109,56 +96,59 @@ const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
 
   return (
     <>
-      <Row>
-        <StakeCheckouSection>
-          <TYPE.subHeader>#</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>组合牌型</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>流动性总份额</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection>
-        <DropDownWrapper>
-          <TYPE.subHeader>操作</TYPE.subHeader>
-        </DropDownWrapper>
-      </Row>
-      {pokers.length ? (
-        pokers.map((item, index) => {
-          return (
-            <UnStakePokerSyntheticItem
-              data={item}
-              key={index}
-              selected={selected}
-              selectPoker={selectPoker}
-            />
-          )
-        })
-      ) : (
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            No data.
-          </TYPE.body>
-        </LightCard>
-      )}
-      <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>
-          Currently Selected: {selected.length}/{pokers.length}
-        </TYPE.subHeader>
-        <ButtonLight
-          onClick={unStateCombine}
-          style={{
-            width: 'auto',
-            padding: '0.4rem .6rem',
-            borderRadius: '16px',
-            fontSize: '12px'
-          }}>
+      <WarpperDarkCard>
+        <Row isHeader={true}>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'></TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Poker
+            </TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              ID
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Liquidity Share
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Calculating power
+            </TYPE.darkGray>
+          </Column>
+        </Row>
+        {pokers.length ? (
+          pokers.map((item, index) => {
+            return (
+              <UnStakePokerSyntheticItem
+                data={item}
+                key={index}
+                selected={selected}
+                selectPoker={selectPoker}
+              />
+            )
+          })
+        ) : (
+          <LightCard padding='40px'>
+            <TYPE.body color={theme.text3} textAlign='center'>
+              No data.
+            </TYPE.body>
+          </LightCard>
+        )}
+      </WarpperDarkCard>
+      <ActionRow>
+        <TYPE.darkGray fontWeight='bold' fontSize='14px'>
+          {selected.length}/{pokers.length} Selected
+        </TYPE.darkGray>
+        <ResponsiveButtonPrimary onClick={unStateCombine}>
           UnStake
-        </ButtonLight>
-      </RowBetween>
+        </ResponsiveButtonPrimary>
+      </ActionRow>
     </>
   )
 }

@@ -1,50 +1,29 @@
-import React, { useContext, useCallback, useState, useEffect } from 'react'
+import React, { useContext, useCallback, useState } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
-import { ButtonLight } from '@/components/Button'
+import {
+  Row,
+  Column,
+  ActionRow,
+  WarpperDarkCard,
+  ResponsiveButtonPrimary
+} from './styleds'
 import { LightCard } from '@/components/Card'
-import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
 import {
   useXKeyDaoContract,
   useNFTPositionManagerContract
 } from '@/hooks/useContract'
 import { useUserPokers, useNeedApprove } from '@/hooks/useStake'
-import { useTransactionAdder } from '@/state/transactions/hooks'
 import { Dots } from '@/pages/Pool/styleds'
-import { PageWrapper } from '@/pages/PoolDetail/styleds'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
-import styled, { ThemeContext } from 'styled-components'
+import { ThemeContext } from 'styled-components'
 
 type SingleStakeProps = {
   pairId: string
 }
-
-const Row = styled.div`
-  align-items: center;
-  border-radius: 20px;
-  display: flex;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg1};
-
-  & > div:not(:first-child) {
-    text-align: center;
-  }
-  & > div:last-child {
-    text-align: right;
-  }
-  :hover {
-    background-color: ${({ theme }) => theme.bg2};
-  }
-`
-const StakeCheckouSection = styled.div`
-  flex: 1;
-`
 
 const SingleStake: React.FC<SingleStakeProps> = ({
   pairId
@@ -74,9 +53,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
       setApproving(() => true)
       approve(...approveArgs, {}).then((response) => {
         addTransaction(response, {
-          summary:
-            'Approve all of Nfts to ' +
-            address
+          summary: 'Approve all of Nfts to ' + address
         })
         setApproving(() => false)
       })
@@ -132,91 +109,82 @@ const SingleStake: React.FC<SingleStakeProps> = ({
 
   if (loading) {
     return (
-      <PageWrapper>
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            <Dots>Loading</Dots>
-          </TYPE.body>
-        </LightCard>
-      </PageWrapper>
+      <WarpperDarkCard>
+        <TYPE.body color={theme.text3} textAlign='center' padding='40px'>
+          <Dots>Loading</Dots>
+        </TYPE.body>
+      </WarpperDarkCard>
     )
   }
 
   return (
     <>
-      <Row>
-        <StakeCheckouSection>
-          <TYPE.subHeader>ID</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>Poker</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>流动性份额</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>操作</TYPE.subHeader>
-        </StakeCheckouSection>
-      </Row>
-      {pokers.length ? (
-        pokers.map((item) => {
-          return (
-            <SingleStakeItem
-              data={item}
-              key={item.tokenIdStr}
-              selectIds={selectIds}
-              selectPoker={selectPoker}
-            />
-          )
-        })
-      ) : (
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            No data.
-          </TYPE.body>
-        </LightCard>
-      )}
-      <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>Currently Selected: {selectIds.length}/{pokers.length}</TYPE.subHeader>
+      <WarpperDarkCard>
+        <Row isHeader={true}>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'></TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Poker
+            </TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              ID
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Liquidity Share
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Calculating power
+            </TYPE.darkGray>
+          </Column>
+        </Row>
+        {pokers.length ? (
+          pokers.map((item, index) => {
+            return (
+              <SingleStakeItem
+                data={item}
+                key={item?.tokenIdStr || index}
+                selectIds={selectIds}
+                selectPoker={selectPoker}
+              />
+            )
+          })
+        ) : (
+          <LightCard padding='40px'>
+            <TYPE.body color={theme.text3} textAlign='center'>
+              No data.
+            </TYPE.body>
+          </LightCard>
+        )}
+      </WarpperDarkCard>
+
+      <ActionRow>
+        <TYPE.darkGray fontWeight='bold' fontSize='14px'>
+          {selectIds.length}/{pokers.length} Selected
+        </TYPE.darkGray>
         {needApprove ? (
           approving ? (
-            <ButtonLight
-              style={{
-                width: 'auto',
-                padding: '0.4rem .6rem',
-                borderRadius: '16px',
-                fontSize: '12px'
-              }}>
+            <ResponsiveButtonPrimary>
               <Dots>Approving</Dots>
-            </ButtonLight>
+            </ResponsiveButtonPrimary>
           ) : (
-            <ButtonLight
-              onClick={approve}
-              style={{
-                width: 'auto',
-                padding: '0.4rem .6rem',
-                borderRadius: '16px',
-                fontSize: '12px'
-              }}>
+            <ResponsiveButtonPrimary onClick={approve}>
               Approve
-            </ButtonLight>
+            </ResponsiveButtonPrimary>
           )
         ) : (
-          <ButtonLight
-            onClick={stateSingle}
-            style={{
-              width: 'auto',
-              padding: '0.4rem .6rem',
-              borderRadius: '16px',
-              fontSize: '12px'
-            }}>
+          <ResponsiveButtonPrimary onClick={stateSingle}>
             Stake
-          </ButtonLight>
+          </ResponsiveButtonPrimary>
         )}
-      </RowBetween>
+      </ActionRow>
     </>
   )
 }

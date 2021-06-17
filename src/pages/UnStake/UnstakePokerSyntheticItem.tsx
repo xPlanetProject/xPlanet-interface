@@ -66,7 +66,7 @@ const StyledDropDown = styled(DropDown)<{ open: boolean }>`
   height: 35%;
   transform: ${({ open }) => (open ? 'rotate(180deg)' : 'none')};
   path {
-    stroke: ${({ open, theme }) => (open ? theme.text1 : theme.white)};
+    stroke: ${({ theme }) => theme.text1};
     stroke-width: 1.5px;
   }
 `
@@ -75,12 +75,6 @@ const SyntheticWrapper = styled.div<{ active: boolean }>`
   overflow: hidden;
   height: ${({ active }) => (active ? 'auto' : '0')};
 `
-
-interface ISingleStakeItemProps {
-  data: any
-  checked?: boolean
-  handleClick?: (id: string) => void
-}
 
 const SingleStakeItem: React.FC<any> = ({
   data,

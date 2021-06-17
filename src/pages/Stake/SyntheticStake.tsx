@@ -1,7 +1,16 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react'
 
 import SingleStakeItem from './SingleStakeItem'
-import { ButtonLight } from '@/components/Button'
+import {
+  Row,
+  Column,
+  ActionRow,
+  WarpperDarkCard,
+  ResponsiveButtonPrimary,
+  SelectedPoker,
+  PokerItem,
+  ActionRowBetween
+} from './styleds'
 import { LightCard } from '@/components/Card'
 import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
@@ -11,61 +20,14 @@ import {
 } from '@/hooks/useContract'
 import { useUserPokers, useNeedApprove } from '@/hooks/useStake'
 import { Dots } from '@/pages/Pool/styleds'
-import { PageWrapper } from '@/pages/PoolDetail/styleds'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
-import { useTransactionAdder } from '@/state/transactions/hooks'
-import styled, { ThemeContext } from 'styled-components'
+import { ThemeContext } from 'styled-components'
 
 type SyntheticStakeProps = {
   pairId: string
 }
-
-const Row = styled.div`
-  align-items: center;
-  border-radius: 20px;
-  display: flex;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg1};
-
-  & > div:not(:first-child) {
-    text-align: center;
-  }
-  & > div:last-child {
-    text-align: right;
-  }
-  :hover {
-    background-color: ${({ theme }) => theme.bg2};
-  }
-`
-const StakeCheckouSection = styled.div`
-  flex: 1;
-`
-
-const PokerItem = styled.div`
-  flex: 1;
-  border-radius: 8px;
-  padding: 24px;
-  margin: 0 10px;
-  background-color: ${({ theme }) => theme.bg2};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  min-height: 180px;
-  :hover {
-    background-color: ${({ theme }) => theme.bg3};
-  }
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    min-height: 100px;
-    padding: 12px;
-    margin: 0 4px;
-  `};
-`
 
 const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   pairId
@@ -96,9 +58,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
       setApproving(() => true)
       approve(...approveArgs, {}).then((response) => {
         addTransaction(response, {
-          summary:
-            'Approve all of NFTS to ' +
-            address
+          summary: 'Approve all of NFTS to ' + address
         })
         setApproving(() => false)
       })
@@ -115,10 +75,9 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
         estimate(args, {}).then((estimatedGasLimit) => {
           addSwaptokenShareCombine(args, {
             gasLimit: calculateGasMargin(estimatedGasLimit)
-          }).then(response => {
+          }).then((response) => {
             addTransaction(response, {
-              summary:
-                'SyntheticStake Nfts to Mining'
+              summary: 'SyntheticStake Nfts to Mining'
             })
           })
         })
@@ -149,108 +108,113 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
 
   if (loading) {
     return (
-      <PageWrapper>
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            <Dots>Loading</Dots>
-          </TYPE.body>
-        </LightCard>
-      </PageWrapper>
+      <WarpperDarkCard>
+        <TYPE.body color={theme.text3} padding='40px' textAlign='center'>
+          <Dots>Loading</Dots>
+        </TYPE.body>
+      </WarpperDarkCard>
     )
   }
 
   return (
     <>
-      <RowBetween>
-        {selectPokers.map((poker) => {
-          return (
-            <PokerItem key={poker?.tokenIdStr}>
-              {poker?.pokerInfo?.faceIcon} {poker?.pokerInfo?.face}
-            </PokerItem>
-          )
-        })}
-        {new Array(5 - selectPokers.length).fill('poker').map((item, index) => {
-          return <PokerItem key={`${item}${index}`}></PokerItem>
-        })}
-      </RowBetween>
-      {/* <PokerResult>
-        <TYPE.subHeader>牌型：黑桃 A 算力：5000 总份额：50000</TYPE.subHeader>
-      </PokerResult> */}
-      <Row>
-        <StakeCheckouSection>
-          <TYPE.subHeader>ID</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>Poker</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>流动性份额</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>算力</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>操作</TYPE.subHeader>
-        </StakeCheckouSection>
-      </Row>
-      {pokers.length ? (
-        pokers.map((item) => {
-          return (
-            <SingleStakeItem
-              data={item}
-              key={item?.tokenIdStr}
-              selectIds={selectIds}
-              selectPoker={selectPoker}
-            />
-          )
-        })
-      ) : (
-        <LightCard padding='40px'>
-          <TYPE.body color={theme.text3} textAlign='center'>
-            No data.
-          </TYPE.body>
-        </LightCard>
-      )}
-      <RowBetween style={{ marginTop: 20 }}>
-        <TYPE.subHeader>
-          Currently Selected: {selectIds.length}/{pokers.length}
-        </TYPE.subHeader>
-        {needApprove ? (
-          approving ? (
-            <ButtonLight
-              style={{
-                width: 'auto',
-                padding: '0.4rem .6rem',
-                borderRadius: '16px',
-                fontSize: '12px'
-              }}>
-              <Dots>Approving</Dots>
-            </ButtonLight>
-          ) : (
-            <ButtonLight
-              onClick={approve}
-              style={{
-                width: 'auto',
-                padding: '0.4rem .6rem',
-                borderRadius: '16px',
-                fontSize: '12px'
-              }}>
-              Approve
-            </ButtonLight>
-          )
+      <WarpperDarkCard>
+        <Row isHeader={true}>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'></TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Poker
+            </TYPE.darkGray>
+          </Column>
+          <Column>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              ID
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Liquidity Share
+            </TYPE.darkGray>
+          </Column>
+          <Column flex='1'>
+            <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
+              Calculating power
+            </TYPE.darkGray>
+          </Column>
+        </Row>
+        {pokers.length ? (
+          pokers.map((item, index) => {
+            return (
+              <SingleStakeItem
+                data={item}
+                key={item?.tokenIdStr || index}
+                selectIds={selectIds}
+                selectPoker={selectPoker}
+              />
+            )
+          })
         ) : (
-          <ButtonLight
-            onClick={stateSingle}
-            style={{
-              width: 'auto',
-              padding: '0.4rem .6rem',
-              borderRadius: '16px',
-              fontSize: '12px'
-            }}>
-            Stake
-          </ButtonLight>
+          <LightCard padding='40px'>
+            <TYPE.body color={theme.text3} textAlign='center'>
+              No data.
+            </TYPE.body>
+          </LightCard>
         )}
-      </RowBetween>
+      </WarpperDarkCard>
+
+      <ActionRow marginTop='1rem'>
+        <SelectedPoker>
+          {selectPokers.map((poker, index) => {
+            return (
+              <PokerItem key={poker?.tokenIdStr || index}>
+                {poker?.pokerInfo?.faceIcon} {poker?.pokerInfo?.face}
+              </PokerItem>
+            )
+          })}
+          {new Array(5 - selectPokers.length)
+            .fill('poker')
+            .map((item, index) => {
+              return <PokerItem key={`${item}${index}`}></PokerItem>
+            })}
+        </SelectedPoker>
+
+        <ActionRowBetween>
+          <RowBetween>
+            <TYPE.main fontWeight='bold' fontSize='14px'>
+              Hands
+            </TYPE.main>
+            <TYPE.body fontWeight='bold' fontSize='14px'>
+              Full House
+            </TYPE.body>
+          </RowBetween>
+          <RowBetween>
+            <TYPE.main fontWeight='bold' fontSize='14px'>
+              Calculating Power
+            </TYPE.main>
+            <TYPE.body fontWeight='bold' fontSize='14px'>
+              120.1231556
+            </TYPE.body>
+          </RowBetween>
+
+          {needApprove ? (
+            approving ? (
+              <ResponsiveButtonPrimary>
+                <Dots>Approving</Dots>
+              </ResponsiveButtonPrimary>
+            ) : (
+              <ResponsiveButtonPrimary onClick={approve}>
+                Approve
+              </ResponsiveButtonPrimary>
+            )
+          ) : (
+            <ResponsiveButtonPrimary onClick={stateSingle}>
+              Stake
+            </ResponsiveButtonPrimary>
+          )}
+        </ActionRowBetween>
+      </ActionRow>
     </>
   )
 }
