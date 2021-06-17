@@ -22,9 +22,9 @@ import Header from '@/components/Header'
 import Popups from '@/components/Popups'
 import Web3ReactManager from '@/components/Web3ReactManager'
 import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
-import { useV3Token } from '@/hooks/TokensV3'
+// import { useV3Token } from '@/hooks/TokensV3'
 import DarkModeQueryParamReader from '@/theme/DarkModeQueryParamReader'
-import useUSDCPrice from '@/usdc-price'
+// import useUSDCPrice from '@/usdc-price'
 import styled from 'styled-components'
 
 const TestComponent = () => {

@@ -2,8 +2,8 @@ import React, { useMemo } from 'react'
 import { MobileView, BrowserView } from 'react-device-detect'
 import { useLocation } from 'react-router-dom'
 
-import LogoBlack from '@/assets/svg/Logo_Black.svg'
-import LogoWhite from '@/assets/svg/Logo_White.svg'
+import LogoBlack from '@/assets/svg/logo_black_small.svg'
+import LogoWhite from '@/assets/svg/logo_white_small.svg'
 import { YellowCard } from '@/components/Card'
 import Menu from '@/components/Menu'
 import { SwapPoolTabs } from '@/components/NavigationTabs'
@@ -97,7 +97,7 @@ const HeaderMemuRow = styled(Row)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-content: space-between;
   `};
-};`
+`
 
 const LogoIcon = styled.div`
   display: flex;
