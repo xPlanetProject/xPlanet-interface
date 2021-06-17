@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 
 import { ReactComponent as DropDown } from '@/assets/images/dropdown.svg'
+import { WrapperRow, Column } from '@/pages/Stake/styleds'
 import { TYPE } from '@/theme'
+import { Box } from 'rebass/styled-components'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   border-radius: 20px;
+  border-radius: 6px;
   background-color: ${({ theme }) => theme.bg1};
 
   :hover {
@@ -13,56 +16,14 @@ const Wrapper = styled.div`
   }
 `
 
-const Row = styled.div`
-  cursor: pointer;
-  align-items: center;
-  display: flex;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  & > div:first-child {
-    max-width: 80px;
-  }
-  & > div:not(:first-child) {
-    text-align: center;
-  }
-`
-
-const RowPoker = styled.div`
-  align-items: center;
-  display: flex;
-  color: ${({ theme }) => theme.text1};
-  margin: 8px 0;
-  padding: 8px 16px;
-  text-decoration: none;
-  font-weight: 500;
-  & > div:first-child {
-    max-width: 80px;
-    margin-left: 40px;
-  }
-  & > div:not(:first-child) {
-    text-align: center;
-  }
-`
-
-const RowPokerSection = styled.div`
-  flex: 1;
-  max-width: 200px;
-`
-const StakeCheckouSection = styled.div`
-  flex: 1;
-`
-const DropDownWrapper = styled.div`
-  width: 80px;
+const DropDownWrapper = styled(Column)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
 `
 
 const StyledDropDown = styled(DropDown)<{ open: boolean }>`
-  margin: 0 1rem 0 0.5rem;
+  margin: 0 0.5rem;
   height: 35%;
   transform: ${({ open }) => (open ? 'rotate(180deg)' : 'none')};
   path {
@@ -85,20 +46,8 @@ const SingleStakeItem: React.FC<any> = ({
   const [open, setOpen] = useState(false)
   return (
     <Wrapper>
-      <Row onClick={() => setOpen(!open)}>
-        <StakeCheckouSection>
-          <TYPE.subHeader>{data.index}</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>{data.combineType}</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>{data.combineLPAmount}</TYPE.subHeader>
-        </StakeCheckouSection>
-        <StakeCheckouSection>
-          <TYPE.subHeader>{data.combinePower}</TYPE.subHeader>
-        </StakeCheckouSection>
-        <DropDownWrapper>
+      <WrapperRow onClick={() => setOpen(!open)}>
+        <DropDownWrapper width='80px'>
           <StyledDropDown open={open} />
           <input
             type='checkbox'
@@ -110,26 +59,38 @@ const SingleStakeItem: React.FC<any> = ({
             style={{ width: 18, height: 18 }}
           />
         </DropDownWrapper>
-      </Row>
+        <Column width='160px'>
+          <TYPE.body>{data.combineType || 'Royal Flush'}</TYPE.body>
+        </Column>
+        <Column>
+          <TYPE.body>-</TYPE.body>
+        </Column>
+        <Column flex='1'>
+          <TYPE.body>{data.combineLPAmount}</TYPE.body>
+        </Column>
+        <Column flex='1'>
+          <TYPE.body>{data.combinePower}</TYPE.body>
+        </Column>
+      </WrapperRow>
+
       <SyntheticWrapper active={open}>
-        <RowPoker>
-          <RowPokerSection>
-            <TYPE.subHeader>ID</TYPE.subHeader>
-          </RowPokerSection>
-          <RowPokerSection>
-            <TYPE.subHeader>xPoker</TYPE.subHeader>
-          </RowPokerSection>
-        </RowPoker>
         {data.pokers.map((item, index) => {
           return (
-            <RowPoker key={item.tokenIdStr}>
-              <RowPokerSection>
-                <TYPE.subHeader>{item.tokenIdStr}</TYPE.subHeader>
-              </RowPokerSection>
-              <RowPokerSection>
-                <TYPE.subHeader>{`${item.pokerInfo.faceIcon} ${item.pokerInfo.face}`}</TYPE.subHeader>
-              </RowPokerSection>
-            </RowPoker>
+            <WrapperRow key={item.tokenIdStr || index}>
+              <Column width='80px'></Column>
+              <Column width='160px'>
+                <TYPE.body>{`${item.pokerInfo.faceIcon} ${item.pokerInfo.face}`}</TYPE.body>
+              </Column>
+              <Column>
+                <TYPE.body>{item.tokenIdStr}</TYPE.body>
+              </Column>
+              <Column flex='1'>
+                <TYPE.body>{item.combineLPAmount}</TYPE.body>
+              </Column>
+              <Column flex='1'>
+                <TYPE.body>{item.combinePower}</TYPE.body>
+              </Column>
+            </WrapperRow>
           )
         })}
       </SyntheticWrapper>

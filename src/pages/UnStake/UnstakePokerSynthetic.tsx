@@ -1,20 +1,16 @@
-import React, { useContext, useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import UnStakePokerSyntheticItem from './UnstakePokerSyntheticItem'
-import { ButtonLight } from '@/components/Button'
 import { LightCard } from '@/components/Card'
-import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
 import {
   useXKeyDaoContract,
   useNFTPositionManagerContract
 } from '@/hooks/useContract'
-import { usePairsFromTokenIds } from '@/hooks/useStake'
 import useTheme from '@/hooks/useTheme'
 import { uesUserCombineMaps } from '@/hooks/useUnStake'
 import { Dots } from '@/pages/Pool/styleds'
 import { PageWrapper } from '@/pages/PoolDetail/styleds'
-import { PokerGroupType } from '@/pages/Stake/StakeHelpers'
 import {
   Row,
   Column,
@@ -29,16 +25,6 @@ import styled from 'styled-components'
 type PageProps = {
   pairId: string
 }
-
-const StakeCheckouSection = styled.div`
-  flex: 1;
-`
-const DropDownWrapper = styled.div`
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`
 
 const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
   const theme = useTheme()
@@ -98,10 +84,10 @@ const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
     <>
       <WarpperDarkCard>
         <Row isHeader={true}>
-          <Column>
+          <Column width='80px'>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'></TYPE.darkGray>
           </Column>
-          <Column>
+          <Column width='160px'>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
               Poker
             </TYPE.darkGray>

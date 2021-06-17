@@ -76,15 +76,15 @@ export const HoverText = styled(TYPE.main)`
   }
 `
 
-export const Row = styled(Box)<{ isHeader?: boolean }>`
+export const WrapperRow = styled(Box)`
   color: ${({ theme }) => theme.text1};
+  font-weight: 500;
   margin: 8px 0;
   text-decoration: none;
-  font-weight: 500;
   display: flex;
   align-items: center;
   border-radius: 6px;
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: transparent;
 
   & > div:not(:first-child) {
     text-align: center;
@@ -92,13 +92,6 @@ export const Row = styled(Box)<{ isHeader?: boolean }>`
   & > div:last-child {
     text-align: right;
   }
-
-  :hover {
-    background-color: ${({ theme }) => theme.bg2};
-  }
-
-  ${({ isHeader, theme }) =>
-    isHeader && `border-bottom: 1px solid ${theme.bg2};`};
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     & > div:not(:first-child) {
@@ -110,8 +103,19 @@ export const Row = styled(Box)<{ isHeader?: boolean }>`
   `};
 `
 
+export const Row = styled(WrapperRow)<{ isHeader?: boolean }>`
+  background-color: ${({ theme }) => theme.bg1};
+
+  :hover {
+    background-color: ${({ theme }) => theme.bg2};
+  }
+
+  ${({ isHeader, theme }) =>
+    isHeader && `border-bottom: 1px solid ${theme.bg2};`};
+`
+
 export const Column = styled(Box)<{ flex?: string; width?: string }>`
-  width: ${({ flex }) => flex || '65px'};
+  width: ${({ flex, width }) => flex || width || '65px'};
   flex-shrink: 0;
   padding: 1rem 0.5rem;
   overflow-wrap: break-word;
