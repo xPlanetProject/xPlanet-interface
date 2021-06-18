@@ -152,11 +152,11 @@ pokerRankMap.set(2, {
 
 pokerSuitMap.set(1, {
   suit: 'Heart',
-  faceIcon: '♥️'
+  faceIcon: '♠️'
 })
 pokerSuitMap.set(2, {
   suit: 'Spade',
-  faceIcon: '♠️'
+  faceIcon: '♥️'
 })
 pokerSuitMap.set(3, {
   suit: 'Club',
