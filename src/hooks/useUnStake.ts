@@ -235,15 +235,11 @@ export function usePairsFromTokenIdsMap(
         const pockerSuit = singlePokerSuitMap.get(
           propertyResult.suit.toNumber()
         )
-        const pokerInfo = {
-          ...pokerRank,
-          ...pockerSuit
-        }
 
         return {
           tokenId,
           tokenIdStr: tokenId?.toString(),
-          pokerInfo: pokerInfo,
+          pokerInfo: Object.assign(pokerRank, pockerSuit),
           pairId: pairIdResult
         }
       })

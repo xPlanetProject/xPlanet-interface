@@ -1,14 +1,29 @@
-import { useSingleCallResult, useSingleContractMultipleData, Result } from '@/state/multicall/hooks'
-import { JSBI } from '@xplanet/sdk'
 import { useMemo } from 'react'
+
+import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
+import { useToken } from '@/hooks/Tokens'
+import {
+  useNFTPositionManagerContract,
+  useContract,
+  useXKeyDaoContract,
+  useTokenContract
+} from '@/hooks/useContract'
+import {
+  singlePokerMap,
+  SinglePokerItem,
+  singlePokerRankMap,
+  singlePokerSuitMap
+} from '@/pokers'
+import {
+  useSingleCallResult,
+  useSingleContractMultipleData,
+  Result
+} from '@/state/multicall/hooks'
+import { or } from '@/utils/or'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { formatUnits } from '@ethersproject/units'
-import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
-import { useNFTPositionManagerContract, useContract, useXKeyDaoContract, useTokenContract } from '@/hooks/useContract'
-import { useToken } from '@/hooks/Tokens'
-import { or } from '@/utils/or'
-import { singlePokerMap, SinglePokerItem } from '@/pokers'
+import { JSBI } from '@xplanet/sdk'
 
 const { BigInt, divide, multiply } = JSBI
 
@@ -45,14 +60,38 @@ interface usePositionsResults {
   pairIds: Array<PositionTokenPair>
 }
 
-function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined): Array<PositionTokenPair> {
+function usePairsFromTokenIds(
+  tokenIds: BigNumber[] | undefined
+): Array<PositionTokenPair> {
   const positionManager = useNFTPositionManagerContract()
-  const inputs = useMemo(() => (tokenIds ? tokenIds.map((tokenId) => [BigNumber.from(tokenId)]) : []), [tokenIds])
-  const pairIdResults = useSingleContractMultipleData(positionManager, 'getPair', inputs)
-  const pokerPropertyResults = useSingleContractMultipleData(positionManager, 'getPokerProperty', inputs)
+  const inputs = useMemo(
+    () =>
+      tokenIds ? tokenIds.map((tokenId) => [BigNumber.from(tokenId)]) : [],
+    [tokenIds]
+  )
+  const pairIdResults = useSingleContractMultipleData(
+    positionManager,
+    'getPair',
+    inputs
+  )
+  const pokerPropertyResults = useSingleContractMultipleData(
+    positionManager,
+    'getPokerProperty',
+    inputs
+  )
 
-  const loading = useMemo(() => [...pairIdResults, ...pokerPropertyResults].some(({ loading }) => loading), [pairIdResults, pokerPropertyResults])
-  const error = useMemo(() => [...pairIdResults, ...pokerPropertyResults].some(({ error }) => error), [pairIdResults, pokerPropertyResults])
+  const loading = useMemo(
+    () =>
+      [...pairIdResults, ...pokerPropertyResults].some(
+        ({ loading }) => loading
+      ),
+    [pairIdResults, pokerPropertyResults]
+  )
+  const error = useMemo(
+    () =>
+      [...pairIdResults, ...pokerPropertyResults].some(({ error }) => error),
+    [pairIdResults, pokerPropertyResults]
+  )
 
   const pairIds = useMemo(() => {
     if (!loading && !error && tokenIds) {
@@ -61,11 +100,22 @@ function usePairsFromTokenIds(tokenIds: BigNumber[] | undefined): Array<Position
         const result = call.result as Result
         const propertyResult = pokerPropertyResults[i].result as Result
         const pokerRank = (propertyResult as any).rank as BigNumber
-        const pockerSuit = pokerRank.toNumber()
+        const pokerSuit = (propertyResult as any).suit as BigNumber
+
+        console.log(propertyResult)
+        console.log(pokerRank)
+
+        console.log({
+          ...singlePokerRankMap.get(pokerRank.toNumber()),
+          ...singlePokerSuitMap.get(pokerSuit.toNumber())
+        })
 
         return {
           tokenId,
-          pokerInfo: singlePokerMap.get(pockerSuit),
+          pokerInfo: Object.assign(
+            singlePokerRankMap.get(pokerRank.toNumber()),
+            singlePokerSuitMap.get(pokerSuit.toNumber())
+          ),
           pairId: result.length ? result[0] : ''
         }
       })
@@ -86,17 +136,30 @@ export function usePairById(pairId: string, tokenId: string): any {
   const pairContract = useContract(pairId, XKeyPairABI)
   const positionManager = useNFTPositionManagerContract()
   const xKeyDaoContract = useXKeyDaoContract()
-  const tokenIdBnStr = useMemo(() => BigNumber.from(tokenId), [tokenId]).toString()
-  const { result: token0, loading: token0Loading } = useSingleCallResult(pairContract, 'token0')
-  const { result: token1, loading: token1Loading } = useSingleCallResult(pairContract, 'token1')
-  const { result: totalSupplyResult, loading: totalSupplyLoading } = useSingleCallResult(pairContract, 'totalSupply')
-  const { result: balanceOfResult, loading: balanceOfLoading } = useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
-  const { result: tokenURIResult, loading: tokenURILoading } = useSingleCallResult(positionManager, 'tokenURI', [tokenIdBnStr])
+  const tokenIdBnStr = useMemo(
+    () => BigNumber.from(tokenId),
+    [tokenId]
+  ).toString()
+  const { result: token0, loading: token0Loading } = useSingleCallResult(
+    pairContract,
+    'token0'
+  )
+  const { result: token1, loading: token1Loading } = useSingleCallResult(
+    pairContract,
+    'token1'
+  )
+  const { result: totalSupplyResult, loading: totalSupplyLoading } =
+    useSingleCallResult(pairContract, 'totalSupply')
+  const { result: balanceOfResult, loading: balanceOfLoading } =
+    useSingleCallResult(pairContract, 'balanceOf', [tokenIdBnStr])
+  const { result: tokenURIResult, loading: tokenURILoading } =
+    useSingleCallResult(positionManager, 'tokenURI', [tokenIdBnStr])
 
-  const tokenAddressResults = useSingleContractMultipleData(xKeyDaoContract, 'swaptoken_addrs', [
-    [0],
-    [1]
-  ])
+  const tokenAddressResults = useSingleContractMultipleData(
+    xKeyDaoContract,
+    'swaptoken_addrs',
+    [[0], [1]]
+  )
 
   const token0Address = Array.isArray(token0) && token0.length ? token0[0] : ''
   const token1Address = Array.isArray(token1) && token1.length ? token1[0] : ''
@@ -107,41 +170,84 @@ export function usePairById(pairId: string, tokenId: string): any {
   const token0Contract = useTokenContract(token0Address)
   const token1Contract = useTokenContract(token1Address)
 
-  const { result: token0BalanceOf, loading: t0balanceOfLoading } = useSingleCallResult(token0Contract, 'balanceOf', [pairId])
-  const { result: token1BalanceOf, loading: t1balanceOfLoading } = useSingleCallResult(token1Contract, 'balanceOf', [pairId])
+  const { result: token0BalanceOf, loading: t0balanceOfLoading } =
+    useSingleCallResult(token0Contract, 'balanceOf', [pairId])
+  const { result: token1BalanceOf, loading: t1balanceOfLoading } =
+    useSingleCallResult(token1Contract, 'balanceOf', [pairId])
 
-  const balanceOf = (Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)).toString()
-  const totalSupply = (Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)).toString()
+  const balanceOf = (
+    Array.isArray(balanceOfResult) ? balanceOfResult[0] : BigNumber.from(0)
+  ).toString()
+  const totalSupply = (
+    Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1)
+  ).toString()
 
-  const token0Amount = (Array.isArray(token0BalanceOf) ? token0BalanceOf[0] : BigNumber.from(0)).toString()
-  const token1Amount = (Array.isArray(token1BalanceOf) ? token1BalanceOf[0] : BigNumber.from(0)).toString()
+  const token0Amount = (
+    Array.isArray(token0BalanceOf) ? token0BalanceOf[0] : BigNumber.from(0)
+  ).toString()
+  const token1Amount = (
+    Array.isArray(token1BalanceOf) ? token1BalanceOf[0] : BigNumber.from(0)
+  ).toString()
 
   return {
-    loading: or(token0Loading, token1Loading, balanceOfLoading, tokenURILoading, totalSupplyLoading, t0balanceOfLoading, t1balanceOfLoading),
+    loading: or(
+      token0Loading,
+      token1Loading,
+      balanceOfLoading,
+      tokenURILoading,
+      totalSupplyLoading,
+      t0balanceOfLoading,
+      t1balanceOfLoading
+    ),
     pairInfo: {
       token0Address,
       token1Address,
       token0Contract,
       token1Contract,
-      token0Amount: formatUnits(divide(multiply(BigInt(token0Amount), BigInt(balanceOf)), BigInt(totalSupply)).toString(), token0Token?.decimals),
-      token1Amount: formatUnits(divide(multiply(BigInt(token1Amount), BigInt(balanceOf)), BigInt(totalSupply)).toString(), token1Token?.decimals),
+      token0Amount: formatUnits(
+        divide(
+          multiply(BigInt(token0Amount), BigInt(balanceOf)),
+          BigInt(totalSupply)
+        ).toString(),
+        token0Token?.decimals
+      ),
+      token1Amount: formatUnits(
+        divide(
+          multiply(BigInt(token1Amount), BigInt(balanceOf)),
+          BigInt(totalSupply)
+        ).toString(),
+        token1Token?.decimals
+      ),
       token0: token0Token,
       token1: token1Token,
       balanceOf: balanceOf.toString(),
-      totalSupply: Array.isArray(totalSupplyResult) ? totalSupplyResult[0] : BigNumber.from(1),
+      totalSupply: Array.isArray(totalSupplyResult)
+        ? totalSupplyResult[0]
+        : BigNumber.from(1),
       tokenURI: Array.isArray(tokenURIResult) ? tokenURIResult[0] : '',
-      shared: formatUnits(BigNumber.from(multiply(divide(BigInt(balanceOf), BigInt(totalSupply)), BigInt(100)).toString()), 2),
-      supportMining: tokenAddressResults.some((res) => !res.loading && res.result?.includes(pairId))
+      shared: formatUnits(
+        BigNumber.from(
+          multiply(
+            divide(BigInt(balanceOf), BigInt(totalSupply)),
+            BigInt(100)
+          ).toString()
+        ),
+        2
+      ),
+      supportMining: tokenAddressResults.some(
+        (res) => !res.loading && res.result?.includes(pairId)
+      )
     }
   }
 }
 
-export function usePositions(account: string | null | undefined): usePositionsResults | any {
+export function usePositions(
+  account: string | null | undefined
+): usePositionsResults | any {
   const positionManager = useNFTPositionManagerContract()
 
-  const { result: balanceResult, loading: balanceOfLoading } = useSingleCallResult(positionManager, 'balanceOf', [
-    account
-  ])
+  const { result: balanceResult, loading: balanceOfLoading } =
+    useSingleCallResult(positionManager, 'balanceOf', [account])
 
   const accountBalance: number | undefined = balanceResult?.[0]?.toNumber()
 
@@ -156,7 +262,11 @@ export function usePositions(account: string | null | undefined): usePositionsRe
     return []
   }, [account, accountBalance])
 
-  const tokenIdResults = useSingleContractMultipleData(positionManager, 'tokenOfOwnerByIndex', tokenIdsArgs)
+  const tokenIdResults = useSingleContractMultipleData(
+    positionManager,
+    'tokenOfOwnerByIndex',
+    tokenIdsArgs
+  )
 
   const anyLoading: boolean = useMemo(
     () => tokenIdResults.some((callState) => callState.loading),
