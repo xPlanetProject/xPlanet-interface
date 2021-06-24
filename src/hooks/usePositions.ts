@@ -102,14 +102,6 @@ function usePairsFromTokenIds(
         const pokerRank = (propertyResult as any).rank as BigNumber
         const pokerSuit = (propertyResult as any).suit as BigNumber
 
-        console.log(propertyResult)
-        console.log(pokerRank)
-
-        console.log({
-          ...singlePokerRankMap.get(pokerRank.toNumber()),
-          ...singlePokerSuitMap.get(pokerSuit.toNumber())
-        })
-
         return {
           tokenId,
           pokerInfo: Object.assign(

@@ -39,11 +39,13 @@ const SingleStakeItem: React.FC<any> = ({
           <TYPE.main fontWeight='bold'>{data.tokenIdStr}</TYPE.main>
         </Column>
         <Column flex='1'>
-          <TYPE.main fontWeight='bold'>{liquidity}</TYPE.main>
+          <TYPE.main fontWeight='bold'>
+            {Number.parseFloat(liquidity).toFixed(4)}
+          </TYPE.main>
         </Column>
         <Column flex='1'>
           <TYPE.main fontWeight='bold'>
-            {data.pokerInfo.rank * (liquidity ?? 1)}
+            {Number(data.pokerInfo.rank * (liquidity ?? 1)).toFixed(4)}
           </TYPE.main>
         </Column>
       </Row>

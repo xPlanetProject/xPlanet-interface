@@ -7,7 +7,6 @@ import {
 import { usePairsFromTokenIds } from '@/hooks/useStake'
 import {
   SinglePokerItem,
-  GroupPokerItem,
   singlePokerRankMap,
   singlePokerSuitMap
 } from '@/pokers'
@@ -21,7 +20,7 @@ import { utils } from 'ethers'
 
 export type PositionTokenPair = {
   tokenId: BigNumber
-  pokerInfo: SinglePokerItem | GroupPokerItem | undefined
+  pokerInfo: SinglePokerItem | undefined
   pairId: string
   isSingle: boolean
   isGroup: boolean

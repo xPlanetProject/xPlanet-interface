@@ -8,7 +8,9 @@ import {
   singlePokerMap,
   SinglePokerItem,
   groupPokerMap,
-  GroupPokerItem
+  GroupPokerItem,
+  singlePokerRankMap,
+  singlePokerSuitMap
 } from '@/pokers'
 import {
   useSingleCallResult,
@@ -46,8 +48,6 @@ export type PositionTokenPair = {
   tokenId: BigNumber
   pokerInfo: SinglePokerItem | GroupPokerItem | undefined
   pairId: string
-  isSingle: boolean
-  isGroup: boolean
 }
 
 interface usePositionsResults {
@@ -96,19 +96,19 @@ export function usePairsFromTokenIds(
           const tokenId = tokenIds[i]
           const result = call.result as Result
           const propertyResult = pokerPropertyResults[i].result as Result
-          const pokerRank = (propertyResult as any).rank as BigNumber
-          const pockerSuit = pokerRank.toNumber()
-          const isSingle = singlePokerMap.has(pockerSuit)
-          const isGroup = groupPokerMap.has(pockerSuit)
+
+          const pokerRank = singlePokerRankMap.get(
+            propertyResult.rank.toNumber()
+          )
+          const pockerSuit = singlePokerSuitMap.get(
+            propertyResult.suit.toNumber()
+          )
 
           return {
             tokenId,
             tokenIdStr: tokenId.toString(),
-            pokerInfo:
-              singlePokerMap.get(pockerSuit) ?? groupPokerMap.get(pockerSuit),
+            pokerInfo: Object.assign(pokerRank, pockerSuit),
             pokerProperty: result,
-            isSingle,
-            isGroup,
             pairId: result.length ? result[0] : ''
           }
         })

@@ -91,7 +91,8 @@ type SinglePokerRankItem = {
   face: string | Array<string>
 }
 type SinglePokerSuitItem = {
-  suit: number | string
+  suit: number
+  suitText: string
   faceIcon: string
 }
 const pokerRankMap = new Map<number, SinglePokerRankItem>()
@@ -151,19 +152,23 @@ pokerRankMap.set(2, {
 })
 
 pokerSuitMap.set(1, {
-  suit: 'Heart',
+  suit: 1,
+  suitText: 'Heart',
   faceIcon: '♠️'
 })
 pokerSuitMap.set(2, {
-  suit: 'Spade',
+  suit: 2,
+  suitText: 'Spade',
   faceIcon: '♥️'
 })
 pokerSuitMap.set(3, {
-  suit: 'Club',
+  suit: 3,
+  suitText: 'Club',
   faceIcon: '♣️'
 })
 pokerSuitMap.set(4, {
-  suit: 'Diamond',
+  suit: 4,
+  suitText: 'Diamond',
   faceIcon: '♦️'
 })
 
