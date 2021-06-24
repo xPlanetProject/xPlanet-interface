@@ -64,32 +64,19 @@ const SingleStake: React.FC<SingleStakeProps> = ({
     const { length } = selectIds
     if (length) {
       const args = selectIds
-      let estimate
-      let method
-      if (selectIds.length === 1) {
-        estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
-        method = xKeyDaoContract?.addSwaptokenShareSingle
+      const estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
+      const method = xKeyDaoContract?.addSwaptokenShareSingle
 
-        if (estimate && method) {
-          estimate(...args, {}).then((estimatedGasLimit) => {
-            method(...args, {
-              gasLimit: calculateGasMargin(estimatedGasLimit)
-            }).then((response) => {
-              addTransaction(response, {
-                summary: 'Stake 1 NFT to Mining'
-              })
+      if (estimate && method) {
+        estimate(args, {}).then((estimatedGasLimit) => {
+          method(args, {
+            gasLimit: calculateGasMargin(estimatedGasLimit)
+          }).then((response) => {
+            addTransaction(response, {
+              summary: `Stake ${length} NFT to Mining`
             })
           })
-        }
-      } else {
-        estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareSingle
-        method = xKeyDaoContract?.addSwaptokenShareSingle
-
-        // estimate(...args, {}).then((estimatedGasLimit) => {
-        //   method(...args, {
-        //     gasLimit: calculateGasMargin(estimatedGasLimit)
-        //   })
-        // })
+        })
       }
     }
   }, [selectIds, xKeyDaoContract, positionManager])

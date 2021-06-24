@@ -66,14 +66,15 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   }, [xKeyDaoContract, positionManager])
 
   const stateSingle = useCallback(async () => {
-    if (selectIds.length) {
-      const estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareCombine
-      const addSwaptokenShareCombine = xKeyDaoContract?.addSwaptokenShareCombine
+    const { length } = selectIds
+    if (length) {
       const args = selectIds
+      const estimate = xKeyDaoContract?.estimateGas?.addSwaptokenShareCombine
+      const method = xKeyDaoContract?.addSwaptokenShareCombine
 
-      if (estimate && addSwaptokenShareCombine) {
+      if (estimate && method) {
         estimate(args, {}).then((estimatedGasLimit) => {
-          addSwaptokenShareCombine(args, {
+          method(args, {
             gasLimit: calculateGasMargin(estimatedGasLimit)
           }).then((response) => {
             addTransaction(response, {
