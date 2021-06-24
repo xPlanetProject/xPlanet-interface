@@ -30699,7 +30699,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-06-09T09:08:20.626Z",
+  "updatedAt": "2021-06-15T09:28:10.316Z",
   "devdoc": {
     "methods": {
       "balanceOf(uint256)": {

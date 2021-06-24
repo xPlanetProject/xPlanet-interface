@@ -120,7 +120,7 @@
   "sourceMap": "101:1677:0:-;;;468:23;8:9:-1;5:2;;;30:1;27;20:12;5:2;468:23:0;101:1677;;;;;;",
   "deployedSourceMap": "101:1677:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;101:1677:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;250:40;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:100:-1;33:3;30:1;27:10;8:100;;;90:11;;;84:18;71:11;;;64:39;52:2;45:10;8:100;;;12:14;250:40:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;215:26;;;:::i;:::-;;;;;;;;;;;;;;;;347:42;;;:::i;297:43::-;;;:::i;552:110::-;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;552:110:0;;:::i;250:40::-;;;;;;;;;;;;;;-1:-1:-1;;;250:40:0;;;;:::o;215:26::-;;;;:::o;347:42::-;381:8;347:42;:::o;297:43::-;;;;;;;;;;;;;;-1:-1:-1;;;297:43:0;;;;:::o;552:110::-;609:7;636:18;;;;;;;;;;;;552:110::o",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity >=0.5.0;\r\n\r\nimport \"./libraries/SafeMath.sol\";\r\n\r\ncontract PairERC20 {\r\n    using SafeMath for uint256;\r\n    mapping (uint256 => uint256) private _balances;\r\n\r\n    uint256 public totalSupply;\r\n\r\n    string public constant name = 'Pair ERC';\r\n    string public constant symbol = 'PAIRERC20';\r\n    uint256 public constant decimal = 10 ** 18;\r\n    event Transfer(uint256 fromToken, uint256 toToken, uint256 value);\r\n    constructor() public {}\r\n    /**\r\n     * @dev See {IERC20-balanceOf}.\r\n     */\r\n    function balanceOf(uint256 tokenId) public view returns (uint256) {\r\n        return _balances[tokenId];\r\n    }\r\n    function transferburn(uint256 amount) internal{\r\n        _balances[0] = amount;\r\n    }\r\n    function _mint(uint256 tokenId, uint256 amount) internal  {\r\n        require(tokenId != 0, \"ERC20: mint to the zero tokenID\");\r\n\r\n       //_beforeTokenTransfer(address(0), account, amount);\r\n\r\n        totalSupply= totalSupply.add(amount);\r\n        _balances[tokenId] = _balances[tokenId].add(amount);\r\n        emit Transfer(0, tokenId, amount);\r\n    }\r\n\r\n    function _add_min_liquid(uint amount) internal {\r\n        if(totalSupply == 0){\r\n            totalSupply = amount;\r\n        }\r\n    }\r\n\r\n    function _burn(uint256 tokenId, uint256 amount) internal  {\r\n        require(tokenId != 0, \"ERC20: burn from the zero address\");\r\n\r\n        //_beforeTokenTransfer(account, address(0), amount);\r\n\r\n        uint256 accountBalance = _balances[tokenId];\r\n        require(accountBalance >= amount, \"ERC20: burn amount exceeds balance\");\r\n        _balances[tokenId] = accountBalance.sub(amount);\r\n        totalSupply= totalSupply.sub( amount);\r\n        _balances[0] = 0;\r\n        emit Transfer(tokenId, 0, amount);\r\n    }\r\n\r\n}\r\n",
-  "sourcePath": "E:\\codingproject\\xkey\\contracts\\PairERC20.sol",
+  "sourcePath": "E:/codingproject/xkey/contracts/PairERC20.sol",
   "ast": {
     "absolutePath": "/E/codingproject/xkey/contracts/PairERC20.sol",
     "exportedSymbols": {
@@ -148,7 +148,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 170,
-        "sourceUnit": 3026,
+        "sourceUnit": 907,
         "src": "63:34:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -173,10 +173,10 @@
               "id": 3,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3025,
+              "referencedDeclaration": 906,
               "src": "133:8:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$3025",
+                "typeIdentifier": "t_contract$_SafeMath_$906",
                 "typeString": "library SafeMath"
               }
             },
@@ -688,7 +688,7 @@
             "scope": 169,
             "src": "552:110:0",
             "stateMutability": "view",
-            "superFunction": 2480,
+            "superFunction": null,
             "visibility": "public"
           },
           {
@@ -923,10 +923,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3278,
-                        3279
+                        966,
+                        967
                       ],
-                      "referencedDeclaration": 3279,
+                      "referencedDeclaration": 967,
                       "src": "829:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1018,7 +1018,7 @@
                         "lValueRequested": false,
                         "memberName": "add",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2865,
+                        "referencedDeclaration": 746,
                         "src": "974:15:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -1170,7 +1170,7 @@
                         "lValueRequested": false,
                         "memberName": "add",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2865,
+                        "referencedDeclaration": 746,
                         "src": "1029:22:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -1637,10 +1637,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3278,
-                        3279
+                        966,
+                        967
                       ],
-                      "referencedDeclaration": 3279,
+                      "referencedDeclaration": 967,
                       "src": "1328:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1824,10 +1824,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3278,
-                        3279
+                        966,
+                        967
                       ],
-                      "referencedDeclaration": 3279,
+                      "referencedDeclaration": 967,
                       "src": "1517:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1946,7 +1946,7 @@
                         "lValueRequested": false,
                         "memberName": "sub",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2881,
+                        "referencedDeclaration": 762,
                         "src": "1620:18:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -2044,7 +2044,7 @@
                         "lValueRequested": false,
                         "memberName": "sub",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2881,
+                        "referencedDeclaration": 762,
                         "src": "1670:15:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -2363,7 +2363,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 3026,
+          "SourceUnit": 907,
           "absolutePath": "/E/codingproject/xkey/contracts/libraries/SafeMath.sol",
           "file": "./libraries/SafeMath.sol",
           "scope": 170,
@@ -2400,7 +2400,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "SafeMath",
-                  "referencedDeclaration": 3025,
+                  "referencedDeclaration": 906,
                   "type": "library SafeMath"
                 },
                 "id": 3,
@@ -2821,7 +2821,7 @@
               "name": "balanceOf",
               "scope": 169,
               "stateMutability": "view",
-              "superFunction": 2480,
+              "superFunction": null,
               "visibility": "public"
             },
             "children": [
@@ -3229,10 +3229,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                3278,
-                                3279
+                                966,
+                                967
                               ],
-                              "referencedDeclaration": 3279,
+                              "referencedDeclaration": 967,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -3373,7 +3373,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "add",
-                                  "referencedDeclaration": 2865,
+                                  "referencedDeclaration": 746,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -3509,7 +3509,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "add",
-                                  "referencedDeclaration": 2865,
+                                  "referencedDeclaration": 746,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -4008,10 +4008,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                3278,
-                                3279
+                                966,
+                                967
                               ],
-                              "referencedDeclaration": 3279,
+                              "referencedDeclaration": 967,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -4208,10 +4208,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                3278,
-                                3279
+                                966,
+                                967
                               ],
-                              "referencedDeclaration": 3279,
+                              "referencedDeclaration": 967,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -4378,7 +4378,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "sub",
-                                  "referencedDeclaration": 2881,
+                                  "referencedDeclaration": 762,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -4485,7 +4485,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "sub",
-                                  "referencedDeclaration": 2881,
+                                  "referencedDeclaration": 762,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -4748,7 +4748,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-06-09T09:08:20.600Z",
+  "updatedAt": "2021-06-15T09:30:25.833Z",
   "devdoc": {
     "methods": {
       "balanceOf(uint256)": {
