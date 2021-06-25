@@ -204,7 +204,8 @@ function Web3StatusInner() {
         pending={hasPendingTransactions}>
         {hasPendingTransactions ? (
           <RowBetween>
-            <Text>{pending.length} Pending</Text> <Loader stroke='white' />
+            <Text style={{ color: 'black' }}>{pending.length} Pending</Text>{' '}
+            <Loader stroke='black' />
           </RowBetween>
         ) : (
           <>
