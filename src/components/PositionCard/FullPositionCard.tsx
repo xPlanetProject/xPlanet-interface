@@ -106,6 +106,15 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               style={{
                 marginLeft: 15
               }}>
+              <ExtentsText>Token ID:</ExtentsText>
+              <Badge>
+                <BadgeText>{pair?.tokenId?.toString()}</BadgeText>
+              </Badge>
+            </RowFixed>
+            <RowFixed
+              style={{
+                marginLeft: 15
+              }}>
               <ExtentsText>Poker:</ExtentsText>
               <Badge>
                 <BadgeText>
