@@ -78,7 +78,7 @@ export default function PoolListIteme({ pairId }: PairProps) {
 
   const xPokers = useMemo(() => {
     if (singleLength && compositeLength) {
-      return singleLength + compositeLength
+      return Number(singleLength) + Number(compositeLength) * 5
     }
     return '0'
   }, [singleLength, compositeLength])
