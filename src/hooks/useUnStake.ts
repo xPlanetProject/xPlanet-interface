@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import {
+  usePairContract,
   useNFTPositionManagerContract,
   useXPokerPowerContract
 } from '@/hooks/useContract'
@@ -10,12 +11,14 @@ import {
   singlePokerRankMap,
   singlePokerSuitMap
 } from '@/pokers'
+import { compositeType } from '@/pokers'
 import {
   useSingleCallResult,
   useSingleContractMultipleData,
   Result
 } from '@/state/multicall/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
+import { formatUnits } from '@ethersproject/units'
 import { utils } from 'ethers'
 
 export type PositionTokenPair = {
@@ -186,6 +189,7 @@ export function usePairsFromTokenIdsMap(
   pairId: string
 ): any {
   const positionManager = useNFTPositionManagerContract()
+  const pairContract = usePairContract(pairId)
 
   const inputs = useMemo(() => {
     return Array.isArray(combineMap)
@@ -208,6 +212,11 @@ export function usePairsFromTokenIdsMap(
     'getPokerProperty',
     inputs
   )
+  const LPAmountResults = useSingleContractMultipleData(
+    pairContract,
+    'balanceOf',
+    inputs
+  )
 
   const pairIds = pairIdsResults
     .map(({ result }) => result)
@@ -216,6 +225,10 @@ export function usePairsFromTokenIdsMap(
   const pokerProperty = pokerPropertyResults
     .map(({ result }) => result)
     .filter((result): result is Result => !!result)
+
+  const LPAmount = LPAmountResults.map(({ result }) => result).filter(
+    (result): result is Result => !!result
+  )
 
   const pokerMap = useMemo(() => {
     if (
@@ -227,7 +240,8 @@ export function usePairsFromTokenIdsMap(
     ) {
       return pokerProperty.map((call, i) => {
         const tokenId = inputs[i]?.[0]
-        const pairIdResult = pairIds[i]?.[0]
+        const pairId = pairIds[i]?.[0]
+        const lpResult = LPAmount[i]?.[0]
         const propertyResult = call
 
         const pokerRank = singlePokerRankMap.get(propertyResult.rank.toNumber())
@@ -239,7 +253,8 @@ export function usePairsFromTokenIdsMap(
           tokenId,
           tokenIdStr: tokenId?.toString(),
           pokerInfo: Object.assign(pokerRank, pockerSuit),
-          pairId: pairIdResult
+          pairId,
+          lp: lpResult || BigNumber.from(0)
         }
       })
     }
@@ -260,5 +275,23 @@ export function usePairsFromTokenIdsMap(
     return []
   }, [combineMap, pokerMap])
 
-  return combineMapRes
+  const combineMapResult = useMemo(() => {
+    return combineMapRes.map((call) => {
+      call.combineLPAmount = call.pokers.reduce((pre, cur) => {
+        return pre.add(cur.lp)
+      }, BigNumber.from(0))
+      call.combineType = compositeType(call.pokers)?.combineType
+      call.combineLPAmount = Number(
+        formatUnits(call.combineLPAmount, 18)
+      ).toFixed(4)
+      call.pokers = call.pokers.map((poker) => {
+        poker.lp = Number(formatUnits(poker.lp, 18)).toFixed(4)
+        return poker
+      })
+
+      return call
+    })
+  }, [combineMapRes])
+
+  return combineMapResult
 }

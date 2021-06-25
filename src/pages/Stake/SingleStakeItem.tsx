@@ -2,8 +2,9 @@ import React from 'react'
 
 import { PokerItemType } from './StakeHelpers'
 import { Row, Column } from './styleds'
-import { useLiquidityPower } from '@/hooks/useStake'
 import { TYPE } from '@/theme'
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatUnits } from '@ethersproject/units'
 
 interface ISingleStakeItemProps {
   data: PokerItemType
@@ -17,7 +18,13 @@ const SingleStakeItem: React.FC<any> = ({
   selectIds,
   selectPoker
 }) => {
-  const { liquidity } = useLiquidityPower(data.pairId, data.tokenIdStr)
+  const lp = Number(formatUnits(data.lp, 18)).toFixed(4)
+  const power = Number(
+    formatUnits(
+      BigNumber.from(data.lp ?? 1).mul(data?.pokerInfo?.rank ?? 0),
+      18
+    )
+  ).toFixed(4)
 
   return (
     <>
@@ -39,14 +46,10 @@ const SingleStakeItem: React.FC<any> = ({
           <TYPE.main fontWeight='bold'>{data.tokenIdStr}</TYPE.main>
         </Column>
         <Column flex='1'>
-          <TYPE.main fontWeight='bold'>
-            {Number.parseFloat(liquidity).toFixed(4)}
-          </TYPE.main>
+          <TYPE.main fontWeight='bold'>{lp}</TYPE.main>
         </Column>
         <Column flex='1'>
-          <TYPE.main fontWeight='bold'>
-            {Number(data.pokerInfo.rank * (liquidity ?? 1)).toFixed(4)}
-          </TYPE.main>
+          <TYPE.main fontWeight='bold'>{power}</TYPE.main>
         </Column>
       </Row>
     </>

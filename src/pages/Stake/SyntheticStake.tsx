@@ -11,6 +11,7 @@ import {
   PokerItem,
   ActionRowBetween
 } from './styleds'
+import { ButtonError } from '@/components/Button'
 import { LightCard } from '@/components/Card'
 import { RowBetween } from '@/components/Row'
 import { useActiveWeb3React } from '@/hooks'
@@ -20,9 +21,11 @@ import {
 } from '@/hooks/useContract'
 import { useUserPokers, useNeedApprove } from '@/hooks/useStake'
 import { Dots } from '@/pages/Pool/styleds'
+import { compositeType } from '@/pokers'
 import { useTransactionAdder } from '@/state/transactions/hooks'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
+import { formatUnits } from '@ethersproject/units'
 import { ThemeContext } from 'styled-components'
 
 type SyntheticStakeProps = {
@@ -40,6 +43,9 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   const [selectIds, selectPokerId] = useState<any>([])
   const [selectPokers, setSelectPokers] = useState<any>([])
   const [approving, setApproving] = useState<any>(false)
+  const [selectType, setSelectType] = useState<any>('')
+  const [selectPower, setSelectPower] = useState<any>('')
+  const [selectError, setSelectError] = useState<any>('')
 
   const needApprove = useNeedApprove()
 
@@ -92,12 +98,15 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
         if (ids.includes(tokenId)) {
           return ids.filter((id) => id !== tokenId)
         } else {
+          if (ids.length == 5) {
+          }
           return ids.length < 5 ? ids.concat([tokenId]) : ids
         }
       })
     },
     [selectIds]
   )
+  console.log(pokers)
 
   useEffect(() => {
     setSelectPokers(() => {
@@ -105,6 +114,24 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
         pokers.find(({ tokenIdStr }) => tokenIdStr === tokenId)
       )
     })
+    const selectIdsCheck = selectIds.filter((item) => !!item)
+
+    if (selectIdsCheck.length == 5) {
+      const selectPoker: Array<any> = []
+      selectIds.map((call) => {
+        let find = pokers.find((item) => item.tokenIdStr == call)
+        selectPoker.push(find)
+      })
+      const { error, combineType, totalNumber } = compositeType(selectPoker)
+
+      setSelectPower(Number(formatUnits(totalNumber.toString(), 18)).toFixed(4))
+      setSelectType(combineType)
+      setSelectError(error)
+    } else {
+      setSelectType('')
+      setSelectPower('0')
+      setSelectError('')
+    }
   }, [selectIds, pokers])
 
   if (loading) {
@@ -187,7 +214,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
               Hands
             </TYPE.main>
             <TYPE.body fontWeight='bold' fontSize='14px'>
-              Full House
+              {selectType}
             </TYPE.body>
           </RowBetween>
           <RowBetween>
@@ -195,7 +222,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
               Calculating Power
             </TYPE.main>
             <TYPE.body fontWeight='bold' fontSize='14px'>
-              120.1231556
+              {selectPower}
             </TYPE.body>
           </RowBetween>
 
@@ -210,8 +237,11 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
               </ResponsiveButtonPrimary>
             )
           ) : (
-            <ResponsiveButtonPrimary onClick={stateSingle}>
-              Stake
+            <ResponsiveButtonPrimary
+              onClick={stateSingle}
+              error={!!selectError}
+              disabled={selectError || selectIds.length != 5}>
+              {selectError ? selectError : 'Stake'}
             </ResponsiveButtonPrimary>
           )}
         </ActionRowBetween>

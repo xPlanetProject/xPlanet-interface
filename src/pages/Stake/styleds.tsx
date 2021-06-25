@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { ButtonPrimary } from '@/components/Button'
+import { ButtonPrimary, ButtonError } from '@/components/Button'
 import { DarkCard } from '@/components/Card'
 import { AutoColumn } from '@/components/Column'
 import { RowBetween } from '@/components/Row'
@@ -138,7 +138,7 @@ export const PokerItem = styled.div`
   height: 120px;
   width: 80px;
   border-radius: 8px;
-  padding: 24px;
+  padding: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,7 +164,7 @@ export const ActionRowBetween = styled(RowBetween)`
   align-self: stretch;
 `
 
-export const ResponsiveButtonPrimary = styled(ButtonPrimary)`
+export const ResponsiveButtonPrimary = styled(ButtonError)`
   border-radius: 28px;
   padding: 10px 18px;
   width: 300px;

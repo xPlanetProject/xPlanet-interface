@@ -85,10 +85,10 @@ const SingleStakeItem: React.FC<any> = ({
                 <TYPE.body>{item.tokenIdStr}</TYPE.body>
               </Column>
               <Column flex='1'>
-                <TYPE.body>{item.combineLPAmount}</TYPE.body>
+                <TYPE.body>{item.lp}</TYPE.body>
               </Column>
               <Column flex='1'>
-                <TYPE.body>{item.combinePower}</TYPE.body>
+                <TYPE.body>{item.power}</TYPE.body>
               </Column>
             </WrapperRow>
           )

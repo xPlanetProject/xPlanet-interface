@@ -3,7 +3,11 @@ import { useMemo } from 'react'
 import { XKEY_DAO_ADRESS } from '@/constants/adress'
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useActiveWeb3React } from '@/hooks'
-import { useNFTPositionManagerContract, useContract } from '@/hooks/useContract'
+import {
+  useNFTPositionManagerContract,
+  useContract,
+  usePairContract
+} from '@/hooks/useContract'
 import {
   singlePokerMap,
   SinglePokerItem,
@@ -60,6 +64,8 @@ export function usePairsFromTokenIds(
   pairId: string
 ): Array<PositionTokenPair> {
   const positionManager = useNFTPositionManagerContract()
+  const pairContract = usePairContract(pairId)
+
   const inputs = useMemo(
     () =>
       tokenIds ? tokenIds.map((tokenId) => [BigNumber.from(tokenId)]) : [],
@@ -75,18 +81,25 @@ export function usePairsFromTokenIds(
     'getPokerProperty',
     inputs
   )
+  const lpResults = useSingleContractMultipleData(
+    pairContract,
+    'balanceOf',
+    inputs
+  )
 
   const loading = useMemo(
     () =>
-      [...pairIdResults, ...pokerPropertyResults].some(
+      [...pairIdResults, ...pokerPropertyResults, ...lpResults].some(
         ({ loading }) => loading
       ),
-    [pairIdResults, pokerPropertyResults]
+    [pairIdResults, pokerPropertyResults, lpResults]
   )
   const error = useMemo(
     () =>
-      [...pairIdResults, ...pokerPropertyResults].some(({ error }) => error),
-    [pairIdResults, pokerPropertyResults]
+      [...pairIdResults, ...pokerPropertyResults, ...lpResults].some(
+        ({ error }) => error
+      ),
+    [pairIdResults, pokerPropertyResults, lpResults]
   )
 
   const pairIds = useMemo(() => {
@@ -96,6 +109,7 @@ export function usePairsFromTokenIds(
           const tokenId = tokenIds[i]
           const result = call.result as Result
           const propertyResult = pokerPropertyResults[i].result as Result
+          const lpResult = lpResults[i].result as Result
 
           const pokerRank = singlePokerRankMap.get(
             propertyResult.rank.toNumber()
@@ -103,8 +117,10 @@ export function usePairsFromTokenIds(
           const pockerSuit = singlePokerSuitMap.get(
             propertyResult.suit.toNumber()
           )
+          const lp = lpResult[0]
 
           return {
+            lp: lp,
             tokenId,
             tokenIdStr: tokenId.toString(),
             pokerInfo: Object.assign(pokerRank, pockerSuit),
