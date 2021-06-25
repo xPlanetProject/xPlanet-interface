@@ -1,8 +1,3 @@
-import { Contract } from '@ethersproject/contracts'
-import { ChainId, WETH } from '@xplanet/sdk'
-import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
-import { abi as QuoterABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
-
 import { useMemo } from 'react'
 
 import ENS_PUBLIC_RESOLVER_ABI from '@/constants/abis/ens-public-resolver.json'
@@ -11,19 +6,29 @@ import { ERC20_BYTES32_ABI } from '@/constants/abis/erc20'
 import ERC20_ABI from '@/constants/abis/erc20.json'
 import { MIGRATOR_ABI, MIGRATOR_ADDRESS } from '@/constants/abis/migrator'
 import UNISOCKS_ABI from '@/constants/abis/unisocks.json'
+import {
+  XSWAP_NFT_ADDRESS,
+  XKEY_DAO_ADRESS,
+  XPOKER_POWER_ADDRESS,
+  QUOTER_ADDRESSES
+} from '@/constants/adress'
 import { abi as SWETH_ABI } from '@/constants/contracts/SWETH.json'
-import { MULTICALL_ABI, MULTICALL_NETWORKS } from '@/constants/multicall'
+import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
+import { abi as XPokerPowerABI } from '@/constants/contracts/XPokerPower.json'
 import { abi as NFTPositionManagerABI } from '@/constants/contracts/XSwapLPNFT.json'
 import { abi as XKeyDaoABI } from '@/constants/contracts/XkeyDao.json'
-import { abi as XPokerPowerABI } from '@/constants/contracts/XPokerPower.json'
+import { MULTICALL_ABI, MULTICALL_NETWORKS } from '@/constants/multicall'
 import {
   V1_EXCHANGE_ABI,
   V1_FACTORY_ABI,
   V1_FACTORY_ADDRESSES
 } from '@/constants/v1'
-import { XSWAP_NFT_ADDRESS, XKEY_DAO_ADRESS, XPOKER_POWER_ADDRESS, QUOTER_ADDRESSES} from '@/constants/adress'
-import { getContract } from '@/utils'
 import { useActiveWeb3React } from '@/hooks'
+import { getContract } from '@/utils'
+import { Contract } from '@ethersproject/contracts'
+import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+import { abi as QuoterABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
+import { ChainId, WETH } from '@xplanet/sdk'
 
 // returns null on errors
 export function useContract(
@@ -123,7 +128,7 @@ export function usePairContract(
   pairAddress?: string,
   withSignerIfPossible?: boolean
 ): Contract | null {
-  return useContract(pairAddress, IUniswapV2PairABI, withSignerIfPossible)
+  return useContract(pairAddress, XKeyPairABI, withSignerIfPossible)
 }
 
 export function useMulticallContract(): Contract | null {
@@ -146,7 +151,9 @@ export function useSocksController(): Contract | null {
   )
 }
 
-export function useNFTPositionManagerContract(withSignerIfPossible?: boolean): Contract | null {
+export function useNFTPositionManagerContract(
+  withSignerIfPossible?: boolean
+): Contract | null {
   return useContract(
     XSWAP_NFT_ADDRESS,
     NFTPositionManagerABI,
@@ -154,22 +161,17 @@ export function useNFTPositionManagerContract(withSignerIfPossible?: boolean): C
   )
 }
 
-export function useXKeyDaoContract(withSignerIfPossible?: boolean): Contract | null {
-  return useContract(
-    XKEY_DAO_ADRESS,
-    XKeyDaoABI,
-    withSignerIfPossible
-  )
+export function useXKeyDaoContract(
+  withSignerIfPossible?: boolean
+): Contract | null {
+  return useContract(XKEY_DAO_ADRESS, XKeyDaoABI, withSignerIfPossible)
 }
 
-export function useXPokerPowerContract(withSignerIfPossible?: boolean): Contract | null {
-  return useContract(
-    XPOKER_POWER_ADDRESS,
-    XPokerPowerABI,
-    withSignerIfPossible
-  )
+export function useXPokerPowerContract(
+  withSignerIfPossible?: boolean
+): Contract | null {
+  return useContract(XPOKER_POWER_ADDRESS, XPokerPowerABI, withSignerIfPossible)
 }
-
 
 export function useV3Quoter() {
   return useContract(QUOTER_ADDRESSES, QuoterABI)
