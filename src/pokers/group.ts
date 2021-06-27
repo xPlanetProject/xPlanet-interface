@@ -25,7 +25,8 @@ pokerTypeMap.set(10, 'HIGH CARD')
 
 export const combinePokerTypeMap = pokerTypeMap
 
-export function compositeType(poker) {
+export function compositeType(composite) {
+  let poker = [...composite]
   let totalNumber = BigNumber.from(0)
   let totalLp = BigNumber.from(0)
   let pokerTypeNumber = 0
@@ -37,8 +38,6 @@ export function compositeType(poker) {
   for (let i = 0; i < 5; i++) {
     const { lp } = poker[i]
     const { rank, suit } = poker[i].pokerInfo
-    poker[i].rankFace = singlePokerRankMap.get(rank)
-    poker[i].suitFace = singlePokerSuitMap.get(suit)
     totalLp = totalLp.add(lp)
     totalNumber = totalNumber.add(rank)
 
@@ -55,12 +54,9 @@ export function compositeType(poker) {
         if (poker[j].pokerInfo.rank == poker[j - 1].pokerInfo.rank) {
           error = 'Cannot add same poker'
         }
-        let tmp = poker[j - 1].pokerInfo.rank
-        poker[j - 1].pokerInfo.rank = poker[j].pokerInfo.rank
-        poker[j].pokerInfo.rank = tmp
-        tmp = poker[j - 1].pokerInfo.suit
-        poker[j - 1].pokerInfo.suit = poker[j].pokerInfo.suit
-        poker[j].pokerInfo.suit = tmp
+        let tmp = poker[j - 1]
+        poker[j - 1] = poker[j]
+        poker[j] = tmp
       }
     }
   }
