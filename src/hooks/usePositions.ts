@@ -212,19 +212,14 @@ export function usePairById(pairId: string, tokenId: string): any {
       ),
       token0: token0Token,
       token1: token1Token,
-      balanceOf: balanceOf.toString(),
+      balanceOf: Number(formatUnits(balanceOf.toString(), 18)).toFixed(4),
       totalSupply: Array.isArray(totalSupplyResult)
         ? totalSupplyResult[0]
         : BigNumber.from(1),
       tokenURI: Array.isArray(tokenURIResult) ? tokenURIResult[0] : '',
       shared: formatUnits(
-        BigNumber.from(
-          multiply(
-            divide(BigInt(balanceOf), BigInt(totalSupply)),
-            BigInt(100)
-          ).toString()
-        ),
-        2
+        BigNumber.from(balanceOf).mul(1000000).div(totalSupply),
+        4
       ),
       supportMining: tokenAddressResults.some(
         (res) => !res.loading && res.result?.includes(pairId)
