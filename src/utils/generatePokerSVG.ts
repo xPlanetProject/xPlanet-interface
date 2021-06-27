@@ -1,4 +1,18 @@
-export default function generateSVG(params) {
+export default function tokenURL(params) {
+  const image = btoa(unescape(encodeURIComponent(generateSVG(params))))
+
+  return String(encodePacked('data:image/svg+xml;base64,', image))
+}
+
+function generateName() {
+  return String(encodePacked('xPlanet xPoker'))
+}
+
+function generateDescription() {
+  return String(encodePacked('xPlanet xSwap Liquidity NFT'))
+}
+
+export function generateSVG(params) {
   return String(
     encodePacked(
       '<svg width="630" height="880" viewBox="0 0 630 880" xmlns="http://www.w3.org/2000/svg"',
@@ -214,7 +228,7 @@ function generateSVGIcon(name) {
       '<rect x="60" y="770" width="',
       (18 * len).toString(),
       '" height="48" rx="10" ry="10" fill="rgb(255,255,255,1)" fill-opacity="0.5" />',
-      '<text x="78" y="800" font-family="\'Roboto Mono\', monospace" font-size="24px" font-weight: "bold"; fill="rgb(0,0,0,1)">',
+      '<text x="78" y="800" font-family="\'Roboto Mono\', monospace" font-size="24px" font-weight="bold" fill="rgb(0,0,0,1)">',
       name,
       '</text></g>'
     )
