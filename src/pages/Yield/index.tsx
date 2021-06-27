@@ -87,6 +87,7 @@ export default function Yield() {
                         isCounting
                         thousandsSeparator=','
                         end={item.value}
+                        decimalPlaces={item.key == 'Yielded (XKEY)' ? 4 : 0}
                         duration={3.2}
                       />
                     </TYPE.largeHeader>
