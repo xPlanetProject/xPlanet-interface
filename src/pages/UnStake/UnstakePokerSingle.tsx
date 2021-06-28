@@ -17,6 +17,7 @@ import {
   WarpperDarkCard,
   ResponsiveButtonPrimary
 } from '@/pages/Stake/styleds'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
 
@@ -27,13 +28,13 @@ type PageProps = {
 const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
   const theme = useTheme()
   const { account } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
 
   const [selectIds, selectPokerId] = useState<any>([])
 
   const { pokers, loading } = uesSingleMaps(account, pairId)
 
   const xKeyDaoContract = useXKeyDaoContract()
-  const positionManager = useNFTPositionManagerContract()
 
   const unStateSingle = useCallback(async () => {
     if (selectIds.length) {
@@ -43,14 +44,18 @@ const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
       const args = selectIds
 
       if (estimate && removeSwaptokenShareSingle) {
-        estimate(...args, {}).then((estimatedGasLimit) => {
-          removeSwaptokenShareSingle(...args, {
+        estimate(args, {}).then((estimatedGasLimit) => {
+          removeSwaptokenShareSingle(args, {
             gasLimit: calculateGasMargin(estimatedGasLimit)
+          }).then((response) => {
+            addTransaction(response, {
+              summary: `Unstake ${selectIds.length} NFT`
+            })
           })
         })
       }
     }
-  }, [selectIds, xKeyDaoContract, positionManager])
+  }, [selectIds, xKeyDaoContract])
 
   const selectPoker = useCallback(
     (tokenId) => {
@@ -127,7 +132,9 @@ const UnStakeSingle: React.FC<PageProps> = ({ pairId }: PageProps) => {
         <TYPE.darkGray fontWeight='bold' fontSize='14px'>
           {selectIds.length}/{pokers.length} Selected
         </TYPE.darkGray>
-        <ResponsiveButtonPrimary onClick={unStateSingle}>
+        <ResponsiveButtonPrimary
+          onClick={unStateSingle}
+          disabled={selectIds.length == 0}>
           UnStake
         </ResponsiveButtonPrimary>
       </ActionRow>

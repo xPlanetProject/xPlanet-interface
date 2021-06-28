@@ -30,6 +30,7 @@ import {
   useMiningPoolData,
   usePowerRewardByAccount
 } from '@/hooks/useMining'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
 
@@ -39,6 +40,7 @@ export default function Poker({
   }
 }: RouteComponentProps<{ pairId?: string }>) {
   const { account } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
   const xKeyDaoContract = useXKeyDaoContract()
 
   const poolInfo = useMiningPool(pairId)
@@ -75,11 +77,15 @@ export default function Poker({
         estimate(...args, {}).then((estimatedGasLimit) => {
           method(...args, {
             gasLimit: calculateGasMargin(estimatedGasLimit)
+          }).then((response) => {
+            addTransaction(response, {
+              summary: `Harvest ${rewardByAccount} XKEY`
+            })
           })
         })
       }
     }
-  }, [account, pairId])
+  }, [account, pairId, rewardByAccount])
 
   return (
     <>

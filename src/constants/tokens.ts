@@ -160,7 +160,7 @@ export class ExtendedEther extends Ether {
   chainId: any = null
 
   constructor(chainId) {
-    super(chainId)
+    super()
     this.chainId = chainId
   }
 

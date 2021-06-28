@@ -167,7 +167,9 @@ const SingleStake: React.FC<SingleStakeProps> = ({
             </ResponsiveButtonPrimary>
           )
         ) : (
-          <ResponsiveButtonPrimary onClick={stateSingle}>
+          <ResponsiveButtonPrimary
+            onClick={stateSingle}
+            disabled={selectIds.length == 0}>
             Stake
           </ResponsiveButtonPrimary>
         )}

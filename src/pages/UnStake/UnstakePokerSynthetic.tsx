@@ -18,6 +18,7 @@ import {
   WarpperDarkCard,
   ResponsiveButtonPrimary
 } from '@/pages/Stake/styleds'
+import { useTransactionAdder } from '@/state/transactions/hooks'
 import { TYPE } from '@/theme'
 import { calculateGasMargin } from '@/utils'
 import styled from 'styled-components'
@@ -30,6 +31,7 @@ const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
   const theme = useTheme()
 
   const { account } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
 
   const [selected, setSelected] = useState<any>([])
 
@@ -49,6 +51,10 @@ const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
         estimate(args, {}).then((estimatedGasLimit) => {
           removeSwaptokenShareCombine(args, {
             gasLimit: calculateGasMargin(estimatedGasLimit)
+          }).then((response) => {
+            addTransaction(response, {
+              summary: `Unstake Synthetic NFTs`
+            })
           })
         })
       }
@@ -131,7 +137,9 @@ const SyntheticStake: React.FC<PageProps> = ({ pairId }: PageProps) => {
         <TYPE.darkGray fontWeight='bold' fontSize='14px'>
           {selected.length}/{pokers.length} Selected
         </TYPE.darkGray>
-        <ResponsiveButtonPrimary onClick={unStateCombine}>
+        <ResponsiveButtonPrimary
+          onClick={unStateCombine}
+          disabled={selected.length != 1}>
           UnStake
         </ResponsiveButtonPrimary>
       </ActionRow>
