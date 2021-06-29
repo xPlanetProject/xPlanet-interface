@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import { ArrowDown } from 'react-feather'
 import ReactGA from 'react-ga'
+import { useTranslation } from 'react-i18next'
 
 import AddressInputPanel from '@/components/AddressInputPanel'
 import {
@@ -72,6 +73,7 @@ import { ThemeContext } from 'styled-components'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
+  const { t } = useTranslation()
 
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
@@ -366,7 +368,7 @@ export default function Swap() {
             marginBottom: '20px',
             padding: '0 0.2rem'
           }}>
-          <Text fontWeight='bold'>Swap</Text>
+          <Text fontWeight='bold'>{t('swap')}</Text>
           <Settings />
         </RowBetween>
         <Wrapper id='swap-page'>

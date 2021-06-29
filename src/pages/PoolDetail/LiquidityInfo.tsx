@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Label, Separator } from './styleds'
 import { DarkCard, LightCard } from '@/components/Card'
@@ -16,6 +17,7 @@ type LiquidityInfoProps = {
 const LiquidityInfo: React.FC<LiquidityInfoProps> = ({
   pair
 }: LiquidityInfoProps) => {
+  const { t } = useTranslation()
   const theme = useContext(ThemeContext)
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)
@@ -48,11 +50,11 @@ const LiquidityInfo: React.FC<LiquidityInfoProps> = ({
         <Separator />
         <AutoColumn gap='md'>
           <RowBetween>
-            <TYPE.main fontWeight='bold'>Amount</TYPE.main>
+            <TYPE.main fontWeight='bold'>{t('Amount')}</TYPE.main>
             <TYPE.body fontWeight='bold'>{pair.balanceOf}</TYPE.body>
           </RowBetween>
           <RowBetween>
-            <TYPE.main fontWeight='bold'>Share</TYPE.main>
+            <TYPE.main fontWeight='bold'>{t('Share')}</TYPE.main>
             <TYPE.body fontWeight='bold'>{pair.shared + '%'}</TYPE.body>
           </RowBetween>
         </AutoColumn>

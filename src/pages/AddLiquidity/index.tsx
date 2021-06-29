@@ -1,12 +1,13 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
+import { useTranslation } from 'react-i18next'
 import { RouteComponentProps, useLocation } from 'react-router-dom'
 
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { PoolPriceBar } from './PoolPriceBar'
 import { ButtonError, ButtonLight, ButtonPrimary } from '@/components/Button'
-import { BlueCard, GreyCard, LightCard } from '@/components/Card'
+import { DarkCard, GreyCard, LightCard } from '@/components/Card'
 import { AutoColumn, ColumnCenter } from '@/components/Column'
 import CurrencyInputPanel from '@/components/CurrencyInputPanel'
 import DoubleCurrencyLogo from '@/components/DoubleLogo'
@@ -58,6 +59,7 @@ export default function AddLiquidity({
   },
   history
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const { t } = useTranslation()
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
 
@@ -400,20 +402,19 @@ export default function AddLiquidity({
           <AutoColumn gap='20px'>
             {noLiquidity && (
               <ColumnCenter>
-                <BlueCard>
+                <DarkCard>
                   <AutoColumn gap='10px'>
-                    <TYPE.link fontWeight={600} color={'primaryText1'}>
-                      You are the first liquidity provider.
+                    <TYPE.link fontWeight={600} color={'text2'}>
+                      {t('create liquidity test1')}
                     </TYPE.link>
-                    <TYPE.link fontWeight={400} color={'primaryText1'}>
-                      The ratio of tokens you add will set the price of this
-                      pool.
+                    <TYPE.link fontWeight={400} color={'text2'}>
+                      {t('create liquidity test2')}
                     </TYPE.link>
-                    <TYPE.link fontWeight={400} color={'primaryText1'}>
-                      Once you are happy with the rate click supply to review.
+                    <TYPE.link fontWeight={400} color={'text2'}>
+                      {t('create liquidity test3')}
                     </TYPE.link>
                   </AutoColumn>
-                </BlueCard>
+                </DarkCard>
               </ColumnCenter>
             )}
             <CurrencyInputPanel
@@ -470,7 +471,7 @@ export default function AddLiquidity({
 
             {!account ? (
               <ButtonLight onClick={toggleWalletModal}>
-                Connect Wallet
+                {t('Connect Wallet')}
               </ButtonLight>
             ) : (
               <AutoColumn gap={'md'}>

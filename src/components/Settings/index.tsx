@@ -1,5 +1,6 @@
 import React, { useRef, useContext, useState } from 'react'
 import { Settings, X } from 'react-feather'
+import { useTranslation } from 'react-i18next'
 
 import { ButtonError } from '@/components/Button'
 import { AutoColumn } from '@/components/Column'
@@ -124,6 +125,7 @@ const ModalContentWrapper = styled.div`
 `
 
 export default function SettingsTab() {
+  const { t } = useTranslation()
   const node = useRef<HTMLDivElement>()
   const open = useSettingsMenuOpen()
   const toggle = useToggleSettingsMenu()
@@ -153,19 +155,17 @@ export default function SettingsTab() {
             <RowBetween style={{ padding: '0 2rem' }}>
               <div />
               <Text fontWeight={500} fontSize={20}>
-                Are you sure?
+                {t('Are you sure?')}
               </Text>
               <StyledCloseIcon onClick={() => setShowConfirmation(false)} />
             </RowBetween>
             <Break />
             <AutoColumn gap='lg' style={{ padding: '0 2rem' }}>
               <Text fontWeight={500} fontSize={20}>
-                Expert mode turns off the confirm transaction prompt and allows
-                high slippage trades that often result in bad rates and lost
-                funds.
+                {t('Toggle Expert Mode Text1')}
               </Text>
               <Text fontWeight={600} fontSize={20}>
-                ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING.
+                {t('Toggle Expert Mode Text2')}
               </Text>
               <ButtonError
                 error={true}
@@ -181,7 +181,7 @@ export default function SettingsTab() {
                   }
                 }}>
                 <Text fontSize={20} fontWeight={500} id='confirm-expert-mode'>
-                  Turn On Expert Mode
+                  {t('Turn On Expert Mode')}
                 </Text>
               </ButtonError>
             </AutoColumn>
@@ -202,10 +202,10 @@ export default function SettingsTab() {
         <MenuFlyout>
           <AutoColumn gap='md' style={{ padding: '1rem' }}>
             <Text fontWeight={600} textAlign='center' fontSize={14}>
-              Settings
+              {t('Settings')}
             </Text>
             <Text fontWeight={600} fontSize={14}>
-              Transaction
+              {t('Transaction')}
             </Text>
             <TransactionSettings
               rawSlippage={userSlippageTolerance}
@@ -214,14 +214,14 @@ export default function SettingsTab() {
               setDeadline={setDeadline}
             />
             <Text fontWeight={600} fontSize={14}>
-              Interface
+              {t('Interface')}
             </Text>
             <RowBetween>
               <RowFixed>
                 <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
-                  Toggle Expert Mode
+                  {t('Toggle Expert Mode')}
                 </TYPE.black>
-                <QuestionHelper text='Bypasses confirmation modals and allows high slippage trades. Use at your own risk.' />
+                <QuestionHelper text={t('Toggle Expert Mode Tip')} />
               </RowFixed>
               <Toggle
                 id='toggle-expert-mode-button'

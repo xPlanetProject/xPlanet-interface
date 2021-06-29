@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import PoolListItem from './PoolListItem'
 import { LightCard } from '@/components/Card'
@@ -19,6 +20,7 @@ const ColumnGrid = styled(AutoColumn)`
 `
 
 function PoolList() {
+  const { t } = useTranslation()
   const theme = useContext(ThemeContext)
   const { loading, pairIds } = useMiningList()
 
@@ -27,7 +29,7 @@ function PoolList() {
       {loading ? (
         <LightCard padding='40px'>
           <TYPE.body color={theme.text3} textAlign='center'>
-            <Dots>Loading</Dots>
+            <Dots>{t('Loading')}</Dots>
           </TYPE.body>
         </LightCard>
       ) : pairIds.length > 0 ? (
@@ -39,7 +41,7 @@ function PoolList() {
       ) : (
         <LightCard padding='40px'>
           <TYPE.body color={theme.text3} textAlign='center'>
-            No data.
+            {t('No data')}
           </TYPE.body>
         </LightCard>
       )}

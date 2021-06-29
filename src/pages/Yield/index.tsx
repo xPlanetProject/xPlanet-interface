@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import PoolList from './PoolList'
 import { DarkCard } from '@/components/Card'
@@ -53,15 +54,16 @@ const BaseInfoItem = styled(AutoColumn)`
 `
 
 export default function Yield() {
+  const { t } = useTranslation()
   const theme = useContext(ThemeContext)
 
   const price = useCurrentStagePrice()
   const mint = userSwapTokenHadMint()
 
   const poolInfo: Array<any> = [
-    { key: 'Value of staked LP (XKEY)', value: 999999999 },
-    { key: 'Yielded (XKEY)', value: Number(mint) },
-    { key: 'Rate (XKEY/Block)', value: Number(price) }
+    { key: t('Value of staked LP (XKEY)'), value: 999999999 },
+    { key: t('Yielded (XKEY)'), value: Number(mint) },
+    { key: t('Rate (XKEY/Block)'), value: Number(price) }
   ]
 
   return (
@@ -71,7 +73,7 @@ export default function Yield() {
           <AutoColumn gap='lg' style={{ width: '100%' }}>
             <TitleRow>
               <TYPE.gray fontWeight='bold' fontSize='20px'>
-                xPoker Mining
+                xPoker {t('Mining')}
               </TYPE.gray>
             </TitleRow>
             <DarkCard>
@@ -100,7 +102,7 @@ export default function Yield() {
             </DarkCard>
             <AutoRow>
               <TYPE.gray fontWeight='bold' fontSize='20px'>
-                Pool List
+                {t('Pool List')}
               </TYPE.gray>
               <Question text='xPoker Mining.' />
             </AutoRow>

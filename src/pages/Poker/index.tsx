@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
 import {
@@ -39,6 +40,7 @@ export default function Poker({
     params: { pairId }
   }
 }: RouteComponentProps<{ pairId?: string }>) {
+  const { t } = useTranslation()
   const { account } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
   const xKeyDaoContract = useXKeyDaoContract()
@@ -56,15 +58,15 @@ export default function Poker({
     usePowerRewardByAccount(pairId, account) ?? {}
 
   const pokerInfo: Array<any> = [
-    { key: 'Staked Amount (xPoker)', value: `${singleLength}` },
-    { key: 'Synthetic Asset Amount (xPoker)', value: `${compositeLength}` },
-    { key: 'Total Mining Power', value: powerAmount }
+    { key: t('Staked Amount (xPoker)'), value: `${singleLength}` },
+    { key: t('Synthetic Asset Amount (xPoker)'), value: `${compositeLength}` },
+    { key: t('Total Mining Power'), value: powerAmount }
   ]
 
   const pokerPower: Array<any> = [
-    { key: 'Yielded (XKEY)', value: `${hadMintAmount}` },
-    { key: 'Yield Rate per block', value: `${yieldRate}/Block` },
-    { key: 'APR for 1 Unt of Mining Power', value: `${APR}%` }
+    { key: t('Yielded (XKEY)'), value: `${hadMintAmount}` },
+    { key: t('Yield Rate per block'), value: `${yieldRate}/Block` },
+    { key: t('APR for 1 Unt of Mining Power'), value: `${APR}%` }
   ]
 
   const harvest = useCallback(async () => {
@@ -79,7 +81,7 @@ export default function Poker({
             gasLimit: calculateGasMargin(estimatedGasLimit)
           }).then((response) => {
             addTransaction(response, {
-              summary: `Harvest ${rewardByAccount} XKEY`
+              summary: `Harvest.`
             })
           })
         })
@@ -99,7 +101,10 @@ export default function Poker({
                 marginBottom: '0.5rem'
               }}
               to='/yield'>
-              <HoverText>{'← Back to xPoker Mining'}</HoverText>
+              <HoverText>
+                {t('← Back to')}
+                {t('xPoker Mining')}
+              </HoverText>
             </Link>
             <RowFixed>
               <DoubleCurrencyLogo
@@ -170,7 +175,7 @@ export default function Poker({
                         textAlign='center'
                         fontSize='16px'
                         fontWeight={500}>
-                        My Mining Power
+                        {t('My Mining Power')}
                       </TYPE.mediumHeader>
                     </RowCenterSmallLeft>
                     <RowCenterSmallLeft>
@@ -186,7 +191,7 @@ export default function Poker({
                       <ResponsiveButtonPrimary
                         as={Link}
                         to={`/unstake/SINGLE/${pairId}`}>
-                        Staked xPoker
+                        {t('Staked xPoker')}
                       </ResponsiveButtonPrimary>
                     </RowCenterSmallLeft>
                   </PowerCard>
@@ -197,7 +202,7 @@ export default function Poker({
                         textAlign='center'
                         fontSize='16px'
                         fontWeight={500}>
-                        My Reward
+                        {t('My Reward')}
                       </TYPE.mediumHeader>
                     </RowCenterSmallLeft>
                     <RowCenterSmallLeft>
@@ -211,7 +216,7 @@ export default function Poker({
                     </RowCenterSmallLeft>
                     <RowCenterSmallLeft>
                       <ResponsiveButtonPrimary onClick={harvest}>
-                        Harvest
+                        {t('Harvest')}
                       </ResponsiveButtonPrimary>
                     </RowCenterSmallLeft>
                   </PowerCard>
@@ -226,18 +231,18 @@ export default function Poker({
                     <img src={Poker1Img} alt={'poker img'} />
                   </PokerImage>
                   <TYPE.mediumHeader textAlign='center' margin='1rem 0'>
-                    Single Poker Mining
+                    {t('Single xPoker Mining')}
                   </TYPE.mediumHeader>
                   <RowBetween margin='1rem 0'>
                     <ResponsiveButtonSecondary
                       as={Link}
                       to={`/stake/SINGLE/${pairId}`}>
-                      Stake
+                      {t('Stake')}
                     </ResponsiveButtonSecondary>
                     <ResponsiveButtonSecondary
                       as={Link}
                       to={`/unstake/SINGLE/${pairId}`}>
-                      Unstake
+                      {t('Unstake')}
                     </ResponsiveButtonSecondary>
                   </RowBetween>
                 </PowerCard>
@@ -248,18 +253,18 @@ export default function Poker({
                     <img src={Poker5Img} alt={'poker img'} />
                   </PokerImage>
                   <TYPE.mediumHeader textAlign='center' margin='1rem 0'>
-                    Sythetic Poker Mining
+                    {t('Sythetic xPoker Mining')}
                   </TYPE.mediumHeader>
                   <RowBetween margin='1rem 0'>
                     <ResponsiveButtonSecondary
                       as={Link}
                       to={`/stake/SYNTHETIC/${pairId}`}>
-                      Stake
+                      {t('Stake')}
                     </ResponsiveButtonSecondary>
                     <ResponsiveButtonSecondary
                       as={Link}
                       to={`/unstake/SYNTHETIC/${pairId}`}>
-                      Unstake
+                      {t('Unstake')}
                     </ResponsiveButtonSecondary>
                   </RowBetween>
                 </PowerCard>

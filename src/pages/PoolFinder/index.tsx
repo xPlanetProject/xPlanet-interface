@@ -1,8 +1,6 @@
-import { Currency, ETHER, JSBI, TokenAmount } from '@xplanet/sdk'
-import { Text } from 'rebass'
-
 import React, { useCallback, useEffect, useState } from 'react'
 import { Plus } from 'react-feather'
+import { useTranslation } from 'react-i18next'
 
 import { ButtonDropdownLight } from '@/components/Button'
 import { LightCard } from '@/components/Card'
@@ -14,12 +12,14 @@ import Row from '@/components/Row'
 import CurrencySearchModal from '@/components/SearchModal/CurrencySearchModal'
 import { PairState, usePair } from '@/data/Reserves'
 import { useActiveWeb3React } from '@/hooks'
+import AppBody from '@/pages/AppBody'
+import { Dots } from '@/pages/Pool/styleds'
 import { usePairAdder } from '@/state/user/hooks'
 import { useTokenBalance } from '@/state/wallet/hooks'
 import { StyledInternalLink } from '@/theme'
 import { currencyId } from '@/utils/currencyId'
-import AppBody from '@/pages/AppBody'
-import { Dots } from '@/pages/Pool/styleds'
+import { Currency, ETHER, JSBI, TokenAmount } from '@xplanet/sdk'
+import { Text } from 'rebass'
 
 enum Fields {
   TOKEN0 = 0,
@@ -27,6 +27,7 @@ enum Fields {
 }
 
 export default function PoolFinder() {
+  const { t } = useTranslation()
   const { account } = useActiveWeb3React()
 
   const [showSearch, setShowSearch] = useState<boolean>(false)
@@ -82,8 +83,8 @@ export default function PoolFinder() {
     <LightCard padding='45px 10px'>
       <Text textAlign='center'>
         {!account
-          ? 'Connect to a wallet to find pools'
-          : 'Select a token to find your liquidity.'}
+          ? t('Connect to a wallet to find pools')
+          : t('Select a token to find your liquidity')}
       </Text>
     </LightCard>
   )
@@ -106,7 +107,7 @@ export default function PoolFinder() {
             </Row>
           ) : (
             <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              Select a Token
+              {t('Select a Token')}
             </Text>
           )}
         </ButtonDropdownLight>
@@ -129,7 +130,7 @@ export default function PoolFinder() {
             </Row>
           ) : (
             <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              Select a Token
+              {t('Select a Token')}
             </Text>
           )}
         </ButtonDropdownLight>
@@ -143,7 +144,7 @@ export default function PoolFinder() {
               borderRadius: '12px'
             }}>
             <Text textAlign='center' fontWeight={500}>
-              Pool Found!
+              {t('Pool Found')}!
             </Text>
           </ColumnCenter>
         )}
@@ -155,13 +156,13 @@ export default function PoolFinder() {
               <LightCard padding='45px 10px'>
                 <AutoColumn gap='sm' justify='center'>
                   <Text textAlign='center'>
-                    You don’t have liquidity in this pool yet.
+                    {t('You don’t have liquidity in this pool yet.')}
                   </Text>
                   <StyledInternalLink
                     to={`/add/${currencyId(currency0)}/${currencyId(
                       currency1
                     )}`}>
-                    <Text textAlign='center'>Add liquidity.</Text>
+                    <Text textAlign='center'>{t('Add liquidity.')}</Text>
                   </StyledInternalLink>
                 </AutoColumn>
               </LightCard>
@@ -169,10 +170,10 @@ export default function PoolFinder() {
           ) : validPairNoLiquidity ? (
             <LightCard padding='45px 10px'>
               <AutoColumn gap='sm' justify='center'>
-                <Text textAlign='center'>No pool found.</Text>
+                <Text textAlign='center'>{t('No pool found.')}</Text>
                 <StyledInternalLink
                   to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                  Create pool.
+                  {t('Create pool.')}
                 </StyledInternalLink>
               </AutoColumn>
             </LightCard>
@@ -180,7 +181,7 @@ export default function PoolFinder() {
             <LightCard padding='45px 10px'>
               <AutoColumn gap='sm' justify='center'>
                 <Text textAlign='center' fontWeight={500}>
-                  Invalid pair.
+                  {t('Invalid pair.')}
                 </Text>
               </AutoColumn>
             </LightCard>
@@ -188,7 +189,7 @@ export default function PoolFinder() {
             <LightCard padding='45px 10px'>
               <AutoColumn gap='sm' justify='center'>
                 <Text textAlign='center'>
-                  Loading
+                  {t('Loading')}
                   <Dots />
                 </Text>
               </AutoColumn>

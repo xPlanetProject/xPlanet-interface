@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { ButtonPrimary } from '@/components/Button'
@@ -71,6 +72,7 @@ interface PairProps {
 }
 
 export default function PoolListIteme({ pairId }: PairProps) {
+  const { t } = useTranslation()
   const { token0, token1, loading } = useTokensFromPair(pairId)
 
   const { singleLength, compositeLength, TVL, APR } =
@@ -86,7 +88,7 @@ export default function PoolListIteme({ pairId }: PairProps) {
   if (loading) {
     return (
       <Card>
-        <Dots>Loading Pair</Dots>
+        <Dots>{t('Loading Pair')}</Dots>
       </Card>
     )
   }
@@ -112,8 +114,8 @@ export default function PoolListIteme({ pairId }: PairProps) {
 
       <RowCenterSmallLeft>
         <ExtentsText>
-          Deposit {token0?.symbol}-{token1?.symbol} xPoker <br />
-          Earn XKEY
+          {t('Deposit')} {token0?.symbol}-{token1?.symbol} xPoker <br />
+          {t('Earn')} XKEY
         </ExtentsText>
       </RowCenterSmallLeft>
 
@@ -122,16 +124,16 @@ export default function PoolListIteme({ pairId }: PairProps) {
         <Text>{xPokers} xPoker</Text>
       </RowBetweenItem>
       <RowBetweenItem>
-        <ExtentsText>TVL:</ExtentsText>
+        <ExtentsText>{t('TVL')}:</ExtentsText>
         <Text>$ {TVL}</Text>
       </RowBetweenItem>
       <RowBetweenItem>
-        <ExtentsText>APR:</ExtentsText>
+        <ExtentsText>{t('APR')}:</ExtentsText>
         <Text>201%</Text>
       </RowBetweenItem>
       <RowBetweenItem>
         <ButtonPrimary padding='12px' as={Link} to={`/poker/${pairId}`}>
-          Select
+          {t('Select')}
         </ButtonPrimary>
       </RowBetweenItem>
     </Card>

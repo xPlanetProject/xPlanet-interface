@@ -1,14 +1,14 @@
-import { ChainId, Currency, currencyEquals, ETHER, Token } from '@xplanet/sdk'
-import { Text } from 'rebass'
-import styled from 'styled-components'
-
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { SUGGESTED_BASES } from '@/constants'
 import { AutoColumn } from '@/components/Column'
 import CurrencyLogo from '@/components/CurrencyLogo'
 import QuestionHelper from '@/components/QuestionHelper'
 import { AutoRow } from '@/components/Row'
+import { SUGGESTED_BASES } from '@/constants'
+import { ChainId, Currency, currencyEquals, ETHER, Token } from '@xplanet/sdk'
+import { Text } from 'rebass'
+import styled from 'styled-components'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
   border: 1px solid
@@ -36,11 +36,13 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
+  const { t } = useTranslation()
+
   return (
     <AutoColumn gap='md'>
       <AutoRow>
         <Text fontWeight={500} fontSize={14}>
-          Common bases
+          {t('Common bases')}
         </Text>
         <QuestionHelper text='These tokens are commonly paired with other tokens.' />
       </AutoRow>

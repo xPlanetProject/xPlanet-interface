@@ -1,4 +1,5 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import SingleStakeItem from './SingleStakeItem'
 import {
@@ -35,6 +36,7 @@ type SyntheticStakeProps = {
 const SyntheticStake: React.FC<SyntheticStakeProps> = ({
   pairId
 }: SyntheticStakeProps) => {
+  const { t } = useTranslation()
   const theme = useContext(ThemeContext)
 
   const { account } = useActiveWeb3React()
@@ -138,7 +140,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
     return (
       <WarpperDarkCard>
         <TYPE.body color={theme.text3} padding='40px' textAlign='center'>
-          <Dots>Loading</Dots>
+          <Dots>{t('Loading')}</Dots>
         </TYPE.body>
       </WarpperDarkCard>
     )
@@ -153,7 +155,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
           </Column>
           <Column>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
-              Poker
+              xPoker
             </TYPE.darkGray>
           </Column>
           <Column>
@@ -163,12 +165,12 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
           </Column>
           <Column flex='1'>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
-              Liquidity Share
+              {t('Liquidity Share')}
             </TYPE.darkGray>
           </Column>
           <Column flex='1'>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
-              Calculating power
+              {t('Calculating power')}
             </TYPE.darkGray>
           </Column>
         </Row>
@@ -186,7 +188,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
         ) : (
           <LightCard padding='40px'>
             <TYPE.body color={theme.text3} textAlign='center'>
-              No data.
+              {t('No data')}
             </TYPE.body>
           </LightCard>
         )}
@@ -211,7 +213,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
         <ActionRowBetween>
           <RowBetween>
             <TYPE.main fontWeight='bold' fontSize='14px'>
-              Hands
+              {t('Hands')}
             </TYPE.main>
             <TYPE.body fontWeight='bold' fontSize='14px'>
               {selectType}
@@ -219,7 +221,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
           </RowBetween>
           <RowBetween>
             <TYPE.main fontWeight='bold' fontSize='14px'>
-              Calculating Power
+              {t('Calculating power')}
             </TYPE.main>
             <TYPE.body fontWeight='bold' fontSize='14px'>
               {selectPower}
@@ -229,11 +231,11 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
           {needApprove ? (
             approving ? (
               <ResponsiveButtonPrimary>
-                <Dots>Approving</Dots>
+                <Dots>{t('Approving')}</Dots>
               </ResponsiveButtonPrimary>
             ) : (
               <ResponsiveButtonPrimary onClick={approve}>
-                Approve
+                {t('Approve')}
               </ResponsiveButtonPrimary>
             )
           ) : (
@@ -241,7 +243,7 @@ const SyntheticStake: React.FC<SyntheticStakeProps> = ({
               onClick={stateSingle}
               error={!!selectError}
               disabled={selectError || selectIds.length != 5}>
-              {selectError ? selectError : 'Stake'}
+              {selectError ? selectError : t('Stake')}
             </ResponsiveButtonPrimary>
           )}
         </ActionRowBetween>

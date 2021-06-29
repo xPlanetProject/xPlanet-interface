@@ -32,7 +32,7 @@ type PageParams = {
 }
 
 export default function PoolDetail() {
-  const [t] = useTranslation()
+  const { t } = useTranslation()
   const params = useParams<PageParams>()
   const theme = useContext(ThemeContext)
 
@@ -49,7 +49,7 @@ export default function PoolDetail() {
       <PageWrapper>
         <LightCard padding='40px'>
           <TYPE.body color={theme.text3} textAlign='center'>
-            <Dots>Loading</Dots>
+            <Dots>{t('Loading')}</Dots>
           </TYPE.body>
         </LightCard>
       </PageWrapper>
@@ -70,7 +70,10 @@ export default function PoolDetail() {
               marginBottom: '0.5rem'
             }}
             to='/pool'>
-            <HoverText>{'← Back to Pools Overview'}</HoverText>
+            <HoverText>
+              {t('← Back to')}
+              {t('Pools Overview')}
+            </HoverText>
           </Link>
           <ResponsiveRow>
             <RowFixed>

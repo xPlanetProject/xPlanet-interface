@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 
 import SingleStake from './SingleStake'
@@ -13,6 +14,7 @@ import { TYPE } from '@/theme'
 type StakeType = 'SINGLE' | 'SYNTHETIC'
 
 const Stake: React.FC = () => {
+  const { t } = useTranslation()
   const { pairId, type } = useParams<{ pairId: string; type: StakeType }>()
   const poolInfo = useMiningPool(pairId)
   const [stakeType, setStakeType] = useState<StakeType>(type)
@@ -29,7 +31,10 @@ const Stake: React.FC = () => {
                 marginBottom: '0.5rem'
               }}
               to={`/poker/${pairId}`}>
-              <HoverText>{'← Back to xPoker Mining'}</HoverText>
+              <HoverText>
+                {t('← Back to')}
+                {t('xPoker Mining')}
+              </HoverText>
             </Link>
             <RowFixed>
               <DoubleCurrencyLogo
@@ -43,8 +48,8 @@ const Stake: React.FC = () => {
               </TYPE.label>
               <TYPE.mediumHeader fontWeight='bold' marginLeft='10px'>
                 {stakeType === 'SINGLE'
-                  ? 'Stake Single xPoker'
-                  : 'Stake Synthetic xPoker'}
+                  ? t('Stake Single xPoker')
+                  : t('Stake Synthetic xPoker')}
               </TYPE.mediumHeader>
             </RowFixed>
           </AutoColumn>
@@ -57,7 +62,7 @@ const Stake: React.FC = () => {
                 onClick={() => {
                   setStakeType('SINGLE')
                 }}>
-                Stake Single xPoker
+                {t('Stake Single xPoker')}
               </NavTitleTab>
               <NavTitleTab
                 as={Link}
@@ -66,7 +71,7 @@ const Stake: React.FC = () => {
                 onClick={() => {
                   setStakeType('SYNTHETIC')
                 }}>
-                Stake Synthetic xPoker
+                {t('Stake Synthetic xPoker')}
               </NavTitleTab>
             </RowFixed>
             <TabConent>

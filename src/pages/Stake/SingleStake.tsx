@@ -1,4 +1,5 @@
 import React, { useContext, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import SingleStakeItem from './SingleStakeItem'
 import {
@@ -28,6 +29,7 @@ type SingleStakeProps = {
 const SingleStake: React.FC<SingleStakeProps> = ({
   pairId
 }: SingleStakeProps) => {
+  const { t } = useTranslation()
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
 
@@ -98,7 +100,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
     return (
       <WarpperDarkCard>
         <TYPE.body color={theme.text3} textAlign='center' padding='40px'>
-          <Dots>Loading</Dots>
+          <Dots>{t('Loading')}</Dots>
         </TYPE.body>
       </WarpperDarkCard>
     )
@@ -113,7 +115,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
           </Column>
           <Column>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
-              Poker
+              xPoker
             </TYPE.darkGray>
           </Column>
           <Column>
@@ -123,12 +125,12 @@ const SingleStake: React.FC<SingleStakeProps> = ({
           </Column>
           <Column flex='1'>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
-              Liquidity Share
+              {t('Liquidity Share')}
             </TYPE.darkGray>
           </Column>
           <Column flex='1'>
             <TYPE.darkGray fontWeight='bold' fontSize='0.75rem'>
-              Calculating power
+              {t('Calculating power')}
             </TYPE.darkGray>
           </Column>
         </Row>
@@ -146,7 +148,7 @@ const SingleStake: React.FC<SingleStakeProps> = ({
         ) : (
           <LightCard padding='40px'>
             <TYPE.body color={theme.text3} textAlign='center'>
-              No data.
+              {t('No data')}
             </TYPE.body>
           </LightCard>
         )}
@@ -154,23 +156,23 @@ const SingleStake: React.FC<SingleStakeProps> = ({
 
       <ActionRow>
         <TYPE.darkGray fontWeight='bold' fontSize='14px'>
-          {selectIds.length}/{pokers.length} Selected
+          {selectIds.length}/{pokers.length} {t('Selected')}
         </TYPE.darkGray>
         {needApprove ? (
           approving ? (
             <ResponsiveButtonPrimary>
-              <Dots>Approving</Dots>
+              <Dots>{t('Approving')}</Dots>
             </ResponsiveButtonPrimary>
           ) : (
             <ResponsiveButtonPrimary onClick={approve}>
-              Approve
+              {t('Approve')}
             </ResponsiveButtonPrimary>
           )
         ) : (
           <ResponsiveButtonPrimary
             onClick={stateSingle}
             disabled={selectIds.length == 0}>
-            Stake
+            {t('Stake')}
           </ResponsiveButtonPrimary>
         )}
       </ActionRow>

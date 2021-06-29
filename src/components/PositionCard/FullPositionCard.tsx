@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 import Badge from '@/components/Badge'
@@ -55,6 +56,7 @@ interface PositionCardProps {
 
 export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const history = useHistory()
+  const { t } = useTranslation()
 
   const { pairInfo, loading } = usePairById(pair.pairId, pair.tokenId)
 
@@ -67,7 +69,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
     return (
       <HoverCard border={border}>
         <CenterAutoColumn gap='12px'>
-          <Dots>Loading Liquidity Item...</Dots>
+          <Dots>{t('Loading Liquidity Item')}</Dots>
         </CenterAutoColumn>
       </HoverCard>
     )
@@ -89,7 +91,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             />
             <Text fontWeight={500} fontSize={20}>
               {!currency0 || !currency1 ? (
-                <Dots>Loading</Dots>
+                <Dots>{t('Loading')}</Dots>
               ) : (
                 `${currency0.symbol}/${currency1.symbol}`
               )}
@@ -97,7 +99,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
           </RowFixed>
           <RowFixed>
             <RowFixed>
-              <ExtentsText>Liquidity Value:</ExtentsText>
+              <ExtentsText>{t('Liquidity Value')}:</ExtentsText>
               <Badge>
                 <BadgeText>$ 1000000</BadgeText>
               </Badge>

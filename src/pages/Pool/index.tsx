@@ -26,7 +26,7 @@ import { ThemeContext } from 'styled-components'
 export default function Pool() {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
-  const [t] = useTranslation()
+  const { t } = useTranslation()
 
   const { positions, loading: positionsLoading } = usePositions(account)
 
@@ -62,7 +62,7 @@ export default function Pool() {
             <LiquidityWrapper>
               <AutoRow padding={'8px 8px 15px'}>
                 <Text color={theme.text1} fontWeight='bold'>
-                  Your Liquidity
+                  {t('Your Liquidity')}
                 </Text>
                 <Question text='When you add liquidity, you are given pool NFT that represent your share. If you don’t see a pool you joined in this list, try importing a pool below.' />
               </AutoRow>
@@ -70,13 +70,13 @@ export default function Pool() {
               {!account ? (
                 <LightCard padding='40px'>
                   <TYPE.body color={theme.text3} textAlign='center'>
-                    Connect to a wallet to view your liquidity.
+                    {t('Connect to a wallet to view your liquidity.')}
                   </TYPE.body>
                 </LightCard>
               ) : positionsLoading ? (
                 <LightCard padding='40px'>
                   <TYPE.body color={theme.text3} textAlign='center'>
-                    <Dots>Loading</Dots>
+                    <Dots>{t('Loading')}</Dots>
                   </TYPE.body>
                 </LightCard>
               ) : positions?.length > 0 ? (
@@ -88,7 +88,7 @@ export default function Pool() {
               ) : (
                 <LightCard padding='40px'>
                   <TYPE.body color={theme.text3} textAlign='center'>
-                    No liquidity found.
+                    {t('No liquidity found')}
                   </TYPE.body>
                 </LightCard>
               )}

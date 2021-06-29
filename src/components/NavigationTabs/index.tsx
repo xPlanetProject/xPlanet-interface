@@ -6,7 +6,6 @@ import { NavLink, Link as HistoryLink } from 'react-router-dom'
 import getMenus, { MenuItem } from './menus'
 import QuestionHelper from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
-import { darken } from 'polished'
 import styled from 'styled-components'
 
 const Tabs = styled.div`
@@ -81,17 +80,19 @@ export function SwapPoolTabs({ active }: { active: string }) {
 }
 
 export function FindPoolTabs() {
+  const { t } = useTranslation()
+
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
         <HistoryLink to='/pool'>
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>Import Pool</ActiveText>
+        <ActiveText>{t('Import Pool')}</ActiveText>
         <QuestionHelper
-          text={
+          text={t(
             "Use this tool to find pairs that don't automatically appear in the interface."
-          }
+          )}
         />
       </RowBetween>
     </Tabs>
@@ -99,19 +100,19 @@ export function FindPoolTabs() {
 }
 
 export function AddRemoveTabs({ adding }: { adding: boolean }) {
+  const { t } = useTranslation()
+
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
         <HistoryLink to='/pool'>
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>{adding ? 'Add' : 'Remove'} Liquidity</ActiveText>
+        <ActiveText>
+          {adding ? t('Add Liquidity') : t('Remove Liquidity')}
+        </ActiveText>
         <QuestionHelper
-          text={
-            adding
-              ? 'When you add liquidity, you are given pool NFT representing your position. These NFT automatically earn fees proportional to your share of the pool, and can be redeemed at any time.'
-              : 'Removing pool tokens converts your position back into underlying NFT at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive.'
-          }
+          text={adding ? t('Add Liquidity Tip') : t('Remove Liquidity Tip')}
         />
       </RowBetween>
     </Tabs>
