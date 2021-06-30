@@ -1,8 +1,8 @@
+import { initReactI18next } from 'react-i18next'
+
 import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import XHR from 'i18next-xhr-backend'
-
-import { initReactI18next } from 'react-i18next'
 
 i18next
   .use(XHR)
@@ -15,10 +15,14 @@ i18next
     react: {
       useSuspense: true
     },
-    fallbackLng: 'en',
-    preload: ['en'],
+    fallbackLng: 'en-US',
+    preload: ['en-US'],
     keySeparator: '.',
     interpolation: { escapeValue: false }
   })
+
+console.log(new LanguageDetector())
+
+console.log(i18next)
 
 export default i18next

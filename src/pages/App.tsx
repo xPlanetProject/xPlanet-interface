@@ -20,6 +20,7 @@ import UnStake from './UnStake'
 import Yield from './Yield'
 import Header from '@/components/Header'
 import Popups from '@/components/Popups'
+import { SwitchLocaleLink } from '@/components/SwitchLocaleLink'
 import Web3ReactManager from '@/components/Web3ReactManager'
 import GoogleAnalyticsReporter from '@/components/analytics/GoogleAnalyticsReporter'
 // import { useV3Token } from '@/hooks/TokensV3'
@@ -168,6 +169,7 @@ export default function App() {
                 <Route component={RedirectPathToSwapOnly} />
               </Switch>
             </Web3ReactManager>
+            <SwitchLocaleLink />
             <Marginer />
           </BodyWrapper>
         </AppWrapper>
