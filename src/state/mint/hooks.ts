@@ -1,3 +1,15 @@
+import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Field, typeInput } from './actions'
+import { PairState, usePair } from '@/data/Reserves'
+import { useTotalSupply } from '@/data/TotalSupply'
+import { useActiveWeb3React } from '@/hooks'
+import { AppDispatch, AppState } from '@/state'
+import { tryParseAmount } from '@/state/swap/hooks'
+import { useCurrencyBalances } from '@/state/wallet/hooks'
+import { wrappedCurrency, wrappedCurrencyAmount } from '@/utils/wrappedCurrency'
 import {
   Currency,
   CurrencyAmount,
@@ -8,21 +20,6 @@ import {
   Price,
   TokenAmount
 } from '@xplanet/sdk'
-
-import { useCallback, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { PairState, usePair } from '@/data/Reserves'
-import { useTotalSupply } from '@/data/TotalSupply'
-import { useActiveWeb3React } from '@/hooks'
-import {
-  wrappedCurrency,
-  wrappedCurrencyAmount
-} from '@/utils/wrappedCurrency'
-import { AppDispatch, AppState } from '@/state'
-import { tryParseAmount } from '@/state/swap/hooks'
-import { useCurrencyBalances } from '@/state/wallet/hooks'
-import { Field, typeInput } from './actions'
 
 const ZERO = JSBI.BigInt(0)
 
@@ -46,6 +43,7 @@ export function useDerivedMintInfo(
   poolTokenPercentage?: Percent
   error?: string
 } {
+  const { t } = useTranslation()
   const { account, chainId } = useActiveWeb3React()
 
   const { independentField, typedValue, otherTypedValue } = useMintState()
@@ -198,15 +196,15 @@ export function useDerivedMintInfo(
 
   let error: string | undefined
   if (!account) {
-    error = 'Connect Wallet'
+    error = t('Connect Wallet')
   }
 
   if (pairState === PairState.INVALID) {
-    error = error ?? 'Invalid pair'
+    error = error ?? t('Invalid pair')
   }
 
   if (!parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? 'Enter an amount'
+    error = error ?? t('Enter an amount')
   }
 
   const {

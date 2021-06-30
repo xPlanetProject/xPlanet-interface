@@ -470,7 +470,7 @@ export default function Swap() {
                   {Boolean(trade) && (
                     <RowBetween align='center'>
                       <Text fontWeight={500} fontSize={14} color={theme.text2}>
-                        Price
+                        {t('Price')}
                       </Text>
                       <TradePrice
                         price={trade?.executionPrice}
@@ -486,7 +486,7 @@ export default function Swap() {
                         fontSize={14}
                         color={theme.text2}
                         onClick={toggleSettings}>
-                        Slippage Tolerance
+                        {t('Slippage Tolerance')}
                       </ClickableText>
                       <ClickableText
                         fontWeight={500}
@@ -504,7 +504,7 @@ export default function Swap() {
           <BottomGrouping>
             {!account ? (
               <ButtonLight onClick={toggleWalletModal}>
-                Connect Wallet
+                {t('Connect Wallet')}
               </ButtonLight>
             ) : showWrap ? (
               <ButtonPrimary
@@ -520,7 +520,7 @@ export default function Swap() {
             ) : noRoute && userHasSpecifiedInputOutput ? (
               <GreyCard style={{ textAlign: 'center' }}>
                 <TYPE.main mb='4px'>
-                  Insufficient liquidity for this trade.
+                  {t('Insufficient liquidity for this trade.')}
                 </TYPE.main>
               </GreyCard>
             ) : showApproveFlow ? (
@@ -535,7 +535,7 @@ export default function Swap() {
                   confirmed={approval === ApprovalState.APPROVED}>
                   {approval === ApprovalState.PENDING ? (
                     <AutoRow gap='6px' justify='center'>
-                      Approving <Loader stroke='white' />
+                      {t('Approving')} <Loader stroke='white' />
                     </AutoRow>
                   ) : approvalSubmitted &&
                     approval === ApprovalState.APPROVED ? (
@@ -601,7 +601,7 @@ export default function Swap() {
                   {swapInputError
                     ? swapInputError
                     : priceImpactSeverity > 3 && !isExpertMode
-                    ? `Price Impact Too High`
+                    ? t('Price Impact Too High')
                     : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
                 </Text>
               </ButtonError>

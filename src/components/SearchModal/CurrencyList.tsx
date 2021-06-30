@@ -1,3 +1,25 @@
+import React, {
+  CSSProperties,
+  MutableRefObject,
+  useCallback,
+  useMemo
+} from 'react'
+import { useTranslation } from 'react-i18next'
+import { FixedSizeList } from 'react-window'
+
+import { FadedSpan, MenuItem } from './styleds'
+import Column from '@/components/Column'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import Loader from '@/components/Loader'
+import { RowFixed } from '@/components/Row'
+import { MouseoverTooltip } from '@/components/Tooltip'
+import { useActiveWeb3React } from '@/hooks'
+import { useIsUserAddedToken } from '@/hooks/Tokens'
+import { useSelectedTokenList, WrappedTokenInfo } from '@/state/lists/hooks'
+import { useAddUserToken, useRemoveUserAddedToken } from '@/state/user/hooks'
+import { useCurrencyBalance } from '@/state/wallet/hooks'
+import { LinkStyledButton, TYPE } from '@/theme'
+import { isTokenOnList } from '@/utils'
 import {
   Currency,
   CurrencyAmount,
@@ -7,31 +29,6 @@ import {
 } from '@xplanet/sdk'
 import { Text } from 'rebass'
 import styled from 'styled-components'
-
-import React, {
-  CSSProperties,
-  MutableRefObject,
-  useCallback,
-  useMemo
-} from 'react'
-import { FixedSizeList } from 'react-window'
-
-import { useActiveWeb3React } from '@/hooks'
-import { useIsUserAddedToken } from '@/hooks/Tokens'
-import { useSelectedTokenList, WrappedTokenInfo } from '@/state/lists/hooks'
-import {
-  useAddUserToken,
-  useRemoveUserAddedToken
-} from '@/state/user/hooks'
-import { useCurrencyBalance } from '@/state/wallet/hooks'
-import { LinkStyledButton, TYPE } from '@/theme'
-import { isTokenOnList } from '@/utils'
-import Column from '@/components/Column'
-import CurrencyLogo from '@/components/CurrencyLogo'
-import Loader from '@/components/Loader'
-import { RowFixed } from '@/components/Row'
-import { MouseoverTooltip } from '@/components/Tooltip'
-import { FadedSpan, MenuItem } from './styleds'
 
 function currencyKey(currency: Currency): string {
   return currency instanceof Token
@@ -116,6 +113,7 @@ function CurrencyRow({
   otherSelected: boolean
   style: CSSProperties
 }) {
+  const { t } = useTranslation()
   const { account, chainId } = useActiveWeb3React()
   const key = currencyKey(currency)
   const selectedTokenList = useSelectedTokenList()
@@ -142,26 +140,26 @@ function CurrencyRow({
         <FadedSpan>
           {!isOnSelectedList && customAdded ? (
             <TYPE.main fontWeight={500}>
-              Added by user
+              {t('Added by user')}
               <LinkStyledButton
                 onClick={(event) => {
                   event.stopPropagation()
                   if (chainId && currency instanceof Token)
                     removeToken(chainId, currency.address)
                 }}>
-                (Remove)
+                ({t('Remove')})
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
           {!isOnSelectedList && !customAdded ? (
             <TYPE.main fontWeight={500}>
-              Found by address
+              {t('Found by address')}
               <LinkStyledButton
                 onClick={(event) => {
                   event.stopPropagation()
                   if (currency instanceof Token) addToken(currency)
                 }}>
-                (Add)
+                ({t('Add')})
               </LinkStyledButton>
             </TYPE.main>
           ) : null}

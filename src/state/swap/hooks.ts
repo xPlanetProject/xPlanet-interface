@@ -1,3 +1,29 @@
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+
+import {
+  Field,
+  replaceSwapState,
+  selectCurrency,
+  setRecipient,
+  switchCurrencies,
+  typeInput
+} from './actions'
+import { SwapState } from './reducer'
+import { useV1Trade } from '@/data/V1'
+import { useActiveWeb3React } from '@/hooks'
+import { useCurrency } from '@/hooks/Tokens'
+import { useTradeExactIn, useTradeExactOut } from '@/hooks/Trades'
+import useENS from '@/hooks/useENS'
+import useParsedQueryString from '@/hooks/useParsedQueryString'
+import { Version } from '@/hooks/useToggledVersion'
+import useToggledVersion from '@/hooks/useToggledVersion'
+import { AppDispatch, AppState } from '@/state'
+import { useUserSlippageTolerance } from '@/state/user/hooks'
+import { useCurrencyBalances } from '@/state/wallet/hooks'
+import { isAddress } from '@/utils'
+import { computeSlippageAdjustedAmounts } from '@/utils/prices'
 import { parseUnits } from '@ethersproject/units'
 import {
   Currency,
@@ -9,32 +35,6 @@ import {
   Trade
 } from '@xplanet/sdk'
 import { ParsedQs } from 'qs'
-
-import { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { useV1Trade } from '@/data/V1'
-import { useActiveWeb3React } from '@/hooks'
-import { useCurrency } from '@/hooks/Tokens'
-import { useTradeExactIn, useTradeExactOut } from '@/hooks/Trades'
-import useENS from '@/hooks/useENS'
-import useParsedQueryString from '@/hooks/useParsedQueryString'
-import { Version } from '@/hooks/useToggledVersion'
-import useToggledVersion from '@/hooks/useToggledVersion'
-import { isAddress } from '@/utils'
-import { computeSlippageAdjustedAmounts } from '@/utils/prices'
-import { AppDispatch, AppState } from '@/state'
-import { useUserSlippageTolerance } from '@/state/user/hooks'
-import { useCurrencyBalances } from '@/state/wallet/hooks'
-import {
-  Field,
-  replaceSwapState,
-  selectCurrency,
-  setRecipient,
-  switchCurrencies,
-  typeInput
-} from './actions'
-import { SwapState } from './reducer'
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap)
@@ -142,6 +142,7 @@ export function useDerivedSwapInfo(): {
   inputError?: string
   v1Trade: Trade | undefined
 } {
+  const { t } = useTranslation()
   const { account } = useActiveWeb3React()
 
   const toggledVersion = useToggledVersion()
@@ -202,20 +203,20 @@ export function useDerivedSwapInfo(): {
 
   let inputError: string | undefined
   if (!account) {
-    inputError = 'Connect Wallet'
+    inputError = t('Connect Wallet')
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? 'Enter an amount'
+    inputError = inputError ?? t('Enter an amount')
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? 'Select a token'
+    inputError = inputError ?? t('Select a token')
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
-    inputError = inputError ?? 'Enter a recipient'
+    inputError = inputError ?? t('Enter a recipient')
   } else {
     if (
       BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
@@ -224,7 +225,7 @@ export function useDerivedSwapInfo(): {
       //  @ts-ignore
       (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
     ) {
-      inputError = inputError ?? 'Invalid recipient'
+      inputError = inputError ?? t('Invalid recipient')
     }
   }
 
@@ -339,14 +340,13 @@ export function useDefaultsFromURLSearch():
   const { chainId } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
-  const [result, setResult] =
-    useState<
-      | {
-          inputCurrencyId: string | undefined
-          outputCurrencyId: string | undefined
-        }
-      | undefined
-    >()
+  const [result, setResult] = useState<
+    | {
+        inputCurrencyId: string | undefined
+        outputCurrencyId: string | undefined
+      }
+    | undefined
+  >()
 
   useEffect(() => {
     if (!chainId) return

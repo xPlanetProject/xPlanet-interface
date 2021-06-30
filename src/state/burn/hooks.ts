@@ -1,3 +1,15 @@
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Field, typeInput } from './actions'
+import { usePair } from '@/data/Reserves'
+import { useTotalSupply } from '@/data/TotalSupply'
+import { useActiveWeb3React } from '@/hooks'
+import { AppDispatch, AppState } from '@/state'
+import { tryParseAmount } from '@/state/swap/hooks'
+import { useTokenBalances } from '@/state/wallet/hooks'
+import { wrappedCurrency } from '@/utils/wrappedCurrency'
 import {
   Currency,
   CurrencyAmount,
@@ -6,18 +18,6 @@ import {
   Percent,
   TokenAmount
 } from '@xplanet/sdk'
-
-import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { usePair } from '@/data/Reserves'
-import { useTotalSupply } from '@/data/TotalSupply'
-import { useActiveWeb3React } from '@/hooks'
-import { wrappedCurrency } from '@/utils/wrappedCurrency'
-import { AppDispatch, AppState } from '@/state'
-import { tryParseAmount } from '@/state/swap/hooks'
-import { useTokenBalances } from '@/state/wallet/hooks'
-import { Field, typeInput } from './actions'
 
 export function useBurnState(): AppState['burn'] {
   return useSelector<AppState, AppState['burn']>((state) => state.burn)
@@ -36,6 +36,7 @@ export function useDerivedBurnInfo(
   }
   error?: string
 } {
+  const { t } = useTranslation()
   const { account, chainId } = useActiveWeb3React()
 
   const { independentField, typedValue } = useBurnState()
@@ -168,7 +169,7 @@ export function useDerivedBurnInfo(
 
   let error: string | undefined
   if (!account) {
-    error = 'Connect Wallet'
+    error = t('Connect Wallet')
   }
 
   if (
@@ -176,7 +177,7 @@ export function useDerivedBurnInfo(
     !parsedAmounts[Field.CURRENCY_A] ||
     !parsedAmounts[Field.CURRENCY_B]
   ) {
-    error = error ?? 'Enter an amount'
+    error = error ?? t('Enter an amount')
   }
 
   //  @ts-ignore

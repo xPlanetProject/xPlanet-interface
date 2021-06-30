@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ArrowDown, Plus } from 'react-feather'
 import ReactGA from 'react-ga'
+import { useTranslation } from 'react-i18next'
 import { RouteComponentProps } from 'react-router'
 
 import {
@@ -60,6 +61,7 @@ export default function RemoveLiquidity({
     params: { currencyIdA, currencyIdB }
   }
 }: RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>) {
+  const { t } = useTranslation()
   const [currencyA, currencyB] = [
     useCurrency(currencyIdA) ?? undefined,
     useCurrency(currencyIdB) ?? undefined
@@ -785,7 +787,7 @@ export default function RemoveLiquidity({
             <div style={{ position: 'relative' }}>
               {!account ? (
                 <ButtonLight onClick={toggleWalletModal}>
-                  Connect Wallet
+                  {t('Connect Wallet')}
                 </ButtonLight>
               ) : (
                 <RowBetween>
