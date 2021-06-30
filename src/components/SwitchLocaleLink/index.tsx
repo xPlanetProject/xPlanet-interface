@@ -48,7 +48,7 @@ export function SwitchLocaleLink() {
     return (
       <RowAround>
         <Wrapper>
-          xPlantSwap available in:{' '}
+          xPlantSwap available in:{'  '}
           {
             <SwitchButton
               onClick={() => {
