@@ -97,11 +97,13 @@ const StyledBalanceMax = styled.button`
   font-weight: 500;
   cursor: pointer;
   margin-right: 0.5rem;
+  opacity: 1;
+
   :hover {
-    color: ${darken(0.2, '#8F8C00')};
+    opacity: 0.6;
   }
   :focus {
-    color: ${darken(0.2, '#8F8C00')};
+    opacity: 0.6;
   }
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`

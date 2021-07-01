@@ -12,6 +12,7 @@ import { navigatorLocale, useActiveLocale } from '@/hooks/useActiveLocale'
 import useParsedQueryString from '@/hooks/useParsedQueryString'
 import { StyledInternalLink, TYPE } from '@/theme'
 import i18next from 'i18next'
+import { stringify } from 'qs'
 import styled from 'styled-components'
 
 const Wrapper = styled(TYPE.main)`
@@ -45,6 +46,11 @@ export function SwitchLocaleLink() {
       targetLocale = browserLocale
     }
 
+    const target = {
+      ...location,
+      search: stringify({ ...qs, lng: targetLocale })
+    }
+
     return (
       <RowAround>
         <Wrapper>
@@ -59,7 +65,7 @@ export function SwitchLocaleLink() {
                   label: `${activeLocale} -> ${targetLocale}`
                 })
               }}
-              to='javacsript:;'>
+              to={target}>
               {LOCALE_LABEL[targetLocale]}
             </SwitchButton>
           }

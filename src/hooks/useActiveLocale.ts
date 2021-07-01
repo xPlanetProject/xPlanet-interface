@@ -45,8 +45,6 @@ export function navigatorLocale(): SupportedLocale | undefined {
 export function useActiveLocale(): SupportedLocale {
   const userLocale = useUserLocale()
 
-  console.log(userLocale)
-
   return useMemo(() => {
     return userLocale ?? navigatorLocale() ?? DEFAULT_LOCALE
   }, [userLocale])
