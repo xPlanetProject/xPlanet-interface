@@ -92,7 +92,7 @@ export default function PoolDetail() {
                 as={Link}
                 to={`/add/${currencyId(currency1)}/${currencyId(
                   currency0
-                )}?tokenId=${params.tokenId}`}
+                )}?tokenId=${params.tokenId}&pairId=${params.pairId}`}
                 style={{ marginRight: '8px' }}>
                 {t('Increase Liquidity')}
               </ResponsiveButtonSecondary>

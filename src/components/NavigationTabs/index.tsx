@@ -6,6 +6,7 @@ import { NavLink, Link as HistoryLink } from 'react-router-dom'
 import getMenus, { MenuItem } from './menus'
 import QuestionHelper from '@/components/QuestionHelper'
 import { RowBetween } from '@/components/Row'
+import useQueryString from '@/hooks/useQueryString'
 import styled from 'styled-components'
 
 const Tabs = styled.div`
@@ -101,11 +102,13 @@ export function FindPoolTabs() {
 
 export function AddRemoveTabs({ adding }: { adding: boolean }) {
   const { t } = useTranslation()
+  const query = useQueryString()
+  const { pairId, tokenId } = query
 
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
-        <HistoryLink to='/pool'>
+        <HistoryLink to={`/pool/${tokenId}/${pairId}`}>
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>
