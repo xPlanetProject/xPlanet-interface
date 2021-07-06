@@ -2,19 +2,23 @@ import { useMemo } from 'react'
 
 import { abi as XKeyPairABI } from '@/constants/contracts/XKeyPair.json'
 import { useToken } from '@/hooks/Tokens'
+import { useV3Token } from '@/hooks/TokensV3'
 import {
   useContract,
   useTokenContract,
   useXKeyDaoContract,
   useXPokerPowerContract
 } from '@/hooks/useContract'
+import usePromiseifyCall from '@/hooks/usePromiseifyCall'
 import {
   useSingleCallResult,
   useSingleContractMultipleData
 } from '@/state/multicall/hooks'
-import usePromiseifyCall from '@/hooks/usePromiseifyCall'
+import useUSDCPrice from '@/usdc-price'
 import { or } from '@/utils/or'
+import { CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { BigNumber, utils } from 'ethers'
+import JSBI from 'jsbi'
 
 export function useCurrentStagePrice() {
   const xKeyDaoContract = useXKeyDaoContract()
@@ -112,32 +116,57 @@ export function useMiningPool(pairId: string | undefined): any {
   }
 }
 
-export function usePricePerLP(pairId: string | undefined) {
-  const pairContract = useContract(pairId, XKeyPairABI)
-  const { result: LPAmountByPair } = useSingleCallResult(
-    pairContract,
-    'totalSupply',
-    []
-  )
+export function usePoolTVL(pairId: string | undefined) {
   const { token0Address, token1Address } = useMiningPool(pairId)
   const token0Contract = useTokenContract(token0Address)
   const token1Contract = useTokenContract(token1Address)
-  const { result: token0AmountByPair } = useSingleCallResult(
+  const token0Token = useV3Token(token0Address)
+  const token1Token = useV3Token(token1Address)
+
+  const { result: token0AmountByPairRes } = useSingleCallResult(
     token0Contract,
     'balanceOf',
     [pairId]
   )
-  const { result: token1AmountByPair } = useSingleCallResult(
+  const { result: token1AmountByPairRes } = useSingleCallResult(
     token1Contract,
     'balanceOf',
     [pairId]
   )
+  const amount0 = token0AmountByPairRes?.[0]
+  const amount1 = token1AmountByPairRes?.[0]
 
-  // TODO
+  // usdc prices always in terms of tokens
+  const price0 = useUSDCPrice(token0Token ?? undefined)
+  const price1 = useUSDCPrice(token1Token ?? undefined)
+
+  const fiatValueOfLiquidity: CurrencyAmount<Token> | null = useMemo(() => {
+    if (!price0 || !price1 || !amount0 || !amount1) return null
+    const calc0 = price0.quote(amount0)
+    const calc1 = price1.quote(amount1)
+    return calc0.add(calc1)
+  }, [price0, price1, amount0, amount1])
+
+  return fiatValueOfLiquidity
 }
 
-export function usePoolTVL(pairId: string | undefined) {
+export function usePricePerLP(pairId: string | undefined) {
   // TODO
+  const pairContract = useContract(pairId, XKeyPairABI)
+  const { result: LPAmountByPairRes } = useSingleCallResult(
+    pairContract,
+    'totalSupply',
+    []
+  )
+  const LPAmount = LPAmountByPairRes?.[0]
+
+  const fiatValueOfLiquidity = usePoolTVL(pairId)
+  const lpv = useMemo(() => {
+    if (!LPAmount || !fiatValueOfLiquidity) return null
+    return fiatValueOfLiquidity.divide(LPAmount).toFixed(2)
+  }, [LPAmount, fiatValueOfLiquidity])
+
+  return lpv
 }
 
 type MiningPoolData = {
@@ -240,7 +269,7 @@ export function usePowerRewardByAccount(
     xKeyDaoContract,
     'predReward',
     [pairId]
-  );
+  )
 
   return {
     powerByAccount:

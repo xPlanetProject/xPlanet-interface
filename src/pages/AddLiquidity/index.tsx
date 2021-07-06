@@ -1,10 +1,11 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useMemo, useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { useTranslation } from 'react-i18next'
 import { RouteComponentProps, useLocation } from 'react-router-dom'
 
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
+import CurrentLiquidity from './CurrentLiquidity'
 import { PoolPriceBar } from './PoolPriceBar'
 import { ButtonError, ButtonLight, ButtonPrimary } from '@/components/Button'
 import { DarkCard, GreyCard, LightCard } from '@/components/Card'
@@ -417,6 +418,7 @@ export default function AddLiquidity({
                 </DarkCard>
               </ColumnCenter>
             )}
+            <CurrentLiquidity />
             <CurrencyInputPanel
               value={formattedAmounts[Field.CURRENCY_A]}
               onUserInput={onFieldAInput}

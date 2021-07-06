@@ -277,3 +277,34 @@ export function usePositions(
     positions: pairIdResults
   }
 }
+
+export function useCurrentLiquidity(
+  tokenId: string | string[] | undefined,
+  pairId: string | string[] | undefined
+) {
+  if (pairId && tokenId) {
+    const { loading: pairInfoLoading, pairInfo } = usePairById(
+      pairId as string,
+      tokenId as string
+    )
+    const positionManager = useNFTPositionManagerContract()
+    const { loading: propertyResultLoading, result: propertyResult } =
+      useSingleCallResult(positionManager, 'getPokerProperty', [tokenId])
+    if (pairInfoLoading && propertyResultLoading)
+      return { haveLiquidity: false }
+
+    const pokerRank = (propertyResult as any).rank as BigNumber
+    const pokerSuit = (propertyResult as any).suit as BigNumber
+    return {
+      haveLiquidity: true,
+      pairInfo,
+      pokerInfo: Object.assign(
+        singlePokerRankMap.get(pokerRank.toNumber()),
+        singlePokerSuitMap.get(pokerSuit.toNumber())
+      )
+    }
+  }
+  return {
+    haveLiquidity: false
+  }
+}

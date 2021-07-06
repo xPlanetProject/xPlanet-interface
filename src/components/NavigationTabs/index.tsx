@@ -104,11 +104,12 @@ export function AddRemoveTabs({ adding }: { adding: boolean }) {
   const { t } = useTranslation()
   const query = useQueryString()
   const { pairId, tokenId } = query
+  const backLink = pairId && tokenId ? `/pool/${tokenId}/${pairId}` : '/pool'
 
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
-        <HistoryLink to={`/pool/${tokenId}/${pairId}`}>
+        <HistoryLink to={backLink}>
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>
